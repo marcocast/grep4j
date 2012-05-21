@@ -20,7 +20,7 @@ public class ProfileConfiguration {
 	public static final String SEPARATOR = System
 			.getProperty("file.separator");
 
-	public static final String PROFILES_CONFIGURATION_PROPERTY = "org.mg.grep4j.profiles";
+	public static final String PROFILES_CONFIGURATION_PROPERTY = "org.grep4j.profiles";
 
 	private static final String DEFAULT_CONFIGURATION_FOLDER = System
 			.getProperty("user.home")
