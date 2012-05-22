@@ -35,21 +35,26 @@ public final class Grep4j {
 	private final String expression;
 	private final List<Profile> profiles;
 
-	private final List<String> contextControls;
-	private final String wildcard;
+	private List<String> contextControls;
+	private String wildcard;
 
 	private final List<GrepResult> results;
 
 	private final List<GrepRequest> grepRequests;
 
-	private Grep4j(Builder builder) {
+	private Grep4j(String expression, List<Profile> profiles) {
 		this.grepRequests = new ArrayList<GrepRequest>();
-		this.results = new Vector<GrepResult>();
-		this.contextControls = builder.contextControls;
-		this.expression = builder.expression;
-		this.wildcard = builder.wildcard;
-		this.profiles = builder.profiles;
-
+		this.results = new Vector<GrepResult>();		
+		this.expression = expression;
+		this.profiles = profiles;
+	}
+	
+	private void setContextControls(List<String> contextControls){
+		this.contextControls = contextControls;
+	}
+	
+	private void setWildcard(String wildcard){
+		this.wildcard = wildcard;
 	}
 
 	/**
@@ -134,37 +139,58 @@ public final class Grep4j {
 	 * Class used to build @see Grep4j.
 	 */
 	public static class Builder {
-
-		private final String expression;
-		private List<String> contextControls;
-		private String wildcard;
-		private final List<Profile> profiles;
-
+		
+		private Grep4j grep4j; 
+		
+		/**
+		 * 
+		 * @param expression
+		 * @param profiles
+		 * @return Grep4j.Builder
+		 */
 		public static Builder grep(String expression, List<Profile> profiles) {
 			return new Builder(expression, profiles);
 		}
-
+		
+		/**
+		 * 
+		 * @param profiles
+		 * @return
+		 */
 		public static List<Profile> on(List<Profile> profiles) {
 			return profiles;
 		}
-
-		private Builder(String expression, List<Profile> profiles) {
-			this.expression = expression;
-			this.profiles = profiles;
-		}
-
+		
+		/**
+		 * 
+		 * @param contextControls
+		 * @return
+		 */
 		public Builder withContextControls(List<String> contextControls) {
-			this.contextControls = contextControls;
+			grep4j.setContextControls(contextControls);
 			return this;
 		}
-
+		
+		/**
+		 * 
+		 * @param wildcard
+		 * @return
+		 */
 		public Builder withWildcard(String wildcard) {
-			this.wildcard = wildcard;
+			grep4j.setWildcard(wildcard);
 			return this;
 		}
-
+		
+		/**
+		 * 
+		 * @return
+		 */
 		public Grep4j build() {
-			return new Grep4j(this);
+			return grep4j;
+		}
+		
+		private Builder(String expression, List<Profile> profiles) {
+			this.grep4j = new Grep4j(expression,profiles);
 		}
 	}
 }
