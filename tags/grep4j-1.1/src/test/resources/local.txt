@@ -1,0 +1,5 @@
+ERROR 1
+fine
+fine
+ERROR 2
+fine
