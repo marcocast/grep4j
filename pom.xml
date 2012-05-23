@@ -31,14 +31,14 @@
 
 	<distributionManagement>
 		<repository>
-			<id>googlecode.grep4j</id>
+			<id>sonatype-nexus-staging</id>
 			<name>Internal Release Repository</name>
-			<url>file:svn:https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
 		</repository>
 		<snapshotRepository>
-			<id>googlecode.grep4j</id>
+			<id>sonatype-nexus-snapshots</id>
 			<name>Internal Snapshots Repository</name>
-			<url>file:https://oss.sonatype.org/content/repositories/snapshots</url>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
 		</snapshotRepository>
 	</distributionManagement>
 
