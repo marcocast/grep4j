@@ -1,14 +1,13 @@
 package org.grep4j.core.task;
 
 import static ch.lambdaj.Lambda.join;
-import static org.grep4j.core.profile.ProfileConfiguration.profileConfiguration;
 
 import java.util.List;
 
-import org.grep4j.core.profile.model.Profile;
-import org.grep4j.core.profile.model.ServerDetails;
+import org.grep4j.core.model.Profile;
+import org.grep4j.core.model.ServerDetails;
 
-public class GrepRequest{
+public class GrepRequest {
 
 	private static final String SPACE = " ";
 	private static final String WILDCARD_CHARACTER = "*";
@@ -19,9 +18,8 @@ public class GrepRequest{
 	private String contextControls;
 	private String wildcard;
 
-	public GrepRequest(String pattern, String profileName) {
-		this.profile = profileConfiguration().getProfileBy(
-				profileName);
+	public GrepRequest(String pattern, Profile profile) {
+		this.profile = profile;
 		this.pattern = pattern;
 	}
 
@@ -32,7 +30,7 @@ public class GrepRequest{
 	public void addContextControls(List<String> contextControls) {
 		this.contextControls = join(contextControls, SPACE);
 	}
-	
+
 	public String getContextControls() {
 		return contextControls;
 	}
@@ -48,7 +46,7 @@ public class GrepRequest{
 			this.wildcard = "";
 		}
 	}
-	
+
 	public String getWildcard() {
 		return wildcard;
 	}

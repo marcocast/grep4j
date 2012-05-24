@@ -1,4 +1,4 @@
-package org.grep4j.core.matcher;
+package org.grep4j.core.matchers;
 
 import java.util.List;
 

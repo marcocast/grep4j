@@ -4,15 +4,16 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.Vector;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-import org.grep4j.core.profile.model.Profile;
+import org.grep4j.core.model.Profile;
 import org.grep4j.core.task.GrepRequest;
 import org.grep4j.core.task.GrepResult;
 import org.grep4j.core.task.GrepTask;
+
+import com.google.common.collect.ImmutableList;
 
 /**
  * Base Class for using the grep4j api. Usage example:
@@ -33,53 +34,51 @@ import org.grep4j.core.task.GrepTask;
 public final class Grep4j {
 
 	private final String expression;
-	private final List<Profile> profiles;
+	private final ImmutableList<Profile> profiles;
 
-	private List<String> contextControls;
+	private ImmutableList<String> contextControls;
 	private String wildcard;
 
-	private final List<GrepResult> results;
+	private final Set<GrepResult> results;
 
 	private final List<GrepRequest> grepRequests;
 
-	private Grep4j(String expression, List<Profile> profiles) {
+	private Grep4j(String expression, ImmutableList<Profile> profiles) {
 		this.grepRequests = new ArrayList<GrepRequest>();
-		this.results = new Vector<GrepResult>();		
+		this.results = new HashSet<GrepResult>();
 		this.expression = expression;
 		this.profiles = profiles;
 	}
-	
-	private void setContextControls(List<String> contextControls){
+
+	private void setContextControls(ImmutableList<String> contextControls) {
 		this.contextControls = contextControls;
 	}
-	
-	private void setWildcard(String wildcard){
+
+	private void setWildcard(String wildcard) {
 		this.wildcard = wildcard;
 	}
 
 	/**
 	 * This method will:
 	 * <ol>
-	 * <li>Verify the input checking that the mandatory fields have been
-	 * populated</li>
-	 * <li>Create the @see GrepCommand to be executed, based on the inputs
-	 * passed</li>
-	 * <li>Execute the @see GrepCommand for all the @see Profile passed</li>
+	 * <li>Verify the input checking that the mandatory fields have been populated</li>
+	 * <li>Create the {@link GrepRequest} to be executed, based on the inputs passed</li>
+	 * <li>Execute the {@link GrepRequest} for all the {@link Profile} passed</li>
 	 * </ol>
 	 */
 	public Grep4j execute() {
 		verifyInputs();
 		prepareCommandRequests();
-		executeCommands();		
+		executeCommands();
 		return this;
 	}
 
 	/**
-	 * @return a List of results
+	 * @return a Set of {@link GrepResult}
 	 */
-	public List<GrepResult> andGetResults() {
+	public Set<GrepResult> andGetResults() {
 		return results;
-	}	
+	}
 
 	private void verifyInputs() {
 		if (expression == null || expression.isEmpty()) {
@@ -99,7 +98,7 @@ public final class Grep4j {
 				grepTaskFutures.add(executorService.submit(new GrepTask(grepRequest)));
 			}
 			for (Future<List<GrepResult>> future : grepTaskFutures) {
-				 results.addAll(future.get());
+				results.addAll(future.get());
 			}
 		} catch (Exception e) {
 			throw new RuntimeException("Error when executing the commands", e);
@@ -108,7 +107,7 @@ public final class Grep4j {
 
 	protected void prepareCommandRequests() {
 		for (Profile profile : profiles) {
-			GrepRequest grepRequest = new GrepRequest(expression, profile.getName());
+			GrepRequest grepRequest = new GrepRequest(expression, profile);
 			if (contextControls != null && !contextControls.isEmpty()) {
 				grepRequest.addContextControls(contextControls);
 			}
@@ -136,14 +135,13 @@ public final class Grep4j {
 	}
 
 	/**
-	 * Class used to build @see Grep4j.
+	 * Class used to build {@link Grep4j}.
 	 */
 	public static class Builder {
-		
-		private Grep4j grep4j; 
-		
+
+		private final Grep4j grep4j;
+
 		/**
-		 * 
 		 * @param expression
 		 * @param profiles
 		 * @return Grep4j.Builder
@@ -151,28 +149,25 @@ public final class Grep4j {
 		public static Builder grep(String expression, List<Profile> profiles) {
 			return new Builder(expression, profiles);
 		}
-		
+
 		/**
-		 * 
 		 * @param profiles
 		 * @return
 		 */
 		public static List<Profile> on(List<Profile> profiles) {
 			return profiles;
 		}
-		
+
 		/**
-		 * 
 		 * @param contextControls
 		 * @return
 		 */
 		public Builder withContextControls(List<String> contextControls) {
-			grep4j.setContextControls(contextControls);
+			grep4j.setContextControls(ImmutableList.copyOf(contextControls));
 			return this;
 		}
-		
+
 		/**
-		 * 
 		 * @param wildcard
 		 * @return
 		 */
@@ -180,17 +175,16 @@ public final class Grep4j {
 			grep4j.setWildcard(wildcard);
 			return this;
 		}
-		
+
 		/**
-		 * 
 		 * @return
 		 */
 		public Grep4j build() {
 			return grep4j;
 		}
-		
+
 		private Builder(String expression, List<Profile> profiles) {
-			this.grep4j = new Grep4j(expression,profiles);
+			this.grep4j = new Grep4j(expression, ImmutableList.copyOf(profiles));
 		}
 	}
 }

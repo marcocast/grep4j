@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
 import net.schmizz.sshj.connection.ConnectionException;
 import net.schmizz.sshj.transport.TransportException;
 
-import org.grep4j.core.profile.model.ServerDetails;
+import org.grep4j.core.model.ServerDetails;
 
 public class LocalCommandExecutor extends CommandExecutor {
 

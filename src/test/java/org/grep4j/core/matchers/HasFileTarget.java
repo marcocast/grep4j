@@ -1,4 +1,4 @@
-package org.grep4j.matcher;
+package org.grep4j.core.matchers;
 
 import java.util.List;
 
@@ -10,21 +10,21 @@ import org.hamcrest.TypeSafeMatcher;
 
 public class HasFileTarget extends TypeSafeMatcher<List<GrepRequest>> {
 
-	private final String fileTargetName;
+	private final String fileName;
 
-	private HasFileTarget(String fileTargetName) {
-		this.fileTargetName = fileTargetName;
+	private HasFileTarget(String fileName) {
+		this.fileName = fileName;
 	}
 
 	@Override
 	public void describeTo(Description description) {
-		description.appendText("not a file target");
+		description.appendText("not a file");
 	}
 
 	@Override
 	public boolean matchesSafely(List<GrepRequest> list) {
-		for (GrepRequest fileTarget : list) {
-			if (fileTarget.getProfile().getName().equals(fileTargetName)) {
+		for (GrepRequest grepRequest : list) {
+			if (grepRequest.getProfile().getName().equals(fileName)) {
 				return true;
 			}
 		}

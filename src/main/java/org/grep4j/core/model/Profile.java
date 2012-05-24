@@ -1,9 +1,7 @@
-package org.grep4j.core.profile.model;
+package org.grep4j.core.model;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
-
-import org.grep4j.core.profile.ProfileConfiguration;
 
 @XmlType
 public class Profile {
@@ -49,12 +47,6 @@ public class Profile {
 
 	public void setServerDetails(ServerDetails serverDetails) {
 		this.serverDetails = serverDetails;
-	}
-
-	public void validate() {
-		if (!fileLocation.endsWith(ProfileConfiguration.SEPARATOR)) {
-			fileLocation += ProfileConfiguration.SEPARATOR;
-		}
 	}
 
 	@XmlAttribute

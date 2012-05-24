@@ -1,4 +1,4 @@
-package org.grep4j.core.matcher;
+package org.grep4j.core.matchers;
 
 import org.grep4j.core.ContextControl;
 import org.hamcrest.Description;

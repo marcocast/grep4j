@@ -4,7 +4,7 @@ import org.grep4j.core.command.ServerDetailsInterpreter;
 import org.grep4j.core.command.linux.CommandExecutor;
 import org.grep4j.core.command.linux.LocalCommandExecutor;
 import org.grep4j.core.command.linux.SshCommandExecutor;
-import org.grep4j.core.profile.model.ServerDetails;
+import org.grep4j.core.model.ServerDetails;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;

@@ -11,7 +11,7 @@ import net.schmizz.sshj.connection.channel.direct.Session.Command;
 import net.schmizz.sshj.transport.TransportException;
 import net.schmizz.sshj.transport.verification.PromiscuousVerifier;
 
-import org.grep4j.core.profile.model.ServerDetails;
+import org.grep4j.core.model.ServerDetails;
 
 public class SshCommandExecutor extends CommandExecutor{
 
