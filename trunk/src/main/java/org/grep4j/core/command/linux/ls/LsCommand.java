@@ -1,7 +1,7 @@
 package org.grep4j.core.command.linux.ls;
 
 import org.grep4j.core.command.linux.LinuxCommand;
-import org.grep4j.core.profile.model.Profile;
+import org.grep4j.core.model.Profile;
 
 public class LsCommand implements LinuxCommand {
 

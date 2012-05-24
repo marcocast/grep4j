@@ -1,6 +1,6 @@
 package org.grep4j.core.command.linux;
 
-import org.grep4j.core.profile.model.ServerDetails;
+import org.grep4j.core.model.ServerDetails;
 
 public abstract class CommandExecutor {
 

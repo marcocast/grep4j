@@ -1,4 +1,4 @@
-package org.grep4j.core.profile.model;
+package org.grep4j.core.model;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;

@@ -6,7 +6,7 @@ import java.util.List;
 import org.grep4j.core.command.linux.CommandExecutor;
 import org.grep4j.core.command.linux.LocalCommandExecutor;
 import org.grep4j.core.command.linux.SshCommandExecutor;
-import org.grep4j.core.profile.model.ServerDetails;
+import org.grep4j.core.model.ServerDetails;
 
 /**
  * Class used to understand if a command has to be run in remote/local and possibly in Linux or windows based on the server Details 

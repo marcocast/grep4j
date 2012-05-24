@@ -24,15 +24,15 @@ public class GrepTask implements Callable<List<GrepResult>> {
 	private final List<GrepResult> results;
 
 	public GrepTask(GrepRequest grepRequest) {
-		
+
 		this.commandExecutor = getCommandExecutor(grepRequest.getServerDetails());
-		
+
 		this.grepRequest = grepRequest;
-		
+
 		this.matchingFiles = new ArrayList<String>();
 		this.grepList = new ArrayList<AbstractGrepCommand>();
 		this.results = new ArrayList<GrepResult>();
-		
+
 	}
 
 	@Override
@@ -49,37 +49,7 @@ public class GrepTask implements Callable<List<GrepResult>> {
 		release();
 
 		return results;
-		
-	}
 
-	private void release() {
-		commandExecutor.quit();
-	}
-
-	private void executeGrepCommands() {
-		for (AbstractGrepCommand command : grepList) {
-			String result = commandExecutor.execute(command).andReturnResult();
-			GrepResult taskResult = new GrepResult(grepRequest
-					.getProfile().getName(), command.getFile(), result);
-			results.add(taskResult);
-		}
-	}
-
-	private void prepareGrepCommands() {
-		for (String filename : matchingFiles) {
-			AbstractGrepCommand grep;
-			if (isGz(filename)) {
-				grep = new GzGrepCommand(grepRequest.getPattern(), filename);
-			} else {
-				grep = new SimpleGrepCommand(grepRequest.getPattern(), filename);
-			}
-			grep.setContextControls(grepRequest.getContextControls());
-			grepList.add(grep);
-		}
-	}
-
-	private boolean isGz(String matchingFile) {
-		return matchingFile.endsWith(".gz");
 	}
 
 	private void init() {
@@ -95,13 +65,43 @@ public class GrepTask implements Callable<List<GrepResult>> {
 		}
 
 		String filenames = commandExecutor.execute(ls).andReturnResult();
-		
+
 		matchingFiles.addAll(aListOf(filenames));
-		
+
+	}
+
+	private void prepareGrepCommands() {
+		for (String filename : matchingFiles) {
+			AbstractGrepCommand grep;
+			if (isGz(filename)) {
+				grep = new GzGrepCommand(grepRequest.getPattern(), filename);
+			} else {
+				grep = new SimpleGrepCommand(grepRequest.getPattern(), filename);
+			}
+			grep.setContextControls(grepRequest.getContextControls());
+			grepList.add(grep);
+		}
+	}
+
+	private void executeGrepCommands() {
+		for (AbstractGrepCommand command : grepList) {
+			String result = commandExecutor.execute(command).andReturnResult();
+			GrepResult taskResult = new GrepResult(grepRequest
+					.getProfile().getName(), command.getFile(), result);
+			results.add(taskResult);
+		}
+	}
+
+	private void release() {
+		commandExecutor.quit();
 	}
 
 	private List<String> aListOf(String filenames) {
 		return Arrays.asList(filenames.split("\n"));
+	}
+
+	private boolean isGz(String matchingFile) {
+		return matchingFile.endsWith(".gz");
 	}
 
 }

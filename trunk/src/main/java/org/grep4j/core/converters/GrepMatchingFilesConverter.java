@@ -1,4 +1,4 @@
-package org.grep4j.core.converter;
+package org.grep4j.core.converters;
 
 import java.util.Arrays;
 import java.util.List;
