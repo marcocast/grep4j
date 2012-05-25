@@ -1,7 +1,7 @@
 package org.grep4j.core;
 
 import static org.grep4j.core.Grep4j.Builder.grep;
-import static org.grep4j.core.Grep4j.Builder.on;
+import static org.grep4j.core.fluent.Dictionary.on;
 import static org.grep4j.core.fixtures.ProfileFixtures.localProfile;
 import static org.grep4j.core.matchers.Grep4jMatchers.appears;
 import static org.grep4j.core.matchers.Grep4jMatchers.neverAppears;

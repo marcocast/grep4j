@@ -154,16 +154,6 @@ public final class Grep4j {
 		}
 
 		/**
-		 * Fluent mirror method: use this method to give more readability to the code.
-		 * 
-		 * @param List of profiles
-		 * @return same list of profiles
-		 */
-		public static List<Profile> on(List<Profile> profiles) {
-			return profiles;
-		}
-
-		/**
 		 * This method create an ImmutableList of context controls {@link ContextControl} 
 		 * and set this list to the {@link Grep4j} instance. 
 		 * 

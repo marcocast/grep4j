@@ -1,15 +1,15 @@
 package org.grep4j.core.matchers;
 
 import static org.grep4j.core.Grep4j.Builder.grep;
-import static org.grep4j.core.Grep4j.Builder.on;
+import static org.grep4j.core.fluent.Dictionary.on;
+import static org.grep4j.core.fluent.Dictionary.of;
+import static org.grep4j.core.task.GrepResult.totalOccurrences;
 
 import java.util.List;
 import java.util.Set;
-import java.util.regex.Pattern;
 
 import org.grep4j.core.Grep4j;
 import org.grep4j.core.matchers.misc.GrepOccurrency;
-import org.grep4j.core.matchers.misc.GrepOccurrencyType;
 import org.grep4j.core.model.Profile;
 import org.grep4j.core.task.GrepResult;
 import org.hamcrest.Description;
@@ -34,26 +34,13 @@ public class GrepResultAppears extends TypeSafeMatcher<String> {
 
 		Set<GrepResult> results = grep4j.execute().andGetResults();
 
-		int actualOccurrences = calculateActualOccurrences(expression, results);
+		int actualOccurrences = totalOccurrences(of(expression), on(results));
 
 		return applyMatchingCriteriaFor(actualOccurrences);
 	}
 
 	private boolean applyMatchingCriteriaFor(int actualOccurrences) {
 		return occurrency.getOccurrencyType().valuate(actualOccurrences, occurrency.getExpectedOccurrencies());
-	}
-
-	private int calculateActualOccurrences(String expression,
-			Set<GrepResult> results) {
-		Pattern pattern = Pattern.compile(expression);
-		int occurrences = 0;
-		for (GrepResult result : results) {
-			java.util.regex.Matcher matcher = pattern.matcher(result.getText());
-			while (matcher.find()) {
-				occurrences++;
-			}
-		}
-		return occurrences;
 	}
 
 	@Override

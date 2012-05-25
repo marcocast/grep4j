@@ -1,6 +1,5 @@
 package org.grep4j.core.command.linux.grep;
 
-
 public class SimpleGrepCommand extends AbstractGrepCommand {
 
 	public SimpleGrepCommand(String expression, String file) {
