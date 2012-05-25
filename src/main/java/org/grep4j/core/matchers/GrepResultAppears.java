@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 
 import org.grep4j.core.Grep4j;
 import org.grep4j.core.matchers.misc.GrepOccurrency;
+import org.grep4j.core.matchers.misc.GrepOccurrencyType;
 import org.grep4j.core.model.Profile;
 import org.grep4j.core.task.GrepResult;
 import org.hamcrest.Description;
@@ -28,13 +29,13 @@ public class GrepResultAppears extends TypeSafeMatcher<String> {
 
 	@Override
 	public boolean matchesSafely(String expression) {
-		
+
 		Grep4j grep4j = grep(expression, on(profiles)).build();
-		
+
 		Set<GrepResult> results = grep4j.execute().andGetResults();
-		
+
 		int actualOccurrences = calculateActualOccurrences(expression, results);
-		
+
 		return applyMatchingCriteriaFor(actualOccurrences);
 	}
 
@@ -64,5 +65,4 @@ public class GrepResultAppears extends TypeSafeMatcher<String> {
 	public static <T> Matcher<String> appears(GrepOccurrency occurrency, List<Profile> profiles) {
 		return new GrepResultAppears(occurrency, profiles);
 	}
-
 }
