@@ -1,6 +1,6 @@
 package org.grep4j.core.matchers;
 
-import static org.grep4j.core.Grep4j.Builder.on;
+import static org.grep4j.core.fluent.Dictionary.on;
 import static org.grep4j.core.matchers.Grep4jMatchers.atLeast;
 import static org.grep4j.core.matchers.Grep4jMatchers.atMost;
 import static org.grep4j.core.matchers.Grep4jMatchers.exactly;
@@ -53,7 +53,7 @@ public class Grep4jMatchersTest {
 				equalTo(GrepOccurrencyType.EXACTLY));
 
 	}
-	
+
 	public void atLeastTwoTimesReturnsAnOccurrencyWellPopulated() {
 		GrepOccurrency occurrency = atLeast(2).times();
 
@@ -63,7 +63,7 @@ public class Grep4jMatchersTest {
 				equalTo(GrepOccurrencyType.AT_LEAST));
 
 	}
-	
+
 	public void atMostFourTimesReturnsAnOccurrencyWellPopulated() {
 		GrepOccurrency occurrency = atMost(4).times();
 		assertThat(occurrency, notNullValue());

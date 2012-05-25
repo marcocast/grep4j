@@ -17,7 +17,7 @@ public class GrepTask implements Callable<List<GrepResult>> {
 
 	private final GrepRequest grepRequest;
 
-	private final CommandExecutor commandExecutor;
+	private CommandExecutor commandExecutor;
 
 	private final List<String> matchingFiles;
 	private final List<AbstractGrepCommand> grepList;
@@ -102,6 +102,14 @@ public class GrepTask implements Callable<List<GrepResult>> {
 
 	private boolean isGz(String matchingFile) {
 		return matchingFile.endsWith(".gz");
+	}
+
+	/**
+	 * Only to be used for test purposes like injecting a mock CommandExecutor object 
+	 * @param commandExecutor
+	 */
+	protected void setCommandExecutor(CommandExecutor commandExecutor) {
+		this.commandExecutor = commandExecutor;
 	}
 
 }

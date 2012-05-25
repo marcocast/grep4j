@@ -1,0 +1,30 @@
+package org.grep4j.core.command.linux.grep;
+
+import org.testng.annotations.Test;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+
+public class SimpleGrepCommandTest extends GrepCommandTest {
+
+	@Test
+	public void testGetFile() {
+		String file = "/file/";
+		String expression = "expression";
+		SimpleGrepCommand simpleGrepCommand = new SimpleGrepCommand(expression, file);
+		assertThat(simpleGrepCommand.getFile(), is(file));
+	}
+
+	@Test(dataProvider = "expressionsAndFile")
+	public void testGetCommandToExecute(String expression, String file) {
+		SimpleGrepCommand simpleGrepCommand = new SimpleGrepCommand(expression, file);
+		assertThat(simpleGrepCommand.getCommandToExecute(), is("grep " + expression + " " + file));
+	}
+
+	@Test(dataProvider = "expressionsAndFile")
+	public void testGetCommandToExecuteWithContextControll(String expression, String file) {
+		SimpleGrepCommand simpleGrepCommand = new SimpleGrepCommand(expression, file);
+		String contextControl = "-A";
+		simpleGrepCommand.setContextControls(contextControl);
+		assertThat(simpleGrepCommand.getCommandToExecute(), is("grep " + expression + " " + file + " " + contextControl));
+	}
+}
