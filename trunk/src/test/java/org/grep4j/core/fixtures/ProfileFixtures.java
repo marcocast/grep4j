@@ -2,8 +2,8 @@ package org.grep4j.core.fixtures;
 
 import java.net.URL;
 
+import static org.grep4j.core.fixtures.ServerDetailsFixtures.localhostServerDetails;
 import org.grep4j.core.model.Profile;
-import org.grep4j.core.model.ServerDetails;
 
 public class ProfileFixtures {
 
@@ -19,9 +19,7 @@ public class ProfileFixtures {
 		profile.setFileLocation(resourcePath.replaceAll(fileName, ""));
 		profile.setFileName(fileName);
 		profile.setId(1);
-		ServerDetails serverDetails = new ServerDetails();
-		serverDetails.setHost("localhost");
-		profile.setServerDetails(serverDetails);
+		profile.setServerDetails(localhostServerDetails());
 		return profile;
 	}
 }

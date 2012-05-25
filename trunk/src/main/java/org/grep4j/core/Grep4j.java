@@ -16,7 +16,7 @@ import org.grep4j.core.task.GrepTask;
 import com.google.common.collect.ImmutableList;
 
 /**
- * Base Class for using the grep4j api. Usage example:
+ * Base Class for using the Grep4j api. Usage example:
  * 
  * <pre>
  * Grep4j grep4j = grep(expression(), on(profiles()))
@@ -26,7 +26,7 @@ import com.google.common.collect.ImmutableList;
  * 
  * </pre>
  * <p>
- * Based on http://marcocast.github.com/grep4j/
+ * Based on http://code.google.com/p/grep4j/
  * 
  * @author Marco Castigliego
  * @author Giovanni Gargiulo
@@ -142,6 +142,9 @@ public final class Grep4j {
 		private final Grep4j grep4j;
 
 		/**
+		 * This creates an new instance of {@link Grep4j} and return an instance of this builder.
+		 * It transform the List of profiles to an ImmutableList of profiles.
+		 * 
 		 * @param expression
 		 * @param profiles
 		 * @return Grep4j.Builder
@@ -151,16 +154,21 @@ public final class Grep4j {
 		}
 
 		/**
-		 * @param profiles
-		 * @return
+		 * Fluent mirror method: use this method to give more readability to the code.
+		 * 
+		 * @param List of profiles
+		 * @return same list of profiles
 		 */
 		public static List<Profile> on(List<Profile> profiles) {
 			return profiles;
 		}
 
 		/**
-		 * @param contextControls
-		 * @return
+		 * This method create an ImmutableList of context controls {@link ContextControl} 
+		 * and set this list to the {@link Grep4j} instance. 
+		 * 
+		 * @param List of contextControls
+		 * @return instance of this builder
 		 */
 		public Builder withContextControls(List<String> contextControls) {
 			grep4j.setContextControls(ImmutableList.copyOf(contextControls));
@@ -168,8 +176,10 @@ public final class Grep4j {
 		}
 
 		/**
+		 * This add a wildcard string to the instance of {@link Grep4j}
+		 * 
 		 * @param wildcard
-		 * @return
+		 * @return instance of this builder
 		 */
 		public Builder withWildcard(String wildcard) {
 			grep4j.setWildcard(wildcard);
@@ -177,7 +187,7 @@ public final class Grep4j {
 		}
 
 		/**
-		 * @return
+		 * @return the created instance of {@link Grep4j}
 		 */
 		public Grep4j build() {
 			return grep4j;

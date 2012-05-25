@@ -4,6 +4,9 @@ import static org.grep4j.core.Grep4j.Builder.grep;
 import static org.grep4j.core.Grep4j.Builder.on;
 import static org.grep4j.core.fixtures.ProfileFixtures.localProfile;
 import static org.grep4j.core.matchers.Grep4jMatchers.appears;
+import static org.grep4j.core.matchers.Grep4jMatchers.neverAppears;
+import static org.grep4j.core.matchers.Grep4jMatchers.atLeast;
+import static org.grep4j.core.matchers.Grep4jMatchers.atMost;
 import static org.grep4j.core.matchers.Grep4jMatchers.exactly;
 import static org.grep4j.core.matchers.GrepResultMatchers.containsExpression;
 import static org.grep4j.core.matchers.GrepResultMatchers.doesNotContainExpression;
@@ -63,6 +66,18 @@ public class WhenGrep4jStartedWithStringToSearchALocalProfile {
 
 	public void errorStringAppears2Times() {
 		assertThat("ERROR", appears(exactly(2).times(), on(profiles)));
+	}
+
+	public void errorStringAppearsAtMost2Times() {
+		assertThat("ERROR", appears(atMost(2).times(), on(profiles)));
+	}
+
+	public void errorStringAppearsAtLeast2Times() {
+		assertThat("ERROR", appears(atLeast(1).times(), on(profiles)));
+	}
+
+	public void error33StringneverAppears() {
+		assertThat("ERROR33", neverAppears(on(profiles)));
 	}
 
 }
