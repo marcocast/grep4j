@@ -8,6 +8,7 @@ import java.util.Set;
 import java.util.regex.Pattern;
 
 import org.grep4j.core.Grep4j;
+import org.grep4j.core.matchers.misc.GrepOccurrency;
 import org.grep4j.core.model.Profile;
 import org.grep4j.core.task.GrepResult;
 import org.hamcrest.Description;
@@ -18,27 +19,40 @@ import org.hamcrest.TypeSafeMatcher;
 public class GrepResultAppears extends TypeSafeMatcher<String> {
 
 	private final List<Profile> profiles;
-	private final int numberOfTimes;
+	private final GrepOccurrency occurrency;
 
-	public GrepResultAppears(int numberOfTimes, List<Profile> profiles) {
-		this.numberOfTimes = numberOfTimes;
+	public GrepResultAppears(GrepOccurrency occurrency, List<Profile> profiles) {
+		this.occurrency = occurrency;
 		this.profiles = profiles;
 	}
 
 	@Override
 	public boolean matchesSafely(String expression) {
-		Grep4j executer = grep(expression, on(profiles)).build();
-		Set<GrepResult> results = executer.execute().andGetResults();
+		
+		Grep4j grep4j = grep(expression, on(profiles)).build();
+		
+		Set<GrepResult> results = grep4j.execute().andGetResults();
+		
+		int actualOccurrences = calculateActualOccurrences(expression, results);
+		
+		return applyMatchingCriteriaFor(actualOccurrences);
+	}
 
+	private boolean applyMatchingCriteriaFor(int actualOccurrences) {
+		return occurrency.getOccurrencyType().valuate(actualOccurrences, occurrency.getExpectedOccurrencies());
+	}
+
+	private int calculateActualOccurrences(String expression,
+			Set<GrepResult> results) {
 		Pattern pattern = Pattern.compile(expression);
-		int totalTimes = 0;
-		for (GrepResult grepResult : results) {
-			java.util.regex.Matcher matcher = pattern.matcher(grepResult.getText());
+		int occurrences = 0;
+		for (GrepResult result : results) {
+			java.util.regex.Matcher matcher = pattern.matcher(result.getText());
 			while (matcher.find()) {
-				totalTimes++;
+				occurrences++;
 			}
 		}
-		return totalTimes == numberOfTimes;
+		return occurrences;
 	}
 
 	@Override
@@ -47,8 +61,8 @@ public class GrepResultAppears extends TypeSafeMatcher<String> {
 	}
 
 	@Factory
-	public static <T> Matcher<String> appears(int numberOfTimes, List<Profile> profiles) {
-		return new GrepResultAppears(numberOfTimes, profiles);
+	public static <T> Matcher<String> appears(GrepOccurrency occurrency, List<Profile> profiles) {
+		return new GrepResultAppears(occurrency, profiles);
 	}
 
 }
