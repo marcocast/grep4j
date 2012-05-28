@@ -1,9 +1,6 @@
 package org.grep4j.core.model;
 
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlType;
 
-@XmlType
 public class Profile {
 
 	private Integer id;
@@ -16,7 +13,6 @@ public class Profile {
 
 	private ServerDetails serverDetails;
 
-	@XmlAttribute
 	public String getName() {
 		return name;
 	}
@@ -49,7 +45,6 @@ public class Profile {
 		this.serverDetails = serverDetails;
 	}
 
-	@XmlAttribute
 	public Integer getId() {
 		return id;
 	}
