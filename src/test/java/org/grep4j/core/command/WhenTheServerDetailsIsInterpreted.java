@@ -4,6 +4,9 @@ import static org.grep4j.core.command.ServerDetailsInterpreter.getCommandExecuto
 import static org.grep4j.core.fixtures.ServerDetailsFixtures.localhostServerDetails;
 import static org.grep4j.core.fixtures.ServerDetailsFixtures.onetwosevenServerDetails;
 import static org.grep4j.core.fixtures.ServerDetailsFixtures.remoteServerDetails;
+import static org.grep4j.core.fluent.Dictionary.whenCalling;
+import static org.grep4j.core.fluent.Dictionary.with;
+import static org.grep4j.core.fluent.Dictionary.returned;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -15,14 +18,14 @@ import org.testng.annotations.Test;
 public class WhenTheServerDetailsIsInterpreted {
 
 	public void ifTheHostIsLocalhostALocalCommandExecutorShouldReturn() {
-		assertThat(getCommandExecutor(localhostServerDetails()), is(LocalCommandExecutor.class));
+		assertThat(whenCalling(getCommandExecutor(with(localhostServerDetails()))), is(returned(LocalCommandExecutor.class)));
 	}
 
 	public void ifTheHostIs127001ALocalCommandExecutorShouldReturn() {
-		assertThat(getCommandExecutor(onetwosevenServerDetails()), is(LocalCommandExecutor.class));
+		assertThat(whenCalling(getCommandExecutor(with(onetwosevenServerDetails()))), is(returned(LocalCommandExecutor.class)));
 	}
 
 	public void ifTheHostIsnotLocalAnSSHCommandExecutorShouldReturn() {
-		assertThat(getCommandExecutor(remoteServerDetails()), is(SshCommandExecutor.class));
+		assertThat(whenCalling(getCommandExecutor(with(remoteServerDetails()))), is(returned(SshCommandExecutor.class)));
 	}
 }
