@@ -1,16 +1,12 @@
 package org.grep4j.core.model;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlType;
 
-@XmlType
 public class ServerDetails {
 
 	private String host;
 	private String user;
 	private String password;
 
-	@XmlElement
 	public String getHost() {
 		return host;
 	}
