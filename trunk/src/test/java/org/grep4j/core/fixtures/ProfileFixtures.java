@@ -28,7 +28,7 @@ public class ProfileFixtures {
 	}
 	
 	public static Profile localGzProfile() {
-		String fileName = "localgz.txt.gz";
+		String fileName = "local.txt.gz";
 		URL url = ProfileFixtures.class.getClassLoader().getResource(fileName);
 		String resourcePath = url.getPath();
 		if (isWindows()) {
