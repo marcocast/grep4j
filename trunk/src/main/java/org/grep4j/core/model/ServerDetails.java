@@ -1,34 +1,69 @@
 package org.grep4j.core.model;
 
-
+/**
+ * Model class that contains details related to the Server where 
+ * the target file that needs to be grep is stored
+ * 
+ * @author marcocast
+ * 
+ */
 public class ServerDetails {
 
 	private String host;
 	private String user;
 	private String password;
-
-	public String getHost() {
-		return host;
-	}
-
+	
+	/**
+	 * The host of the server where the target file that needs to be grep is stored.
+	 * 
+	 * This can be an IP or an alias in case the alias is defined in the system properties.
+	 * In case of a local profile, simply enter "localhost" or "127.0.0.1"
+	 * 
+	 * @param host
+	 */
 	public void setHost(String host) {
 		this.host = host;
 	}
-
-	public String getUser() {
-		return user;
-	}
-
+	
+	/**
+	 * User needed to connect to remote machine
+	 * @param user
+	 */
 	public void setUser(String user) {
 		this.user = user;
 	}
-
-	public String getPassword() {
-		return password;
-	}
-
+	
+	/**
+	 * Password needed to connect to remote machine
+	 * @param password
+	 */
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	/**
+	 * The host of the server where the target file that needs to be grep is stored. 
+	 * This can be an IP or an alias in case the alias is defined in the system properties.
+	 * 
+	 * @return host
+	 */
+	public String getHost() {
+		return host;
+	}
+	
+	/**
+	 * @return the user needed to connect to remote machine
+	 */
+	public String getUser() {
+		return user;
+	}
+		
+	/**
+	 * 
+	 * @return the password needed to connect to remote machine
+	 */
+	public String getPassword() {
+		return password;
 	}
 
 	@Override

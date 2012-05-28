@@ -23,7 +23,6 @@ public class ProfileFixtures {
 		profile.setName("local");
 		profile.setFileLocation(resourcePath.replaceAll(fileName, ""));
 		profile.setFileName(fileName);
-		profile.setId(1);
 		profile.setServerDetails(localhostServerDetails());
 		return profile;
 	}
