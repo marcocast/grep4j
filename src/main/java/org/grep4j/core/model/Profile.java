@@ -1,9 +1,13 @@
 package org.grep4j.core.model;
 
-
+/**
+ * Model class that contains details related to the Profile.
+ * The profile represents a target file that needs to be grep
+ * 
+ * @author marcocast
+ *
+ */
 public class Profile {
-
-	private Integer id;
 
 	private String name;
 
@@ -12,7 +16,11 @@ public class Profile {
 	private String fileName;
 
 	private ServerDetails serverDetails;
-
+	
+	/**
+	 * Name identifier for this profile
+	 * @return
+	 */
 	public String getName() {
 		return name;
 	}
@@ -45,17 +53,9 @@ public class Profile {
 		this.serverDetails = serverDetails;
 	}
 
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
 	@Override
 	public String toString() {
-		return "Profile [id=" + id + ", name=" + name + ", fileLocation="
+		return "Profile [name=" + name + ", fileLocation="
 				+ fileLocation + ", fileName=" + fileName
 				+ ", serverDetails=" + serverDetails + "]";
 	}
@@ -64,7 +64,7 @@ public class Profile {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + id;
+		result = prime * result;
 		return result;
 	}
 
@@ -77,10 +77,6 @@ public class Profile {
 		if (getClass() != obj.getClass())
 			return false;
 		Profile other = (Profile) obj;
-		if (id != null && other.id != null) {
-			if (id.intValue() != other.id.intValue())
-				return false;
-		}
 		if (name != null && other.name != null) {
 			if (!name.equals(other.name)) {
 				return false;
