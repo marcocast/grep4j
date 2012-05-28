@@ -167,6 +167,8 @@ public final class Grep4j {
 
 		/**
 		 * This add a wildcard string to the instance of {@link Grep4j}
+		 * Example "*" it will be used together with the file name : server.log*
+		 * If a gz file is matching the server.log*, it will be grep as well.
 		 * 
 		 * @param wildcard
 		 * @return instance of this builder

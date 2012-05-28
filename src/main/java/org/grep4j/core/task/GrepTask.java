@@ -65,14 +65,13 @@ public class GrepTask implements Callable<List<GrepResult>> {
 		}
 
 		String filenames = commandExecutor.execute(ls).andReturnResult();
-
+		
 		matchingFiles.addAll(aListOf(filenames));
-
 	}
 
 	private void prepareGrepCommands() {
 		for (String filename : matchingFiles) {
-			AbstractGrepCommand grep;
+			AbstractGrepCommand grep;			
 			if (isGz(filename)) {
 				grep = new GzGrepCommand(grepRequest.getPattern(), filename);
 			} else {
