@@ -26,4 +26,19 @@ public class ProfileFixtures {
 		profile.setServerDetails(localhostServerDetails());
 		return profile;
 	}
+	
+	public static Profile localGzProfile() {
+		String fileName = "localgz.txt.gz";
+		URL url = ProfileFixtures.class.getClassLoader().getResource(fileName);
+		String resourcePath = url.getPath();
+		if (isWindows()) {
+			resourcePath = resourcePath.replaceAll(":", "");
+		}
+		Profile profile = new Profile();
+		profile.setName("local");
+		profile.setFileLocation(resourcePath.replaceAll(fileName, ""));
+		profile.setFileName(fileName);
+		profile.setServerDetails(localhostServerDetails());
+		return profile;
+	}
 }

@@ -5,6 +5,12 @@ import static org.grep4j.core.fluent.Dictionary.of;
 import java.util.Set;
 import java.util.regex.Pattern;
 
+/**
+ * This class contains the result of the grep in String formats.
+ * 
+ * @author marcocast
+ *
+ */
 public class GrepResult {
 
 	private final String profileName;
@@ -19,15 +25,24 @@ public class GrepResult {
 		this.fileName = fileName;
 		this.text = text;
 	}
-
+	
+	/** 
+	 * @return the profile name associated with this grep result
+	 */
 	public String getProfileName() {
 		return profileName;
 	}
-
+	
+	/** 
+	 * @return the file name associated with this grep result
+	 */
 	public String getFileName() {
 		return fileName;
 	}
-
+	
+	/** 
+	 * @return the text containing the result of the grep
+	 */
 	public String getText() {
 		return text;
 	}
