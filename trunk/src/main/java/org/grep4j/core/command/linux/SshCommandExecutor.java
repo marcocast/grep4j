@@ -13,7 +13,22 @@ import net.schmizz.sshj.transport.verification.PromiscuousVerifier;
 
 import org.grep4j.core.model.ServerDetails;
 
-public class SshCommandExecutor extends CommandExecutor{
+/**
+ * /**
+ * The SshCommandExecutor uses the  net.schmizz.sshj library to connect in remote boxes and execute the commands.
+ * 
+ * <ol>
+ * <li>Connection is established in the init method using the credentials in the {@link serverDetails}</li>
+ * <li>Opens a session channel as first thing in the execute method</li>
+ * <li>Execute a remote command from the opened session</li>
+ * <li>Close the opened session</li>
+ * <li>Disconnect the ssh client</li>
+ * </ol> 
+ * 
+ * @author Marco Castigliego
+ *
+ */
+public class SshCommandExecutor extends CommandExecutor {
 
 	private SSHClient sshClient;
 	private Session session = null;
@@ -24,21 +39,21 @@ public class SshCommandExecutor extends CommandExecutor{
 
 	@Override
 	public void init() {
-		connect();		
+		connect();
 	}
-	
+
 	@Override
 	public void quit() {
 		disconnect();
 	}
-	
+
 	private void connect() {
 		sshClient = new SSHClient();
 		sshClient.addHostKeyVerifier(new PromiscuousVerifier());
 		try {
 			if (!sshClient.isConnected()) {
 				sshClient.connect(serverDetails.getHost());
-				sshClient.authPassword(serverDetails.getUser(),	serverDetails.getPassword());
+				sshClient.authPassword(serverDetails.getUser(), serverDetails.getPassword());
 			}
 		} catch (IOException e) {
 			quit();
@@ -47,6 +62,7 @@ public class SshCommandExecutor extends CommandExecutor{
 		}
 	}
 
+	@Override
 	public CommandExecutor execute(LinuxCommand command) {
 		try {
 			startSession();
@@ -60,7 +76,6 @@ public class SshCommandExecutor extends CommandExecutor{
 
 		return this;
 	}
-
 
 	private void disconnect() {
 		if (sshClient.isConnected()) {

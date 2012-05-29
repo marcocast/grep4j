@@ -1,9 +1,10 @@
 package org.grep4j.core.model;
 
-import org.testng.annotations.Test;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
+
+import org.testng.annotations.Test;
 
 @Test
 public class ProfileTest {

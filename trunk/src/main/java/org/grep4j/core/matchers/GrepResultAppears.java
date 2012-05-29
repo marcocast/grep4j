@@ -1,8 +1,8 @@
 package org.grep4j.core.matchers;
 
 import static org.grep4j.core.Grep4j.Builder.grep;
-import static org.grep4j.core.fluent.Dictionary.on;
 import static org.grep4j.core.fluent.Dictionary.of;
+import static org.grep4j.core.fluent.Dictionary.on;
 import static org.grep4j.core.task.GrepResult.totalOccurrences;
 
 import java.util.List;
@@ -17,6 +17,13 @@ import org.hamcrest.Factory;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 
+/**
+ * Assert that the expression is present in the list of profiles provided for the frequency of times specified
+ * It will run {@link Grep4j} and verify the result
+ * 
+ * @author Marco Castigliego
+ *
+ */
 public class GrepResultAppears extends TypeSafeMatcher<String> {
 
 	private final List<Profile> profiles;
