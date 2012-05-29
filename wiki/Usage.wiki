@@ -1,0 +1,24 @@
+#Grep4j Usage
+
+= Usage =
+
+==Using Grep4j to grep Local or remote files==
+
+{{{
+Grep4j grep4j = grep(expression(), on(profiles()))
+  		.withContextControls(getContextControls())
+                .withWildcard(getWildcard())
+  		.build();
+grep4j.execute().andGetResults();
+
+}}}
+
+==Using Grep4j in your tests==
+
+
+{{{
+assertThat("fine", appears(exactly(3).times(), on(profiles)));
+assertThat("ERROR", appears(atMost(2).times(), on(profiles)));
+assertThat("ERROR", appears(atLeast(1).times(), on(profiles)));
+assertThat("ERROR33", neverAppears(on(profiles)));
+}}}
