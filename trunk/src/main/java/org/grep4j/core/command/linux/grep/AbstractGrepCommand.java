@@ -5,7 +5,7 @@ import org.grep4j.core.command.linux.LinuxCommand;
 public abstract class AbstractGrepCommand implements LinuxCommand {
 
 	protected static final String SPACE = " ";
-	protected static final String GREP_COMMAND = "grep";
+	protected static final String GREP_COMMAND = "egrep";
 
 	protected final String file;
 	protected final String expression;
