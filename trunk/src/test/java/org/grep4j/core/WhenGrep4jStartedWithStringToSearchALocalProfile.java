@@ -2,7 +2,6 @@ package org.grep4j.core;
 
 import static org.grep4j.core.Grep4j.Builder.grep;
 import static org.grep4j.core.fixtures.ProfileFixtures.localProfile;
-import static org.grep4j.core.fixtures.ProfileFixtures.localGzProfile;
 import static org.grep4j.core.fluent.Dictionary.on;
 import static org.grep4j.core.matchers.Grep4jMatchers.appears;
 import static org.grep4j.core.matchers.Grep4jMatchers.atLeast;
@@ -29,7 +28,7 @@ public class WhenGrep4jStartedWithStringToSearchALocalProfile {
 	private static final String STRING_TO_SEARCH = "ERROR";
 	private static final String KNOWN_PROFILE = "local";
 
-	private List<Profile> profiles = Arrays.asList(localProfile());
+	private final List<Profile> profiles = Arrays.asList(localProfile());
 
 	public void verifyExpressionToParse() {
 		Grep4j executer = grep(STRING_TO_SEARCH, on(profiles)).build();
@@ -53,13 +52,12 @@ public class WhenGrep4jStartedWithStringToSearchALocalProfile {
 		Set<GrepResult> results = grep4j.execute().andGetResults();
 		assertThat(results, doesNotContainExpression("3"));
 	}
-	
-	private void gzStringsShouldBeFoundOnTheResult() {
+
+	public void gzStringsShouldBeFoundOnTheResult() {
 		Grep4j grep4j = grep("ERROR", on(profiles)).withWildcard("*").build();
 		Set<GrepResult> results = grep4j.execute().andGetResults();
 		assertThat(results, containsExpression("GZ"));
 	}
-
 
 	public void fineStringAppears3Times() {
 		assertThat("fine", appears(exactly(3).times(), on(profiles)));
