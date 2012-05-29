@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import net.schmizz.sshj.common.IOUtils;
 import net.schmizz.sshj.connection.ConnectionException;
 import net.schmizz.sshj.transport.TransportException;
 
@@ -26,6 +27,7 @@ public class LocalCommandExecutor extends CommandExecutor {
 	public void quit() {
 	}
 
+	@Override
 	public CommandExecutor execute(LinuxCommand command) {
 		try {
 
@@ -40,21 +42,15 @@ public class LocalCommandExecutor extends CommandExecutor {
 
 	private void executeCommand(LinuxCommand command)
 			throws ConnectionException, TransportException, IOException {
+		String[] commands = { "bash", "-c", command.getCommandToExecute() };
 		InputStreamReader isr = null;
 		BufferedReader br = null;
 		try {
 
 			Process p = Runtime.getRuntime()
-					.exec(command.getCommandToExecute());
-			isr = new InputStreamReader(p.getInputStream());
-			br = new BufferedReader(isr);
-			StringBuilder resultBuilder = new StringBuilder();
-			String s = null;
-			while ((s = br.readLine()) != null) {
-				resultBuilder.append(s);
-				resultBuilder.append(lineSeparator);
-			}
-			result = resultBuilder.toString();
+					.exec(commands);
+			p.waitFor();
+			result = IOUtils.readFully((p.getInputStream())).toString();
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		} finally {
