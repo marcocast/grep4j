@@ -25,21 +25,21 @@ public class GrepResult {
 		this.fileName = fileName;
 		this.text = text;
 	}
-	
+
 	/** 
 	 * @return the profile name associated with this grep result
 	 */
 	public String getProfileName() {
 		return profileName;
 	}
-	
+
 	/** 
 	 * @return the file name associated with this grep result
 	 */
 	public String getFileName() {
 		return fileName;
 	}
-	
+
 	/** 
 	 * @return the text containing the result of the grep
 	 */
@@ -50,13 +50,15 @@ public class GrepResult {
 	/**
 	 * Given an expression, it counts how many time the patter is found in the result
 	 * Example: getOccourrences(of(expression));
+	 * This method will ignore the 1st and last single quotes in order to compile regex:
+	 * expression.replaceAll("(^')|('$)", "")
 	 * 
 	 * @param expression
 	 * @return total number of time the patter is found
 	 */
 	public int getOccourrences(String expression) {
 		int occurrences = 0;
-		Pattern pattern = Pattern.compile(expression);
+		Pattern pattern = Pattern.compile(expression.replaceAll("(^')|('$)", ""));
 		java.util.regex.Matcher matcher = pattern.matcher(this.getText());
 		while (matcher.find()) {
 			occurrences++;

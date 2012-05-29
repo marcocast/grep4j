@@ -145,6 +145,9 @@ public final class Grep4j {
 		 * This creates an new instance of {@link Grep4j} and return an instance of this builder.
 		 * It transform the List of profiles to an ImmutableList of profiles.
 		 * 
+		 * Grep4j supports Regex. All the regular expressions must be passed within single quotes
+		 * Example : 'CUSTOMER(.*)UPDATE' to grep for all the customers * updates
+		 * 
 		 * @param expression
 		 * @param profiles
 		 * @return Grep4j.Builder
