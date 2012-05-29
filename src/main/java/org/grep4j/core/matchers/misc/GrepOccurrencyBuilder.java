@@ -1,5 +1,18 @@
 package org.grep4j.core.matchers.misc;
 
+/**
+ * Builder used to promote a fluent api.
+ * Example:
+ * <pre>
+ * assertThat("fine", appears(exactly(3).times(), on(profiles))); 
+ * assertThat("fine", appears(exactly(3).hundredTimes(), on(profiles)));
+ * assertThat("fine", appears(exactly(3).thousandTimes(), on(profiles)));
+ * assertThat("fine", appears(exactly(3).millionTimes(), on(profiles)));
+ * </pre>
+ * 
+ * @author Marco Castigliego
+ *
+ */
 public class GrepOccurrencyBuilder {
 
 	private final GrepOccurrency grepOccurrency;

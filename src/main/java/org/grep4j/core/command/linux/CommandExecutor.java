@@ -11,12 +11,16 @@ public abstract class CommandExecutor {
 	public CommandExecutor(ServerDetails serverDetails) {
 		this.serverDetails = serverDetails;
 	}
-	
+
 	public abstract void init();
+
 	public abstract void quit();
 
 	public abstract CommandExecutor execute(LinuxCommand command);
-	
+
+	/**
+	 * @return the result of the command in a String format
+	 */
 	public String andReturnResult() {
 		return result;
 	}

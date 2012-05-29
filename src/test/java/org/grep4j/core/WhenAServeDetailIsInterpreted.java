@@ -1,5 +1,8 @@
 package org.grep4j.core;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+
 import org.grep4j.core.command.ServerDetailsInterpreter;
 import org.grep4j.core.command.linux.CommandExecutor;
 import org.grep4j.core.command.linux.LocalCommandExecutor;
@@ -8,8 +11,6 @@ import org.grep4j.core.model.ServerDetails;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
 
 
 public class WhenAServeDetailIsInterpreted {

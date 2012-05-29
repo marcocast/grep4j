@@ -17,6 +17,14 @@ import com.google.common.collect.ImmutableList;
 public class ServerDetailsInterpreter {
 	private static final List<String> localhostAliases = ImmutableList.<String> builder().add("localhost", "127.0.0.1").build();
 
+	/**
+	 * Based on the server details, it returns 
+	 * {@link LocalCommandExecutor} if the host is "localhost" or "127.0.0.1" 
+	 * otherwise return {@link SshCommandExecutor}
+	 * 
+	 * @param serverDetails
+	 * @return {@link CommandExecutor}
+	 */
 	public static CommandExecutor getCommandExecutor(ServerDetails serverDetails) {
 		CommandExecutor commandExecutor = null;
 		if (localhostAliases.contains(serverDetails.getHost().toLowerCase())) {

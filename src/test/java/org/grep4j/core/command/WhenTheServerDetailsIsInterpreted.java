@@ -4,9 +4,9 @@ import static org.grep4j.core.command.ServerDetailsInterpreter.getCommandExecuto
 import static org.grep4j.core.fixtures.ServerDetailsFixtures.localhostServerDetails;
 import static org.grep4j.core.fixtures.ServerDetailsFixtures.onetwosevenServerDetails;
 import static org.grep4j.core.fixtures.ServerDetailsFixtures.remoteServerDetails;
+import static org.grep4j.core.fluent.Dictionary.returned;
 import static org.grep4j.core.fluent.Dictionary.whenCalling;
 import static org.grep4j.core.fluent.Dictionary.with;
-import static org.grep4j.core.fluent.Dictionary.returned;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 

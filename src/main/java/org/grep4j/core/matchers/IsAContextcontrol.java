@@ -6,8 +6,14 @@ import org.hamcrest.Factory;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 
+/**
+ * Check that the String is a {@link ContextControl}
+ * @author Marco Castigliego
+ *
+ */
 public class IsAContextcontrol extends TypeSafeMatcher<String> {
 
+	@Override
 	public void describeTo(Description description) {
 		description.appendText("not a context control");
 	}

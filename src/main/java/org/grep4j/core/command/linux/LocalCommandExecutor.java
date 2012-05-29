@@ -10,10 +10,14 @@ import net.schmizz.sshj.transport.TransportException;
 
 import org.grep4j.core.model.ServerDetails;
 
+/**
+ * The LocalCommandExecutor uses the java.lang.Process to execute the commands.
+ * Example of local command: bash -c ls /tmp/*.txt 
+ * 
+ * @author Marco Castigliego
+ *
+ */
 public class LocalCommandExecutor extends CommandExecutor {
-
-	private static final String lineSeparator = System
-			.getProperty("line.separator");
 
 	public LocalCommandExecutor(ServerDetails serverDetails) {
 		super(serverDetails);

@@ -1,6 +1,12 @@
 package org.grep4j.core.command.linux.grep;
 
-
+/**
+ * GzGrepCommand is a LinuxCommand object that build the command to grep compressed files.
+ * Example: "gunzip -c /tmp/server.log.gz | grep ERROR  
+ * 
+ * @author Marco Castigliego
+ *
+ */
 public class GzGrepCommand extends AbstractGrepCommand {
 
 	private static final String GUNZIP = "gunzip";

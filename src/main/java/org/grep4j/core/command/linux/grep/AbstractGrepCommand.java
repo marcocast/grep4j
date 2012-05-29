@@ -13,12 +13,20 @@ public abstract class AbstractGrepCommand implements LinuxCommand {
 
 	protected StringBuilder command;
 
+	/**
+	 * @param expression to search
+	 * @param file to grep
+	 */
 	public AbstractGrepCommand(String expression, String file) {
 		this.expression = expression;
 		this.file = file;
 		this.command = new StringBuilder();
 	}
 
+	/**
+	 * {@see ContextControl} 
+	 * @param contextControls
+	 */
 	public void setContextControls(String contextControls) {
 		this.contextControls = contextControls;
 	}
@@ -30,6 +38,9 @@ public abstract class AbstractGrepCommand implements LinuxCommand {
 		}
 	}
 
+	/**
+	 * @return the file to grep
+	 */
 	public String getFile() {
 		return file;
 	}

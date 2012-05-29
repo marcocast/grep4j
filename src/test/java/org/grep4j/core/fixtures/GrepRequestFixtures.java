@@ -1,7 +1,7 @@
 package org.grep4j.core.fixtures;
 
-import static org.grep4j.core.fixtures.ProfileFixtures.localProfile;
 import static org.grep4j.core.fixtures.ProfileFixtures.localGzProfile;
+import static org.grep4j.core.fixtures.ProfileFixtures.localProfile;
 
 import org.grep4j.core.task.GrepRequest;
 

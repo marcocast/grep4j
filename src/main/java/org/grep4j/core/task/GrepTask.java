@@ -13,6 +13,21 @@ import org.grep4j.core.command.linux.grep.GzGrepCommand;
 import org.grep4j.core.command.linux.grep.SimpleGrepCommand;
 import org.grep4j.core.command.linux.ls.LsCommand;
 
+/**
+ * Callable class use to run CommandExecutors.
+ * 
+ * When called:
+ * <ol>
+ * <li>initialise the commandExecutor</li>
+ * <li>Use the {@link LsCommand} to create a list of files in the case there is a wildcard. Example server.log* can return more files like server.log, server.log.gz,etc </li>
+ * <li>Prepare the grep commands ({@link GzGrepCommand} for compressed files and {@link SimpleGrepCommand} for not compressed files)</li>
+ * <li>Execute each grep command</li>
+ * <li>quit the commandExecutor</li>
+ * </ol> 
+ * 
+ * @author Marco Castigliego
+ *
+ */
 public class GrepTask implements Callable<List<GrepResult>> {
 
 	private final GrepRequest grepRequest;
@@ -65,13 +80,13 @@ public class GrepTask implements Callable<List<GrepResult>> {
 		}
 
 		String filenames = commandExecutor.execute(ls).andReturnResult();
-		
+
 		matchingFiles.addAll(aListOf(filenames));
 	}
 
 	private void prepareGrepCommands() {
 		for (String filename : matchingFiles) {
-			AbstractGrepCommand grep;			
+			AbstractGrepCommand grep;
 			if (isGz(filename)) {
 				grep = new GzGrepCommand(grepRequest.getPattern(), filename);
 			} else {

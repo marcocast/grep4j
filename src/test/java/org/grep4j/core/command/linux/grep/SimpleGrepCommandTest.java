@@ -1,8 +1,9 @@
 package org.grep4j.core.command.linux.grep;
 
-import org.testng.annotations.Test;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+
+import org.testng.annotations.Test;
 
 public class SimpleGrepCommandTest extends GrepCommandTest {
 

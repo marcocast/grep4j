@@ -1,6 +1,11 @@
 package org.grep4j.core.fluent;
 
-
+/**
+ * Utility class to group all the fluent mirror methods that help the readability of the code.
+ * 
+ * @author Marco Castigliego
+ *
+ */
 public class Dictionary {
 	private Dictionary() {
 	}
