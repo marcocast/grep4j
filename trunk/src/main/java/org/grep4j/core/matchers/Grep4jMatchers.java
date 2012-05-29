@@ -18,8 +18,14 @@ public class Grep4jMatchers {
 	/**
 	 * Assert that the expression is present in the list of profiles provided for the frequency of times specified
 	 * Example usage:
-	 * 
+	 * <pre>
 	 * assertThat("ID12354", appears(exactly(2).times(), on(profiles)));
+	 * </pre>
+	 * Grep4j supports Regex. All the regular expressions must be passed within single quotes
+	 * Example (this return <code>true</code> against a file containing the line : "customer Marco(id=12345) has been updated successfully"):
+	 * <pre>
+	 * assertThat("'customer(.*)updated'", appears(exactly(1).times(), on(profiles)));
+	 * </pre>
 	 * 
 	 * @param frequency of occurrences @see {@link GrepOccurrencyType}  
 	 * @param profiles where to search for occurrences
@@ -34,9 +40,15 @@ public class Grep4jMatchers {
 	/**
 	 * Assert that the expression is not present in the list of profiles provided
 	 * Example usage:
-	 * 
+	 * <pre>
 	 * assertThat("ID12354", neverAppears(on(profiles)));
-	 * 
+	 * </pre>
+	 * Grep4j supports Regex. All the regular expressions must be passed within single quotes
+	 * Example: (this return <code>true</code> against a file not containing any line with
+	 * the word 'customer' first and the word 'updated' then in the same line
+	 * <pre>
+	 * assertThat("'customer(.*)updated'", neverAppears(on(profiles)));
+	 * </pre>
 	 * @param profiles where to search for occurrences
 	 * @return matcher {@link GrepResultAppears}
 	 */
@@ -48,9 +60,9 @@ public class Grep4jMatchers {
 	/**
 	 * Assert that the expression is present in the list of profiles provided
 	 * Example usage:
-	 * 
+	 * <pre>
 	 * assertThat("ID12354", appears(on(profiles)));
-	 * 
+	 * </pre>
 	 * @param profiles where to search for occurrences
 	 * @return matcher {@link GrepResultAppears}
 	 */

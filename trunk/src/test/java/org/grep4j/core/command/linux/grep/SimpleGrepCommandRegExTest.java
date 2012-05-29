@@ -5,7 +5,7 @@ import static org.junit.Assert.assertThat;
 
 import org.testng.annotations.Test;
 
-public class SimpleGrepCommandTest extends GrepCommandTest {
+public class SimpleGrepCommandRegExTest extends GrepCommandTest {
 
 	@Test
 	public void testGetFile() {
