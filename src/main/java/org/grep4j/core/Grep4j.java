@@ -106,6 +106,7 @@ public final class Grep4j {
 	}
 
 	protected void prepareCommandRequests() {
+		grepRequests.clear();
 		for (Profile profile : profiles) {
 			GrepRequest grepRequest = new GrepRequest(expression, profile);
 			if (contextControls != null && !contextControls.isEmpty()) {
