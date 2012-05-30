@@ -16,17 +16,17 @@ import org.grep4j.core.task.GrepTask;
 import com.google.common.collect.ImmutableList;
 
 /**
- * Base Class for using the Grep4j api. Usage example:
+ * Entry Class for using the Grep4j api. Usage example:
  * 
  * <pre>
  * Grep4j grep4j = grep(expression(), on(profiles()))
  * 		.withContextControls(getContextControls()).withWildcard(getWildcard())
  * 		.build();
  * grep4j.execute().andGetResults();
- * 
  * </pre>
  * <p>
- * Based on http://code.google.com/p/grep4j/
+ * 
+ * Reference: http://code.google.com/p/grep4j/
  * 
  * @author Marco Castigliego
  * @author Giovanni Gargiulo
@@ -61,9 +61,9 @@ public final class Grep4j {
 	/**
 	 * This method will:
 	 * <ol>
-	 * <li>Verify the input checking that the mandatory fields have been populated</li>
-	 * <li>Create the {@link GrepRequest} to be executed, based on the inputs passed</li>
-	 * <li>Execute the {@link GrepRequest} for all the {@link Profile} passed</li>
+	 * <li>Verify the input checking that mandatory fields have been correctly populated</li>
+	 * <li>Prepare {@link GrepRequest}s to be executed, based on the inputs passed</li>
+	 * <li>Execute {@link GrepRequest} for each valid {@link Profile}</li>
 	 * </ol>
 	 */
 	public Grep4j execute() {
@@ -74,7 +74,7 @@ public final class Grep4j {
 	}
 
 	/**
-	 * @return a Set of {@link GrepResult}
+	 * @return a Set of {@link GrepResult}s
 	 */
 	public Set<GrepResult> andGetResults() {
 		return results;
@@ -135,18 +135,21 @@ public final class Grep4j {
 	}
 
 	/**
-	 * Class used to build {@link Grep4j}.
+	 * Facility Builder Class for building {@link Grep4j}
 	 */
 	public static class Builder {
 
 		private final Grep4j grep4j;
 
 		/**
-		 * This creates an new instance of {@link Grep4j} and return an instance of this builder.
-		 * It transform the List of profiles to an ImmutableList of profiles.
 		 * 
-		 * Grep4j supports Regex. All the regular expressions must be passed within single quotes
-		 * Example : 'CUSTOMER(.*)UPDATE' to grep for all the customers * updates
+		 * This method is the entry point for the {@link Grep4j} Builder. 
+		 * It initialises a new {@link Grep4j}.
+		 * 
+		 * It also protects the List of profiles wrapping them into an ImmutableList.
+		 * 
+		 * Grep4j supports plain text as well as RegEx. Regular expressions must be passed within single quotes
+		 * Example : 'CUSTOMER(.*)UPDATE' will grep for all the customers * updates
 		 * 
 		 * @param expression
 		 * @param profiles
@@ -157,8 +160,8 @@ public final class Grep4j {
 		}
 
 		/**
-		 * This method create an ImmutableList of context controls {@link ContextControl} 
-		 * and set this list to the {@link Grep4j} instance. 
+		 * This method creates an ImmutableList of context controls {@link ContextControl} 
+		 * and set it to the {@link Grep4j} instance. 
 		 * 
 		 * @param List of contextControls
 		 * @return instance of this builder
@@ -169,7 +172,7 @@ public final class Grep4j {
 		}
 
 		/**
-		 * This add a wildcard string to the instance of {@link Grep4j}
+		 * This method adds a wildcard-ed string to the instance of {@link Grep4j}
 		 * Example "*" it will be used together with the file name : server.log*
 		 * If a gz file is matching the server.log*, it will be grep as well.
 		 * 
