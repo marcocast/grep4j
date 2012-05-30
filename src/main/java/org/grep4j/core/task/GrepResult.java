@@ -6,7 +6,7 @@ import java.util.Set;
 import java.util.regex.Pattern;
 
 /**
- * This class contains the result of the grep in String formats.
+ * This class contains the result of the grep in String format.
  * 
  * @author marcocast
  *
@@ -48,7 +48,7 @@ public class GrepResult {
 	}
 
 	/**
-	 * Given an expression, it counts how many time the patter is found in the result
+	 * Given an expression, it counts how many times the pattern is found in the result
 	 * Example: getOccourrences(of(expression));
 	 * This method will ignore the 1st and last single quotes in order to compile regex:
 	 * expression.replaceAll("(^')|('$)", "")
@@ -67,7 +67,7 @@ public class GrepResult {
 	}
 
 	/**
-	 * Given an expression and a set of {@link GrepResult}, it counts how many time the patter is found in all the results
+	 * Given an expression and a set of {@link GrepResult}, it counts how many times the pattern is found in all the results
 	 * Example: totalOccurrences(of(expression), on(results));
 	 * 
 	 * @param expression

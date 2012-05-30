@@ -14,18 +14,19 @@ import org.grep4j.core.command.linux.grep.SimpleGrepCommand;
 import org.grep4j.core.command.linux.ls.LsCommand;
 
 /**
- * Callable class use to run CommandExecutors.
+ * Callable class used to run CommandExecutors.
  * 
  * When called:
  * <ol>
- * <li>initialise the commandExecutor</li>
- * <li>Use the {@link LsCommand} to create a list of files in the case there is a wildcard. Example server.log* can return more files like server.log, server.log.gz,etc </li>
- * <li>Prepare the grep commands ({@link GzGrepCommand} for compressed files and {@link SimpleGrepCommand} for not compressed files)</li>
- * <li>Execute each grep command</li>
- * <li>quit the commandExecutor</li>
+ * <li>Initialises the commandExecutor</li>
+ * <li>Uses the {@link LsCommand} to create a list of files in case a wildcard is used. For instance using server.log* can return more files such as server.log, server.log.gz, etc</li>
+ * <li>Prepares grep commands ({@link GzGrepCommand} for compressed archives and {@link SimpleGrepCommand} for plain text ones)</li>
+ * <li>Executes each grep command</li>
+ * <li>Releases commandExecutor resources</li>
  * </ol> 
  * 
  * @author Marco Castigliego
+ * @author Giovanni Gargiulo
  *
  */
 public class GrepTask implements Callable<List<GrepResult>> {
