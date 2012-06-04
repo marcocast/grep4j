@@ -14,7 +14,7 @@ import org.grep4j.core.command.linux.grep.SimpleGrepCommand;
 import org.grep4j.core.command.linux.ls.LsCommand;
 
 /**
- * Callable class used to run CommandExecutors.
+ * Callable class used to run {@link CommandExecutor}s.
  * 
  * When called:
  * <ol>

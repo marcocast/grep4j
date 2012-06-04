@@ -1,11 +1,10 @@
 package org.grep4j.core.model;
 
 /**
- * Model class that contains details related to the Server where 
- * the target file that needs to be grep is stored
+ * Model class containing details of the server where the target file is stored.
  * 
- * @author marcocast
- * 
+ * @author Giovanni Gargiulo 
+ * @author Marco Castigliego
  */
 public class ServerDetails {
 
@@ -14,10 +13,11 @@ public class ServerDetails {
 	private String password;
 	
 	/**
-	 * The host of the server where the target file that needs to be grep is stored.
+	 * The hostname of the server where the target file is stored.
 	 * 
-	 * This can be an IP or an alias in case the alias is defined in the system properties.
-	 * In case of a local profile, simply enter "localhost" or "127.0.0.1"
+	 * This can be either an IP or proper hostname.
+	 * 
+	 * In case of a local server, the hostname has to be either "localhost" or "127.0.0.1"
 	 * 
 	 * @param host
 	 */
@@ -26,7 +26,7 @@ public class ServerDetails {
 	}
 	
 	/**
-	 * User needed to connect to remote machine
+	 * Username required to connect to remote machine
 	 * @param user
 	 */
 	public void setUser(String user) {
@@ -34,7 +34,7 @@ public class ServerDetails {
 	}
 	
 	/**
-	 * Password needed to connect to remote machine
+	 * Password required to connect to remote machine
 	 * @param password
 	 */
 	public void setPassword(String password) {
@@ -42,8 +42,7 @@ public class ServerDetails {
 	}
 	
 	/**
-	 * The host of the server where the target file that needs to be grep is stored. 
-	 * This can be an IP or an alias in case the alias is defined in the system properties.
+	 * The host of the server where the target file is stored. 
 	 * 
 	 * @return host
 	 */
@@ -52,7 +51,7 @@ public class ServerDetails {
 	}
 	
 	/**
-	 * @return the user needed to connect to remote machine
+	 * @return the user required to connect to remote machine
 	 */
 	public String getUser() {
 		return user;
@@ -60,7 +59,7 @@ public class ServerDetails {
 		
 	/**
 	 * 
-	 * @return the password needed to connect to remote machine
+	 * @return the password required to connect to remote machine
 	 */
 	public String getPassword() {
 		return password;

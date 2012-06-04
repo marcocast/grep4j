@@ -1,8 +1,10 @@
 package org.grep4j.core.command.linux.grep;
 
+import org.grep4j.core.command.linux.LinuxCommand;
+
 /**
- * SimpleGrepCommand is a LinuxCommand object that build the command to grep not compressed files.
- * Example: "grep ERROR /tmp/server.log.gz"   
+ * {@link SimpleGrepCommand} is a {@link LinuxCommand} object that build the command to grep not compressed files.
+ * Example: "grep ERROR /tmp/server.log"   
  * 
  * @author Marco Castigliego
  *

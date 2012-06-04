@@ -8,7 +8,8 @@ import java.util.regex.Pattern;
 /**
  * This class contains the result of the grep in String format.
  * 
- * @author marcocast
+ * @author Marco Castigliego
+ * @author Giovanni Gargiulo
  *
  */
 public class GrepResult {

@@ -9,6 +9,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import org.grep4j.core.model.Profile;
+import org.grep4j.core.options.ExtraLinesOption;
 import org.grep4j.core.task.GrepRequest;
 import org.grep4j.core.task.GrepResult;
 import org.grep4j.core.task.GrepTask;
@@ -16,7 +17,7 @@ import org.grep4j.core.task.GrepTask;
 import com.google.common.collect.ImmutableList;
 
 /**
- * Entry Class for using the Grep4j api. Usage example:
+ * Entry Class for using the Grep4j API. Usage example:
  * 
  * <pre>
  * Grep4j grep4j = grep(expression(), on(profiles()))
@@ -105,7 +106,7 @@ public final class Grep4j {
 		}
 	}
 
-	protected void prepareCommandRequests() {
+	void prepareCommandRequests() {
 		grepRequests.clear();
 		for (Profile profile : profiles) {
 			GrepRequest grepRequest = new GrepRequest(expression, profile);
@@ -119,19 +120,19 @@ public final class Grep4j {
 		}
 	}
 
-	protected String getExpression() {
+	String getExpression() {
 		return expression;
 	}
 
-	protected List<GrepRequest> getGrepRequests() {
+	List<GrepRequest> getGrepRequests() {
 		return grepRequests;
 	}
 
-	protected List<String> getContextControls() {
+	List<String> getContextControls() {
 		return contextControls;
 	}
 
-	protected String getWildcard() {
+	String getWildcard() {
 		return wildcard;
 	}
 
@@ -161,7 +162,7 @@ public final class Grep4j {
 		}
 
 		/**
-		 * This method creates an ImmutableList of context controls {@link ContextControl} 
+		 * This method creates an ImmutableList of context controls {@link ExtraLinesOption} 
 		 * and set it to the {@link Grep4j} instance. 
 		 * 
 		 * @param List of contextControls

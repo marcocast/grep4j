@@ -10,11 +10,12 @@ import org.grep4j.core.model.ServerDetails;
 import com.google.common.collect.ImmutableList;
 
 /**
- * Class used to understand if a command has to be run in remote/local and possibly in Linux or windows based on the server Details 
- * @author marcocast
- *
+ * Facility to detect if the Server is either remote or local.
+ *  
+ * @author Marco Castigliego
  */
 public class ServerDetailsInterpreter {
+	
 	private static final List<String> localhostAliases = ImmutableList.<String> builder().add("localhost", "127.0.0.1").build();
 
 	/**

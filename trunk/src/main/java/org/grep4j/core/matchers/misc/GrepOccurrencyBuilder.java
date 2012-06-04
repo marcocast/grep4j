@@ -1,7 +1,7 @@
 package org.grep4j.core.matchers.misc;
 
 /**
- * Builder used to promote a fluent api.
+ * Builder used to provide a fluent api.
  * Example:
  * <pre>
  * assertThat("fine", appears(exactly(3).times(), on(profiles))); 
@@ -10,6 +10,7 @@ package org.grep4j.core.matchers.misc;
  * assertThat("fine", appears(exactly(3).millionTimes(), on(profiles)));
  * </pre>
  * 
+ * @author Giovanni Gargiulo 
  * @author Marco Castigliego
  *
  */

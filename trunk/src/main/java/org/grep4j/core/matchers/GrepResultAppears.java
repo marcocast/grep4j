@@ -18,10 +18,12 @@ import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 
 /**
- * Assert that the expression is present in the list of profiles provided for the frequency of times specified
+ * Assert that the matching expression is present the number of times specified as frequency field in the the provided profiles
+
  * It will run {@link Grep4j} and verify the result
  * 
  * @author Marco Castigliego
+ * @author Giovanni Gargiulo
  *
  */
 public class GrepResultAppears extends TypeSafeMatcher<String> {

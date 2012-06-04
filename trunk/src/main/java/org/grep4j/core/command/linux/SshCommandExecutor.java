@@ -14,18 +14,18 @@ import net.schmizz.sshj.transport.verification.PromiscuousVerifier;
 import org.grep4j.core.model.ServerDetails;
 
 /**
- * /**
- * The SshCommandExecutor uses the  net.schmizz.sshj library to connect in remote boxes and execute the commands.
+ * The SshCommandExecutor uses the net.schmizz.sshj library to execute remote commands.
  * 
  * <ol>
- * <li>Connection is established in the init method using the credentials in the {@link serverDetails}</li>
- * <li>Opens a session channel as first thing in the execute method</li>
- * <li>Execute a remote command from the opened session</li>
- * <li>Close the opened session</li>
- * <li>Disconnect the ssh client</li>
+ * <li>Connection is established in the init method using credentials in the {@link serverDetails}</li>
+ * <li>Opens a session channel</li>
+ * <li>Execute a command on the session</li>
+ * <li>Closes the session</li>
+ * <li>Disconnects</li>
  * </ol> 
  * 
  * @author Marco Castigliego
+ * @author Giovanni Gargiulo
  *
  */
 public class SshCommandExecutor extends CommandExecutor {

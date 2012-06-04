@@ -2,6 +2,12 @@ package org.grep4j.core.command.linux;
 
 import org.grep4j.core.model.ServerDetails;
 
+/**
+ * Base class for executing commands against a Server 
+ * 
+ * @author Marco Castigliego
+ * @author Giovanni Gargiulo
+ */
 public abstract class CommandExecutor {
 
 	protected final ServerDetails serverDetails;

@@ -1,10 +1,13 @@
 package org.grep4j.core.model;
 
 /**
- * Model class that contains details related to the Profile. The profile
- * represents a target file that needs to be grep
+ * Model class representing a file that will be the target of the grep command.
  * 
- * @author marcocast
+ * The Server Details class attributes will specify how to access the file
+ * (either local file or credentials for accessing a remote machine)
+ * 
+ * @author Giovanni Gargiulo
+ * @author Marco Castigliego
  * 
  */
 public class Profile {
@@ -20,7 +23,8 @@ public class Profile {
 	/**
 	 * String unique identifier for this profile
 	 * 
-	 * @param profile name
+	 * @param profile
+	 *            name
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -29,26 +33,26 @@ public class Profile {
 	/**
 	 * The file location is the absolute path of where the file to grep exists.
 	 * Example: "/opt/jboss/server/log/"
-	 *  
+	 * 
 	 * The last "/" is mandatory
 	 * 
-	 * @param file location
+	 * @param file
+	 *            location
 	 */
 	public void setFileLocation(String fileLocation) {
 		this.fileLocation = fileLocation;
 	}
-	
+
 	/**
-	 * The file name that needs to be grep
-	 * Example: server.log
+	 * The file name that needs to be grep Example: server.log
 	 * 
-	 * @param file name
+	 * @param file
+	 *            name
 	 */
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
 	}
 
-	
 	/**
 	 * The {@link ServerDetails} needed to connect to the remote or local server
 	 * 
@@ -57,7 +61,7 @@ public class Profile {
 	public void setServerDetails(ServerDetails serverDetails) {
 		this.serverDetails = serverDetails;
 	}
-	
+
 	/**
 	 * String unique identifier for this profile
 	 * 
@@ -66,7 +70,7 @@ public class Profile {
 	public String getName() {
 		return name;
 	}
-	
+
 	/**
 	 * Name unique identifier for this profile
 	 * 
@@ -84,9 +88,10 @@ public class Profile {
 	public String getFileLocation() {
 		return fileLocation;
 	}
-		
-	/** 
-	 * @return the {@link ServerDetails} needed to connect to the remote or local server
+
+	/**
+	 * @return the {@link ServerDetails} needed to connect to the remote or
+	 *         local server
 	 */
 	public ServerDetails getServerDetails() {
 		return serverDetails;

@@ -10,13 +10,14 @@ import org.hamcrest.Matcher;
 
 /**
  * Facade class for all the core matchers
+ * 
  * @author Marco Castigliego
  * @author Giovanni Gargiulo
  */
 public class Grep4jMatchers {
 
 	/**
-	 * Assert that the expression is present in the list of profiles provided for the frequency of times specified
+	 * Assert that the matching expression is present the number of times specified as frequency field in the the provided profiles
 	 * Example usage:
 	 * <pre>
 	 * assertThat("ID12354", appears(exactly(2).times(), on(profiles)));
@@ -38,7 +39,7 @@ public class Grep4jMatchers {
 	}
 
 	/**
-	 * Assert that the expression is not present in the list of profiles provided
+	 * Assert that the matching expression is not present in the provided profiles
 	 * Example usage:
 	 * <pre>
 	 * assertThat("ID12354", neverAppears(on(profiles)));
@@ -58,7 +59,7 @@ public class Grep4jMatchers {
 	}
 
 	/**
-	 * Assert that the expression is present in the list of profiles provided
+	 * Assert that the matching expression is present at least once
 	 * Example usage:
 	 * <pre>
 	 * assertThat("ID12354", appears(on(profiles)));
@@ -72,7 +73,7 @@ public class Grep4jMatchers {
 	}
 
 	/**
-	 * Use this if you want to test that the pattern appears in the profiles exactly (value == threshold) x times
+	 * To be used in case the matching expression has to appear exactly (value == threshold) x times
 	 * @param times
 	 * @return {@link GrepOccurrencyBuilder}
 	 */
@@ -81,7 +82,7 @@ public class Grep4jMatchers {
 	}
 
 	/**
-	 * Use this if you want to test that the pattern appears in the profiles at least (value >=threshold) x times
+	 * To be used in case the matching expression has to appear at least (value >=threshold) x times
 	 * @param times
 	 * @return {@link GrepOccurrencyBuilder}
 	 */
@@ -90,7 +91,7 @@ public class Grep4jMatchers {
 	}
 
 	/**
-	 * Use this if you want to test that the pattern appears in the profiles at most (value <= threshold) x times
+	 * To be used in case the matching expression has to appear at most (value <= threshold) x times
 	 * @param times
 	 * @return {@link GrepOccurrencyBuilder}
 	 */
@@ -99,8 +100,8 @@ public class Grep4jMatchers {
 	}
 
 	/**
-	 * Use this if you want to test that the pattern appears in the profiles at most (value <= threshold) x times
-	 * @param times
+	 * To be used in case the matching expression does not have to appear at all.
+	 * 
 	 * @return {@link GrepOccurrencyBuilder}
 	 */
 	public static GrepOccurrencyBuilder zero() {

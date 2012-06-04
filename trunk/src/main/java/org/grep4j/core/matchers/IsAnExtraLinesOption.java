@@ -1,17 +1,17 @@
 package org.grep4j.core.matchers;
 
-import org.grep4j.core.ContextControl;
+import org.grep4j.core.options.ExtraLinesOption;
 import org.hamcrest.Description;
 import org.hamcrest.Factory;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 
 /**
- * Check that the String is a {@link ContextControl}
+ * Check that the String is a {@link ExtraLinesOption}
  * @author Marco Castigliego
  *
  */
-public class IsAContextcontrol extends TypeSafeMatcher<String> {
+public class IsAnExtraLinesOption extends TypeSafeMatcher<String> {
 
 	@Override
 	public void describeTo(Description description) {
@@ -20,11 +20,11 @@ public class IsAContextcontrol extends TypeSafeMatcher<String> {
 
 	@Override
 	public boolean matchesSafely(String item) {
-		return ContextControl.isAContextControl(item);
+		return ExtraLinesOption.isAnExtraLinesOption(item);
 	}
 
 	@Factory
-	public static <T> Matcher<String> aContextcontrol() {
-		return new IsAContextcontrol();
+	public static <T> Matcher<String> anExtraLinesOption() {
+		return new IsAnExtraLinesOption();
 	}
 }
