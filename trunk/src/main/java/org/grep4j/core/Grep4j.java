@@ -62,8 +62,10 @@ public final class Grep4j {
 	/**
 	 * This method will:
 	 * <ol>
-	 * <li>Verify the input checking that mandatory fields have been correctly populated</li>
-	 * <li>Prepare {@link GrepRequest}s to be executed, based on the inputs passed</li>
+	 * <li>Verify the input checking that mandatory fields have been correctly
+	 * populated</li>
+	 * <li>Prepare {@link GrepRequest}s to be executed, based on the inputs
+	 * passed</li>
 	 * <li>Execute {@link GrepRequest} for each valid {@link Profile}</li>
 	 * </ol>
 	 */
@@ -81,22 +83,25 @@ public final class Grep4j {
 		return results;
 	}
 
-	private void verifyInputs() {
-		if (expression == null || expression.isEmpty()) {
+	void verifyInputs() {
+		if (expression == null || expression.trim().isEmpty()) {
 			throw new IllegalArgumentException(
 					"No expression to grep was specified");
 		}
 		if (profiles == null || profiles.isEmpty()) {
-			throw new IllegalArgumentException("No profile to grep was specified");
+			throw new IllegalArgumentException(
+					"No profile to grep was specified");
 		}
 	}
 
 	private void executeCommands() {
 		try {
-			ExecutorService executorService = Executors.newFixedThreadPool(grepRequests.size());
+			ExecutorService executorService = Executors
+					.newFixedThreadPool(grepRequests.size());
 			Set<Future<List<GrepResult>>> grepTaskFutures = new HashSet<Future<List<GrepResult>>>();
 			for (GrepRequest grepRequest : grepRequests) {
-				grepTaskFutures.add(executorService.submit(new GrepTask(grepRequest)));
+				grepTaskFutures.add(executorService.submit(new GrepTask(
+						grepRequest)));
 			}
 			for (Future<List<GrepResult>> future : grepTaskFutures) {
 				results.addAll(future.get());
@@ -145,13 +150,15 @@ public final class Grep4j {
 
 		/**
 		 * 
-		 * This method is the entry point for the {@link Grep4j} Builder. 
-		 * It initialises a new {@link Grep4j}.
+		 * This method is the entry point for the {@link Grep4j} Builder. It
+		 * initialises a new {@link Grep4j}.
 		 * 
-		 * It also protects the List of profiles wrapping them into an ImmutableList.
+		 * It also protects the List of profiles wrapping them into an
+		 * ImmutableList.
 		 * 
-		 * Grep4j supports plain text as well as RegEx. Regular expressions must be passed within single quotes
-		 * Example : 'CUSTOMER(.*)UPDATE' will grep for all the customers * updates
+		 * Grep4j supports plain text as well as RegEx. Regular expressions must
+		 * be passed within single quotes Example : 'CUSTOMER(.*)UPDATE' will
+		 * grep for all the customers * updates
 		 * 
 		 * @param expression
 		 * @param profiles
@@ -162,10 +169,11 @@ public final class Grep4j {
 		}
 
 		/**
-		 * This method creates an ImmutableList of context controls {@link ExtraLinesOption} 
-		 * and set it to the {@link Grep4j} instance. 
+		 * This method creates an ImmutableList of context controls
+		 * {@link ExtraLinesOption} and set it to the {@link Grep4j} instance.
 		 * 
-		 * @param List of contextControls
+		 * @param List
+		 *            of contextControls
 		 * @return instance of this builder
 		 */
 		public Builder withContextControls(List<String> contextControls) {
@@ -174,9 +182,10 @@ public final class Grep4j {
 		}
 
 		/**
-		 * This method adds a wildcard-ed string to the instance of {@link Grep4j}
-		 * Example "*" it will be used together with the file name : server.log*
-		 * If a gz file is matching the server.log*, it will be grep as well.
+		 * This method adds a wildcard-ed string to the instance of
+		 * {@link Grep4j} Example "*" it will be used together with the file
+		 * name : server.log* If a gz file is matching the server.log*, it will
+		 * be grep as well.
 		 * 
 		 * @param wildcard
 		 * @return instance of this builder

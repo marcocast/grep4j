@@ -11,17 +11,21 @@ import com.google.common.collect.ImmutableList;
 
 /**
  * Facility to detect if the Server is either remote or local.
- *  
+ * 
  * @author Marco Castigliego
  */
 public class ServerDetailsInterpreter {
-	
-	private static final List<String> localhostAliases = ImmutableList.<String> builder().add("localhost", "127.0.0.1").build();
+
+	private ServerDetailsInterpreter() {
+	}
+
+	private static final List<String> localhostAliases = ImmutableList
+			.<String> builder().add("localhost", "127.0.0.1").build();
 
 	/**
-	 * Based on the server details, it returns 
-	 * {@link LocalCommandExecutor} if the host is "localhost" or "127.0.0.1" 
-	 * otherwise return {@link SshCommandExecutor}
+	 * Based on the server details, it returns {@link LocalCommandExecutor} if
+	 * the host is "localhost" or "127.0.0.1" otherwise return
+	 * {@link SshCommandExecutor}
 	 * 
 	 * @param serverDetails
 	 * @return {@link CommandExecutor}

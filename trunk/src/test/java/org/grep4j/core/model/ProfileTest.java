@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 
+import org.grep4j.core.fixtures.ProfileFixtures;
 import org.testng.annotations.Test;
 
 @Test
@@ -38,5 +39,11 @@ public class ProfileTest {
 		profile2.setServerDetails(null);		
 		assertThat(profile, is(profile2));
 	}
-
+	
+	public void testEquals2() {
+		Profile profile = ProfileFixtures.aDummyRemoteProfile();
+		Profile profile2 = ProfileFixtures.aDummyRemoteProfile();
+		assertThat(profile.equals(profile2), is(Boolean.TRUE));
+	}
+	
 }

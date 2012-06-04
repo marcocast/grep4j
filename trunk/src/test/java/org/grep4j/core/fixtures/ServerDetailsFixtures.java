@@ -19,9 +19,17 @@ public class ServerDetailsFixtures {
 		return serverDetails;
 	}
 
-	public static ServerDetails remoteServerDetails() {
+	public static ServerDetails aDummyRemoteServerDetails() {
 		ServerDetails serverDetails = new ServerDetails();
 		serverDetails.setHost("172.60.60.60");
+		serverDetails.setUser("user");
+		serverDetails.setPassword("password");
+		return serverDetails;
+	}
+	
+	public static ServerDetails aServerDetailsWithUnknownHostname() {
+		ServerDetails serverDetails = new ServerDetails();
+		serverDetails.setHost("DontTellMeYouCanResolveThis");
 		serverDetails.setUser("user");
 		serverDetails.setPassword("password");
 		return serverDetails;

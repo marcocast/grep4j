@@ -3,7 +3,7 @@ package org.grep4j.core.command;
 import static org.grep4j.core.command.ServerDetailsInterpreter.getCommandExecutor;
 import static org.grep4j.core.fixtures.ServerDetailsFixtures.localhostServerDetails;
 import static org.grep4j.core.fixtures.ServerDetailsFixtures.onetwosevenServerDetails;
-import static org.grep4j.core.fixtures.ServerDetailsFixtures.remoteServerDetails;
+import static org.grep4j.core.fixtures.ServerDetailsFixtures.aDummyRemoteServerDetails;
 import static org.grep4j.core.fluent.Dictionary.returned;
 import static org.grep4j.core.fluent.Dictionary.whenCalling;
 import static org.grep4j.core.fluent.Dictionary.with;
@@ -26,6 +26,6 @@ public class WhenTheServerDetailsIsInterpreted {
 	}
 
 	public void ifTheHostIsnotLocalAnSSHCommandExecutorShouldReturn() {
-		assertThat(whenCalling(getCommandExecutor(with(remoteServerDetails()))), is(returned(SshCommandExecutor.class)));
+		assertThat(whenCalling(getCommandExecutor(with(aDummyRemoteServerDetails()))), is(returned(SshCommandExecutor.class)));
 	}
 }
