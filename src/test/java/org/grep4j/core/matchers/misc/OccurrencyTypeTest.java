@@ -43,5 +43,25 @@ public class OccurrencyTypeTest {
 	public void testNegativeGreaterAtMostType() {
 		assertThat(GrepOccurrencyType.AT_MOST.valuate(4, 3), is(false));
 	}
+	
+	public void testExactlyTimesBuilder() {
+		int times = new GrepOccurrencyBuilder(3, GrepOccurrencyType.EXACTLY).times().getExpectedOccurrencies();
+		assertThat(times, is(3));
+	}
+	
+	public void testExactly3HundredsTimesBuilder() {
+		int times = new GrepOccurrencyBuilder(3, GrepOccurrencyType.EXACTLY).hundredTimes().getExpectedOccurrencies();
+		assertThat(times, is(300));
+	}
+	
+	public void testExactly3ThousandTimesBuilder() {
+		int times = new GrepOccurrencyBuilder(3, GrepOccurrencyType.EXACTLY).thousandTimes().getExpectedOccurrencies();
+		assertThat(times, is(3000));
+	}
 
+	public void testExactly3MillionTimesBuilder() {
+		int times = new GrepOccurrencyBuilder(3, GrepOccurrencyType.EXACTLY).millionTimes().getExpectedOccurrencies();
+		assertThat(times, is(3000000));
+	}
+	
 }
