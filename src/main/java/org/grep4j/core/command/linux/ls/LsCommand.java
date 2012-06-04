@@ -4,12 +4,13 @@ import org.grep4j.core.command.linux.LinuxCommand;
 import org.grep4j.core.model.Profile;
 
 /**
- * LsCommand is a LinuxCommand object that build the command to list files.
- * It's normally used in case there is a wildcard in the file name to grep like server.log*
+ * {@link LsCommand} is a {@link LinuxCommand} object that build the command to list files.
+ * It's used in case a wildcard is specified.
  * 
  * Example: "ls /tmp/server.log*"
  * 
  * @author Marco Castigliego
+ * @author Giovanni Gargiulo
  *
  */
 public class LsCommand implements LinuxCommand {

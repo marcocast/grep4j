@@ -1,9 +1,10 @@
 package org.grep4j.core.matchers.misc;
 
 /**
- * Utility class used by the {@link GrepOccurrencyBuilder}
+ * Fluent facility class used in {@link GrepOccurrencyBuilder}
  * 
  * @author Marco Castigliego
+ * @author Giovanni Gargiulo
  *
  */
 public class GrepOccurrency {

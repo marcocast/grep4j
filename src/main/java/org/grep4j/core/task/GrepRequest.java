@@ -11,6 +11,7 @@ import org.grep4j.core.model.ServerDetails;
  * Class container of the grep request
  * 
  * @author Marco Castigliego
+ * @author Giovanni Gargiulo
  *
  */
 public class GrepRequest {
