@@ -1,5 +1,10 @@
 package org.grep4j.core.model;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
+
 /**
  * Model class representing a file that will be the target of the grep command.
  * 
@@ -98,35 +103,18 @@ public class Profile {
 	}
 
 	@Override
-	public String toString() {
-		return "Profile [name=" + name + ", fileLocation=" + fileLocation
-				+ ", fileName=" + fileName + ", serverDetails=" + serverDetails
-				+ "]";
-	}
+    public boolean equals(Object obj) {
+        return EqualsBuilder.reflectionEquals(this, obj);
+    }
 
 	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result;
-		return result;
-	}
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
+    }
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Profile other = (Profile) obj;
-		if (name != null && other.name != null) {
-			if (!name.equals(other.name)) {
-				return false;
-			}
-		}
-		return true;
-	}
+    public int hashCode() {
+        return HashCodeBuilder.reflectionHashCode(this);
+    }
 
 }

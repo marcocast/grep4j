@@ -27,6 +27,14 @@ public class ServerDetailsFixtures {
 		return serverDetails;
 	}
 	
+	public static ServerDetails anotherDummyRemoteServerDetails() {
+		ServerDetails serverDetails = new ServerDetails();
+		serverDetails.setHost("192.168.0.1");
+		serverDetails.setUser("user");
+		serverDetails.setPassword("password");
+		return serverDetails;
+	}
+	
 	public static ServerDetails aServerDetailsWithUnknownHostname() {
 		ServerDetails serverDetails = new ServerDetails();
 		serverDetails.setHost("DontTellMeYouCanResolveThis");

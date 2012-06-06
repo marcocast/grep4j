@@ -2,8 +2,12 @@ package org.grep4j.core.model;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThat;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
 import org.grep4j.core.fixtures.ProfileFixtures;
 import org.testng.annotations.Test;
 
@@ -26,24 +30,33 @@ public class ProfileTest {
 		assertThat(profile.getServerDetails(), nullValue());
 	}
 	
-	public void testEquals(){
-		Profile profile = new Profile();
-		profile.setFileLocation(fileLocation);
-		profile.setFileName(fileName);
-		profile.setName(name);
-		profile.setServerDetails(null);		
-		Profile profile2 = new Profile();
-		profile2.setFileLocation(fileLocation);
-		profile2.setFileName(fileName);
-		profile2.setName(name);
-		profile2.setServerDetails(null);		
-		assertThat(profile, is(profile2));
-	}
-	
-	public void testEquals2() {
+	public void testPositiveEquals() {
 		Profile profile = ProfileFixtures.aDummyRemoteProfile();
 		Profile profile2 = ProfileFixtures.aDummyRemoteProfile();
-		assertThat(profile.equals(profile2), is(Boolean.TRUE));
+		assertThat(profile, is(equalTo(profile2)));
+	}
+	
+	public void testNegativeEquals() {
+		Profile profile = ProfileFixtures.aDummyRemoteProfile();
+		Profile profile2 = ProfileFixtures.anotherDummyRemoteProfile();
+		assertThat(profile, is(not(equalTo(profile2))));
+	}
+	
+	public void testPositiveHashCode() {
+		Profile profile = ProfileFixtures.aDummyRemoteProfile();
+		Profile profile2 = ProfileFixtures.aDummyRemoteProfile();
+		assertThat(profile.hashCode(), is(equalTo(profile2.hashCode())));
+	}
+	
+	public void testNegativeHashCode() {
+		Profile profile = ProfileFixtures.aDummyRemoteProfile();
+		Profile profile2 = ProfileFixtures.anotherDummyRemoteProfile();
+		assertThat(profile.hashCode(), is(not(equalTo(profile2.hashCode()))));
+	}
+	
+	public void testToStrig() {
+		Profile profile = ProfileFixtures.aDummyRemoteProfile();
+		assertThat(profile.toString(), is(equalTo(ToStringBuilder.reflectionToString(profile, ToStringStyle.MULTI_LINE_STYLE))));
 	}
 	
 }
