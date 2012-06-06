@@ -33,10 +33,26 @@ public class SshCommandExecutor extends CommandExecutor {
 	private SSHClient sshClient;
 	private Session session = null;
 
-	public SshCommandExecutor(ServerDetails serverDetails) {
+	private SshCommandExecutor(ServerDetails serverDetails) {
 		super(serverDetails);
 	}
-
+	
+	public static SshCommandExecutor aDefaultSshCommandExecutor(ServerDetails serverDetails) {
+		SshCommandExecutor executor = new SshCommandExecutor(serverDetails);
+		executor.setSshClient(new SSHClient());
+		return executor;
+	}
+	
+	public static SshCommandExecutor aCustomSshCommandExecutor(ServerDetails serverDetails, SSHClient sshClient) {
+		SshCommandExecutor executor = new SshCommandExecutor(serverDetails);
+		executor.setSshClient(sshClient);
+		return executor;
+	}
+ 
+	private void setSshClient(SSHClient sshClient) {
+		this.sshClient = sshClient;
+	}
+	
 	@Override
 	public void init() {
 		connect();
@@ -48,17 +64,13 @@ public class SshCommandExecutor extends CommandExecutor {
 	}
 
 	private void connect() {
-		sshClient = new SSHClient();
-		sshClient.addHostKeyVerifier(new PromiscuousVerifier());
 		try {
-			if (!sshClient.isConnected()) {
-				sshClient.connect(serverDetails.getHost());
-				sshClient.authPassword(serverDetails.getUser(), serverDetails.getPassword());
-			}
+			sshClient.addHostKeyVerifier(new PromiscuousVerifier());
+			sshClient.connect(serverDetails.getHost());
+			sshClient.authPassword(serverDetails.getUser(), serverDetails.getPassword());
 		} catch (IOException e) {
 			quit();
 			throw new RuntimeException("ERROR:Error trying to connect to ");
-
 		}
 	}
 
@@ -94,11 +106,9 @@ public class SshCommandExecutor extends CommandExecutor {
 
 	private void executeCommand(LinuxCommand command)
 			throws ConnectionException, TransportException, IOException {
-
 		Command cmd = session.exec(command.getCommandToExecute());
 		result = IOUtils.readFully(cmd.getInputStream()).toString();
 		cmd.join(5, TimeUnit.SECONDS);
-
 	}
 
 	private void startSession() throws ConnectionException, TransportException {

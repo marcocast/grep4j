@@ -2,6 +2,7 @@ package org.grep4j.core.fixtures;
 
 import static org.grep4j.core.command.OperativeSystemDetector.isWindows;
 import static org.grep4j.core.fixtures.ServerDetailsFixtures.aDummyRemoteServerDetails;
+import static org.grep4j.core.fixtures.ServerDetailsFixtures.anotherDummyRemoteServerDetails;
 import static org.grep4j.core.fixtures.ServerDetailsFixtures.aServerDetailsWithUnknownHostname;
 import static org.grep4j.core.fixtures.ServerDetailsFixtures.localhostServerDetails;
 
@@ -20,6 +21,15 @@ public class ProfileFixtures {
 		profile.setFileLocation("/path/to/file/");
 		profile.setFileName("filename");
 		profile.setServerDetails(aDummyRemoteServerDetails());
+		return profile;
+	}
+	
+	public static Profile anotherDummyRemoteProfile() {
+		Profile profile = new Profile();
+		profile.setName("another dummy remote profile");
+		profile.setFileLocation("/apath/to/file/");
+		profile.setFileName("filename");
+		profile.setServerDetails(anotherDummyRemoteServerDetails());
 		return profile;
 	}
 	
