@@ -1,9 +1,6 @@
 package org.grep4j.core;
 
 import static ch.lambdaj.Lambda.join;
-import static org.grep4j.core.Grep4j.grep;
-import static org.grep4j.core.fluent.Dictionary.on;
-import static org.grep4j.core.fluent.Dictionary.with;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;

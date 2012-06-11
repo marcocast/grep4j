@@ -2,8 +2,8 @@ package org.grep4j.core.fixtures;
 
 import static org.grep4j.core.command.OperativeSystemDetector.isWindows;
 import static org.grep4j.core.fixtures.ServerDetailsFixtures.aDummyRemoteServerDetails;
-import static org.grep4j.core.fixtures.ServerDetailsFixtures.anotherDummyRemoteServerDetails;
 import static org.grep4j.core.fixtures.ServerDetailsFixtures.aServerDetailsWithUnknownHostname;
+import static org.grep4j.core.fixtures.ServerDetailsFixtures.anotherDummyRemoteServerDetails;
 import static org.grep4j.core.fixtures.ServerDetailsFixtures.localhostServerDetails;
 
 import java.net.URL;

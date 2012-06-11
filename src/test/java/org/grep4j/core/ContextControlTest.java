@@ -2,8 +2,8 @@ package org.grep4j.core;
 
 import static org.grep4j.core.options.ExtraLinesOption.after;
 import static org.grep4j.core.options.ExtraLinesOption.before;
-import static org.grep4j.core.options.ExtraLinesOption.parseOption;
 import static org.grep4j.core.options.ExtraLinesOption.isAnExtraLinesOption;
+import static org.grep4j.core.options.ExtraLinesOption.parseOption;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertThat;
