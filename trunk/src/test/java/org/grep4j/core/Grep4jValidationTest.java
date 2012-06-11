@@ -1,8 +1,5 @@
 package org.grep4j.core;
 
-import static org.grep4j.core.Grep4j.Builder.grep;
-import static org.grep4j.core.fluent.Dictionary.on;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -23,34 +20,34 @@ public class Grep4jValidationTest {
 	@Test(expectedExceptions=java.lang.IllegalArgumentException.class)
 	public void testEmptyExpression() {
 		List<Profile> profiles = Arrays.asList(new Profile[]{ ProfileFixtures.aDummyRemoteProfile()});
-		grep4j = grep(EMPTY_EXPRESSION, on(profiles)).build();
+		grep4j = new Grep4j(EMPTY_EXPRESSION, profiles);
 		grep4j.verifyInputs();
 	}
 	
 	@Test(expectedExceptions=java.lang.IllegalArgumentException.class)
 	public void testBlankExpression() {
 		List<Profile> profiles = Arrays.asList(new Profile[]{ ProfileFixtures.aDummyRemoteProfile()});
-		grep4j = grep(BLANK_EXPRESSION, on(profiles)).build();
+		grep4j = new Grep4j(BLANK_EXPRESSION, profiles);
 		grep4j.verifyInputs();
 	}
 	
 	@Test(expectedExceptions=java.lang.IllegalArgumentException.class)
 	public void testNullExpression() {
 		List<Profile> profiles = Arrays.asList(new Profile[]{ ProfileFixtures.aDummyRemoteProfile()});
-		grep4j = grep(NULL_EXPRESSION, on(profiles)).build();
+		grep4j = new Grep4j(NULL_EXPRESSION, profiles);
 		grep4j.verifyInputs();
 	}
 	
 	@Test(expectedExceptions=java.lang.IllegalArgumentException.class)
 	public void testEmptyProfiles() {
-		grep4j = grep(EXPRESSION, on(new ArrayList<Profile>())).build();
+		grep4j = new Grep4j(EXPRESSION, new ArrayList<Profile>());
 		grep4j.verifyInputs();
 	}
 	
 	@Test(expectedExceptions=RuntimeException.class)
 	public void testExecutionException() {
 		List<Profile> profiles = Arrays.asList(new Profile[]{ ProfileFixtures.aRemoteProfileWithUnknownServers()});
-		grep4j = grep(EXPRESSION, on(profiles)).build();
+		grep4j = new Grep4j(EXPRESSION, profiles);
 		grep4j.execute();
 	}
 	

@@ -1,8 +1,9 @@
 package org.grep4j.core;
 
 import static ch.lambdaj.Lambda.join;
-import static org.grep4j.core.Grep4j.Builder.grep;
+import static org.grep4j.core.Grep4j.grep;
 import static org.grep4j.core.fluent.Dictionary.on;
+import static org.grep4j.core.fluent.Dictionary.with;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
@@ -28,13 +29,9 @@ public class Grep4jTest {
 	@BeforeTest
 	public void init() {
 		List<Profile> profiles = Arrays.asList(new Profile[] { ProfileFixtures
-				.aDummyRemoteProfile() });
-		grep4j = grep(EXPRESSION, on(profiles)).withWildcard(WILDCARD)
-				.withContextControls(extraLinesOptions()).build();
-	}
-
-	public void testWildcard() {
-		assertThat(grep4j.getWildcard(), is(WILDCARD));
+				.aDummyRemoteProfileWithWildcard(WILDCARD) });
+		
+		grep4j = new Grep4j(EXPRESSION, profiles, extraLinesOptions());
 	}
 
 	public void testAfter() {

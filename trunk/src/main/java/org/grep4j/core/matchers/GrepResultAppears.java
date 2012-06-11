@@ -1,9 +1,7 @@
 package org.grep4j.core.matchers;
 
-import static org.grep4j.core.Grep4j.Builder.grep;
-import static org.grep4j.core.fluent.Dictionary.of;
+import static org.grep4j.core.Grep4j.grep;
 import static org.grep4j.core.fluent.Dictionary.on;
-import static org.grep4j.core.task.GrepResult.totalOccurrences;
 
 import java.util.List;
 import java.util.Set;
@@ -11,7 +9,7 @@ import java.util.Set;
 import org.grep4j.core.Grep4j;
 import org.grep4j.core.matchers.misc.GrepOccurrency;
 import org.grep4j.core.model.Profile;
-import org.grep4j.core.task.GrepResult;
+import org.grep4j.core.result.SingleGrepResult;
 import org.hamcrest.Description;
 import org.hamcrest.Factory;
 import org.hamcrest.Matcher;
@@ -39,11 +37,7 @@ public class GrepResultAppears extends TypeSafeMatcher<String> {
 	@Override
 	public boolean matchesSafely(String expression) {
 
-		Grep4j grep4j = grep(expression, on(profiles)).build();
-
-		Set<GrepResult> results = grep4j.execute().andGetResults();
-
-		int actualOccurrences = totalOccurrences(of(expression), on(results));
+		int actualOccurrences = grep(expression, on(profiles)).totalOccurrences();
 
 		return applyMatchingCriteriaFor(actualOccurrences);
 	}

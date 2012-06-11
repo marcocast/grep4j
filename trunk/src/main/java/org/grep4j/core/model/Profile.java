@@ -4,6 +4,7 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
+import org.grep4j.core.Grep4j;
 
 /**
  * Model class representing a file that will be the target of the grep command.
@@ -18,12 +19,10 @@ import org.apache.commons.lang.builder.ToStringStyle;
 public class Profile {
 
 	private String name;
-
 	private String fileLocation;
-
 	private String fileName;
-
 	private ServerDetails serverDetails;
+	private String wildcard;
 
 	/**
 	 * String unique identifier for this profile
@@ -100,6 +99,30 @@ public class Profile {
 	 */
 	public ServerDetails getServerDetails() {
 		return serverDetails;
+	}
+	
+	/**
+	 * This method adds a wildcard-ed string to the instance of
+	 * {@link Profile} Example "*" it will be used together with the file
+	 * name : server.log* If a gz file is matching the server.log*, it will
+	 * be grep as well.
+	 * 
+	 * @param wildcard
+	 */
+	public void setWildcard(String wildcard) {
+		this.wildcard = wildcard;
+	}
+	
+	/**
+	 * This method return a wildcard-ed string to the instance of
+	 * {@link Profile} Example "*" it will be used together with the file
+	 * name : server.log* If a gz file is matching the server.log*, it will
+	 * be grep as well.
+	 * 
+	 * @return wildcard used in this profile
+	 */
+	public String getWildcard() {
+		return wildcard;
 	}
 
 	@Override

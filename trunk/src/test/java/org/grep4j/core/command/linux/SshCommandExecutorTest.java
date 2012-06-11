@@ -23,7 +23,7 @@ import org.testng.annotations.Test;
  * @author ggargiulo
  * 
  */
-@Test
+@Test(enabled=false)
 public class SshCommandExecutorTest {
 
 	private static String COMMAND_TO_EXECUTE = "command to execute";

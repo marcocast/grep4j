@@ -1,4 +1,4 @@
-package org.grep4j.core.task;
+package org.grep4j.core.result;
 
 import static org.grep4j.core.fluent.Dictionary.of;
 
@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
  * @author Giovanni Gargiulo
  *
  */
-public class GrepResult {
+public class SingleGrepResult {
 
 	private final String profileName;
 
@@ -20,7 +20,7 @@ public class GrepResult {
 
 	private final String text;
 
-	public GrepResult(String profileName, String fileName, String text) {
+	public SingleGrepResult(String profileName, String fileName, String text) {
 		super();
 		this.profileName = profileName;
 		this.fileName = fileName;
@@ -67,20 +67,5 @@ public class GrepResult {
 		return occurrences;
 	}
 
-	/**
-	 * Given an expression and a set of {@link GrepResult}, it counts how many times the pattern is found in all the results
-	 * Example: totalOccurrences(of(expression), on(results));
-	 * 
-	 * @param expression
-	 * @param results
-	 * @return total number of time the patter is found in all the GrepResults
-	 */
-	public static int totalOccurrences(String expression, Set<GrepResult> results) {
-		int occurrences = 0;
-		for (GrepResult result : results) {
-			occurrences += result.getOccourrences(of(expression));
-		}
-		return occurrences;
-	}
-
+	
 }
