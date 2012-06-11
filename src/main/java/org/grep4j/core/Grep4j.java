@@ -91,7 +91,7 @@ public final class Grep4j {
 	 * @return GlobalGrepResult
 	 */
 	public static GlobalGrepResult grep(String expression, List<Profile> profiles) {
-		return new Grep4j(expression, ImmutableList.copyOf(profiles)).execute().andGetResults();
+		return new Grep4j(expression, profiles).execute().andGetResults();
 	}
 	
 	/**
@@ -112,7 +112,7 @@ public final class Grep4j {
 	 * @return GlobalGrepResult
 	 */
 	public static GlobalGrepResult grep(String expression, List<Profile> profiles,List<String> contextControls) {
-		return new Grep4j(expression, ImmutableList.copyOf(profiles) ,ImmutableList.copyOf(contextControls)).execute().andGetResults();
+		return new Grep4j(expression, profiles ,contextControls).execute().andGetResults();
 	}
 
 	
