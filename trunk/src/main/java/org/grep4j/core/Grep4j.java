@@ -20,10 +20,7 @@ import com.google.common.collect.ImmutableList;
  * Entry Class for using the Grep4j API. Usage example:
  * 
  * <pre>
- * Grep4j grep4j = grep(expression(), on(profiles()))
- * 		.withContextControls(getContextControls()).withWildcard(getWildcard())
- * 		.build();
- * grep4j.execute().andGetResults();
+ * grep(expression(), on(profiles(), with(getContextControls())))
  * </pre>
  * <p>
  * 
