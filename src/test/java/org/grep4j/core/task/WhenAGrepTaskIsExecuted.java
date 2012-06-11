@@ -12,6 +12,7 @@ import java.util.List;
 import org.grep4j.core.command.linux.LocalCommandExecutor;
 import org.grep4j.core.command.linux.grep.SimpleGrepCommand;
 import org.grep4j.core.command.linux.ls.LsCommand;
+import org.grep4j.core.result.SingleGrepResult;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.testng.annotations.BeforeMethod;
@@ -38,9 +39,9 @@ public class WhenAGrepTaskIsExecuted {
 		when(commandExecutor.execute(any(SimpleGrepCommand.class))).thenReturn(commandExecutor);
 		when(commandExecutor.andReturnResult()).thenReturn(expression);
 		grepTask.setCommandExecutor(commandExecutor);
-		List<GrepResult> grepResults = grepTask.call();
+		List<SingleGrepResult> grepResults = grepTask.call();
 		assertThat(grepResults.size(), is(1));
-		GrepResult result = grepResults.get(0);
+		SingleGrepResult result = grepResults.get(0);
 		assertThat(result.getText(), is(expression));
 	}
 	
@@ -53,9 +54,9 @@ public class WhenAGrepTaskIsExecuted {
 		when(commandExecutor.execute(any(SimpleGrepCommand.class))).thenReturn(commandExecutor);
 		when(commandExecutor.andReturnResult()).thenReturn(expression);
 		grepTask.setCommandExecutor(commandExecutor);
-		List<GrepResult> grepResults = grepTask.call();
+		List<SingleGrepResult> grepResults = grepTask.call();
 		assertThat(grepResults.size(), is(1));
-		GrepResult result = grepResults.get(0);
+		SingleGrepResult result = grepResults.get(0);
 		assertThat(result.getText(), is(expression));
 	}
 }

@@ -24,6 +24,16 @@ public class ProfileFixtures {
 		return profile;
 	}
 	
+	public static Profile aDummyRemoteProfileWithWildcard(String wildcard) {
+		Profile profile = new Profile();
+		profile.setName("dummy remote profiel");
+		profile.setFileLocation("/path/to/file/");
+		profile.setFileName("filename");
+		profile.setWildcard(wildcard);
+		profile.setServerDetails(aDummyRemoteServerDetails());
+		return profile;
+	}
+	
 	public static Profile anotherDummyRemoteProfile() {
 		Profile profile = new Profile();
 		profile.setName("another dummy remote profile");
@@ -53,6 +63,22 @@ public class ProfileFixtures {
 		profile.setName("local");
 		profile.setFileLocation(resourcePath.replaceAll(fileName, ""));
 		profile.setFileName(fileName);
+		profile.setServerDetails(localhostServerDetails());
+		return profile;
+	}
+	
+	public static Profile localProfileWithWildecard(String wildcard) {
+		String fileName = "local.txt";
+		URL url = ProfileFixtures.class.getClassLoader().getResource(fileName);
+		String resourcePath = url.getPath();
+		if (isWindows()) {
+			resourcePath = resourcePath.replaceAll(":", "");
+		}
+		Profile profile = new Profile();
+		profile.setName("local");
+		profile.setFileLocation(resourcePath.replaceAll(fileName, ""));
+		profile.setFileName(fileName);
+		profile.setWildcard(wildcard);
 		profile.setServerDetails(localhostServerDetails());
 		return profile;
 	}

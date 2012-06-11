@@ -2,13 +2,13 @@ package org.grep4j.core.matchers;
 
 import java.util.Set;
 
-import org.grep4j.core.task.GrepResult;
+import org.grep4j.core.result.SingleGrepResult;
 import org.hamcrest.Description;
 import org.hamcrest.Factory;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 
-public class GrepResultContains extends TypeSafeMatcher<Set<GrepResult>> {
+public class GrepResultContains extends TypeSafeMatcher<Set<SingleGrepResult>> {
 
 	private final String expression;
 
@@ -22,8 +22,8 @@ public class GrepResultContains extends TypeSafeMatcher<Set<GrepResult>> {
 	}
 
 	@Override
-	public boolean matchesSafely(Set<GrepResult> results) {
-		for (GrepResult grepResult : results) {
+	public boolean matchesSafely(Set<SingleGrepResult> results) {
+		for (SingleGrepResult grepResult : results) {
 			if (grepResult.getText().contains((expression))) {
 				return true;
 			}
@@ -32,7 +32,7 @@ public class GrepResultContains extends TypeSafeMatcher<Set<GrepResult>> {
 	}
 
 	@Factory
-	public static <T> Matcher<Set<GrepResult>> containsExpression(
+	public static <T> Matcher<Set<SingleGrepResult>> containsExpression(
 			String expression) {
 		return new GrepResultContains(expression);
 	}

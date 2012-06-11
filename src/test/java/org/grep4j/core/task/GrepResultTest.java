@@ -1,5 +1,6 @@
 package org.grep4j.core.task;
 
+import org.grep4j.core.result.SingleGrepResult;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import static org.junit.Assert.assertThat;
@@ -8,11 +9,11 @@ import static org.hamcrest.CoreMatchers.is;
 @Test
 public class GrepResultTest {
 
-	GrepResult grepResult;
+	SingleGrepResult grepResult;
 	
 	@BeforeTest
 	public void init() {
-		grepResult = new GrepResult("profileName", "fileName", "customer Marco(id=12345) has been updated successfully");
+		grepResult = new SingleGrepResult("profileName", "fileName", "customer Marco(id=12345) has been updated successfully");
 	}
 	
 	public void testRegEx() {

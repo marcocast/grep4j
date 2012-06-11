@@ -64,6 +64,20 @@ public class Dictionary {
 	public static <T> T whenCalling(T type) {
 		return type;
 	}
+	
+	/**
+	 * Fluent mirror method: use this method to give more readability to the code.
+	 * Example:
+	 * <pre>
+	 * assertThat(<b>executing</b>(getCommandExecutor(with(onetwosevenServerDetails()))), is(returned(LocalCommandExecutor.class)));
+	 * </pre>
+	 * 
+	 * @param type
+	 * @return type
+	 */
+	public static <T> T executing(T type) {
+		return type;
+	}
 
 	/**
 	 * Fluent mirror method: use this method to give more readability to the code.
