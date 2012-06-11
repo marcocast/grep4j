@@ -9,7 +9,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import org.grep4j.core.model.Profile;
-import org.grep4j.core.options.ExtraLinesOption;
 import org.grep4j.core.result.GlobalGrepResult;
 import org.grep4j.core.result.SingleGrepResult;
 import org.grep4j.core.task.GrepRequest;

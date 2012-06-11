@@ -1,9 +1,10 @@
 package org.grep4j.core;
 
+import static org.grep4j.core.Grep4j.grep;
 import static org.grep4j.core.fixtures.ProfileFixtures.localProfile;
+import static org.grep4j.core.fluent.Dictionary.executing;
 import static org.grep4j.core.fluent.Dictionary.on;
-import static org.grep4j.core.matchers.Grep4jMatchers.appears;
-import static org.grep4j.core.matchers.Grep4jMatchers.exactly;
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 import java.util.Arrays;
@@ -18,8 +19,8 @@ public class WhenGrep4jStartedWithRegExStringToSearchALocalProfile {
 	private final List<Profile> profiles = Arrays.asList(localProfile());
 
 	public void fineStringAppears3Times() {
-		assertThat("'customer(.*)updated'", appears(exactly(1).times(), on(profiles)));
-		assertThat("Marco", appears(exactly(1).times(), on(profiles)));
+		assertThat(executing(grep("'customer(.*)updated'", on(profiles))).totalOccurrences(), is(1));
+		assertThat(executing(grep("Marco", on(profiles))).totalOccurrences(), is(1));
 	}
 
 }

@@ -4,12 +4,10 @@ import static org.grep4j.core.Grep4j.grep;
 import static org.grep4j.core.fluent.Dictionary.on;
 
 import java.util.List;
-import java.util.Set;
 
 import org.grep4j.core.Grep4j;
 import org.grep4j.core.matchers.misc.GrepOccurrency;
 import org.grep4j.core.model.Profile;
-import org.grep4j.core.result.SingleGrepResult;
 import org.hamcrest.Description;
 import org.hamcrest.Factory;
 import org.hamcrest.Matcher;

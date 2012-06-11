@@ -1,10 +1,11 @@
 package org.grep4j.core.task;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+
 import org.grep4j.core.result.SingleGrepResult;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
-import static org.junit.Assert.assertThat;
-import static org.hamcrest.CoreMatchers.is;
 
 @Test
 public class GrepResultTest {

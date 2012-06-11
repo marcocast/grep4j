@@ -1,8 +1,5 @@
 package org.grep4j.core.result;
 
-import static org.grep4j.core.fluent.Dictionary.of;
-
-import java.util.Set;
 import java.util.regex.Pattern;
 
 /**

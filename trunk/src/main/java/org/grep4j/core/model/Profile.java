@@ -4,7 +4,6 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
-import org.grep4j.core.Grep4j;
 
 /**
  * Model class representing a file that will be the target of the grep command.
