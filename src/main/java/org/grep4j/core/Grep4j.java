@@ -17,7 +17,7 @@ import org.grep4j.core.task.GrepTask;
 import com.google.common.collect.ImmutableList;
 
 /**
- * Entry Class for using the Grep4j API. Usage example:
+ * Entry Class for the Grep4j API. Usage example:
  * 
  * <pre>
  * List<Profile> profiles = Arrays.asList(aProfile,moreProfiles);
