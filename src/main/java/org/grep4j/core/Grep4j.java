@@ -20,8 +20,20 @@ import com.google.common.collect.ImmutableList;
  * Entry Class for using the Grep4j API. Usage example:
  * 
  * <pre>
- * grep(expression(), on(profiles(), with(getContextControls())))
+ * List<Profile> profiles = Arrays.asList(aProfile,moreProfiles);
+ * 
+ * Set<SingleGrepResult> results = grep("USER(12435)", on(profiles()))).getAllGrepResults();
+ * for (SingleGrepResult result : results) {			
+ * 		System.out.println(result.getText());
+ * }
  * </pre>
+ * 
+ * Grep4j used for test:
+ * <pre>
+ * List<Profile> profiles = Arrays.asList(aProfile,moreProfiles);
+ * assertThat(executing(grep("USER(12435)", on(profiles))).totalOccurrences(), is(1));
+ * </pre>
+ * 
  * <p>
  * 
  * Reference: http://code.google.com/p/grep4j/
