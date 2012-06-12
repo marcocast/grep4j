@@ -89,9 +89,7 @@ public final class Grep4j {
 	/**
 	 * 
 	 * This utility method executes the grep command and return the {@link GlobalGrepResult}
-	 * containing the result of the grep
-	 * 
-	
+	 * containing the result of the grep 
 	 * 
 	 * Grep4j supports plain text as well as RegEx. Regular expressions must
 	 * be passed within single quotes Example : 'CUSTOMER(.*)UPDATE' will
