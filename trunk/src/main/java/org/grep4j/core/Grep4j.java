@@ -112,6 +112,8 @@ public final class Grep4j {
 	 * 
 	 * It also protects the List of profiles and contextControls wrapping them into an
 	 * ImmutableList.
+	 * Example of contextControl String is "-A50" for 50 lines of trailing context after matching lines 
+	 * or "-B20" for 20 lines of trailing context before matching lines 
 	 * 
 	 * Grep4j supports plain text as well as RegEx. Regular expressions must
 	 * be passed within single quotes Example : 'CUSTOMER(.*)UPDATE' will
