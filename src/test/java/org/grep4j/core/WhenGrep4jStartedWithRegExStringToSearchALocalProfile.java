@@ -18,7 +18,7 @@ public class WhenGrep4jStartedWithRegExStringToSearchALocalProfile {
 
 	private final List<Profile> profiles = Arrays.asList(localProfile());
 
-	public void fineStringAppears3Times() {
+	public void customerRegexStringAppears1Time() {
 		assertThat(executing(grep("'customer(.*)updated'", on(profiles))).totalOccurrences(), is(1));
 		assertThat(executing(grep("Marco", on(profiles))).totalOccurrences(), is(1));
 	}
