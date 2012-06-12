@@ -1,6 +1,10 @@
 package org.grep4j.core;
 
+import static org.grep4j.core.options.ExtraLinesOption.after;
+import static org.grep4j.core.options.ExtraLinesOption.before;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -75,8 +79,6 @@ public final class Grep4j {
 	 * This utility method executes the grep command and return the {@link GlobalGrepResult}
 	 * containing the result of the grep
 	 * 
-	
-	 * 
 	 * Grep4j supports plain text as well as RegEx. Regular expressions must
 	 * be passed within single quotes Example : 'CUSTOMER(.*)UPDATE' will
 	 * grep for all the customers * updates
@@ -94,8 +96,7 @@ public final class Grep4j {
 	 * This utility method executes the grep command and return the {@link GlobalGrepResult}
 	 * containing the result of the grep
 	 * 
-	 * It also protects the List of profiles and contextControls wrapping them into an
-	 * ImmutableList.
+	 * linesAfter is the number of lines of trailing context after matching lines
 	 * 
 	 * Grep4j supports plain text as well as RegEx. Regular expressions must
 	 * be passed within single quotes Example : 'CUSTOMER(.*)UPDATE' will
@@ -103,11 +104,54 @@ public final class Grep4j {
 	 * 
 	 * @param expression
 	 * @param profiles
-	 * @param contextControls
+	 * @param linesAfter
 	 * @return GlobalGrepResult
 	 */
-	public static GlobalGrepResult grep(String expression, List<Profile> profiles, List<String> contextControls) {
-		return new Grep4j(expression, profiles, contextControls).execute().andGetResults();
+	public static GlobalGrepResult grepWithExtraLinesAfter(String expression, List<Profile> profiles, int linesAfter) {
+		return new Grep4j(expression, profiles, Arrays.asList(after.getExtraLineOptionType() + linesAfter)).execute().andGetResults();
+	}
+
+	/**
+	 * 
+	 * This utility method executes the grep command and return the {@link GlobalGrepResult}
+	 * containing the result of the grep
+	 * 
+	 * linesBefore is the number of lines of trailing context before matching lines
+	 * 
+	 * Grep4j supports plain text as well as RegEx. Regular expressions must
+	 * be passed within single quotes Example : 'CUSTOMER(.*)UPDATE' will
+	 * grep for all the customers * updates
+	 * 
+	 * @param expression
+	 * @param profiles
+	 * @param linesBefore
+	 * @return GlobalGrepResult
+	 */
+	public static GlobalGrepResult grepWithExtraLinesBefore(String expression, List<Profile> profiles, int linesBefore) {
+		return new Grep4j(expression, profiles, Arrays.asList(before.getExtraLineOptionType() + linesBefore)).execute().andGetResults();
+	}
+
+	/**
+	 * 
+	 * This utility method executes the grep command and return the {@link GlobalGrepResult}
+	 * containing the result of the grep
+	 * 
+	 * linesBefore is the number of lines of trailing context before matching lines
+	 * linesAfter is the number of lines of trailing context after matching lines
+	 * 
+	 * Grep4j supports plain text as well as RegEx. Regular expressions must
+	 * be passed within single quotes Example : 'CUSTOMER(.*)UPDATE' will
+	 * grep for all the customers * updates
+	 * 
+	 * @param expression
+	 * @param profiles
+	 * @param linesBefore
+	 * @param linesAfter
+	 * @return GlobalGrepResult
+	 */
+	public static GlobalGrepResult grepWithExtraLinesBeforeAndAfter(String expression, List<Profile> profiles, int linesBefore, int linesAfter) {
+		List<String> extraLines = Arrays.asList(before.getExtraLineOptionType() + linesBefore, after.getExtraLineOptionType() + linesAfter);
+		return new Grep4j(expression, profiles, extraLines).execute().andGetResults();
 	}
 
 	/**
