@@ -1,5 +1,7 @@
 package org.grep4j.core.model;
 
+import javax.annotation.concurrent.Immutable;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -15,6 +17,7 @@ import org.apache.commons.lang.builder.ToStringStyle;
  * @author Marco Castigliego
  * 
  */
+@Immutable
 public class Profile {
 
 	private String name;
