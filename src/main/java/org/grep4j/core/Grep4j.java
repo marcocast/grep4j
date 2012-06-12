@@ -51,7 +51,11 @@ public final class Grep4j {
 		this.results = new GlobalGrepResult(expression);
 		this.expression = expression;
 		this.profiles = ImmutableList.copyOf(profiles);
-		this.contextControls = ImmutableList.copyOf(contextControls);
+		if (contextControls != null) {
+			this.contextControls = ImmutableList.copyOf(contextControls);
+		} else {
+			this.contextControls = null;
+		}
 	}
 
 	/**
@@ -106,7 +110,7 @@ public final class Grep4j {
 	 * @param contextControls
 	 * @return GlobalGrepResult
 	 */
-	public static GlobalGrepResult grepWithExtraLines(String expression, List<Profile> profiles, List<String> contextControls) {
+	public static GlobalGrepResult grep(String expression, List<Profile> profiles, List<String> contextControls) {
 		return new Grep4j(expression, profiles, contextControls).execute().andGetResults();
 	}
 
