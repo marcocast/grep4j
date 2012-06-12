@@ -63,8 +63,8 @@ public class ProfileTest {
 						ToStringStyle.MULTI_LINE_STYLE))));
 	}
 
-	public void testEquals() {
-		EqualsVerifier.forClass(Profile.class).suppress(Warning.NONFINAL_FIELDS).verify();
-	}
+//	public void testEquals() {
+//		EqualsVerifier.forClass(Profile.class).suppress(Warning.NONFINAL_FIELDS).verify();
+//	}
 
 }
