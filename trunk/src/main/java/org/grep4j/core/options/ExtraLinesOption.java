@@ -1,7 +1,7 @@
 package org.grep4j.core.options;
 
 /**
- * Context Line Control 	
+ * Extra Lines Option
  *  
  * @author Marco Castigliego
  * @author Giovanni Gargiulo 

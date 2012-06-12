@@ -6,11 +6,6 @@ import static org.grep4j.core.fixtures.ProfileFixtures.localProfileWithWildecard
 import static org.grep4j.core.fluent.Dictionary.executing;
 import static org.grep4j.core.fluent.Dictionary.on;
 import static org.grep4j.core.fluent.Dictionary.whenCalling;
-import static org.grep4j.core.matchers.Grep4jMatchers.appears;
-import static org.grep4j.core.matchers.Grep4jMatchers.atLeast;
-import static org.grep4j.core.matchers.Grep4jMatchers.atMost;
-import static org.grep4j.core.matchers.Grep4jMatchers.exactly;
-import static org.grep4j.core.matchers.Grep4jMatchers.neverAppears;
 import static org.grep4j.core.matchers.GrepResultMatchers.containsExpression;
 import static org.grep4j.core.matchers.GrepResultMatchers.doesNotContainExpression;
 import static org.grep4j.core.matchers.HasFileTarget.hasFileTarget;
@@ -60,27 +55,22 @@ public class WhenGrep4jStartedWithStringToSearchALocalProfile {
 	}
 
 	public void fineStringAppears3Times() {
-		assertThat("fine", appears(exactly(3).times(), on(profiles)));
 		assertThat(whenCalling(grep("fine", on(profiles))).totalOccurrences(), is(3));
 	}
 
 	public void errorStringAppears2Times() {
-		assertThat("ERROR", appears(exactly(2).times(), on(profiles)));
 		assertThat(executing(grep("ERROR", on(profiles))).totalOccurrences(), is(2));
 	}
 
 	public void errorStringAppearsAtMost2Times() {
-		assertThat("ERROR", appears(atMost(2).times(), on(profiles)));
 		assertThat(executing(grep("ERROR", on(profiles))).totalOccurrences(), is(2));
 	}
 
 	public void errorStringAppearsAtLeast2Times() {
-		assertThat("ERROR", appears(atLeast(1).times(), on(profiles)));
 		assertThat(executing(grep("ERROR", on(profiles))).totalOccurrences(), is(2));
 	}
 
 	public void error33StringneverAppears() {
-		assertThat("ERROR33", neverAppears(on(profiles)));
 		assertThat(executing(grep("ERROR33", on(profiles))).totalOccurrences(), is(0));
 	}
 

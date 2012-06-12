@@ -36,29 +36,29 @@ public final class Grep4j {
 	private final ImmutableList<String> contextControls;
 	private final GlobalGrepResult results;
 	private final List<GrepRequest> grepRequests;
-	
+
 	/**
 	 * Creates an instance of Grep4j
 	 * 
-	 * It also protects the List of profiles wrapping them into an
-	 * ImmutableList.
+	 * It also protects the profiles and contextControls lists wrapping them into an ImmutableList.
+	 * 
 	 * @param expression
 	 * @param profiles
 	 * @param contextControls
 	 */
-	Grep4j(String expression, List<Profile> profiles,List<String> contextControls) {
+	Grep4j(String expression, List<Profile> profiles, List<String> contextControls) {
 		this.grepRequests = new ArrayList<GrepRequest>();
 		this.results = new GlobalGrepResult(expression);
 		this.expression = expression;
 		this.profiles = ImmutableList.copyOf(profiles);
 		this.contextControls = ImmutableList.copyOf(contextControls);
 	}
-	
+
 	/**
 	 * Creates an instance of Grep4j
 	 * 
-	 * It also protects the List of profiles wrapping them into an
-	 * ImmutableList.
+	 * It also protects the profiles list wrapping them into an ImmutableList.
+	 * 
 	 * @param expression
 	 * @param profiles
 	 */
@@ -69,8 +69,7 @@ public final class Grep4j {
 		this.profiles = ImmutableList.copyOf(profiles);
 		this.contextControls = null;
 	}
-	
-	
+
 	/**
 	 * 
 	 * This utility method executes the grep command and return the {@link GlobalGrepResult}
@@ -89,7 +88,7 @@ public final class Grep4j {
 	public static GlobalGrepResult grep(String expression, List<Profile> profiles) {
 		return new Grep4j(expression, profiles).execute().andGetResults();
 	}
-	
+
 	/**
 	 * 
 	 * This utility method executes the grep command and return the {@link GlobalGrepResult}
@@ -107,11 +106,10 @@ public final class Grep4j {
 	 * @param contextControls
 	 * @return GlobalGrepResult
 	 */
-	public static GlobalGrepResult grep(String expression, List<Profile> profiles,List<String> contextControls) {
-		return new Grep4j(expression, profiles ,contextControls).execute().andGetResults();
+	public static GlobalGrepResult grep(String expression, List<Profile> profiles, List<String> contextControls) {
+		return new Grep4j(expression, profiles, contextControls).execute().andGetResults();
 	}
 
-	
 	/**
 	 * This method will:
 	 * <ol>
@@ -122,7 +120,7 @@ public final class Grep4j {
 	 * <li>Execute {@link GrepRequest} for each valid {@link Profile}</li>
 	 * </ol>
 	 */
-	public Grep4j execute() {
+	Grep4j execute() {
 		verifyInputs();
 		prepareCommandRequests();
 		executeCommands();
@@ -130,9 +128,9 @@ public final class Grep4j {
 	}
 
 	/**
-	 * @return a Set of {@link SingleGrepResult}s
+	 * @return a {@link GlobalGrepResult}s
 	 */
-	public GlobalGrepResult andGetResults() {
+	GlobalGrepResult andGetResults() {
 		return results;
 	}
 
@@ -157,8 +155,8 @@ public final class Grep4j {
 						grepRequest)));
 			}
 			for (Future<List<SingleGrepResult>> future : grepTaskFutures) {
-				for(SingleGrepResult singleGrepResult : future.get())
-				results.addSingleGrepResult(singleGrepResult);
+				for (SingleGrepResult singleGrepResult : future.get())
+					results.addSingleGrepResult(singleGrepResult);
 			}
 		} catch (Exception e) {
 			throw new RuntimeException("Error when executing the commands", e);
@@ -189,5 +187,5 @@ public final class Grep4j {
 
 	List<String> getContextControls() {
 		return contextControls;
-	}	
+	}
 }

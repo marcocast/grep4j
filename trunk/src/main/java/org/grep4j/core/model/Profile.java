@@ -99,7 +99,7 @@ public class Profile {
 	public ServerDetails getServerDetails() {
 		return serverDetails;
 	}
-	
+
 	/**
 	 * This method adds a wildcard-ed string to the instance of
 	 * {@link Profile} Example "*" it will be used together with the file
@@ -111,7 +111,7 @@ public class Profile {
 	public void setWildcard(String wildcard) {
 		this.wildcard = wildcard;
 	}
-	
+
 	/**
 	 * This method return a wildcard-ed string to the instance of
 	 * {@link Profile} Example "*" it will be used together with the file
@@ -125,18 +125,18 @@ public class Profile {
 	}
 
 	@Override
-    public final boolean equals(Object obj) {
-        return EqualsBuilder.reflectionEquals(this, obj);
-    }
+	public boolean equals(Object obj) {
+		return EqualsBuilder.reflectionEquals(this, obj);
+	}
 
 	@Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
-    }
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
+	}
 
 	@Override
-    public final int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this);
-    }
+	public int hashCode() {
+		return HashCodeBuilder.reflectionHashCode(this);
+	}
 
 }
