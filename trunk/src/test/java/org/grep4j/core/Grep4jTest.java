@@ -27,7 +27,7 @@ public class Grep4jTest {
 	public void init() {
 		List<Profile> profiles = Arrays.asList(new Profile[] { ProfileFixtures
 				.aDummyRemoteProfileWithWildcard(WILDCARD) });
-		
+
 		grep4j = new Grep4j(EXPRESSION, profiles, extraLinesOptions());
 	}
 
