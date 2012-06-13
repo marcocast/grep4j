@@ -22,7 +22,10 @@ import com.google.common.collect.ImmutableList;
  * <pre>
  * List<Profile> profiles = Arrays.asList(aProfile,moreProfiles);
  * 
- * Set<SingleGrepResult> results = grep("USER(12435)", on(profiles()))).getAllGrepResults();
+ * 
+ * GlobalGrepResult result = grep("USER(12435)", on(profiles())));
+ * System.out.println("Total occurrences found : " + result.totalOccurrences());
+ * Set<SingleGrepResult> results = result.getAllGrepResults();
  * for (SingleGrepResult result : results) {			
  * 		System.out.println(result.getText());
  * }
