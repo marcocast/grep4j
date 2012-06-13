@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.grep4j.core.model.Profile;
 import org.grep4j.core.model.ServerDetails;
+import org.grep4j.core.options.ExtraLines;
 
 /**
  * Class container of the grep request
@@ -35,11 +36,11 @@ public class GrepRequest {
 	}
 
 	/**
-	 * Add context controls in a String format {@see ContextControl}
-	 * @param contextControls
+	 * Add Extra lines options {@see ExtraLines}
+	 * @param extraLinesOptions
 	 */
-	public void addContextControls(List<String> contextControls) {
-		this.contextControls = join(contextControls, SPACE);
+	public void addExtraLineOptions(List<ExtraLines> extraLinesOptions) {
+		this.contextControls = join(extraLinesOptions, SPACE);
 	}
 
 	/**
