@@ -26,8 +26,8 @@ import com.google.common.collect.ImmutableList;
  * GlobalGrepResult result = grep("USER(12435)", on(profiles())));
  * System.out.println("Total occurrences found : " + result.totalOccurrences());
  * Set<SingleGrepResult> results = result.getAllGrepResults();
- * for (SingleGrepResult result : results) {			
- * 		System.out.println(result.getText());
+ * for (SingleGrepResult singleResult : results) {			
+ * 		System.out.println(singleResult.getText());
  * }
  * </pre>
  * 
