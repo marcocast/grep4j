@@ -22,6 +22,9 @@ import com.google.common.collect.ImmutableList;
  * Entry Class for the Grep4j API. Usage example:
  * 
  * <pre>
+ * import static org.grep4j.core.fluent.Dictionary.on;
+ * ...
+ * 
  * List<Profile> profiles = Arrays.asList(aProfile,moreProfiles);
  * 
  * 
@@ -35,6 +38,10 @@ import com.google.common.collect.ImmutableList;
  * 
  * Grep4j used for test:
  * <pre>
+ * import static org.grep4j.core.fluent.Dictionary.on;
+ * import static org.grep4j.core.fluent.Dictionary.executing;
+ * ...
+ * 
  * List<Profile> profiles = Arrays.asList(aProfile,moreProfiles);
  * assertThat(executing(grep("USER(12435)", on(profiles))).totalOccurrences(), is(1));
  * </pre>
@@ -100,6 +107,15 @@ public final class Grep4j {
 	 * be passed within single quotes Example : 'CUSTOMER(.*)UPDATE' will
 	 * grep for all the customers * updates
 	 * 
+	 * Example:
+	 * <pre>
+	 * import static org.grep4j.core.fluent.Dictionary.on;
+	 * ...
+	 * 
+	 * grep(expression(), on(profiles()));
+	 * </pre>
+	 * 
+	 * 
 	 * @param expression
 	 * @param profiles
 	 * @return GlobalGrepResult
@@ -117,6 +133,7 @@ public final class Grep4j {
 	* ImmutableList.
 	* Example of ExtraLines is :
 	* <pre>
+	* import static org.grep4j.core.fluent.Dictionary.on;
 	* import static org.grep4j.core.options.ExtraLines.extraLinesAfter;
 	* ...
 	* 
@@ -160,6 +177,7 @@ public final class Grep4j {
 	* ImmutableList.
 	* Example of ExtraLines is :
 	* <pre>
+	* import static org.grep4j.core.fluent.Dictionary.on;
 	* import static org.grep4j.core.options.ExtraLines.extraLinesBefore;
 	* import static org.grep4j.core.options.ExtraLines.extraLinesAfter;
 	* ...
