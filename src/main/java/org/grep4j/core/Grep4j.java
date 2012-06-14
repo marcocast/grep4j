@@ -162,7 +162,7 @@ public final class Grep4j {
 	* @param expression
 	* @param profiles
 	* @param extraLines
-	* @return
+	* @return GlobalGrepResult
 	*/
 	public static GlobalGrepResult grep(String expression, List<Profile> profiles, ExtraLines... extraLines) {
 		return new Grep4j(expression, profiles, Arrays.asList(extraLines)).execute().andGetResults();
@@ -192,7 +192,7 @@ public final class Grep4j {
 	* @param expression
 	* @param profiles
 	* @param extraLines
-	* @return
+	* @return GlobalGrepResult
 	*/
 	public static GlobalGrepResult grep(String expression, List<Profile> profiles, List<ExtraLines> extraLines) {
 		return new Grep4j(expression, profiles, extraLines).execute().andGetResults();
