@@ -17,7 +17,8 @@ import java.util.List;
 import java.util.Set;
 
 import org.grep4j.core.model.Profile;
-import org.grep4j.core.result.TaskResult;
+import org.grep4j.core.result.GrepResult;
+import org.grep4j.core.result.GrepResultsSet;
 import org.testng.annotations.Test;
 
 @Test
@@ -40,17 +41,17 @@ public class WhenGrep4jStartedWithStringToSearchALocalProfile {
 	}
 
 	public void errorStringMustBeFoundOnTheResult() {
-		Set<TaskResult> results = grep(STRING_TO_SEARCH, on(profiles)).getAllGrepResults();
+		GrepResultsSet results = grep(STRING_TO_SEARCH, on(profiles));
 		assertThat(results, containsExpression("ERROR"));
 	}
 
 	public void Only2ErrorStringsMustNotBeFoundOnTheResult() {
-		Set<TaskResult> results = grep("ERROR", on(profiles)).getAllGrepResults();
+		GrepResultsSet results = grep("ERROR", on(profiles));
 		assertThat(results, doesNotContainExpression("3"));
 	}
 
 	public void gzStringsShouldBeFoundOnTheResult() {
-		Set<TaskResult> results = grep("ERROR", on(on(Arrays.asList(localProfileWithWildecard("*"))))).getAllGrepResults();
+		GrepResultsSet results = grep("ERROR", on(on(Arrays.asList(localProfileWithWildecard("*")))));
 		assertThat(results, containsExpression("GZ"));
 	}
 
