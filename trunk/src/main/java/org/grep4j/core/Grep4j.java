@@ -11,8 +11,8 @@ import java.util.concurrent.Future;
 
 import org.grep4j.core.model.Profile;
 import org.grep4j.core.options.ExtraLines;
+import org.grep4j.core.result.GrepResultsSet;
 import org.grep4j.core.result.GrepResult;
-import org.grep4j.core.result.TaskResult;
 import org.grep4j.core.task.GrepRequest;
 import org.grep4j.core.task.GrepTask;
 
@@ -28,9 +28,9 @@ import com.google.common.collect.ImmutableList;
  * List<Profile> profiles = Arrays.asList(aProfile,moreProfiles);
  * 
  * 
- * GlobalGrepResult result = grep("USER(12435)", on(profiles())));
+ * GrepResultsSet results = grep("USER(12435)", on(profiles)));
  * System.out.println("Total occurrences found : " + result.totalOccurrences());
- * Set<SingleGrepResult> results = result.getAllGrepResults();
+ * 
  * for (SingleGrepResult singleResult : results) {			
  * 		System.out.println(singleResult.getText());
  * }
@@ -58,7 +58,7 @@ public final class Grep4j {
 	private final String expression;
 	private final ImmutableList<Profile> profiles;
 	private final ImmutableList<ExtraLines> extraLinesOptions;
-	private final GrepResult results;
+	private final GrepResultsSet results;
 	private final List<GrepRequest> grepRequests;
 
 	/**
@@ -72,7 +72,7 @@ public final class Grep4j {
 	 */
 	Grep4j(String expression, List<Profile> profiles, List<ExtraLines> extraLines) {
 		this.grepRequests = new ArrayList<GrepRequest>();
-		this.results = new GrepResult(expression);
+		this.results = new GrepResultsSet(expression);
 		this.expression = expression;
 		this.profiles = ImmutableList.copyOf(profiles);
 		if (extraLines != null) {
@@ -92,7 +92,7 @@ public final class Grep4j {
 	 */
 	Grep4j(String expression, List<Profile> profiles) {
 		this.grepRequests = new ArrayList<GrepRequest>();
-		this.results = new GrepResult(expression);
+		this.results = new GrepResultsSet(expression);
 		this.expression = expression;
 		this.profiles = ImmutableList.copyOf(profiles);
 		this.extraLinesOptions = null;
@@ -100,7 +100,7 @@ public final class Grep4j {
 
 	/**
 	 * 
-	 * This utility method executes the grep command and return the {@link GrepResult}
+	 * This utility method executes the grep command and return the {@link GrepResultsSet}
 	 * containing the result of the grep 
 	 * 
 	 * Grep4j supports plain text as well as RegEx. Regular expressions must
@@ -120,13 +120,13 @@ public final class Grep4j {
 	 * @param profiles
 	 * @return GlobalGrepResult
 	 */
-	public static GrepResult grep(String expression, List<Profile> profiles) {
+	public static GrepResultsSet grep(String expression, List<Profile> profiles) {
 		return new Grep4j(expression, profiles).execute().andGetResults();
 	}
 
 	/**
 	* 
-	* This utility method executes the grep command and return the {@link GrepResult}
+	* This utility method executes the grep command and return the {@link GrepResultsSet}
 	* containing the result of the grep
 	* 
 	* It also protects the List of profiles and ExtraLines wrapping them into an
@@ -164,13 +164,13 @@ public final class Grep4j {
 	* @param extraLines
 	* @return GlobalGrepResult
 	*/
-	public static GrepResult grep(String expression, List<Profile> profiles, ExtraLines... extraLines) {
+	public static GrepResultsSet grep(String expression, List<Profile> profiles, ExtraLines... extraLines) {
 		return new Grep4j(expression, profiles, Arrays.asList(extraLines)).execute().andGetResults();
 	}
 
 	/**
 	* 
-	* This utility method executes the grep command and return the {@link GrepResult}
+	* This utility method executes the grep command and return the {@link GrepResultsSet}
 	* containing the result of the grep
 	* 
 	* It also protects the List of profiles and ExtraLines wrapping them into an
@@ -194,7 +194,7 @@ public final class Grep4j {
 	* @param extraLines
 	* @return GlobalGrepResult
 	*/
-	public static GrepResult grep(String expression, List<Profile> profiles, List<ExtraLines> extraLines) {
+	public static GrepResultsSet grep(String expression, List<Profile> profiles, List<ExtraLines> extraLines) {
 		return new Grep4j(expression, profiles, extraLines).execute().andGetResults();
 	}
 
@@ -216,9 +216,9 @@ public final class Grep4j {
 	}
 
 	/**
-	 * @return a {@link GrepResult}s
+	 * @return a {@link GrepResultsSet}s
 	 */
-	GrepResult andGetResults() {
+	GrepResultsSet andGetResults() {
 		return results;
 	}
 
@@ -236,14 +236,14 @@ public final class Grep4j {
 	private void executeCommands() {
 		try {
 			ExecutorService executorService = Executors.newFixedThreadPool(grepRequests.size());
-			Set<Future<List<TaskResult>>> grepTaskFutures = new HashSet<Future<List<TaskResult>>>();
+			Set<Future<List<GrepResult>>> grepTaskFutures = new HashSet<Future<List<GrepResult>>>();
 			for (GrepRequest grepRequest : grepRequests) {
 				grepTaskFutures.add(executorService.submit(new GrepTask(
 						grepRequest)));
 			}
-			for (Future<List<TaskResult>> future : grepTaskFutures) {
-				for (TaskResult singleGrepResult : future.get())
-					results.addSingleGrepResult(singleGrepResult);
+			for (Future<List<GrepResult>> future : grepTaskFutures) {
+				for (GrepResult singleGrepResult : future.get())
+					results.add(singleGrepResult);
 			}
 		} catch (Exception e) {
 			throw new RuntimeException("Error when executing the commands", e);

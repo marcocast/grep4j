@@ -1,58 +1,68 @@
 package org.grep4j.core.result;
 
-import static org.grep4j.core.fluent.Dictionary.of;
-
-import java.util.HashSet;
-import java.util.Set;
+import java.util.regex.Pattern;
 
 /**
- * This class contains all the results coming from the grep task.
+ * This class contains the result of the grep in String format.
  * 
  * @author Marco Castigliego
+ * @author Giovanni Gargiulo
  *
  */
 public class GrepResult {
 
-	private final Set<TaskResult> grepResults;
-	private final String expression;
+	private final String profileName;
 
-	/**
-	 * GlobalGrepResult is a container of different {@link TaskResult}  
-	 * 
-	 * @param the expression used to grep
+	private final String fileName;
+
+	private final String text;
+
+	public GrepResult(String profileName, String fileName, String text) {
+		super();
+		this.profileName = profileName;
+		this.fileName = fileName;
+		this.text = text;
+	}
+
+	/** 
+	 * @return the profile name associated with this grep result
 	 */
-	public GrepResult(String expression) {
-		this.expression = expression;
-		grepResults = new HashSet<TaskResult>();
+	public String getProfileName() {
+		return profileName;
+	}
+
+	/** 
+	 * @return the file name associated with this grep result
+	 */
+	public String getFileName() {
+		return fileName;
+	}
+
+	/** 
+	 * @return the text containing the result of the grep
+	 */
+	public String getText() {
+		return text;
 	}
 
 	/**
-	 * Add a {@link TaskResult} to the Set of results
+	 * Given an expression, it counts how many times the pattern is found in the result
+	 * Example: getOccourrences(of(expression));
+	 * This method will ignore the 1st and last single quotes in order to compile regex:
+	 * expression.replaceAll("(^')|('$)", "")
 	 * 
-	 * @param singleGrepResult
+	 * @param expression
+	 * @return total number of time the patter is found
 	 */
-	public void addSingleGrepResult(TaskResult singleGrepResult) {
-		grepResults.add(singleGrepResult);
-	}
-
-	/**
-	 * @return Set<SingleGrepResult>
-	 */
-	public Set<TaskResult> getAllGrepResults() {
-		return grepResults;
-	}
-
-	/**
-	 * it counts how many times the pattern is found in all the results
-	 * 
-	 * @return total number of time the patter is found in all the GrepResults
-	 */
-	public int totalOccurrences() {
+	public int getOccourrences(String expression) {
 		int occurrences = 0;
-		for (TaskResult result : grepResults) {
-			occurrences += result.getOccourrences(of(expression));
+		Pattern pattern = Pattern.compile(expression.replaceAll("(^')|('$)", ""));
+		java.util.regex.Matcher matcher = pattern.matcher(this.getText());
+		while (matcher.find()) {
+			occurrences++;
 		}
 		return occurrences;
 	}
 
+	
 }
