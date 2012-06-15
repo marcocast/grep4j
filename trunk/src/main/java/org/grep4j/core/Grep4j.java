@@ -11,8 +11,8 @@ import java.util.concurrent.Future;
 
 import org.grep4j.core.model.Profile;
 import org.grep4j.core.options.ExtraLines;
-import org.grep4j.core.result.GrepResultsSet;
 import org.grep4j.core.result.GrepResult;
+import org.grep4j.core.result.GrepResultsSet;
 import org.grep4j.core.task.GrepRequest;
 import org.grep4j.core.task.GrepTask;
 
