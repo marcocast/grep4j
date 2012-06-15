@@ -12,7 +12,7 @@ import org.grep4j.core.command.linux.grep.AbstractGrepCommand;
 import org.grep4j.core.command.linux.grep.GzGrepCommand;
 import org.grep4j.core.command.linux.grep.SimpleGrepCommand;
 import org.grep4j.core.command.linux.ls.LsCommand;
-import org.grep4j.core.result.SingleGrepResult;
+import org.grep4j.core.result.TaskResult;
 
 /**
  * Callable class used to run {@link CommandExecutor}s.
@@ -30,7 +30,7 @@ import org.grep4j.core.result.SingleGrepResult;
  * @author Giovanni Gargiulo
  *
  */
-public class GrepTask implements Callable<List<SingleGrepResult>> {
+public class GrepTask implements Callable<List<TaskResult>> {
 
 	private final GrepRequest grepRequest;
 
@@ -38,7 +38,7 @@ public class GrepTask implements Callable<List<SingleGrepResult>> {
 
 	private final List<String> matchingFiles;
 	private final List<AbstractGrepCommand> grepList;
-	private final List<SingleGrepResult> results;
+	private final List<TaskResult> results;
 
 	public GrepTask(GrepRequest grepRequest) {
 
@@ -48,12 +48,12 @@ public class GrepTask implements Callable<List<SingleGrepResult>> {
 
 		this.matchingFiles = new ArrayList<String>();
 		this.grepList = new ArrayList<AbstractGrepCommand>();
-		this.results = new ArrayList<SingleGrepResult>();
+		this.results = new ArrayList<TaskResult>();
 
 	}
 
 	@Override
-	public List<SingleGrepResult> call() {
+	public List<TaskResult> call() {
 
 		init();
 
@@ -102,7 +102,7 @@ public class GrepTask implements Callable<List<SingleGrepResult>> {
 	private void executeGrepCommands() {
 		for (AbstractGrepCommand command : grepList) {
 			String result = commandExecutor.execute(command).andReturnResult();
-			SingleGrepResult taskResult = new SingleGrepResult(grepRequest
+			TaskResult taskResult = new TaskResult(grepRequest
 					.getProfile().getName(), command.getFile(), result);
 			results.add(taskResult);
 		}

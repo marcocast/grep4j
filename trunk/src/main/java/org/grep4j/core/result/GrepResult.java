@@ -11,34 +11,34 @@ import java.util.Set;
  * @author Marco Castigliego
  *
  */
-public class GlobalGrepResult {
+public class GrepResult {
 
-	private final Set<SingleGrepResult> grepResults;
+	private final Set<TaskResult> grepResults;
 	private final String expression;
 
 	/**
-	 * GlobalGrepResult is a container of different {@link SingleGrepResult}  
+	 * GlobalGrepResult is a container of different {@link TaskResult}  
 	 * 
 	 * @param the expression used to grep
 	 */
-	public GlobalGrepResult(String expression) {
+	public GrepResult(String expression) {
 		this.expression = expression;
-		grepResults = new HashSet<SingleGrepResult>();
+		grepResults = new HashSet<TaskResult>();
 	}
 
 	/**
-	 * Add a {@link SingleGrepResult} to the Set of results
+	 * Add a {@link TaskResult} to the Set of results
 	 * 
 	 * @param singleGrepResult
 	 */
-	public void addSingleGrepResult(SingleGrepResult singleGrepResult) {
+	public void addSingleGrepResult(TaskResult singleGrepResult) {
 		grepResults.add(singleGrepResult);
 	}
 
 	/**
 	 * @return Set<SingleGrepResult>
 	 */
-	public Set<SingleGrepResult> getAllGrepResults() {
+	public Set<TaskResult> getAllGrepResults() {
 		return grepResults;
 	}
 
@@ -49,7 +49,7 @@ public class GlobalGrepResult {
 	 */
 	public int totalOccurrences() {
 		int occurrences = 0;
-		for (SingleGrepResult result : grepResults) {
+		for (TaskResult result : grepResults) {
 			occurrences += result.getOccourrences(of(expression));
 		}
 		return occurrences;

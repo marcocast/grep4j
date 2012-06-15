@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
  * @author Giovanni Gargiulo
  *
  */
-public class SingleGrepResult {
+public class TaskResult {
 
 	private final String profileName;
 
@@ -17,7 +17,7 @@ public class SingleGrepResult {
 
 	private final String text;
 
-	public SingleGrepResult(String profileName, String fileName, String text) {
+	public TaskResult(String profileName, String fileName, String text) {
 		super();
 		this.profileName = profileName;
 		this.fileName = fileName;

@@ -3,18 +3,18 @@ package org.grep4j.core.task;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-import org.grep4j.core.result.SingleGrepResult;
+import org.grep4j.core.result.TaskResult;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 @Test
 public class GrepResultTest {
 
-	SingleGrepResult grepResult;
+	TaskResult grepResult;
 	
 	@BeforeTest
 	public void init() {
-		grepResult = new SingleGrepResult("profileName", "fileName", "customer Marco(id=12345) has been updated successfully");
+		grepResult = new TaskResult("profileName", "fileName", "customer Marco(id=12345) has been updated successfully");
 	}
 	
 	public void testRegEx() {
