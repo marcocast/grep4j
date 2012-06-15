@@ -235,6 +235,7 @@ public final class Grep4j {
 
 	private void executeCommands() {
 		try {
+			results.clear();
 			ExecutorService executorService = Executors.newFixedThreadPool(grepRequests.size());
 			Set<Future<List<GrepResult>>> grepTaskFutures = new HashSet<Future<List<GrepResult>>>();
 			for (GrepRequest grepRequest : grepRequests) {
