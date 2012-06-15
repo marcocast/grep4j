@@ -74,10 +74,17 @@ public class GrepRequest {
 	}
 
 	/**
+	 * If profile.getFileLocation() does not end with "/", this method will insert "/"
+	 * between the fileLocation and the fileName; 
+	 * 
 	 * @return the absolute path of the file to grep
 	 */
 	public String getFileAbsolutePath() {
-		return profile.getFileLocation() + profile.getFileName();
+		String separator = "/";
+		if (profile.getFileLocation().endsWith("/")) {
+			separator = "";
+		}
+		return profile.getFileLocation() + separator + profile.getFileName();
 	}
 
 	/**
