@@ -14,10 +14,8 @@ import static org.junit.Assert.assertThat;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 import org.grep4j.core.model.Profile;
-import org.grep4j.core.result.GrepResult;
 import org.grep4j.core.result.GrepResultsSet;
 import org.testng.annotations.Test;
 
