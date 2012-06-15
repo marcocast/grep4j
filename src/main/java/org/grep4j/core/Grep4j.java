@@ -31,7 +31,7 @@ import com.google.common.collect.ImmutableList;
  * GrepResultsSet results = grep("USER(12435)", on(profiles)));
  * System.out.println("Total occurrences found : " + result.totalOccurrences());
  * 
- * for (SingleGrepResult singleResult : results) {			
+ * for (GrepResult singleResult : results) {			
  * 		System.out.println(singleResult.getText());
  * }
  * </pre>
