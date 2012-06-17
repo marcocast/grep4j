@@ -74,7 +74,7 @@ public class SshCommandExecutorTest {
 		expect(sshClient.startSession()).andReturn(session);
 		expect(session.exec(eq(COMMAND_TO_EXECUTE))).andReturn(command);
 		expect(command.getInputStream()).andReturn(
-				new ByteArrayInputStream(new String("Whatever").getBytes()));
+				new ByteArrayInputStream("Whatever".getBytes()));
 
 		// Command cmd = session.exec(command.getCommandToExecute());
 		// result = IOUtils.readFully(cmd.getInputStream()).toString();

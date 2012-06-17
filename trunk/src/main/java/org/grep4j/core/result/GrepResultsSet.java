@@ -98,7 +98,7 @@ public class GrepResultsSet implements Collection<GrepResult> {
 
 	@Override
 	public boolean retainAll(Collection<?> c) {
-		grepResults.remove(c);
+		grepResults.retainAll(c);
 		return false;
 	}
 
