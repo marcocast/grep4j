@@ -43,21 +43,17 @@ public class WhenAServeDetailIsInterpreted {
 	
 	private ServerDetails serverDetails;
 	
-	@BeforeTest
-	public void initServerDetails(){
-		serverDetails = new ServerDetails();		
-	}
 	
 	@Test(dataProvider = "correctLocalHosts")
 	public void andTheHostIsLocalALocalCommandExecutorShouldBeUsed(String host){	
-		serverDetails.setHost(host);
+		serverDetails = new ServerDetails(host);
 		CommandExecutor commandExecutor = ServerDetailsInterpreter.getCommandExecutor(serverDetails);
 		assertThat(commandExecutor, is(LocalCommandExecutor.class));
 	}
 	
 	@Test(dataProvider = "incorrectLocalHosts")
 	public void andTheHostIsNotLocalASshCommandExecutorShouldBeUsed(String host){	
-		serverDetails.setHost(host);
+		serverDetails = new ServerDetails(host);
 		CommandExecutor commandExecutor = ServerDetailsInterpreter.getCommandExecutor(serverDetails);
 		assertThat(commandExecutor, is(SshCommandExecutor.class));
 	}

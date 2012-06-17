@@ -13,7 +13,7 @@ import org.apache.commons.lang.builder.ToStringStyle;
  */
 public class ServerDetails {
 
-	private String host;
+	private final String host;
 	private String user;
 	private String password;
 	
@@ -26,7 +26,7 @@ public class ServerDetails {
 	 * 
 	 * @param host
 	 */
-	public void setHost(String host) {
+	public ServerDetails(String host){
 		this.host = host;
 	}
 	
