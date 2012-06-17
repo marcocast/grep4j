@@ -43,7 +43,7 @@ public class WhenGrep4jStartedWithStringToSearchALocalProfile {
 		assertThat(results, containsExpression("ERROR"));
 	}
 
-	public void Only2ErrorStringsMustNotBeFoundOnTheResult() {
+	public void only2ErrorStringsMustNotBeFoundOnTheResult() {
 		GrepResultsSet results = grep("ERROR", on(profiles));
 		assertThat(results, doesNotContainExpression("3"));
 	}
