@@ -1,7 +1,6 @@
 package org.grep4j.core.task;
 
 import static org.grep4j.core.fixtures.GrepRequestFixtures.localGrepERRORrequest;
-import static org.grep4j.core.fixtures.GrepRequestFixtures.localGzGrepERRORrequest;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
@@ -35,7 +34,7 @@ public class WhenAGrepTaskIsExecuted {
 		GrepTask grepTask = new GrepTask(localGrepERRORrequest(expression));
 		commandExecutor.init();
 		when(commandExecutor.execute(any(LsCommand.class))).thenReturn(commandExecutor);
-		when(commandExecutor.andReturnResult()).thenReturn(localGrepERRORrequest(expression).getFileAbsolutePath());
+		//when(commandExecutor.andReturnResult()).thenReturn(localGrepERRORrequest(expression).getProfile().getFilePath());
 		when(commandExecutor.execute(any(SimpleGrepCommand.class))).thenReturn(commandExecutor);
 		when(commandExecutor.andReturnResult()).thenReturn(expression);
 		grepTask.setCommandExecutor(commandExecutor);
@@ -50,7 +49,7 @@ public class WhenAGrepTaskIsExecuted {
 		GrepTask grepTask = new GrepTask(localGrepERRORrequest(expression));
 		commandExecutor.init();
 		when(commandExecutor.execute(any(LsCommand.class))).thenReturn(commandExecutor);
-		when(commandExecutor.andReturnResult()).thenReturn(localGzGrepERRORrequest(expression).getFileAbsolutePath());
+		//when(commandExecutor.andReturnResult()).thenReturn(localGzGrepERRORrequest(expression).getProfile().getFilePath());
 		when(commandExecutor.execute(any(SimpleGrepCommand.class))).thenReturn(commandExecutor);
 		when(commandExecutor.andReturnResult()).thenReturn(expression);
 		grepTask.setCommandExecutor(commandExecutor);

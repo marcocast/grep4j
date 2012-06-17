@@ -18,8 +18,7 @@ public class ServerDetailsTest {
 	private final static String password = "password";
 
 	public void testGettersAndSetters() {
-		ServerDetails serverDetails = new ServerDetails();
-		serverDetails.setHost(host);
+		ServerDetails serverDetails = new ServerDetails(host);
 		serverDetails.setUser(user);
 		serverDetails.setPassword(password);
 		assertThat(serverDetails.getHost(), is(host));

@@ -76,11 +76,6 @@ public class GrepTask implements Callable<List<GrepResult>> {
 	private void listMatchingFiles() {
 		LsCommand ls = new LsCommand(grepRequest.getProfile());
 
-		if (grepRequest.getWildcard() != null
-				&& !grepRequest.getWildcard().isEmpty()) {
-			ls.addWildcard(grepRequest.getWildcard());
-		}
-
 		String filenames = commandExecutor.execute(ls).andReturnResult();
 
 		matchingFiles.addAll(aListOf(filenames));

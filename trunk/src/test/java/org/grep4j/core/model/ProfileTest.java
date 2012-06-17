@@ -14,18 +14,13 @@ import org.testng.annotations.Test;
 @Test
 public class ProfileTest {
 
-	private final static String fileLocation = "fileLocation";
-	private final static String fileName = "fileName";
+	private final static String filePath = "filePathTest";
 	private final static String name = "name";
 
 	public void testGettersAndSetters() {
-		Profile profile = new Profile();
-		profile.setFileLocation(fileLocation);
-		profile.setFileName(fileName);
-		profile.setName(name);
+		Profile profile = new Profile(name,filePath);
 		profile.setServerDetails(null);
-		assertThat(profile.getFileLocation(), is(fileLocation));
-		assertThat(profile.getFileName(), is(fileName));
+		assertThat(profile.getFilePath(), is(filePath));
 		assertThat(profile.getName(), is(name));
 		assertThat(profile.getServerDetails(), nullValue());
 	}

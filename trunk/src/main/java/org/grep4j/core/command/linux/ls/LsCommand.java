@@ -22,26 +22,17 @@ public class LsCommand implements LinuxCommand {
 
 	private final String fileAbsolutePath;
 
-	private String wildcard;
+	private final String wildcard;
 
 	public LsCommand(Profile profile) {
 		this.profile = profile;
-		this.fileAbsolutePath = getFileAbsolutePath();
-		this.wildcard = "";
-	}
-
-	/**
-	 * If profile.getFileLocation() does not end with "/", this method will insert "/"
-	 * between the fileLocation and the fileName; 
-	 * 
-	 * @return the absolute path of the file to grep
-	 */
-	public String getFileAbsolutePath() {
-		String separator = "/";
-		if (profile.getFileLocation().endsWith("/")) {
-			separator = "";
+		this.fileAbsolutePath = profile.getFilePath();
+		if(profile.getWildcard() != null && !profile.getWildcard().isEmpty()){
+			this.wildcard = profile.getWildcard();
+		}else{
+			this.wildcard = "";
 		}
-		return profile.getFileLocation() + separator + profile.getFileName();
+		
 	}
 
 	@Override
@@ -52,10 +43,6 @@ public class LsCommand implements LinuxCommand {
 		command.append(fileAbsolutePath);
 		command.append(wildcard);
 		return command.toString();
-	}
-
-	public void addWildcard(String wildcard) {
-		this.wildcard = wildcard;
 	}
 
 }

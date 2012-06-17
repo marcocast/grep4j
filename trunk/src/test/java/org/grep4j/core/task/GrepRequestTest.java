@@ -14,7 +14,7 @@ public class GrepRequestTest {
 	
 	@BeforeMethod
 	public void init() {
-		grepRequest = new GrepRequest("pattern", new Profile());
+		grepRequest = new GrepRequest("pattern", new Profile("testProfile","path"));
 	}
 	
 	public void testNullWildCard() {

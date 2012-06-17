@@ -16,38 +16,26 @@ public class ProfileFixtures {
 	}
 
 	public static Profile aDummyRemoteProfile() {
-		Profile profile = new Profile();
-		profile.setName("dummy remote profiel");
-		profile.setFileLocation("/path/to/file/");
-		profile.setFileName("filename");
+		Profile profile = new Profile("dummy remote profiel","/path/to/file/filename.txt");
 		profile.setServerDetails(aDummyRemoteServerDetails());
 		return profile;
 	}
 	
 	public static Profile aDummyRemoteProfileWithWildcard(String wildcard) {
-		Profile profile = new Profile();
-		profile.setName("dummy remote profiel");
-		profile.setFileLocation("/path/to/file/");
-		profile.setFileName("filename");
+		Profile profile = new Profile("dummy remote profiel","/path/to/file/filename.txt");
 		profile.setWildcard(wildcard);
 		profile.setServerDetails(aDummyRemoteServerDetails());
 		return profile;
 	}
 	
 	public static Profile anotherDummyRemoteProfile() {
-		Profile profile = new Profile();
-		profile.setName("another dummy remote profile");
-		profile.setFileLocation("/apath/to/file/");
-		profile.setFileName("filename");
+		Profile profile = new Profile("dummy remote profiel","/path/to/file/filename.txt");
 		profile.setServerDetails(anotherDummyRemoteServerDetails());
 		return profile;
 	}
 	
 	public static Profile aRemoteProfileWithUnknownServers() {
-		Profile profile = new Profile();
-		profile.setName("dummy remote profiel");
-		profile.setFileLocation("/path/to/file/");
-		profile.setFileName("filename");
+		Profile profile = new Profile("dummy remote profiel","/path/to/file/filename.txt");
 		profile.setServerDetails(aServerDetailsWithUnknownHostname());
 		return profile;
 	}
@@ -59,10 +47,7 @@ public class ProfileFixtures {
 		if (isWindows()) {
 			resourcePath = resourcePath.replaceAll(":", "");
 		}
-		Profile profile = new Profile();
-		profile.setName("local");
-		profile.setFileLocation(resourcePath.replaceAll(fileName, ""));
-		profile.setFileName(fileName);
+		Profile profile = new Profile("local",resourcePath);
 		profile.setServerDetails(localhostServerDetails());
 		return profile;
 	}
@@ -74,10 +59,7 @@ public class ProfileFixtures {
 		if (isWindows()) {
 			resourcePath = resourcePath.replaceAll(":", "");
 		}
-		Profile profile = new Profile();
-		profile.setName("local");
-		profile.setFileLocation(resourcePath.replaceAll(fileName, ""));
-		profile.setFileName(fileName);
+		Profile profile = new Profile("local",resourcePath);
 		profile.setWildcard(wildcard);
 		profile.setServerDetails(localhostServerDetails());
 		return profile;
@@ -90,10 +72,7 @@ public class ProfileFixtures {
 		if (isWindows()) {
 			resourcePath = resourcePath.replaceAll(":", "");
 		}
-		Profile profile = new Profile();
-		profile.setName("local");
-		profile.setFileLocation(resourcePath.replaceAll(fileName, ""));
-		profile.setFileName(fileName);
+		Profile profile = new Profile("local",resourcePath);
 		profile.setServerDetails(localhostServerDetails());
 		return profile;
 	}

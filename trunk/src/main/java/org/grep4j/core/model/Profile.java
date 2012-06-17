@@ -20,45 +20,21 @@ import org.apache.commons.lang.builder.ToStringStyle;
 @Immutable
 public class Profile {
 
-	private String name;
-	private String fileLocation;
-	private String fileName;
+	private final String name;
+	private final String filePath;
 	private ServerDetails serverDetails;
 	private String wildcard;
 
 	/**
-	 * String unique identifier for this profile
-	 * 
-	 * @param profile
-	 *            name
+	 * 	
+	 * @param name unique identifier for this profile
+	 * @param filePath absolute path of where the file to grep exists. Example: "/opt/jboss/server/log/server.log"
 	 */
-	public void setName(String name) {
+	public Profile(String name,String filePath){
 		this.name = name;
+		this.filePath = filePath;
 	}
-
-	/**
-	 * The file location is the absolute path of where the file to grep exists.
-	 * Example: "/opt/jboss/server/log/"
-	 * 
-	 * The last "/" is mandatory
-	 * 
-	 * @param file
-	 *            location
-	 */
-	public void setFileLocation(String fileLocation) {
-		this.fileLocation = fileLocation;
-	}
-
-	/**
-	 * The file name that needs to be grep Example: server.log
-	 * 
-	 * @param file
-	 *            name
-	 */
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
-
+	
 	/**
 	 * The {@link ServerDetails} needed to connect to the remote or local server
 	 * 
@@ -78,21 +54,12 @@ public class Profile {
 	}
 
 	/**
-	 * Name unique identifier for this profile
-	 * 
-	 * @return
-	 */
-	public String getFileName() {
-		return fileName;
-	}
-
-	/**
-	 * The file location is the absolute path of where the file to grep exists.
+	 * The file path is the absolute path of where the file to grep exists.
 	 * 
 	 * @return file location
 	 */
-	public String getFileLocation() {
-		return fileLocation;
+	public String getFilePath() {
+		return filePath;
 	}
 
 	/**
