@@ -1,8 +1,8 @@
 package org.grep4j.core.command.linux.grep;
 
-import org.grep4j.core.command.linux.LinuxCommand;
+import org.grep4j.core.command.ExecutableCommand;
 
-public abstract class AbstractGrepCommand implements LinuxCommand {
+public abstract class AbstractGrepCommand implements ExecutableCommand {
 
 	protected static final String SPACE = " ";
 	protected static final String GREP_COMMAND = "egrep";

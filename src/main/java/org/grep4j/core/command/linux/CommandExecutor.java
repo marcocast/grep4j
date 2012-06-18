@@ -1,5 +1,6 @@
 package org.grep4j.core.command.linux;
 
+import org.grep4j.core.command.ExecutableCommand;
 import org.grep4j.core.model.ServerDetails;
 
 /**
@@ -22,7 +23,7 @@ public abstract class CommandExecutor {
 
 	public abstract void quit();
 
-	public abstract CommandExecutor execute(LinuxCommand command);
+	public abstract CommandExecutor execute(ExecutableCommand command);
 
 	/**
 	 * @return the result of the command in a String format
