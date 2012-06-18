@@ -11,6 +11,7 @@ import net.schmizz.sshj.connection.channel.direct.Session.Command;
 import net.schmizz.sshj.transport.TransportException;
 import net.schmizz.sshj.transport.verification.PromiscuousVerifier;
 
+import org.grep4j.core.command.ExecutableCommand;
 import org.grep4j.core.model.ServerDetails;
 
 /**
@@ -75,7 +76,7 @@ public class SshCommandExecutor extends CommandExecutor {
 	}
 
 	@Override
-	public CommandExecutor execute(LinuxCommand command) {
+	public CommandExecutor execute(ExecutableCommand command) {
 		try {
 			startSession();
 			executeCommand(command);
@@ -104,7 +105,7 @@ public class SshCommandExecutor extends CommandExecutor {
 		session.close();
 	}
 
-	private void executeCommand(LinuxCommand command)
+	private void executeCommand(ExecutableCommand command)
 			throws ConnectionException, TransportException, IOException {
 		Command cmd = session.exec(command.getCommandToExecute());
 		result = IOUtils.readFully(cmd.getInputStream()).toString();

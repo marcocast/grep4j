@@ -201,6 +201,7 @@ public final class Grep4j {
 	/**
 	 * This method will:
 	 * <ol>
+	 * <li>Clean all result and request lists</li>
 	 * <li>Verify the input checking that mandatory fields have been correctly
 	 * populated</li>
 	 * <li>Prepare {@link GrepRequest}s to be executed, based on the inputs
@@ -209,10 +210,16 @@ public final class Grep4j {
 	 * </ol>
 	 */
 	Grep4j execute() {
+		clean();
 		verifyInputs();
 		prepareCommandRequests();
 		executeCommands();
 		return this;
+	}
+
+	private void clean() {
+		grepRequests.clear();
+		results.clear();
 	}
 
 	/**
@@ -235,7 +242,6 @@ public final class Grep4j {
 
 	private void executeCommands() {
 		try {
-			results.clear();
 			ExecutorService executorService = Executors.newFixedThreadPool(grepRequests.size());
 			Set<Future<List<GrepResult>>> grepTaskFutures = new HashSet<Future<List<GrepResult>>>();
 			for (GrepRequest grepRequest : grepRequests) {
@@ -252,7 +258,6 @@ public final class Grep4j {
 	}
 
 	void prepareCommandRequests() {
-		grepRequests.clear();
 		for (Profile profile : profiles) {
 			GrepRequest grepRequest = new GrepRequest(expression, profile);
 			if (extraLinesOptions != null && !extraLinesOptions.isEmpty()) {

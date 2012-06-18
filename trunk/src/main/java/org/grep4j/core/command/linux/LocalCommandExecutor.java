@@ -6,6 +6,7 @@ import net.schmizz.sshj.common.IOUtils;
 import net.schmizz.sshj.connection.ConnectionException;
 import net.schmizz.sshj.transport.TransportException;
 
+import org.grep4j.core.command.ExecutableCommand;
 import org.grep4j.core.model.ServerDetails;
 
 /**
@@ -30,7 +31,7 @@ public class LocalCommandExecutor extends CommandExecutor {
 	}
 
 	@Override
-	public CommandExecutor execute(LinuxCommand command) {
+	public CommandExecutor execute(ExecutableCommand command) {
 		try {
 			executeCommand(command);
 		} catch (Exception e) {
@@ -39,7 +40,7 @@ public class LocalCommandExecutor extends CommandExecutor {
 		return this;
 	}
 
-	private void executeCommand(LinuxCommand command)
+	private void executeCommand(ExecutableCommand command)
 			throws ConnectionException, TransportException, IOException {
 		String[] commands = { "bash", "-c", command.getCommandToExecute() };
 		try {
