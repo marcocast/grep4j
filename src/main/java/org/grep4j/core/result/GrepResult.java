@@ -2,6 +2,8 @@ package org.grep4j.core.result;
 
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * This class contains the result of the grep in String format.
  * 
@@ -16,7 +18,7 @@ public class GrepResult {
 	private final String fileName;
 
 	private final String text;
-	
+
 	private final boolean regularExpression;
 
 	public GrepResult(String profileName, String fileName, String text, boolean regularExpression) {
@@ -59,10 +61,14 @@ public class GrepResult {
 	 */
 	public int getOccourrences(String expression) {
 		int occurrences = 0;
-		Pattern pattern = Pattern.compile(expression);
-		java.util.regex.Matcher matcher = pattern.matcher(this.getText());
-		while (matcher.find()) {
-			occurrences++;
+		if (regularExpression) {
+			Pattern pattern = Pattern.compile(expression);
+			java.util.regex.Matcher matcher = pattern.matcher(this.getText());
+			while (matcher.find()) {
+				occurrences++;
+			}
+		} else {
+			occurrences = StringUtils.countMatches(this.getText(), expression);
 		}
 		return occurrences;
 	}

@@ -18,7 +18,8 @@ public class GrepResultTest {
 	}
 
 	public void testRegEx() {
-		assertThat(grepResult.getOccourrences("'customer(.*)updated'"), is(1));
+		grepResult = new GrepResult("profileName", "fileName", "customer Marco(id=12345) has been updated successfully", true);
+		assertThat(grepResult.getOccourrences("customer(.*)updated"), is(1));
 		assertThat(grepResult.getOccourrences("Marco"), is(1));
 	}
 
