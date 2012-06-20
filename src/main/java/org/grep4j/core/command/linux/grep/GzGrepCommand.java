@@ -29,7 +29,9 @@ public class GzGrepCommand extends AbstractGrepCommand {
 		command.append(SPACE);
 		command.append(GREP_COMMAND);
 		command.append(SPACE);
+		command.append(SEP);
 		command.append(expression);
+		command.append(SEP);
 		appendContextControl();
 		return command.toString();
 	}

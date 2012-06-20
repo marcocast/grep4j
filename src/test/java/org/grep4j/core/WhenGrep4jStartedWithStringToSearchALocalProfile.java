@@ -73,4 +73,8 @@ public class WhenGrep4jStartedWithStringToSearchALocalProfile {
 		assertThat(executing(grep("ERROR33", on(profiles))).totalOccurrences(), is(0));
 	}
 
+	public void errorMultipleTokenStringStringAppearsOneTime() {
+		assertThat(executing(grep("has been updated", on(profiles))).totalOccurrences(), is(1));
+	}
+
 }
