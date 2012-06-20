@@ -30,7 +30,7 @@ public class Grep4jTest {
 		List<Profile> profiles = Arrays.asList(new Profile[] { ProfileFixtures
 				.aDummyRemoteProfileWithWildcard(WILDCARD) });
 
-		grep4j = new Grep4j(EXPRESSION, profiles, Arrays.asList(extraLinesAfter(AFTER_5), extraLinesBefore(BEFORE_3)));
+		grep4j = new Grep4j(EXPRESSION, profiles, Arrays.asList(extraLinesAfter(AFTER_5), extraLinesBefore(BEFORE_3)), false);
 	}
 
 	public void testAfter() {

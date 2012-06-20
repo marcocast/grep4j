@@ -11,21 +11,21 @@ public class SimpleGrepCommandRegExTest extends GrepCommandTest {
 	public void testGetFile() {
 		String file = "/file/";
 		String expression = "expression";
-		SimpleGrepCommand simpleGrepCommand = new SimpleGrepCommand(expression, file);
+		SimpleGrepCommand simpleGrepCommand = new SimpleGrepCommand(expression, file, false);
 		assertThat(simpleGrepCommand.getFile(), is(file));
 	}
 
 	@Test(dataProvider = "expressionsAndFile")
 	public void testGetCommandToExecute(String expression, String file) {
-		SimpleGrepCommand simpleGrepCommand = new SimpleGrepCommand(expression, file);
-		assertThat(simpleGrepCommand.getCommandToExecute(), is("egrep " + "\"" + expression + "\"" + " " + file));
+		SimpleGrepCommand simpleGrepCommand = new SimpleGrepCommand(expression, file, false);
+		assertThat(simpleGrepCommand.getCommandToExecute(), is("grep " + "\"" + expression + "\"" + " " + file));
 	}
 
 	@Test(dataProvider = "expressionsAndFile")
 	public void testGetCommandToExecuteWithContextControll(String expression, String file) {
-		SimpleGrepCommand simpleGrepCommand = new SimpleGrepCommand(expression, file);
+		SimpleGrepCommand simpleGrepCommand = new SimpleGrepCommand(expression, file, false);
 		String contextControl = "-A";
 		simpleGrepCommand.setContextControls(contextControl);
-		assertThat(simpleGrepCommand.getCommandToExecute(), is("egrep " + "\"" + expression + "\"" + " " + file + " " + contextControl));
+		assertThat(simpleGrepCommand.getCommandToExecute(), is("grep " + "\"" + expression + "\"" + " " + file + " " + contextControl));
 	}
 }

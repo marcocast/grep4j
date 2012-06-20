@@ -6,9 +6,11 @@ public abstract class AbstractGrepCommand implements ExecutableCommand {
 
 	protected static final String SPACE = " ";
 	protected static final String SEP = "\"";
-	protected static final String GREP_COMMAND = "egrep";
+	protected static final String EGREP_COMMAND = "egrep";
+	protected static final String GREP_COMMAND = "grep";
 
 	protected final String file;
+	protected final boolean regexExpression;
 	protected final String expression;
 	protected String contextControls;
 
@@ -18,10 +20,19 @@ public abstract class AbstractGrepCommand implements ExecutableCommand {
 	 * @param expression to search
 	 * @param file to grep
 	 */
-	public AbstractGrepCommand(String expression, String file) {
+	protected AbstractGrepCommand(String expression, String file, boolean regexExpression) {
 		this.expression = expression;
 		this.file = file;
 		this.command = new StringBuilder();
+		this.regexExpression = regexExpression;
+	}
+
+	protected String getGrepCommand() {
+		if (regexExpression) {
+			return EGREP_COMMAND;
+		} else {
+			return GREP_COMMAND;
+		}
 	}
 
 	/**

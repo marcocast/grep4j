@@ -16,12 +16,15 @@ public class GrepResult {
 	private final String fileName;
 
 	private final String text;
+	
+	private final boolean regularExpression;
 
-	public GrepResult(String profileName, String fileName, String text) {
+	public GrepResult(String profileName, String fileName, String text, boolean regularExpression) {
 		super();
 		this.profileName = profileName;
 		this.fileName = fileName;
 		this.text = text;
+		this.regularExpression = regularExpression;
 	}
 
 	/** 
@@ -56,7 +59,7 @@ public class GrepResult {
 	 */
 	public int getOccourrences(String expression) {
 		int occurrences = 0;
-		Pattern pattern = Pattern.compile(expression.replaceAll("(^')|('$)", ""));
+		Pattern pattern = Pattern.compile(expression);
 		java.util.regex.Matcher matcher = pattern.matcher(this.getText());
 		while (matcher.find()) {
 			occurrences++;
@@ -64,5 +67,4 @@ public class GrepResult {
 		return occurrences;
 	}
 
-	
 }

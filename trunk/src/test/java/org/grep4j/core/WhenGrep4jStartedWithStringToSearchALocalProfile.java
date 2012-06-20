@@ -28,12 +28,12 @@ public class WhenGrep4jStartedWithStringToSearchALocalProfile {
 	private final List<Profile> profiles = Arrays.asList(localProfile());
 
 	public void verifyExpressionToParse() {
-		Grep4j executer = new Grep4j(STRING_TO_SEARCH, on(profiles));
+		Grep4j executer = new Grep4j(STRING_TO_SEARCH, on(profiles), false);
 		assertThat(executer.getExpression(), is(STRING_TO_SEARCH));
 	}
 
 	public void verifyProfileToUse() {
-		Grep4j executer = new Grep4j(STRING_TO_SEARCH, on(profiles));
+		Grep4j executer = new Grep4j(STRING_TO_SEARCH, on(profiles), false);
 		executer.prepareCommandRequests();
 		assertThat(executer.getGrepRequests(), hasFileTarget(KNOWN_PROFILE));
 	}
@@ -75,6 +75,10 @@ public class WhenGrep4jStartedWithStringToSearchALocalProfile {
 
 	public void errorMultipleTokenStringStringAppearsOneTime() {
 		assertThat(executing(grep("has been updated", on(profiles))).totalOccurrences(), is(1));
+	}
+
+	public void errorStringWithRegExCaracthersAppearsOneTime() {
+		assertThat(executing(grep("Marco(id=12345)", on(profiles))).totalOccurrences(), is(1));
 	}
 
 }

@@ -25,6 +25,7 @@ public class GrepRequest {
 	private final String pattern;
 	private String contextControls;
 	private String wildcard;
+	private boolean regex;
 
 	/**
 	 * @param pattern search 
@@ -48,6 +49,18 @@ public class GrepRequest {
 	 */
 	public String getContextControls() {
 		return contextControls;
+	}
+
+	/**
+	 * 
+	 * @return if the expression is a regex expression
+	 */
+	public boolean isRegex() {
+		return this.regex;
+	}
+
+	public void setRegex(boolean regex) {
+		this.regex = regex;
 	}
 
 	/**

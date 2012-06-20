@@ -11,13 +11,13 @@ import org.grep4j.core.command.ExecutableCommand;
  */
 public class SimpleGrepCommand extends AbstractGrepCommand {
 
-	public SimpleGrepCommand(String expression, String file) {
-		super(expression, file);
+	public SimpleGrepCommand(String expression, String file, boolean regexExpression) {
+		super(expression, file, regexExpression);
 	}
 
 	@Override
 	public String getCommandToExecute() {
-		command.append(GREP_COMMAND);
+		command.append(getGrepCommand());
 		command.append(SPACE);
 		command.append(SEP);
 		command.append(expression);
