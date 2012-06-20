@@ -60,6 +60,7 @@ public final class Grep4j {
 	private final ImmutableList<ExtraLines> extraLinesOptions;
 	private final GrepResultsSet results;
 	private final List<GrepRequest> grepRequests;
+	private final boolean regexExpression;
 
 	/**
 	 * Creates an instance of Grep4j that accepts also extra lines options.
@@ -70,16 +71,18 @@ public final class Grep4j {
 	 * @param profiles
 	 * @param extraLinesOptions
 	 */
-	Grep4j(String expression, List<Profile> profiles, List<ExtraLines> extraLines) {
+	Grep4j(String expression, List<Profile> profiles, List<ExtraLines> extraLines, boolean egrep) {
 		this.grepRequests = new ArrayList<GrepRequest>();
 		this.results = new GrepResultsSet(expression);
 		this.expression = expression;
 		this.profiles = ImmutableList.copyOf(profiles);
+		this.regexExpression = egrep;
 		if (extraLines != null) {
 			this.extraLinesOptions = ImmutableList.copyOf(extraLines);
 		} else {
 			this.extraLinesOptions = null;
 		}
+
 	}
 
 	/**
@@ -90,12 +93,13 @@ public final class Grep4j {
 	 * @param expression
 	 * @param profiles
 	 */
-	Grep4j(String expression, List<Profile> profiles) {
+	Grep4j(String expression, List<Profile> profiles, boolean egrep) {
 		this.grepRequests = new ArrayList<GrepRequest>();
 		this.results = new GrepResultsSet(expression);
 		this.expression = expression;
 		this.profiles = ImmutableList.copyOf(profiles);
 		this.extraLinesOptions = null;
+		this.regexExpression = egrep;
 	}
 
 	/**
@@ -121,7 +125,7 @@ public final class Grep4j {
 	 * @return GlobalGrepResult
 	 */
 	public static GrepResultsSet grep(String expression, List<Profile> profiles) {
-		return new Grep4j(expression, profiles).execute().andGetResults();
+		return new Grep4j(expression, profiles, false).execute().andGetResults();
 	}
 
 	/**
@@ -165,7 +169,7 @@ public final class Grep4j {
 	* @return GlobalGrepResult
 	*/
 	public static GrepResultsSet grep(String expression, List<Profile> profiles, ExtraLines... extraLines) {
-		return new Grep4j(expression, profiles, Arrays.asList(extraLines)).execute().andGetResults();
+		return new Grep4j(expression, profiles, Arrays.asList(extraLines), false).execute().andGetResults();
 	}
 
 	/**
@@ -195,7 +199,107 @@ public final class Grep4j {
 	* @return GlobalGrepResult
 	*/
 	public static GrepResultsSet grep(String expression, List<Profile> profiles, List<ExtraLines> extraLines) {
-		return new Grep4j(expression, profiles, extraLines).execute().andGetResults();
+		return new Grep4j(expression, profiles, extraLines, false).execute().andGetResults();
+	}
+
+	/**
+	 * 
+	 * This utility method executes the grep command and return the {@link GrepResultsSet}
+	 * containing the result of the grep 
+	 * 
+	 * This method supports plain text as well as RegEx. Regular expressions must
+	 * be passed within single quotes Example : 'CUSTOMER(.*)UPDATE' will
+	 * grep for all the customers * updates
+	 * 
+	 * Example:
+	 * <pre>
+	 * import static org.grep4j.core.fluent.Dictionary.on;
+	 * ...
+	 * 
+	 * grep(expression(), on(profiles()));
+	 * </pre>
+	 * 
+	 * 
+	 * @param expression
+	 * @param profiles
+	 * @return GlobalGrepResult
+	 */
+	public static GrepResultsSet egrep(String expression, List<Profile> profiles) {
+		return new Grep4j(expression, profiles, true).execute().andGetResults();
+	}
+
+	/**
+	* 
+	* This utility method executes the grep command and return the {@link GrepResultsSet}
+	* containing the result of the grep
+	* 
+	* It also protects the List of profiles and ExtraLines wrapping them into an
+	* ImmutableList.
+	* Example of ExtraLines is :
+	* <pre>
+	* import static org.grep4j.core.fluent.Dictionary.on;
+	* import static org.grep4j.core.options.ExtraLines.extraLinesAfter;
+	* ...
+	* 
+	* grep(expression(), on(profiles()), extraLinesAfter(100));
+	* </pre>
+	* or
+	* <pre>
+	* import static org.grep4j.core.options.ExtraLines.extraLinesBefore;
+	* ...
+	* 
+	* grep(expression(), on(profiles()), extraLinesBefore(100));
+	* </pre>	 
+	* or
+	* <pre>
+	* import static org.grep4j.core.options.ExtraLines.extraLinesBefore;
+	* import static org.grep4j.core.options.ExtraLines.extraLinesAfter;
+	* ...
+	* 
+	* grep(expression(), on(profiles()), extraLinesBefore(100), extraLinesAfter(100));
+	* </pre>
+	* 
+	* This method supports plain text as well as RegEx. Regular expressions must
+	* be passed within single quotes Example : 'CUSTOMER(.*)UPDATE' will
+	* grep for all the customers * updates
+	* 
+	* @param expression
+	* @param profiles
+	* @param extraLines
+	* @return GlobalGrepResult
+	*/
+	public static GrepResultsSet egrep(String expression, List<Profile> profiles, ExtraLines... extraLines) {
+		return new Grep4j(expression, profiles, Arrays.asList(extraLines), true).execute().andGetResults();
+	}
+
+	/**
+	* 
+	* This utility method executes the grep command and return the {@link GrepResultsSet}
+	* containing the result of the grep
+	* 
+	* It also protects the List of profiles and ExtraLines wrapping them into an
+	* ImmutableList.
+	* Example of ExtraLines is :
+	* <pre>
+	* import static org.grep4j.core.fluent.Dictionary.on;
+	* import static org.grep4j.core.options.ExtraLines.extraLinesBefore;
+	* import static org.grep4j.core.options.ExtraLines.extraLinesAfter;
+	* ...
+	* 
+	* grep(expression(), on(profiles()), Arrays.asList(extraLinesBefore(100), extraLinesAfter(100)));
+	* </pre>
+	* 
+	* This method supports plain text as well as RegEx. Regular expressions must
+	* be passed within single quotes Example : 'CUSTOMER(.*)UPDATE' will
+	* grep for all the customers * updates
+	* 
+	* @param expression
+	* @param profiles
+	* @param extraLines
+	* @return GlobalGrepResult
+	*/
+	public static GrepResultsSet egrep(String expression, List<Profile> profiles, List<ExtraLines> extraLines) {
+		return new Grep4j(expression, profiles, extraLines, true).execute().andGetResults();
 	}
 
 	/**
@@ -260,6 +364,7 @@ public final class Grep4j {
 	void prepareCommandRequests() {
 		for (Profile profile : profiles) {
 			GrepRequest grepRequest = new GrepRequest(expression, profile);
+			grepRequest.setRegex(regexExpression);
 			if (extraLinesOptions != null && !extraLinesOptions.isEmpty()) {
 				grepRequest.addExtraLineOptions(extraLinesOptions);
 			}

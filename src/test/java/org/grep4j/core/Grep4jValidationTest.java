@@ -16,39 +16,39 @@ public class Grep4jValidationTest {
 	private static final String EMPTY_EXPRESSION = "";
 	private static final String BLANK_EXPRESSION = " ";
 	private static final String NULL_EXPRESSION = null;
-	
-	@Test(expectedExceptions=java.lang.IllegalArgumentException.class)
+
+	@Test(expectedExceptions = java.lang.IllegalArgumentException.class)
 	public void testEmptyExpression() {
-		List<Profile> profiles = Arrays.asList(new Profile[]{ ProfileFixtures.aDummyRemoteProfile()});
-		grep4j = new Grep4j(EMPTY_EXPRESSION, profiles);
+		List<Profile> profiles = Arrays.asList(new Profile[] { ProfileFixtures.aDummyRemoteProfile() });
+		grep4j = new Grep4j(EMPTY_EXPRESSION, profiles, false);
 		grep4j.verifyInputs();
 	}
-	
-	@Test(expectedExceptions=java.lang.IllegalArgumentException.class)
+
+	@Test(expectedExceptions = java.lang.IllegalArgumentException.class)
 	public void testBlankExpression() {
-		List<Profile> profiles = Arrays.asList(new Profile[]{ ProfileFixtures.aDummyRemoteProfile()});
-		grep4j = new Grep4j(BLANK_EXPRESSION, profiles);
+		List<Profile> profiles = Arrays.asList(new Profile[] { ProfileFixtures.aDummyRemoteProfile() });
+		grep4j = new Grep4j(BLANK_EXPRESSION, profiles, false);
 		grep4j.verifyInputs();
 	}
-	
-	@Test(expectedExceptions=java.lang.IllegalArgumentException.class)
+
+	@Test(expectedExceptions = java.lang.IllegalArgumentException.class)
 	public void testNullExpression() {
-		List<Profile> profiles = Arrays.asList(new Profile[]{ ProfileFixtures.aDummyRemoteProfile()});
-		grep4j = new Grep4j(NULL_EXPRESSION, profiles);
+		List<Profile> profiles = Arrays.asList(new Profile[] { ProfileFixtures.aDummyRemoteProfile() });
+		grep4j = new Grep4j(NULL_EXPRESSION, profiles, false);
 		grep4j.verifyInputs();
 	}
-	
-	@Test(expectedExceptions=java.lang.IllegalArgumentException.class)
+
+	@Test(expectedExceptions = java.lang.IllegalArgumentException.class)
 	public void testEmptyProfiles() {
-		grep4j = new Grep4j(EXPRESSION, new ArrayList<Profile>());
+		grep4j = new Grep4j(EXPRESSION, new ArrayList<Profile>(), false);
 		grep4j.verifyInputs();
 	}
-	
-	@Test(expectedExceptions=RuntimeException.class)
+
+	@Test(expectedExceptions = RuntimeException.class)
 	public void testExecutionException() {
-		List<Profile> profiles = Arrays.asList(new Profile[]{ ProfileFixtures.aRemoteProfileWithUnknownServers()});
-		grep4j = new Grep4j(EXPRESSION, profiles);
+		List<Profile> profiles = Arrays.asList(new Profile[] { ProfileFixtures.aRemoteProfileWithUnknownServers() });
+		grep4j = new Grep4j(EXPRESSION, profiles, false);
 		grep4j.execute();
 	}
-	
+
 }

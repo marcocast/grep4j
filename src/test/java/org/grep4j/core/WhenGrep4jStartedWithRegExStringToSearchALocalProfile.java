@@ -1,5 +1,6 @@
 package org.grep4j.core;
 
+import static org.grep4j.core.Grep4j.egrep;
 import static org.grep4j.core.Grep4j.grep;
 import static org.grep4j.core.fixtures.ProfileFixtures.localProfile;
 import static org.grep4j.core.fluent.Dictionary.executing;
@@ -19,7 +20,7 @@ public class WhenGrep4jStartedWithRegExStringToSearchALocalProfile {
 	private final List<Profile> profiles = Arrays.asList(localProfile());
 
 	public void customerRegexStringAppears1Time() {
-		assertThat(grep("customer(.*)updated", on(profiles)).totalOccurrences(), is(1));
+		assertThat(egrep("customer(.*)updated", on(profiles)).totalOccurrences(), is(1));
 		assertThat(executing(grep("Marco", on(profiles))).totalOccurrences(), is(1));
 	}
 

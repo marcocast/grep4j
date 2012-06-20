@@ -11,21 +11,21 @@ public class GzGrepCommandTest extends GrepCommandTest {
 	public void testGetFile() {
 		String file = "/file/";
 		String expression = "expression";
-		GzGrepCommand GzGrepCommand = new GzGrepCommand(expression, file);
+		GzGrepCommand GzGrepCommand = new GzGrepCommand(expression, file, false);
 		assertThat(GzGrepCommand.getFile(), is(file));
 	}
 
 	@Test(dataProvider = "expressionsAndFile")
 	public void testGetCommandToExecute(String expression, String file) {
-		GzGrepCommand GzGrepCommand = new GzGrepCommand(expression, file);
-		assertThat(GzGrepCommand.getCommandToExecute(), is("gunzip -c " + file + " | egrep " + "\"" + expression + "\""));
+		GzGrepCommand GzGrepCommand = new GzGrepCommand(expression, file, false);
+		assertThat(GzGrepCommand.getCommandToExecute(), is("gunzip -c " + file + " | grep " + "\"" + expression + "\""));
 	}
 
 	@Test(dataProvider = "expressionsAndFile")
 	public void testGetCommandToExecuteWithContextControll(String expression, String file) {
-		GzGrepCommand GzGrepCommand = new GzGrepCommand(expression, file);
+		GzGrepCommand GzGrepCommand = new GzGrepCommand(expression, file, false);
 		String contextControl = "-A";
 		GzGrepCommand.setContextControls(contextControl);
-		assertThat(GzGrepCommand.getCommandToExecute(), is("gunzip -c " + file + " | egrep " + "\"" + expression + "\"" + " " + contextControl));
+		assertThat(GzGrepCommand.getCommandToExecute(), is("gunzip -c " + file + " | grep " + "\"" + expression + "\"" + " " + contextControl));
 	}
 }
