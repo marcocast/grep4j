@@ -19,7 +19,7 @@ public class WhenGrep4jStartedWithRegExStringToSearchALocalProfile {
 	private final List<Profile> profiles = Arrays.asList(localProfile());
 
 	public void customerRegexStringAppears1Time() {
-		assertThat(grep("'customer(.*)updated'", on(profiles)).totalOccurrences(), is(1));
+		assertThat(grep("customer(.*)updated", on(profiles)).totalOccurrences(), is(1));
 		assertThat(executing(grep("Marco", on(profiles))).totalOccurrences(), is(1));
 	}
 
