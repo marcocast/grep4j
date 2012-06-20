@@ -60,7 +60,7 @@ public final class Grep4j {
 	private final ImmutableList<ExtraLines> extraLinesOptions;
 	private final GrepResultsSet results;
 	private final List<GrepRequest> grepRequests;
-	private final boolean regexExpression;
+	private final boolean isRegexExpression;
 
 	/**
 	 * Creates an instance of Grep4j that accepts also extra lines options.
@@ -70,13 +70,14 @@ public final class Grep4j {
 	 * @param expression
 	 * @param profiles
 	 * @param extraLinesOptions
+	 * @param isRegexExpression
 	 */
-	Grep4j(String expression, List<Profile> profiles, List<ExtraLines> extraLines, boolean egrep) {
+	Grep4j(String expression, List<Profile> profiles, List<ExtraLines> extraLines, boolean isRegexExpression) {
 		this.grepRequests = new ArrayList<GrepRequest>();
 		this.results = new GrepResultsSet(expression);
 		this.expression = expression;
 		this.profiles = ImmutableList.copyOf(profiles);
-		this.regexExpression = egrep;
+		this.isRegexExpression = isRegexExpression;
 		if (extraLines != null) {
 			this.extraLinesOptions = ImmutableList.copyOf(extraLines);
 		} else {
@@ -92,14 +93,15 @@ public final class Grep4j {
 	 * 
 	 * @param expression
 	 * @param profiles
+	 * @param isRegexExpression
 	 */
-	Grep4j(String expression, List<Profile> profiles, boolean egrep) {
+	Grep4j(String expression, List<Profile> profiles, boolean isRegexExpression) {
 		this.grepRequests = new ArrayList<GrepRequest>();
 		this.results = new GrepResultsSet(expression);
 		this.expression = expression;
 		this.profiles = ImmutableList.copyOf(profiles);
 		this.extraLinesOptions = null;
-		this.regexExpression = egrep;
+		this.isRegexExpression = isRegexExpression;
 	}
 
 	/**
@@ -107,16 +109,12 @@ public final class Grep4j {
 	 * This utility method executes the grep command and return the {@link GrepResultsSet}
 	 * containing the result of the grep 
 	 * 
-	 * Grep4j supports plain text as well as RegEx. Regular expressions must
-	 * be passed within single quotes Example : 'CUSTOMER(.*)UPDATE' will
-	 * grep for all the customers * updates
-	 * 
 	 * Example:
 	 * <pre>
 	 * import static org.grep4j.core.fluent.Dictionary.on;
 	 * ...
 	 * 
-	 * grep(expression(), on(profiles()));
+	 * grep("expression", on(profiles()));
 	 * </pre>
 	 * 
 	 * 
@@ -141,14 +139,14 @@ public final class Grep4j {
 	* import static org.grep4j.core.options.ExtraLines.extraLinesAfter;
 	* ...
 	* 
-	* grep(expression(), on(profiles()), extraLinesAfter(100));
+	* grep("expression", on(profiles()), extraLinesAfter(100));
 	* </pre>
 	* or
 	* <pre>
 	* import static org.grep4j.core.options.ExtraLines.extraLinesBefore;
 	* ...
 	* 
-	* grep(expression(), on(profiles()), extraLinesBefore(100));
+	* grep("expression", on(profiles()), extraLinesBefore(100));
 	* </pre>	 
 	* or
 	* <pre>
@@ -156,12 +154,8 @@ public final class Grep4j {
 	* import static org.grep4j.core.options.ExtraLines.extraLinesAfter;
 	* ...
 	* 
-	* grep(expression(), on(profiles()), extraLinesBefore(100), extraLinesAfter(100));
+	* grep("expression", on(profiles()), extraLinesBefore(100), extraLinesAfter(100));
 	* </pre>
-	* 
-	* Grep4j supports plain text as well as RegEx. Regular expressions must
-	* be passed within single quotes Example : 'CUSTOMER(.*)UPDATE' will
-	* grep for all the customers * updates
 	* 
 	* @param expression
 	* @param profiles
@@ -186,12 +180,8 @@ public final class Grep4j {
 	* import static org.grep4j.core.options.ExtraLines.extraLinesAfter;
 	* ...
 	* 
-	* grep(expression(), on(profiles()), Arrays.asList(extraLinesBefore(100), extraLinesAfter(100)));
+	* grep("expression", on(profiles()), Arrays.asList(extraLinesBefore(100), extraLinesAfter(100)));
 	* </pre>
-	* 
-	* Grep4j supports plain text as well as RegEx. Regular expressions must
-	* be passed within single quotes Example : 'CUSTOMER(.*)UPDATE' will
-	* grep for all the customers * updates
 	* 
 	* @param expression
 	* @param profiles
@@ -207,8 +197,7 @@ public final class Grep4j {
 	 * This utility method executes the grep command and return the {@link GrepResultsSet}
 	 * containing the result of the grep 
 	 * 
-	 * This method supports plain text as well as RegEx. Regular expressions must
-	 * be passed within single quotes Example : 'CUSTOMER(.*)UPDATE' will
+	 * This method supports plain text as well as RegEx. Example : CUSTOMER(.*)UPDATE will
 	 * grep for all the customers * updates
 	 * 
 	 * Example:
@@ -216,7 +205,7 @@ public final class Grep4j {
 	 * import static org.grep4j.core.fluent.Dictionary.on;
 	 * ...
 	 * 
-	 * grep(expression(), on(profiles()));
+	 * grep("regularExpression", on(profiles()));
 	 * </pre>
 	 * 
 	 * 
@@ -241,14 +230,14 @@ public final class Grep4j {
 	* import static org.grep4j.core.options.ExtraLines.extraLinesAfter;
 	* ...
 	* 
-	* grep(expression(), on(profiles()), extraLinesAfter(100));
+	* grep("regularExpression", on(profiles()), extraLinesAfter(100));
 	* </pre>
 	* or
 	* <pre>
 	* import static org.grep4j.core.options.ExtraLines.extraLinesBefore;
 	* ...
 	* 
-	* grep(expression(), on(profiles()), extraLinesBefore(100));
+	* grep("regularExpression", on(profiles()), extraLinesBefore(100));
 	* </pre>	 
 	* or
 	* <pre>
@@ -259,8 +248,7 @@ public final class Grep4j {
 	* grep(expression(), on(profiles()), extraLinesBefore(100), extraLinesAfter(100));
 	* </pre>
 	* 
-	* This method supports plain text as well as RegEx. Regular expressions must
-	* be passed within single quotes Example : 'CUSTOMER(.*)UPDATE' will
+	* This method supports plain text as well as RegEx. Example : 'CUSTOMER(.*)UPDATE' will
 	* grep for all the customers * updates
 	* 
 	* @param expression
@@ -286,11 +274,10 @@ public final class Grep4j {
 	* import static org.grep4j.core.options.ExtraLines.extraLinesAfter;
 	* ...
 	* 
-	* grep(expression(), on(profiles()), Arrays.asList(extraLinesBefore(100), extraLinesAfter(100)));
+	* grep("regularExpression", on(profiles()), Arrays.asList(extraLinesBefore(100), extraLinesAfter(100)));
 	* </pre>
 	* 
-	* This method supports plain text as well as RegEx. Regular expressions must
-	* be passed within single quotes Example : 'CUSTOMER(.*)UPDATE' will
+	* This method supports plain text as well as RegEx. Example : 'CUSTOMER(.*)UPDATE' will
 	* grep for all the customers * updates
 	* 
 	* @param expression
@@ -363,8 +350,7 @@ public final class Grep4j {
 
 	void prepareCommandRequests() {
 		for (Profile profile : profiles) {
-			GrepRequest grepRequest = new GrepRequest(expression, profile);
-			grepRequest.setRegex(regexExpression);
+			GrepRequest grepRequest = new GrepRequest(expression, profile,isRegexExpression);
 			if (extraLinesOptions != null && !extraLinesOptions.isEmpty()) {
 				grepRequest.addExtraLineOptions(extraLinesOptions);
 			}

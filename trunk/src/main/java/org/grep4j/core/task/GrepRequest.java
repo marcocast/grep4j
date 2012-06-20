@@ -23,10 +23,22 @@ public class GrepRequest {
 	protected final Profile profile;
 
 	private final String pattern;
+	private final boolean isRegexExpression;
 	private String contextControls;
 	private String wildcard;
-	private boolean regex;
+	
 
+	/**
+	 * @param pattern search 
+	 * @param profile to grep
+	 * @param isRegexExpression
+	 */
+	public GrepRequest(String pattern, Profile profile, boolean isRegexExpression) {
+		this.profile = profile;
+		this.pattern = pattern;
+		this.isRegexExpression = isRegexExpression;
+	}
+	
 	/**
 	 * @param pattern search 
 	 * @param profile to grep
@@ -34,6 +46,7 @@ public class GrepRequest {
 	public GrepRequest(String pattern, Profile profile) {
 		this.profile = profile;
 		this.pattern = pattern;
+		this.isRegexExpression = false;
 	}
 
 	/**
@@ -55,12 +68,8 @@ public class GrepRequest {
 	 * 
 	 * @return if the expression is a regex expression
 	 */
-	public boolean isRegex() {
-		return this.regex;
-	}
-
-	public void setRegex(boolean regex) {
-		this.regex = regex;
+	public boolean isRegexExpression() {
+		return this.isRegexExpression;
 	}
 
 	/**
