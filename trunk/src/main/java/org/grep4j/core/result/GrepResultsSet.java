@@ -42,6 +42,21 @@ public class GrepResultsSet implements Collection<GrepResult> {
 	}
 
 	/**
+	 * it counts how many times the expressionToSearch pattern is found in all the results
+	 * 
+	 * 
+	 * @param expressionToSearch
+	 * @return total number of time the patter is found in all the GrepResults
+	 */
+	public int totalOccurrences(String expressionToSearch) {
+		int occurrences = 0;
+		for (GrepResult result : grepResults) {
+			occurrences += result.getOccourrences(of(expressionToSearch));
+		}
+		return occurrences;
+	}
+
+	/**
 	 * Add a {@link GrepResult} to the Set of results
 	 * 
 	 * @param grepResult
