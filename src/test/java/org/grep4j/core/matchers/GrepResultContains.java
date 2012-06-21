@@ -1,6 +1,5 @@
 package org.grep4j.core.matchers;
 
-import org.apache.commons.lang3.StringUtils;
 import org.grep4j.core.result.GrepResult;
 import org.grep4j.core.result.GrepResultsSet;
 import org.hamcrest.Description;
