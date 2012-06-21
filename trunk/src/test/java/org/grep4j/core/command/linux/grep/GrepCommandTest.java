@@ -4,6 +4,8 @@ import org.testng.annotations.DataProvider;
 
 public abstract class GrepCommandTest {
 
+	public final static String SINGLE_QUOTE = "\'";
+
 	@DataProvider(name = "expressionsAndFile")
 	public Object[][] expressionsAndFile() {
 		return new Object[][] {

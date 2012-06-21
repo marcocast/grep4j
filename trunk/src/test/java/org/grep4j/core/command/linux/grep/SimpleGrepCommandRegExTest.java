@@ -18,7 +18,7 @@ public class SimpleGrepCommandRegExTest extends GrepCommandTest {
 	@Test(dataProvider = "expressionsAndFile")
 	public void testGetCommandToExecute(String expression, String file) {
 		SimpleGrepCommand simpleGrepCommand = new SimpleGrepCommand(expression, file, false);
-		assertThat(simpleGrepCommand.getCommandToExecute(), is("grep " + "\"" + expression + "\"" + " " + file));
+		assertThat(simpleGrepCommand.getCommandToExecute(), is("grep " + SINGLE_QUOTE + expression + SINGLE_QUOTE + " " + file));
 	}
 
 	@Test(dataProvider = "expressionsAndFile")
@@ -26,6 +26,7 @@ public class SimpleGrepCommandRegExTest extends GrepCommandTest {
 		SimpleGrepCommand simpleGrepCommand = new SimpleGrepCommand(expression, file, false);
 		String contextControl = "-A";
 		simpleGrepCommand.setContextControls(contextControl);
-		assertThat(simpleGrepCommand.getCommandToExecute(), is("grep " + "\"" + expression + "\"" + " " + file + " " + contextControl));
+		assertThat(simpleGrepCommand.getCommandToExecute(),
+				is("grep " + SINGLE_QUOTE + expression + SINGLE_QUOTE + " " + file + " " + contextControl));
 	}
 }
