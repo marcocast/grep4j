@@ -1,6 +1,5 @@
 package org.grep4j.core.matchers;
 
-import org.grep4j.core.result.GrepResult;
 import org.grep4j.core.result.GrepResultsSet;
 import org.hamcrest.Description;
 import org.hamcrest.Factory;
@@ -22,12 +21,7 @@ public class GrepResultContains extends TypeSafeMatcher<GrepResultsSet> {
 
 	@Override
 	public boolean matchesSafely(GrepResultsSet results) {
-		for (GrepResult grepResult : results) {
-			if (grepResult.getOccourrences(expression) > 0) {
-				return true;
-			}
-		}
-		return false;
+		return results.totalOccurrences(expression) > 0;
 	}
 
 	@Factory
