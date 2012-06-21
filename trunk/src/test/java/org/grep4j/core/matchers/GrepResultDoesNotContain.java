@@ -23,7 +23,7 @@ public class GrepResultDoesNotContain extends TypeSafeMatcher<GrepResultsSet> {
 	@Override
 	public boolean matchesSafely(GrepResultsSet results) {
 		for (GrepResult grepResult : results) {
-			if (grepResult.getText().contains((expression))) {
+			if (grepResult.getOccourrences(expression) > 0) {
 				return false;
 			}
 		}
