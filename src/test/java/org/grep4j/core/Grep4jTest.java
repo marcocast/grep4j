@@ -1,8 +1,8 @@
 package org.grep4j.core;
 
 import static ch.lambdaj.Lambda.join;
-import static org.grep4j.core.options.ExtraLines.extraLinesAfter;
-import static org.grep4j.core.options.ExtraLines.extraLinesBefore;
+import static org.grep4j.core.Grep4j.extraLinesAfter;
+import static org.grep4j.core.Grep4j.extraLinesBefore;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;

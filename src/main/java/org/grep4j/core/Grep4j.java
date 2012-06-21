@@ -11,6 +11,7 @@ import java.util.concurrent.Future;
 
 import org.grep4j.core.model.Profile;
 import org.grep4j.core.options.ExtraLines;
+import org.grep4j.core.options.ExtraLinesOption;
 import org.grep4j.core.result.GrepResult;
 import org.grep4j.core.result.GrepResultsSet;
 import org.grep4j.core.task.GrepRequest;
@@ -287,6 +288,26 @@ public final class Grep4j {
 	*/
 	public static GrepResultsSet egrep(String expression, List<Profile> profiles, List<ExtraLines> extraLines) {
 		return new Grep4j(expression, profiles, extraLines, true).execute().andGetResults();
+	}
+
+	/**
+	 * extraLinesAfter(5) will return an ExtraLines object with a toString equals to -A5
+	 * 
+	 * @param numberOfLines
+	 * @return ExtraLines containing the context control command
+	 */
+	public static ExtraLines extraLinesAfter(int numberOfLines) {
+		return new ExtraLines(ExtraLinesOption.after, numberOfLines);
+	}
+
+	/**
+	 * extraLinesBefore(5) will return an ExtraLines object with a toString equals to -B5
+	 * 
+	 * @param numberOfLines
+	 * @return ExtraLines containing the context control command
+	 */
+	public static ExtraLines extraLinesBefore(int numberOfLines) {
+		return new ExtraLines(ExtraLinesOption.before, numberOfLines);
 	}
 
 	/**

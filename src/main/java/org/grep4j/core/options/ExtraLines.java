@@ -12,28 +12,8 @@ public class ExtraLines {
 
 	private final String extraLinesOptionString;
 
-	private ExtraLines(ExtraLinesOption extraLinesOption, int numberOfLines) {
+	public ExtraLines(ExtraLinesOption extraLinesOption, int numberOfLines) {
 		extraLinesOptionString = extraLinesOption.getExtraLineOptionType() + numberOfLines;
-	}
-
-	/**
-	 * extraLinesAfter(5) will return an ExtraLines object with a toString equals to -A5
-	 * 
-	 * @param numberOfLines
-	 * @return ExtraLines containing the context control command
-	 */
-	public static ExtraLines extraLinesAfter(int numberOfLines) {
-		return new ExtraLines(ExtraLinesOption.after, numberOfLines);
-	}
-
-	/**
-	 * extraLinesBefore(5) will return an ExtraLines object with a toString equals to -B5
-	 * 
-	 * @param numberOfLines
-	 * @return ExtraLines containing the context control command
-	 */
-	public static ExtraLines extraLinesBefore(int numberOfLines) {
-		return new ExtraLines(ExtraLinesOption.before, numberOfLines);
 	}
 
 	@Override

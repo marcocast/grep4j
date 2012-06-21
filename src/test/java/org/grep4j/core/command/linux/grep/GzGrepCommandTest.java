@@ -18,7 +18,7 @@ public class GzGrepCommandTest extends GrepCommandTest {
 	@Test(dataProvider = "expressionsAndFile")
 	public void testGetCommandToExecute(String expression, String file) {
 		GzGrepCommand GzGrepCommand = new GzGrepCommand(expression, file, false);
-		assertThat(GzGrepCommand.getCommandToExecute(), is("gunzip -c " + file + " | grep " + "\"" + expression + "\""));
+		assertThat(GzGrepCommand.getCommandToExecute(), is("gunzip -c " + file + " | grep " + SINGLE_QUOTE + expression + SINGLE_QUOTE));
 	}
 
 	@Test(dataProvider = "expressionsAndFile")
@@ -26,6 +26,7 @@ public class GzGrepCommandTest extends GrepCommandTest {
 		GzGrepCommand GzGrepCommand = new GzGrepCommand(expression, file, false);
 		String contextControl = "-A";
 		GzGrepCommand.setContextControls(contextControl);
-		assertThat(GzGrepCommand.getCommandToExecute(), is("gunzip -c " + file + " | grep " + "\"" + expression + "\"" + " " + contextControl));
+		assertThat(GzGrepCommand.getCommandToExecute(), is("gunzip -c " + file + " | grep " + SINGLE_QUOTE + expression + SINGLE_QUOTE + " "
+				+ contextControl));
 	}
 }

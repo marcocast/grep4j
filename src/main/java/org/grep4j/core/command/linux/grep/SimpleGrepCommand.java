@@ -19,9 +19,9 @@ public class SimpleGrepCommand extends AbstractGrepCommand {
 	public String getCommandToExecute() {
 		command.append(getGrepCommand());
 		command.append(SPACE);
-		command.append(SEP);
+		command.append(QUOTE);
 		command.append(expression);
-		command.append(SEP);
+		command.append(QUOTE);
 		command.append(SPACE);
 		command.append(file);
 		appendContextControl();

@@ -1,6 +1,8 @@
 package org.grep4j.core;
 
 import static org.grep4j.core.Grep4j.grep;
+import static org.grep4j.core.Grep4j.extraLinesAfter;
+import static org.grep4j.core.Grep4j.extraLinesBefore;
 import static org.grep4j.core.fixtures.ProfileFixtures.localProfile;
 import static org.grep4j.core.fixtures.ProfileFixtures.localProfileWithWildecard;
 import static org.grep4j.core.fluent.Dictionary.executing;
@@ -81,4 +83,13 @@ public class WhenGrep4jStartedWithStringToSearchALocalProfile {
 		assertThat(executing(grep("Marco(id=12345)", on(profiles))).totalOccurrences(), is(1));
 	}
 
+	public void extraLineAfter() {
+		GrepResultsSet results = grep("ERROR 1", on(profiles), extraLinesAfter(20));
+		assertThat(results, containsExpression("ERROR 2"));
+	}
+
+	public void extraLineBefore() {
+		GrepResultsSet results = grep("ERROR 2", on(profiles), extraLinesBefore(20));
+		assertThat(results, containsExpression("ERROR 1"));
+	}
 }

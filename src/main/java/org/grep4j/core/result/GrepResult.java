@@ -53,8 +53,6 @@ public class GrepResult {
 	/**
 	 * Given an expression, it counts how many times the pattern is found in the result
 	 * Example: getOccourrences(of(expression));
-	 * This method will ignore the 1st and last single quotes in order to compile regex:
-	 * expression.replaceAll("(^')|('$)", "")
 	 * 
 	 * @param expression
 	 * @return total number of time the patter is found
