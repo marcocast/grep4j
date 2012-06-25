@@ -403,8 +403,9 @@ public final class Grep4j {
 	}
 
 	private void executeCommands() {
+		ExecutorService executorService = null;
 		try {
-			ExecutorService executorService = Executors.newFixedThreadPool(grepRequests.size());
+			executorService = Executors.newFixedThreadPool(grepRequests.size());
 			Set<Future<List<GrepResult>>> grepTaskFutures = new HashSet<Future<List<GrepResult>>>();
 			for (GrepRequest grepRequest : grepRequests) {
 				grepTaskFutures.add(executorService.submit(new GrepTask(
@@ -416,6 +417,8 @@ public final class Grep4j {
 			}
 		} catch (Exception e) {
 			throw new RuntimeException("Error when executing the commands", e);
+		} finally {
+			executorService.shutdownNow();
 		}
 	}
 

@@ -56,15 +56,13 @@ public class GrepTask implements Callable<List<GrepResult>> {
 	public List<GrepResult> call() {
 
 		init();
-
-		listMatchingFiles();
-
-		prepareGrepCommands();
-
-		executeGrepCommands();
-
-		release();
-
+		try {
+			listMatchingFiles();
+			prepareGrepCommands();
+			executeGrepCommands();
+		} finally {
+			release();
+		}
 		return results;
 
 	}

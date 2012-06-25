@@ -66,7 +66,7 @@ public class SshCommandExecutor extends CommandExecutor {
 
 	private void connect() {
 		try {
-			sshClient.getConnection().setTimeout(180);
+			sshClient.getConnection().setTimeout(60);
 			sshClient.addHostKeyVerifier(new PromiscuousVerifier());
 			sshClient.connect(serverDetails.getHost());
 			sshClient.authPassword(serverDetails.getUser(), serverDetails.getPassword());
