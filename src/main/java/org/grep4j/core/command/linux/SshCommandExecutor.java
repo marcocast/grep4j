@@ -37,23 +37,23 @@ public class SshCommandExecutor extends CommandExecutor {
 	private SshCommandExecutor(ServerDetails serverDetails) {
 		super(serverDetails);
 	}
-	
+
 	public static SshCommandExecutor aDefaultSshCommandExecutor(ServerDetails serverDetails) {
 		SshCommandExecutor executor = new SshCommandExecutor(serverDetails);
 		executor.setSshClient(new SSHClient());
 		return executor;
 	}
-	
+
 	public static SshCommandExecutor aCustomSshCommandExecutor(ServerDetails serverDetails, SSHClient sshClient) {
 		SshCommandExecutor executor = new SshCommandExecutor(serverDetails);
 		executor.setSshClient(sshClient);
 		return executor;
 	}
- 
+
 	private void setSshClient(SSHClient sshClient) {
 		this.sshClient = sshClient;
 	}
-	
+
 	@Override
 	public void init() {
 		connect();
@@ -66,6 +66,7 @@ public class SshCommandExecutor extends CommandExecutor {
 
 	private void connect() {
 		try {
+			sshClient.getConnection().setTimeout(180);
 			sshClient.addHostKeyVerifier(new PromiscuousVerifier());
 			sshClient.connect(serverDetails.getHost());
 			sshClient.authPassword(serverDetails.getUser(), serverDetails.getPassword());
