@@ -4,7 +4,6 @@ import static org.grep4j.core.fixtures.ProfileFixtures.localProfile;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-import org.grep4j.core.model.Profile;
 import org.testng.annotations.Test;
 
 @Test
