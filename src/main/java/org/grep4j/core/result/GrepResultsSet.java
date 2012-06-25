@@ -3,6 +3,7 @@ package org.grep4j.core.result;
 import static org.grep4j.core.fluent.Dictionary.of;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -25,7 +26,7 @@ public class GrepResultsSet implements Collection<GrepResult> {
 	 */
 	public GrepResultsSet(String expression) {
 		this.expression = expression;
-		grepResults = new HashSet<GrepResult>();
+		grepResults = Collections.synchronizedSet(new HashSet<GrepResult>());
 	}
 
 	/**
