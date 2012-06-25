@@ -6,6 +6,7 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Model class representing a file that will be the target of the grep command.
@@ -23,18 +24,17 @@ public class Profile {
 	private final String name;
 	private final String filePath;
 	private ServerDetails serverDetails;
-	private String wildcard;
 
 	/**
 	 * 	
 	 * @param name unique identifier for this profile
 	 * @param filePath absolute path of where the file to grep exists. Example: "/opt/jboss/server/log/server.log"
 	 */
-	public Profile(String name,String filePath){
+	public Profile(String name, String filePath) {
 		this.name = name;
 		this.filePath = filePath;
 	}
-	
+
 	/**
 	 * The {@link ServerDetails} needed to connect to the remote or local server
 	 * 
@@ -70,28 +70,8 @@ public class Profile {
 		return serverDetails;
 	}
 
-	/**
-	 * This method adds a wildcard-ed string to the instance of
-	 * {@link Profile} Example "*" it will be used together with the file
-	 * name : server.log* If a gz file is matching the server.log*, it will
-	 * be grep as well.
-	 * 
-	 * @param wildcard
-	 */
-	public void setWildcard(String wildcard) {
-		this.wildcard = wildcard;
-	}
-
-	/**
-	 * This method return a wildcard-ed string to the instance of
-	 * {@link Profile} Example "*" it will be used together with the file
-	 * name : server.log* If a gz file is matching the server.log*, it will
-	 * be grep as well.
-	 * 
-	 * @return wildcard used in this profile
-	 */
-	public String getWildcard() {
-		return wildcard;
+	public boolean containsWildcard() {
+		return StringUtils.contains(filePath, "*");
 	}
 
 	@Override

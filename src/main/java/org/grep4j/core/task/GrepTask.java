@@ -74,11 +74,20 @@ public class GrepTask implements Callable<List<GrepResult>> {
 	}
 
 	private void listMatchingFiles() {
-		LsCommand ls = new LsCommand(grepRequest.getProfile());
 
-		String filenames = commandExecutor.execute(ls).andReturnResult();
+		if (grepRequest.getProfile().containsWildcard()) {
 
-		matchingFiles.addAll(aListOf(filenames));
+			LsCommand ls = new LsCommand(grepRequest.getProfile());
+
+			String filenames = commandExecutor.execute(ls).andReturnResult();
+
+			matchingFiles.addAll(aListOf(filenames));
+
+		} else {
+
+			matchingFiles.add(grepRequest.getProfile().getFilePath());
+		}
+
 	}
 
 	private void prepareGrepCommands() {

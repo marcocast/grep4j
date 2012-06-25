@@ -41,13 +41,6 @@ public class Grep4jTest {
 		assertThat(grep4j.getExtraLinesOptions(), hasItem(extraLinesBefore(BEFORE_3)));
 	}
 
-	public void testWildcardPrepareCommandRequests() {
-		grep4j.prepareCommandRequests();
-		for (GrepRequest grepRequest : grep4j.getGrepRequests()) {
-			assertThat(grepRequest.getWildcard(), is("*" + WILDCARD + "*"));
-		}
-	}
-
 	public void testExtraLinesOptionsPrepareCommandRequests() {
 		grep4j.prepareCommandRequests();
 		for (GrepRequest grepRequest : grep4j.getGrepRequests()) {

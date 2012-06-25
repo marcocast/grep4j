@@ -18,15 +18,12 @@ import org.grep4j.core.options.ExtraLines;
 public class GrepRequest {
 
 	private static final String SPACE = " ";
-	private static final String WILDCARD_CHARACTER = "*";
 
 	protected final Profile profile;
 
 	private final String pattern;
 	private final boolean isRegexExpression;
 	private String contextControls;
-	private String wildcard;
-	
 
 	/**
 	 * @param pattern search 
@@ -38,7 +35,7 @@ public class GrepRequest {
 		this.pattern = pattern;
 		this.isRegexExpression = isRegexExpression;
 	}
-	
+
 	/**
 	 * @param pattern search 
 	 * @param profile to grep
@@ -73,40 +70,10 @@ public class GrepRequest {
 	}
 
 	/**
-	 * Add a wildcard surrounded by *. Example for wildcard = "2012" it will build a wildcard *2012*
-	 * @param wildcard
-	 */
-	public void addWildcard(String wildcard) {
-		if (wildcard != null && !wildcard.isEmpty()) {
-			StringBuilder wildcardBuilder = new StringBuilder();
-			wildcardBuilder.append(WILDCARD_CHARACTER);
-			wildcardBuilder.append(wildcard);
-			wildcardBuilder.append(WILDCARD_CHARACTER);
-			this.wildcard = wildcardBuilder.toString();
-		} else {
-			this.wildcard = "";
-		}
-	}
-
-	/**
-	 * @return the wildcard
-	 */
-	public String getWildcard() {
-		return wildcard;
-	}
-
-	/**
 	 * @return the pattern / exression to search
 	 */
 	public String getPattern() {
 		return pattern;
-	}
-
-	/**
-	 * @return true if contains a wildcard
-	 */
-	public boolean hasWildcard() {
-		return this.wildcard != null && wildcard.length() > 0;
 	}
 
 	public ServerDetails getServerDetails() {
