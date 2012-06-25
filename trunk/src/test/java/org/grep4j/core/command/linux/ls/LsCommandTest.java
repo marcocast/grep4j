@@ -16,13 +16,4 @@ public class LsCommandTest {
 		assertThat(LsCommand.getCommandToExecute(), is("ls " + absolutePath));
 	}
 
-	public void testGetCommandToExecuteWithWildcard() {
-		String absolutePath = localProfile().getFilePath();
-		String wildcard = "wild";
-		Profile profile = localProfile();
-		profile.setWildcard(wildcard);
-		LsCommand LsCommand = new LsCommand(profile);
-		assertThat(LsCommand.getCommandToExecute(), is("ls " + absolutePath + wildcard));
-	}
-
 }

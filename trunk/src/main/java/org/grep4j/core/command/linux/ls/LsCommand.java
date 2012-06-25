@@ -22,17 +22,9 @@ public class LsCommand implements ExecutableCommand {
 
 	private final String fileAbsolutePath;
 
-	private final String wildcard;
-
 	public LsCommand(Profile profile) {
 		this.profile = profile;
 		this.fileAbsolutePath = profile.getFilePath();
-		if(profile.getWildcard() != null && !profile.getWildcard().isEmpty()){
-			this.wildcard = profile.getWildcard();
-		}else{
-			this.wildcard = "";
-		}
-		
 	}
 
 	@Override
@@ -41,7 +33,6 @@ public class LsCommand implements ExecutableCommand {
 		command.append(LS_COMMAND);
 		command.append(BLANK);
 		command.append(fileAbsolutePath);
-		command.append(wildcard);
 		return command.toString();
 	}
 

@@ -425,9 +425,6 @@ public final class Grep4j {
 			if (extraLinesOptions != null && !extraLinesOptions.isEmpty()) {
 				grepRequest.addExtraLineOptions(extraLinesOptions);
 			}
-			if (profile.getWildcard() != null && !profile.getWildcard().isEmpty()) {
-				grepRequest.addWildcard(profile.getWildcard());
-			}
 			grepRequests.add(grepRequest);
 		}
 	}
