@@ -18,7 +18,6 @@ import org.grep4j.core.result.GrepResultsSet;
 import org.grep4j.core.task.GrepRequest;
 import org.grep4j.core.task.GrepTask;
 
-import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableList;
 
 /**
@@ -79,7 +78,7 @@ public final class Grep4j {
 	 */
 	Grep4j(String expression, List<Profile> profiles, List<ExtraLines> extraLines, boolean isRegexExpression) {
 		this.grepRequests = new ArrayList<GrepRequest>();
-		this.results = new GrepResultsSet(expression);
+		this.results = new GrepResultsSet();
 		this.expression = expression;
 		this.profiles = ImmutableList.copyOf(profiles);
 		this.isRegexExpression = isRegexExpression;
@@ -102,7 +101,7 @@ public final class Grep4j {
 	 */
 	Grep4j(String expression, List<Profile> profiles, boolean isRegexExpression) {
 		this.grepRequests = new ArrayList<GrepRequest>();
-		this.results = new GrepResultsSet(expression);
+		this.results = new GrepResultsSet();
 		this.expression = expression;
 		this.profiles = ImmutableList.copyOf(profiles);
 		this.extraLinesOptions = null;

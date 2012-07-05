@@ -56,7 +56,7 @@ public class WhenGrep4jStartedWithStringToSearchALocalProfile {
 	}
 
 	public void fineStringAppears3Times() {
-		assertThat(whenCalling(grep("fine", on(profiles))).totalOccurrences(), is(3));
+		assertThat(whenCalling(grep("fine", on(profiles))).totalOccurrences(), is(5));
 	}
 
 	public void errorStringAppears2Times() {

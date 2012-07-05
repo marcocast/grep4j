@@ -37,7 +37,7 @@ public class WhenGreppingSingleProfile {
 	}
 
 	public void fineStringAppears3Times() {
-		assertThat(whenCalling(grep("fine", on(localProfile()))).totalOccurrences(), is(3));
+		assertThat(whenCalling(grep("fine", on(localProfile()))).totalOccurrences(), is(5));
 	}
 
 	public void errorStringAppears2Times() {
