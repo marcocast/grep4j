@@ -17,15 +17,13 @@ import java.util.Set;
 public class GrepResultsSet implements Collection<GrepResult> {
 
 	private final Set<GrepResult> grepResults;
-	private final String expression;
 
 	/**
 	 * GlobalGrepResult is a container of different {@link GrepResult}  
 	 * 
 	 * @param the expression used to grep
 	 */
-	public GrepResultsSet(String expression) {
-		this.expression = expression;
+	public GrepResultsSet() {
 		grepResults = Collections.synchronizedSet(new HashSet<GrepResult>());
 	}
 
@@ -55,6 +53,40 @@ public class GrepResultsSet implements Collection<GrepResult> {
 			occurrences += result.getOccourrences(of(expressionToSearch));
 		}
 		return occurrences;
+	}
+
+	/**
+	 * extract the lines that match with the passed regularExpression 
+	 * @param expression
+	 * @return the lines that match with the passed regularExpression 
+	 */
+	public GrepResultsSet extractWithRegEx(String expression) {
+		GrepResultsSet grepResultsSet = new GrepResultsSet();
+
+		for (GrepResult result : grepResults) {
+			GrepResult extractResult = result.extractWithRegEx(expression);
+			if (!extractResult.getText().isEmpty()) {
+				grepResultsSet.add(extractResult);
+			}
+		}
+		return grepResultsSet;
+	}
+
+	/**
+	 * extract the lines that match with the passed regularExpression 
+	 * @param expression
+	 * @return the lines that match with the passed regularExpression 
+	 */
+	public GrepResultsSet extract(String expression) {
+		GrepResultsSet grepResultsSet = new GrepResultsSet();
+
+		for (GrepResult result : grepResults) {
+			GrepResult extractResult = result.extract(expression);
+			if (!extractResult.getText().isEmpty()) {
+				grepResultsSet.add(extractResult);
+			}
+		}
+		return grepResultsSet;
 	}
 
 	/**

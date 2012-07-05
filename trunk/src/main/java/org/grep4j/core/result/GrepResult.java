@@ -1,11 +1,11 @@
 package org.grep4j.core.result;
 
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang3.StringUtils;
-import org.grep4j.core.model.Profile;
 import org.grep4j.core.task.GrepRequest;
 
 /**
@@ -17,7 +17,10 @@ import org.grep4j.core.task.GrepRequest;
  */
 public class GrepResult {
 
-	private final String profileName;
+	// Pattern used to parse lines
+	private static Pattern linePattern = Pattern.compile(".*\r?\n");
+
+	private final GrepRequest grepRequest;
 
 	private final String fileName;
 
@@ -25,22 +28,27 @@ public class GrepResult {
 
 	private final String expression;
 
-	private final boolean regularExpression;
-
 	public GrepResult(GrepRequest grepRequest, String fileName, String text) {
 		super();
-		this.profileName = grepRequest.getProfile().getName();
+		this.grepRequest = grepRequest;
 		this.fileName = fileName;
 		this.text = text;
-		this.regularExpression = grepRequest.isRegexExpression();
 		this.expression = grepRequest.getExpression();
+	}
+
+	private GrepResult(String expression, GrepRequest grepRequest, String fileName, String text) {
+		super();
+		this.grepRequest = grepRequest;
+		this.fileName = fileName;
+		this.text = text;
+		this.expression = expression;
 	}
 
 	/** 
 	 * @return the profile name associated with this grep result
 	 */
 	public String getProfileName() {
-		return profileName;
+		return grepRequest.getProfile().getName();
 	}
 
 	/** 
@@ -64,16 +72,16 @@ public class GrepResult {
 	 * @param expression
 	 * @return total number of time the patter is found
 	 */
-	public int getOccourrences(String expression) {
+	public int getOccourrences(String expressionToSearch) {
 		int occurrences = 0;
-		if (regularExpression) {
-			Pattern pattern = Pattern.compile(expression);
+		if (grepRequest.isRegexExpression()) {
+			Pattern pattern = Pattern.compile(expressionToSearch);
 			java.util.regex.Matcher matcher = pattern.matcher(this.getText());
 			while (matcher.find()) {
 				occurrences++;
 			}
 		} else {
-			occurrences = StringUtils.countMatches(this.getText(), expression);
+			occurrences = StringUtils.countMatches(this.getText(), expressionToSearch);
 		}
 		return occurrences;
 	}
@@ -85,7 +93,7 @@ public class GrepResult {
 	 */
 	public int getOccourrences() {
 		int occurrences = 0;
-		if (regularExpression) {
+		if (grepRequest.isRegexExpression()) {
 			Pattern pattern = Pattern.compile(this.expression);
 			java.util.regex.Matcher matcher = pattern.matcher(this.getText());
 			while (matcher.find()) {
@@ -95,6 +103,48 @@ public class GrepResult {
 			occurrences = StringUtils.countMatches(this.getText(), this.expression);
 		}
 		return occurrences;
+	}
+
+	/**
+	 * extract the lines that match with the passed regularExpression 
+	 * @param expression
+	 * @return the lines that match with the passed regularExpression 
+	 */
+	public GrepResult extractWithRegEx(String expression) {
+		StringBuilder textResult = new StringBuilder();
+
+		Pattern pattern = Pattern.compile(expression);
+		Matcher lm = linePattern.matcher(this.getText()); // Line matcher
+		Matcher pm = null; // Pattern matcher
+		while (lm.find()) {
+			CharSequence cs = lm.group(); // The current line
+			if (pm == null)
+				pm = pattern.matcher(cs);
+			else
+				pm.reset(cs);
+			if (pm.find())
+				textResult.append(cs);
+		}
+		return new GrepResult(expression, grepRequest, fileName, textResult.toString());
+	}
+
+	/**
+	 * extract the lines that match with the passed expression 
+	 * @param expression
+	 * @return the lines that match with the passed expression 
+	 */
+	public GrepResult extract(String expression) {
+		StringBuilder textResult = new StringBuilder();
+
+		Matcher lm = linePattern.matcher(this.getText()); // Line matcher
+		while (lm.find()) {
+			CharSequence cs = lm.group(); // The current line
+			if (StringUtils.contains(cs, expression)) {
+				textResult.append(cs);
+			}
+		}
+
+		return new GrepResult(expression, grepRequest, fileName, textResult.toString());
 	}
 
 	@Override
