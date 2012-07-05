@@ -106,9 +106,9 @@ public class GrepResult {
 	}
 
 	/**
-	 * extract the lines that match with the passed regularExpression 
+	 * extract the lines that match with the passed filter as a regularExpression 
 	 * @param expression
-	 * @return the lines that match with the passed regularExpression 
+	 * @return the lines that match with the passed filter as a regularExpression 
 	 */
 	public GrepResult filterByRE(String expression) {
 		StringBuilder textResult = new StringBuilder();
@@ -129,9 +129,9 @@ public class GrepResult {
 	}
 
 	/**
-	 * extract the lines that match with the passed expression 
+	 * extract the lines that match with the passed filter
 	 * @param expression
-	 * @return the lines that match with the passed expression 
+	 * @return the lines that match with the passed filter 
 	 */
 	public GrepResult filterBy(String expression) {
 		StringBuilder textResult = new StringBuilder();
