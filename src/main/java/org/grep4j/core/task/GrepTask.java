@@ -92,9 +92,9 @@ public class GrepTask implements Callable<List<GrepResult>> {
 		for (String filename : matchingFiles) {
 			AbstractGrepCommand grep;
 			if (isGz(filename)) {
-				grep = new GzGrepCommand(grepRequest.getPattern(), filename, grepRequest.isRegexExpression());
+				grep = new GzGrepCommand(grepRequest.getExpression(), filename, grepRequest.isRegexExpression());
 			} else {
-				grep = new SimpleGrepCommand(grepRequest.getPattern(), filename, grepRequest.isRegexExpression());
+				grep = new SimpleGrepCommand(grepRequest.getExpression(), filename, grepRequest.isRegexExpression());
 			}
 			grep.setContextControls(grepRequest.getContextControls());
 			grepList.add(grep);
@@ -104,8 +104,7 @@ public class GrepTask implements Callable<List<GrepResult>> {
 	private void executeGrepCommands() {
 		for (AbstractGrepCommand command : grepList) {
 			String result = commandExecutor.execute(command).andReturnResult();
-			GrepResult taskResult = new GrepResult(grepRequest
-					.getProfile().getName(), command.getFile(), result, grepRequest.isRegexExpression());
+			GrepResult taskResult = new GrepResult(grepRequest, command.getFile(), result);
 			results.add(taskResult);
 		}
 	}

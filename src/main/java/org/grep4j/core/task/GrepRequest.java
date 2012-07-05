@@ -21,7 +21,7 @@ public class GrepRequest {
 
 	protected final Profile profile;
 
-	private final String pattern;
+	private final String expression;
 	private final boolean isRegexExpression;
 	private String contextControls;
 
@@ -30,9 +30,9 @@ public class GrepRequest {
 	 * @param profile to grep
 	 * @param isRegexExpression
 	 */
-	public GrepRequest(String pattern, Profile profile, boolean isRegexExpression) {
+	public GrepRequest(String expression, Profile profile, boolean isRegexExpression) {
 		this.profile = profile;
-		this.pattern = pattern;
+		this.expression = expression;
 		this.isRegexExpression = isRegexExpression;
 	}
 
@@ -42,7 +42,7 @@ public class GrepRequest {
 	 */
 	public GrepRequest(String pattern, Profile profile) {
 		this.profile = profile;
-		this.pattern = pattern;
+		this.expression = pattern;
 		this.isRegexExpression = false;
 	}
 
@@ -72,8 +72,8 @@ public class GrepRequest {
 	/**
 	 * @return the pattern / exression to search
 	 */
-	public String getPattern() {
-		return pattern;
+	public String getExpression() {
+		return expression;
 	}
 
 	public ServerDetails getServerDetails() {
