@@ -10,7 +10,6 @@ import static org.grep4j.core.fluent.Dictionary.on;
 import static org.grep4j.core.fluent.Dictionary.whenCalling;
 import static org.grep4j.core.matchers.GrepResultMatchers.containsExpression;
 import static org.grep4j.core.matchers.GrepResultMatchers.doesNotContainExpression;
-import static org.grep4j.core.matchers.HasFileTarget.hasFileTarget;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -28,17 +27,6 @@ public class WhenGrep4jStartedWithStringToSearchALocalProfile {
 	private static final String KNOWN_PROFILE = "local";
 
 	private final List<Profile> profiles = Arrays.asList(localProfile());
-
-	public void verifyExpressionToParse() {
-		Grep4j executer = new Grep4j(STRING_TO_SEARCH, on(profiles), false);
-		assertThat(executer.getExpression(), is(STRING_TO_SEARCH));
-	}
-
-	public void verifyProfileToUse() {
-		Grep4j executer = new Grep4j(STRING_TO_SEARCH, on(profiles), false);
-		executer.prepareCommandRequests();
-		assertThat(executer.getGrepRequests(), hasFileTarget(KNOWN_PROFILE));
-	}
 
 	public void errorStringMustBeFoundOnTheResult() {
 		GrepResultsSet results = grep(STRING_TO_SEARCH, on(profiles));

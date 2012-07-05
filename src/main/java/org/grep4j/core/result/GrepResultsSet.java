@@ -60,11 +60,11 @@ public class GrepResultsSet implements Collection<GrepResult> {
 	 * @param expression
 	 * @return the lines that match with the passed regularExpression 
 	 */
-	public GrepResultsSet extractWithRegEx(String expression) {
+	public GrepResultsSet filterByRE(String expression) {
 		GrepResultsSet grepResultsSet = new GrepResultsSet();
 
 		for (GrepResult result : grepResults) {
-			GrepResult extractResult = result.extractWithRegEx(expression);
+			GrepResult extractResult = result.filterByRE(expression);
 			if (!extractResult.getText().isEmpty()) {
 				grepResultsSet.add(extractResult);
 			}
@@ -77,11 +77,11 @@ public class GrepResultsSet implements Collection<GrepResult> {
 	 * @param expression
 	 * @return the lines that match with the passed regularExpression 
 	 */
-	public GrepResultsSet extract(String expression) {
+	public GrepResultsSet filterBy(String expression) {
 		GrepResultsSet grepResultsSet = new GrepResultsSet();
 
 		for (GrepResult result : grepResults) {
-			GrepResult extractResult = result.extract(expression);
+			GrepResult extractResult = result.filterBy(expression);
 			if (!extractResult.getText().isEmpty()) {
 				grepResultsSet.add(extractResult);
 			}

@@ -110,7 +110,7 @@ public class GrepResult {
 	 * @param expression
 	 * @return the lines that match with the passed regularExpression 
 	 */
-	public GrepResult extractWithRegEx(String expression) {
+	public GrepResult filterByRE(String expression) {
 		StringBuilder textResult = new StringBuilder();
 
 		Pattern pattern = Pattern.compile(expression);
@@ -133,7 +133,7 @@ public class GrepResult {
 	 * @param expression
 	 * @return the lines that match with the passed expression 
 	 */
-	public GrepResult extract(String expression) {
+	public GrepResult filterBy(String expression) {
 		StringBuilder textResult = new StringBuilder();
 
 		Matcher lm = linePattern.matcher(this.getText()); // Line matcher

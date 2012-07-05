@@ -76,7 +76,7 @@ public final class Grep4j {
 	 * @param extraLinesOptions
 	 * @param isRegexExpression
 	 */
-	Grep4j(String expression, List<Profile> profiles, List<ExtraLines> extraLines, boolean isRegexExpression) {
+	private Grep4j(String expression, List<Profile> profiles, List<ExtraLines> extraLines, boolean isRegexExpression) {
 		this.grepRequests = new ArrayList<GrepRequest>();
 		this.results = new GrepResultsSet();
 		this.expression = expression;
@@ -99,7 +99,7 @@ public final class Grep4j {
 	 * @param profiles
 	 * @param isRegexExpression
 	 */
-	Grep4j(String expression, List<Profile> profiles, boolean isRegexExpression) {
+	private Grep4j(String expression, List<Profile> profiles, boolean isRegexExpression) {
 		this.grepRequests = new ArrayList<GrepRequest>();
 		this.results = new GrepResultsSet();
 		this.expression = expression;
@@ -491,7 +491,7 @@ public final class Grep4j {
 	 * <li>Execute {@link GrepRequest} for each valid {@link Profile}</li>
 	 * </ol>
 	 */
-	Grep4j execute() {
+	private Grep4j execute() {
 		clean();
 		verifyInputs();
 		prepareCommandRequests();
@@ -507,11 +507,11 @@ public final class Grep4j {
 	/**
 	 * @return a {@link GrepResultsSet}s
 	 */
-	GrepResultsSet andGetResults() {
+	private GrepResultsSet andGetResults() {
 		return results;
 	}
 
-	void verifyInputs() {
+	private void verifyInputs() {
 		if (expression == null || expression.trim().isEmpty()) {
 			throw new IllegalArgumentException(
 					"No expression to grep was specified");
@@ -542,7 +542,7 @@ public final class Grep4j {
 		}
 	}
 
-	void prepareCommandRequests() {
+	private void prepareCommandRequests() {
 		for (Profile profile : profiles) {
 			GrepRequest grepRequest = new GrepRequest(expression, profile, isRegexExpression);
 			if (extraLinesOptions != null && !extraLinesOptions.isEmpty()) {
@@ -552,15 +552,4 @@ public final class Grep4j {
 		}
 	}
 
-	String getExpression() {
-		return expression;
-	}
-
-	List<GrepRequest> getGrepRequests() {
-		return grepRequests;
-	}
-
-	List<ExtraLines> getExtraLinesOptions() {
-		return extraLinesOptions;
-	}
 }

@@ -20,14 +20,14 @@ public class WhenExtracting {
 
 	public void aGrepResultsSetWithSingleFile() {
 		GrepResultsSet results = grep("ERROR 1", on(localProfile()), extraLinesAfter(20));
-		for (GrepResult result : results.extract("Marco")) {
+		for (GrepResult result : results.filterBy("Marco")) {
 			assertThat(StringUtils.contains(result.getText(), "customer Marco(id=12345) has been updated successfully"), is(true));
 		}
 	}
 
 	public void aGrepResultsSetWithMultipleFiles() {
 		GrepResultsSet results = grep("ER", on(Arrays.asList(localProfileWithWildecard("*"))), extraLinesAfter(20));
-		for (GrepResult result : results.extract("OR")) {
+		for (GrepResult result : results.filterBy("OR")) {
 			if (result.getFileName().endsWith("gz")) {
 				assertThat(StringUtils.contains(result.getText(), "GZ ERROR 1"), is(true));
 				assertThat(StringUtils.contains(result.getText(), "GZ ERROR 2"), is(true));
@@ -39,12 +39,12 @@ public class WhenExtracting {
 	}
 
 	public void aGrepResultsSetWithMultipleFilesOnly1Match() {
-		GrepResultsSet results = grep("ER", on(Arrays.asList(localProfileWithWildecard("*"))), extraLinesAfter(20)).extract("GZ");
+		GrepResultsSet results = grep("ER", on(Arrays.asList(localProfileWithWildecard("*"))), extraLinesAfter(20)).filterBy("GZ");
 		assertThat(results.size(), is(1));
 	}
 
 	public void aGrepResultsSetWithMultipleFiles2Matches() {
-		GrepResultsSet results = grep("ER", on(Arrays.asList(localProfileWithWildecard("*"))), extraLinesAfter(20)).extract("OR");
+		GrepResultsSet results = grep("ER", on(Arrays.asList(localProfileWithWildecard("*"))), extraLinesAfter(20)).filterBy("OR");
 		assertThat(results.size(), is(2));
 	}
 
@@ -59,18 +59,18 @@ public class WhenExtracting {
 		GrepResultsSet results = grep("ER", on(Arrays.asList(localProfileWithWildecard("*"))), extraLinesAfter(20));
 		for (GrepResult result : results) {
 			if (result.getFileName().endsWith("gz")) {
-				assertThat(StringUtils.contains(result.extract("OR").getText(), "GZ ERROR 1"), is(true));
-				assertThat(StringUtils.contains(result.extract("OR").getText(), "GZ ERROR 2"), is(true));
+				assertThat(StringUtils.contains(result.filterBy("OR").getText(), "GZ ERROR 1"), is(true));
+				assertThat(StringUtils.contains(result.filterBy("OR").getText(), "GZ ERROR 2"), is(true));
 			} else {
-				assertThat(StringUtils.contains(result.extract("OR").getText(), "ERROR 1"), is(true));
-				assertThat(StringUtils.contains(result.extract("OR").getText(), "ERROR 2"), is(true));
+				assertThat(StringUtils.contains(result.filterBy("OR").getText(), "ERROR 1"), is(true));
+				assertThat(StringUtils.contains(result.filterBy("OR").getText(), "ERROR 2"), is(true));
 			}
 		}
 	}
 
 	public void aGrepResultsSetWithSingleFileMultipleExtracts() {
 		GrepResultsSet results = grep("ERROR 1", on(localProfile()), extraLinesAfter(20));
-		for (GrepResult result : results.extract("fine").extract("extract")) {
+		for (GrepResult result : results.filterBy("fine").filterBy("extract")) {
 			assertThat(StringUtils.contains(result.getText(), "fine extract"), is(true));
 		}
 	}
@@ -79,10 +79,10 @@ public class WhenExtracting {
 		GrepResultsSet results = grep("ER", on(Arrays.asList(localProfileWithWildecard("*"))), extraLinesAfter(20));
 		for (GrepResult result : results) {
 			if (result.getFileName().endsWith("gz")) {
-				assertThat(StringUtils.contains(result.extract("OR").extract("2").getText(), "GZ ERROR 1"), is(false));
-				assertThat(StringUtils.contains(result.extract("OR").extract("1").getText(), "GZ ERROR 2"), is(false));
+				assertThat(StringUtils.contains(result.filterBy("OR").filterBy("2").getText(), "GZ ERROR 1"), is(false));
+				assertThat(StringUtils.contains(result.filterBy("OR").filterBy("1").getText(), "GZ ERROR 2"), is(false));
 			} else {
-				assertThat(StringUtils.contains(result.extract("fine").extract("extract").extractWithRegEx("(.*)ub(.*)").getText(),
+				assertThat(StringUtils.contains(result.filterBy("fine").filterBy("extract").filterByRE("(.*)ub(.*)").getText(),
 						"fine double extract"), is(true));
 			}
 		}
