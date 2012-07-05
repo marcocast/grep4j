@@ -114,16 +114,18 @@ public class GrepResult {
 		StringBuilder textResult = new StringBuilder();
 
 		Pattern pattern = Pattern.compile(expression);
-		Matcher lm = linePattern.matcher(this.getText()); // Line matcher
-		Matcher pm = null; // Pattern matcher
+		Matcher lm = linePattern.matcher(this.getText()); 
+		Matcher pm = null; 
 		while (lm.find()) {
-			CharSequence cs = lm.group(); // The current line
-			if (pm == null)
+			CharSequence cs = lm.group(); 
+			if (pm == null){
 				pm = pattern.matcher(cs);
-			else
+			}else{
 				pm.reset(cs);
-			if (pm.find())
+			}
+			if (pm.find()){
 				textResult.append(cs);
+			}
 		}
 		return new GrepResult(expression, grepRequest, fileName, textResult.toString());
 	}
@@ -135,10 +137,9 @@ public class GrepResult {
 	 */
 	public GrepResult filterBy(String expression) {
 		StringBuilder textResult = new StringBuilder();
-
-		Matcher lm = linePattern.matcher(this.getText()); // Line matcher
+		Matcher lm = linePattern.matcher(this.getText());
 		while (lm.find()) {
-			CharSequence cs = lm.group(); // The current line
+			CharSequence cs = lm.group(); 
 			if (StringUtils.contains(cs, expression)) {
 				textResult.append(cs);
 			}
