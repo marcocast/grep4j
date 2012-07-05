@@ -3,24 +3,30 @@ package org.grep4j.core.task;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
+import org.grep4j.core.model.Profile;
 import org.grep4j.core.result.GrepResult;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 @Test
-public class GrepResultTest {
+public class GrepResultTestWithRegEx {
 
 	GrepResult grepResult;
 
 	@BeforeTest
 	public void init() {
-		grepResult = new GrepResult("profileName", "fileName", "customer Marco(id=12345) has been updated successfully", false);
+		GrepRequest grepRequest = new GrepRequest("customer Marco(.*) has been updated successfully", new Profile("profileName", "fileName"),
+				true);
+		grepResult = new GrepResult(grepRequest, "fileName", "customer Marco(id=12345) has been updated successfully");
+	}
+
+	public void testRegExWithExpression() {
+		assertThat(grepResult.getOccourrences("customer(.*)updated"), is(1));
+		assertThat(grepResult.getOccourrences("Marco"), is(1));
 	}
 
 	public void testRegEx() {
-		grepResult = new GrepResult("profileName", "fileName", "customer Marco(id=12345) has been updated successfully", true);
-		assertThat(grepResult.getOccourrences("customer(.*)updated"), is(1));
-		assertThat(grepResult.getOccourrences("Marco"), is(1));
+		assertThat(grepResult.getOccourrences(), is(1));
 	}
 
 	public void testProfileNameProperties() {

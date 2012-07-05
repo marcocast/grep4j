@@ -5,12 +5,14 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang3.StringUtils;
+import org.grep4j.core.model.Profile;
+import org.grep4j.core.task.GrepRequest;
 
 /**
  * This class contains the result of the grep in String format.
  * 
  * @author Marco Castigliego
- * @author Giovanni Gargiulo
+ * 
  *
  */
 public class GrepResult {
@@ -21,14 +23,17 @@ public class GrepResult {
 
 	private final String text;
 
+	private final String expression;
+
 	private final boolean regularExpression;
 
-	public GrepResult(String profileName, String fileName, String text, boolean regularExpression) {
+	public GrepResult(GrepRequest grepRequest, String fileName, String text) {
 		super();
-		this.profileName = profileName;
+		this.profileName = grepRequest.getProfile().getName();
 		this.fileName = fileName;
 		this.text = text;
-		this.regularExpression = regularExpression;
+		this.regularExpression = grepRequest.isRegexExpression();
+		this.expression = grepRequest.getExpression();
 	}
 
 	/** 
@@ -69,6 +74,25 @@ public class GrepResult {
 			}
 		} else {
 			occurrences = StringUtils.countMatches(this.getText(), expression);
+		}
+		return occurrences;
+	}
+
+	/**
+	 * Based on the grep expression, it counts how many times the pattern is found in the result
+	 * 
+	 * @return total number of time the patter is found
+	 */
+	public int getOccourrences() {
+		int occurrences = 0;
+		if (regularExpression) {
+			Pattern pattern = Pattern.compile(this.expression);
+			java.util.regex.Matcher matcher = pattern.matcher(this.getText());
+			while (matcher.find()) {
+				occurrences++;
+			}
+		} else {
+			occurrences = StringUtils.countMatches(this.getText(), this.expression);
 		}
 		return occurrences;
 	}
