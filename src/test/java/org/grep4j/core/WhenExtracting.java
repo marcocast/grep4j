@@ -38,6 +38,16 @@ public class WhenExtracting {
 		}
 	}
 
+	public void aGrepResultsSetWithMultipleFilesOnly1Match() {
+		GrepResultsSet results = grep("ER", on(Arrays.asList(localProfileWithWildecard("*"))), extraLinesAfter(20)).extract("GZ");
+		assertThat(results.size(), is(1));
+	}
+
+	public void aGrepResultsSetWithMultipleFiles2Matches() {
+		GrepResultsSet results = grep("ER", on(Arrays.asList(localProfileWithWildecard("*"))), extraLinesAfter(20)).extract("OR");
+		assertThat(results.size(), is(2));
+	}
+
 	public void aGrepResultsWithSingleFile() {
 		GrepResultsSet results = grep("ERROR 1", on(localProfile()), extraLinesAfter(20));
 		for (GrepResult result : results) {
