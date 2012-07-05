@@ -56,9 +56,9 @@ public class GrepResultsSet implements Collection<GrepResult> {
 	}
 
 	/**
-	 * extract the lines that match with the passed regularExpression 
+	 * extract the lines that match with the passed filter as a regularExpression 
 	 * @param expression
-	 * @return the lines that match with the passed regularExpression 
+	 * @return the lines that match with the passed filter as a regularExpression 
 	 */
 	public GrepResultsSet filterByRE(String expression) {
 		GrepResultsSet grepResultsSet = new GrepResultsSet();
@@ -73,9 +73,9 @@ public class GrepResultsSet implements Collection<GrepResult> {
 	}
 
 	/**
-	 * extract the lines that match with the passed regularExpression 
+	 * extract the lines that match with the passed filter 
 	 * @param expression
-	 * @return the lines that match with the passed regularExpression 
+	 * @return the lines that match with the passed filter 
 	 */
 	public GrepResultsSet filterBy(String expression) {
 		GrepResultsSet grepResultsSet = new GrepResultsSet();
