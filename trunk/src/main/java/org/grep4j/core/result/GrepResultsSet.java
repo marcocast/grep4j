@@ -37,7 +37,7 @@ public class GrepResultsSet implements Collection<GrepResult> {
 	public int totalOccurrences() {
 		int occurrences = 0;
 		for (GrepResult result : grepResults) {
-			occurrences += result.getOccourrences(of(expression));
+			occurrences += result.getOccourrences();
 		}
 		return occurrences;
 	}
