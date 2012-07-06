@@ -1,16 +1,12 @@
 package org.grep4j.core;
 
-import static org.grep4j.core.Grep4j.withOption;
 import static org.grep4j.core.Grep4j.grep;
+import static org.grep4j.core.Grep4j.withOption;
 import static org.grep4j.core.fixtures.ProfileFixtures.localProfile;
-import static org.grep4j.core.fixtures.ProfileFixtures.localProfileWithWildecard;
 import static org.grep4j.core.fluent.Dictionary.on;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-import java.util.Arrays;
-
-import org.apache.commons.lang3.StringUtils;
 import org.grep4j.core.result.GrepResult;
 import org.grep4j.core.result.GrepResultsSet;
 import org.testng.annotations.Test;

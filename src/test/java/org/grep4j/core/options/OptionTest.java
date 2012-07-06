@@ -2,7 +2,6 @@ package org.grep4j.core.options;
 
 import static ch.lambdaj.Lambda.join;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 
 import java.util.Arrays;

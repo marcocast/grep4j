@@ -12,7 +12,6 @@ import java.util.concurrent.Future;
 
 import org.grep4j.core.model.Profile;
 import org.grep4j.core.options.Option;
-import org.grep4j.core.options.Option;
 import org.grep4j.core.result.GrepResult;
 import org.grep4j.core.result.GrepResultsSet;
 import org.grep4j.core.task.GrepRequest;
@@ -136,7 +135,7 @@ public final class Grep4j {
 	* This utility method executes the grep command and return the {@link GrepResultsSet}
 	* containing the result of the grep
 	* 
-	* It also protects the List of profiles and ExtraLines wrapping them into an
+	* It also protects the List of profiles and Options wrapping them into an
 	* ImmutableList.
 	* Example of ExtraLines is :
 	* <pre>
@@ -160,9 +159,8 @@ public final class Grep4j {
 	* import static org.grep4j.core.fluent.Dictionary.on;
 	* ...
 	* 
-	* GrepResultsSet results = grep("expression", on(profiles()), extraLinesBefore(100));
+	* GrepResultsSet results = grep("eXpReSsIoN", on(profiles()), withOption("-i"));
 	* System.out.println("Total occurrences found : " + results.totalOccurrences());
-	* System.out.println("Total occurrences found : " + results.totalOccurrences("another expression within 100 lines before"));
 	* 
 	* for (GrepResult singleResult : results) {			
 	* 		System.out.println(singleResult);
@@ -176,9 +174,8 @@ public final class Grep4j {
 	* import static org.grep4j.core.fluent.Dictionary.on;
 	* ...
 	* 
-	* GrepResultsSet results = grep("expression", on(profiles()), extraLinesBefore(100), extraLinesAfter(100));
+	* GrepResultsSet results = grep("expression", on(profiles()), extraLinesBefore(100), extraLinesAfter(100), withOption("-o"));
 	* System.out.println("Total occurrences found : " + results.totalOccurrences());
-	* System.out.println("Total occurrences found : " + results.totalOccurrences("another expression within 100 lines before and 100 after"));
 	* 
 	* for (GrepResult singleResult : results) {			
 	* 		System.out.println(singleResult);
@@ -227,7 +224,7 @@ public final class Grep4j {
 	* This method supports plain text as well as RegEx. Example : CUSTOMER(.*)UPDATE will
 	* grep for all the customers * updates.
 	* 
-	* It also protects the List of profiles and ExtraLines wrapping them into an
+	* It also protects the List of profiles and Options wrapping them into an
 	* ImmutableList.
 	* Example of ExtraLines is :
 	* <pre>
@@ -312,7 +309,7 @@ public final class Grep4j {
 	* This utility method executes the grep command and return the {@link GrepResultsSet}
 	* containing the result of the grep
 	* 
-	* It also protects the List of profiles and ExtraLines wrapping them into an
+	* It also protects the List of profiles and Options wrapping them into an
 	* ImmutableList.
 	* Example of ExtraLines is :
 	* <pre>
@@ -362,7 +359,7 @@ public final class Grep4j {
 	* 
 	* @param expression
 	* @param profile
-	* @param extraLines
+	* @param options
 	* @return GlobalGrepResult
 	*/
 	public static GrepResultsSet grep(String expression, Profile profile, Option... options) {
@@ -403,7 +400,7 @@ public final class Grep4j {
 	* This method supports plain text as well as RegEx. Example : CUSTOMER(.*)UPDATE will
 	* grep for all the customers * updates.
 	* 
-	* It also protects the List of profiles and ExtraLines wrapping them into an
+	* It also protects the List of profiles and Options wrapping them into an
 	* ImmutableList.
 	* Example of ExtraLines is :
 	* <pre>
@@ -453,7 +450,7 @@ public final class Grep4j {
 	* 
 	* @param expression
 	* @param profiles
-	* @param extraLines
+	* @param options
 	* @return GlobalGrepResult
 	*/
 	public static GrepResultsSet egrep(String expression, Profile profile, Option... options) {
@@ -467,6 +464,24 @@ public final class Grep4j {
 	 */
 	public static Option withOption(String optionComand) {
 		return new Option(optionComand);
+	}
+
+	/**
+	 * 
+	 * @param optionComand
+	 * @return
+	 */
+	public static Option extraLinesAfter(int lines) {
+		return new Option("-A", String.valueOf(lines));
+	}
+
+	/**
+	 * 
+	 * @param optionComand
+	 * @return
+	 */
+	public static Option extraLinesBefore(int lines) {
+		return new Option("-B", String.valueOf(lines));
 	}
 
 	/**
