@@ -27,13 +27,27 @@ public class Dictionary {
 	 * Fluent mirror method: use this method to give more readability to the code.
 	 * Example:
 	 * <pre>
-	 * int actualOccurrences = totalOccurrences(<b>of</b>(expression), on(results));
+	 * int actualOccurrences = totalOccurrences(<b>expression</b>("info"), on(results));
 	 * </pre>
 	 * 
 	 * @param type
 	 * @return type
 	 */
 	public static <T> T of(T type) {
+		return type;
+	}
+
+	/**
+	 * Fluent mirror method: use this method to give more readability to the code.
+	 * Example:
+	 * <pre>
+	 * int actualOccurrences = totalOccurrences(<b>of</b>(expression), results);
+	 * </pre>
+	 * 
+	 * @param type
+	 * @return type
+	 */
+	public static <T> T expression(T type) {
 		return type;
 	}
 
@@ -64,7 +78,7 @@ public class Dictionary {
 	public static <T> T whenCalling(T type) {
 		return type;
 	}
-	
+
 	/**
 	 * Fluent mirror method: use this method to give more readability to the code.
 	 * Example:
