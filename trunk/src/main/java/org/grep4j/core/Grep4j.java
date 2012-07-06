@@ -187,7 +187,7 @@ public final class Grep4j {
 	* @return GlobalGrepResult
 	*/
 	public static GrepResultsSet grep(String expression, List<Profile> profiles, Option... options) {
-		return new Grep4j(expression, profiles, Arrays.asList(options), Arrays.asList(options).contains(Option.REGEXP_OPTION)).execute()
+		return new Grep4j(expression, profiles, Arrays.asList(options), false).execute()
 				.andGetResults();
 	}
 
@@ -364,8 +364,7 @@ public final class Grep4j {
 	* @return GlobalGrepResult
 	*/
 	public static GrepResultsSet grep(String expression, Profile profile, Option... options) {
-		return new Grep4j(expression, Collections.singletonList(profile), Arrays.asList(options), Arrays.asList(options).contains(
-				Option.REGEXP_OPTION)).execute().andGetResults();
+		return new Grep4j(expression, Collections.singletonList(profile), Arrays.asList(options), false).execute().andGetResults();
 	}
 
 	/**
@@ -457,43 +456,6 @@ public final class Grep4j {
 	*/
 	public static GrepResultsSet egrep(String expression, Profile profile, Option... options) {
 		return new Grep4j(expression, Collections.singletonList(profile), Arrays.asList(options), true).execute().andGetResults();
-	}
-
-	/**
-	 * 
-	 * @param optionComand
-	 * @return
-	 */
-	public static Option withOption(String optionComand) {
-		return new Option(optionComand);
-	}
-
-	/**
-	 * 
-	 * @param optionComand
-	 * @return
-	 */
-	public static Option extraLinesAfter(int lines) {
-		return new Option("-A", String.valueOf(lines));
-	}
-
-	/**
-	 * 
-	 * @param optionComand
-	 * @return
-	 */
-	public static Option extraLinesBefore(int lines) {
-		return new Option("-B", String.valueOf(lines));
-	}
-
-	/**
-	 * 
-	 * @param optionComand
-	 * @param value
-	 * @return
-	 */
-	public static Option withOption(String optionComand, String value) {
-		return new Option(optionComand, value);
 	}
 
 	/**
