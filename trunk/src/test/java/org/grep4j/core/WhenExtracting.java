@@ -1,7 +1,7 @@
 package org.grep4j.core;
 
-import static org.grep4j.core.Grep4j.withOption;
 import static org.grep4j.core.Grep4j.grep;
+import static org.grep4j.core.Grep4j.withOption;
 import static org.grep4j.core.fixtures.ProfileFixtures.localProfile;
 import static org.grep4j.core.fixtures.ProfileFixtures.localProfileWithWildecard;
 import static org.grep4j.core.fluent.Dictionary.on;

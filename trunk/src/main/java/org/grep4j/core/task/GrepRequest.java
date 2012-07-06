@@ -47,7 +47,7 @@ public class GrepRequest {
 	}
 
 	/**
-	 * Add Extra lines options {@see ExtraLines}
+	 * Add Extra options {@see Option}
 	 * @param options
 	 */
 	public void addOptions(List<Option> options) {
