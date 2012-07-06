@@ -11,8 +11,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import org.grep4j.core.model.Profile;
-import org.grep4j.core.options.ExtraLines;
-import org.grep4j.core.options.ExtraLinesOption;
+import org.grep4j.core.options.Option;
+import org.grep4j.core.options.Option;
 import org.grep4j.core.result.GrepResult;
 import org.grep4j.core.result.GrepResultsSet;
 import org.grep4j.core.task.GrepRequest;
@@ -61,7 +61,7 @@ public final class Grep4j {
 
 	private final String expression;
 	private final ImmutableList<Profile> profiles;
-	private final ImmutableList<ExtraLines> extraLinesOptions;
+	private final ImmutableList<Option> options;
 	private final GrepResultsSet results;
 	private final List<GrepRequest> grepRequests;
 	private final boolean isRegexExpression;
@@ -73,19 +73,19 @@ public final class Grep4j {
 	 * 
 	 * @param expression
 	 * @param profiles
-	 * @param extraLinesOptions
+	 * @param options
 	 * @param isRegexExpression
 	 */
-	private Grep4j(String expression, List<Profile> profiles, List<ExtraLines> extraLines, boolean isRegexExpression) {
+	private Grep4j(String expression, List<Profile> profiles, List<Option> options, boolean isRegexExpression) {
 		this.grepRequests = new ArrayList<GrepRequest>();
 		this.results = new GrepResultsSet();
 		this.expression = expression;
 		this.profiles = ImmutableList.copyOf(profiles);
 		this.isRegexExpression = isRegexExpression;
-		if (extraLines != null) {
-			this.extraLinesOptions = ImmutableList.copyOf(extraLines);
+		if (options != null) {
+			this.options = ImmutableList.copyOf(options);
 		} else {
-			this.extraLinesOptions = null;
+			this.options = null;
 		}
 
 	}
@@ -104,7 +104,7 @@ public final class Grep4j {
 		this.results = new GrepResultsSet();
 		this.expression = expression;
 		this.profiles = ImmutableList.copyOf(profiles);
-		this.extraLinesOptions = null;
+		this.options = null;
 		this.isRegexExpression = isRegexExpression;
 	}
 
@@ -186,11 +186,11 @@ public final class Grep4j {
 	* 
 	* @param expression
 	* @param profiles
-	* @param extraLines
+	* @param option
 	* @return GlobalGrepResult
 	*/
-	public static GrepResultsSet grep(String expression, List<Profile> profiles, ExtraLines... extraLines) {
-		return new Grep4j(expression, profiles, Arrays.asList(extraLines), false).execute().andGetResults();
+	public static GrepResultsSet grep(String expression, List<Profile> profiles, Option... options) {
+		return new Grep4j(expression, profiles, Arrays.asList(options), false).execute().andGetResults();
 	}
 
 	/**
@@ -277,11 +277,11 @@ public final class Grep4j {
 	* 
 	* @param expression
 	* @param profiles
-	* @param extraLines
+	* @param option
 	* @return GlobalGrepResult
 	*/
-	public static GrepResultsSet egrep(String expression, List<Profile> profiles, ExtraLines... extraLines) {
-		return new Grep4j(expression, profiles, Arrays.asList(extraLines), true).execute().andGetResults();
+	public static GrepResultsSet egrep(String expression, List<Profile> profiles, Option... options) {
+		return new Grep4j(expression, profiles, Arrays.asList(options), true).execute().andGetResults();
 	}
 
 	/**
@@ -365,8 +365,8 @@ public final class Grep4j {
 	* @param extraLines
 	* @return GlobalGrepResult
 	*/
-	public static GrepResultsSet grep(String expression, Profile profile, ExtraLines... extraLines) {
-		return new Grep4j(expression, Collections.singletonList(profile), Arrays.asList(extraLines), false).execute().andGetResults();
+	public static GrepResultsSet grep(String expression, Profile profile, Option... options) {
+		return new Grep4j(expression, Collections.singletonList(profile), Arrays.asList(options), false).execute().andGetResults();
 	}
 
 	/**
@@ -456,28 +456,27 @@ public final class Grep4j {
 	* @param extraLines
 	* @return GlobalGrepResult
 	*/
-	public static GrepResultsSet egrep(String expression, Profile profile, ExtraLines... extraLines) {
-		return new Grep4j(expression, Collections.singletonList(profile), Arrays.asList(extraLines), true).execute().andGetResults();
+	public static GrepResultsSet egrep(String expression, Profile profile, Option... options) {
+		return new Grep4j(expression, Collections.singletonList(profile), Arrays.asList(options), true).execute().andGetResults();
 	}
 
 	/**
-	 * extraLinesAfter(5) will return an ExtraLines object with a toString equals to -A5
 	 * 
-	 * @param numberOfLines
-	 * @return ExtraLines containing the context control command
+	 * @param optionComand
+	 * @return
 	 */
-	public static ExtraLines extraLinesAfter(int numberOfLines) {
-		return new ExtraLines(ExtraLinesOption.after, numberOfLines);
+	public static Option withOption(String optionComand) {
+		return new Option(optionComand);
 	}
 
 	/**
-	 * extraLinesBefore(5) will return an ExtraLines object with a toString equals to -B5
 	 * 
-	 * @param numberOfLines
-	 * @return ExtraLines containing the context control command
+	 * @param optionComand
+	 * @param value
+	 * @return
 	 */
-	public static ExtraLines extraLinesBefore(int numberOfLines) {
-		return new ExtraLines(ExtraLinesOption.before, numberOfLines);
+	public static Option withOption(String optionComand, String value) {
+		return new Option(optionComand, value);
 	}
 
 	/**
@@ -547,8 +546,8 @@ public final class Grep4j {
 	private void prepareCommandRequests() {
 		for (Profile profile : profiles) {
 			GrepRequest grepRequest = new GrepRequest(expression, profile, isRegexExpression);
-			if (extraLinesOptions != null && !extraLinesOptions.isEmpty()) {
-				grepRequest.addExtraLineOptions(extraLinesOptions);
+			if (options != null && !options.isEmpty()) {
+				grepRequest.addOptions(options);
 			}
 			grepRequests.add(grepRequest);
 		}

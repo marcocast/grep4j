@@ -1,8 +1,7 @@
 package org.grep4j.core;
 
-import static org.grep4j.core.Grep4j.extraLinesAfter;
-import static org.grep4j.core.Grep4j.extraLinesBefore;
 import static org.grep4j.core.Grep4j.grep;
+import static org.grep4j.core.Grep4j.withOption;
 import static org.grep4j.core.fixtures.ProfileFixtures.localProfile;
 import static org.grep4j.core.fixtures.ProfileFixtures.localProfileWithWildecard;
 import static org.grep4j.core.fluent.Dictionary.executing;
@@ -65,12 +64,12 @@ public class WhenGreppingSingleProfile {
 	}
 
 	public void extraLineAfter() {
-		GrepResultsSet results = grep("ERROR 1", on(localProfile()), extraLinesAfter(20));
+		GrepResultsSet results = grep("ERROR 1", on(localProfile()), withOption("-A", "20"));
 		assertThat(results, containsExpression("ERROR 2"));
 	}
 
 	public void extraLineBefore() {
-		GrepResultsSet results = grep("ERROR 2", on(localProfile()), extraLinesBefore(20));
+		GrepResultsSet results = grep("ERROR 2", on(localProfile()), withOption("-B", "20"));
 		assertThat(results, containsExpression("ERROR 1"));
 	}
 }

@@ -6,7 +6,7 @@ public abstract class AbstractGrepCommand implements ExecutableCommand {
 
 	protected static final String SPACE = " ";
 	protected static final String QUOTE = "\'";
-	protected static final String EGREP_COMMAND = "egrep";
+	protected static final String EGREP_COMMAND = "grep -E";
 	protected static final String GREP_COMMAND = "grep";
 
 	protected final String file;
