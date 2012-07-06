@@ -187,7 +187,8 @@ public final class Grep4j {
 	* @return GlobalGrepResult
 	*/
 	public static GrepResultsSet grep(String expression, List<Profile> profiles, Option... options) {
-		return new Grep4j(expression, profiles, Arrays.asList(options), false).execute().andGetResults();
+		return new Grep4j(expression, profiles, Arrays.asList(options), Arrays.asList(options).contains(Option.REGEXP_OPTION)).execute()
+				.andGetResults();
 	}
 
 	/**
@@ -363,7 +364,8 @@ public final class Grep4j {
 	* @return GlobalGrepResult
 	*/
 	public static GrepResultsSet grep(String expression, Profile profile, Option... options) {
-		return new Grep4j(expression, Collections.singletonList(profile), Arrays.asList(options), false).execute().andGetResults();
+		return new Grep4j(expression, Collections.singletonList(profile), Arrays.asList(options), Arrays.asList(options).contains(
+				Option.REGEXP_OPTION)).execute().andGetResults();
 	}
 
 	/**

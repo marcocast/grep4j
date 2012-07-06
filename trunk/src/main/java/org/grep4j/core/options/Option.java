@@ -5,6 +5,8 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 
 public class Option {
 
+	public static final String REGEXP_OPTION = "-E";
+
 	private final String optionCommand;
 	private final String optionValue;
 
