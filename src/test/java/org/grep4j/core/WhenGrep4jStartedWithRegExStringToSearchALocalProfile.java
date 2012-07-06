@@ -2,11 +2,12 @@ package org.grep4j.core;
 
 import static org.grep4j.core.Grep4j.egrep;
 import static org.grep4j.core.Grep4j.grep;
-import static org.grep4j.core.Grep4j.withOption;
 import static org.grep4j.core.fixtures.ProfileFixtures.localProfile;
 import static org.grep4j.core.fluent.Dictionary.executing;
 import static org.grep4j.core.fluent.Dictionary.on;
 import static org.grep4j.core.matchers.GrepResultMatchers.containsExpression;
+import static org.grep4j.core.options.Option.extraLinesAfter;
+import static org.grep4j.core.options.Option.extraLinesBefore;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -28,12 +29,12 @@ public class WhenGrep4jStartedWithRegExStringToSearchALocalProfile {
 	}
 
 	public void extraLineBefore() {
-		GrepResultsSet results = egrep("ER(.*) 2", on(profiles), withOption("-B", "20"));
+		GrepResultsSet results = egrep("ER(.*) 2", on(profiles), extraLinesBefore(20));
 		assertThat(results, containsExpression("ER(.*) 1"));
 	}
 
 	public void extraLineAfter() {
-		GrepResultsSet results = egrep("ER(.*) 1", on(profiles), withOption("-A", "20"));
+		GrepResultsSet results = egrep("ER(.*) 1", on(profiles), extraLinesAfter(20));
 		assertThat(results, containsExpression("ER(.*) 2"));
 	}
 
