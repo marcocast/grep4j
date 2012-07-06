@@ -538,7 +538,9 @@ public final class Grep4j {
 		} catch (Exception e) {
 			throw new RuntimeException("Error when executing the commands", e);
 		} finally {
-			executorService.shutdownNow();
+			if (executorService != null) {
+				executorService.shutdownNow();
+			}
 		}
 	}
 
