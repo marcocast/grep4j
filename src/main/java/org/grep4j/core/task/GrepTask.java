@@ -1,11 +1,17 @@
 package org.grep4j.core.task;
 
 import static org.grep4j.core.command.ServerDetailsInterpreter.getCommandExecutor;
+import static org.grep4j.core.task.ForkController.maxExecutorTaskThreads;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import org.grep4j.core.command.linux.CommandExecutor;
 import org.grep4j.core.command.linux.grep.AbstractGrepCommand;
@@ -41,20 +47,15 @@ public class GrepTask implements Callable<List<GrepResult>> {
 	private final List<GrepResult> results;
 
 	public GrepTask(GrepRequest grepRequest) {
-
 		this.commandExecutor = getCommandExecutor(grepRequest.getServerDetails());
-
 		this.grepRequest = grepRequest;
-
 		this.matchingFiles = new ArrayList<String>();
 		this.grepList = new ArrayList<AbstractGrepCommand>();
 		this.results = new ArrayList<GrepResult>();
-
 	}
 
 	@Override
 	public List<GrepResult> call() {
-
 		init();
 		try {
 			listMatchingFiles();
@@ -64,28 +65,24 @@ public class GrepTask implements Callable<List<GrepResult>> {
 			release();
 		}
 		return results;
-
 	}
 
 	private void init() {
 		commandExecutor.init();
 	}
-
+	
+	/*
+	 * In case the file to grep contains a wildcard (EXAMPLE server.log*), we run first an LS command
+	 * to separate each file which will then be treated in a separated Grepresult
+	 */
 	private void listMatchingFiles() {
-
 		if (grepRequest.getProfile().containsWildcard()) {
-
 			LsCommand ls = new LsCommand(grepRequest.getProfile());
-
 			String filenames = commandExecutor.execute(ls).andReturnResult();
-
 			matchingFiles.addAll(aListOf(filenames));
-
 		} else {
-
 			matchingFiles.add(grepRequest.getProfile().getFilePath());
 		}
-
 	}
 
 	private void prepareGrepCommands() {
@@ -102,10 +99,22 @@ public class GrepTask implements Callable<List<GrepResult>> {
 	}
 
 	private void executeGrepCommands() {
-		for (AbstractGrepCommand command : grepList) {
-			String result = commandExecutor.execute(command).andReturnResult();
-			GrepResult taskResult = new GrepResult(grepRequest, command.getFile(), result);
-			results.add(taskResult);
+		ExecutorService executorService = null;
+		try {
+			executorService = Executors.newFixedThreadPool(maxExecutorTaskThreads(grepList.size()));
+			Set<Future<GrepResult>> commandsExecutorTaskFutures = new HashSet<Future<GrepResult>>();
+			for (AbstractGrepCommand command : grepList) {
+				commandsExecutorTaskFutures.add(executorService.submit(new CommandExecutorTask(commandExecutor,command,grepRequest)));
+			}
+			for (Future<GrepResult> future : commandsExecutorTaskFutures) {
+				results.add(future.get());
+			}
+		} catch (Exception e) {
+			throw new RuntimeException("Error when executing the CommandExecutorTasks", e);
+		} finally {
+			if (executorService != null) {
+				executorService.shutdownNow();
+			}
 		}
 	}
 
@@ -128,5 +137,5 @@ public class GrepTask implements Callable<List<GrepResult>> {
 	protected void setCommandExecutor(CommandExecutor commandExecutor) {
 		this.commandExecutor = commandExecutor;
 	}
-
+	
 }

@@ -1,12 +1,12 @@
 package org.grep4j.core.matchers;
 
-import org.grep4j.core.result.GrepResultsSet;
+import org.grep4j.core.result.GrepResults;
 import org.hamcrest.Description;
 import org.hamcrest.Factory;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 
-public class GrepResultDoesNotContain extends TypeSafeMatcher<GrepResultsSet> {
+public class GrepResultDoesNotContain extends TypeSafeMatcher<GrepResults> {
 
 	private final String expression;
 
@@ -20,12 +20,12 @@ public class GrepResultDoesNotContain extends TypeSafeMatcher<GrepResultsSet> {
 	}
 
 	@Override
-	public boolean matchesSafely(GrepResultsSet results) {
+	public boolean matchesSafely(GrepResults results) {
 		return results.totalOccurrences(expression) == 0;
 	}
 
 	@Factory
-	public static <T> Matcher<GrepResultsSet> doesNotContainExpression(
+	public static <T> Matcher<GrepResults> doesNotContainExpression(
 			String expression) {
 		return new GrepResultDoesNotContain(expression);
 	}

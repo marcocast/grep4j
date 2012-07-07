@@ -116,6 +116,14 @@ public class Option {
 	public static Option filesMatching() {
 		return new Option("-l");
 	}
+	
+	/**
+	 * --version, the version of grep 
+	 * @return
+	 */
+	public static Option grepVersion() {
+		return new Option("--version");
+	}
 
 	public String getOptionCommand() {
 		return optionCommand;

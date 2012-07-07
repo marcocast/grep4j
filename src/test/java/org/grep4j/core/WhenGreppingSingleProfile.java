@@ -13,7 +13,7 @@ import static org.grep4j.core.options.Option.extraLinesBefore;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-import org.grep4j.core.result.GrepResultsSet;
+import org.grep4j.core.result.GrepResults;
 import org.testng.annotations.Test;
 
 @Test
@@ -22,17 +22,17 @@ public class WhenGreppingSingleProfile {
 	private static final String STRING_TO_SEARCH = "ERROR";
 
 	public void errorStringMustBeFoundOnTheResult() {
-		GrepResultsSet results = grep(STRING_TO_SEARCH, on(localProfile()));
+		GrepResults results = grep(STRING_TO_SEARCH, on(localProfile()));
 		assertThat(results, containsExpression("ERROR"));
 	}
 
 	public void only2ErrorStringsMustNotBeFoundOnTheResult() {
-		GrepResultsSet results = grep("ERROR", on(localProfile()));
+		GrepResults results = grep("ERROR", on(localProfile()));
 		assertThat(results, doesNotContainExpression("3"));
 	}
 
 	public void gzStringsShouldBeFoundOnTheResult() {
-		GrepResultsSet results = grep("ERROR", on(localProfileWithWildecard("*")));
+		GrepResults results = grep("ERROR", on(localProfileWithWildecard("*")));
 		assertThat(results, containsExpression("GZ"));
 	}
 
@@ -65,12 +65,12 @@ public class WhenGreppingSingleProfile {
 	}
 
 	public void extraLineAfter() {
-		GrepResultsSet results = grep("ERROR 1", on(localProfile()), extraLinesAfter(20));
+		GrepResults results = grep("ERROR 1", on(localProfile()), extraLinesAfter(20));
 		assertThat(results, containsExpression("ERROR 2"));
 	}
 
 	public void extraLineBefore() {
-		GrepResultsSet results = grep("ERROR 2", on(localProfile()), extraLinesBefore(20));
+		GrepResults results = grep("ERROR 2", on(localProfile()), extraLinesBefore(20));
 		assertThat(results, containsExpression("ERROR 1"));
 	}
 }

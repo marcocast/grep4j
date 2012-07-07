@@ -1,5 +1,7 @@
 package org.grep4j.core;
 
+import static org.grep4j.core.task.ForkController.maxGrepTaskThreads;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -13,12 +15,11 @@ import java.util.concurrent.Future;
 import org.grep4j.core.model.Profile;
 import org.grep4j.core.options.Option;
 import org.grep4j.core.result.GrepResult;
-import org.grep4j.core.result.GrepResultsSet;
+import org.grep4j.core.result.GrepResults;
 import org.grep4j.core.task.GrepRequest;
 import org.grep4j.core.task.GrepTask;
 
 import com.google.common.collect.ImmutableList;
-
 /**
  * Entry Class for the Grep4j API. Usage example:
  * 
@@ -61,7 +62,7 @@ public final class Grep4j {
 	private final String expression;
 	private final ImmutableList<Profile> profiles;
 	private final ImmutableList<Option> options;
-	private final GrepResultsSet results;
+	private final GrepResults results;
 	private final List<GrepRequest> grepRequests;
 	private final boolean isRegexExpression;
 
@@ -77,7 +78,7 @@ public final class Grep4j {
 	 */
 	private Grep4j(String expression, List<Profile> profiles, List<Option> options, boolean isRegexExpression) {
 		this.grepRequests = new ArrayList<GrepRequest>();
-		this.results = new GrepResultsSet();
+		this.results = new GrepResults();
 		this.expression = expression;
 		this.profiles = ImmutableList.copyOf(profiles);
 		this.isRegexExpression = isRegexExpression;
@@ -100,7 +101,7 @@ public final class Grep4j {
 	 */
 	private Grep4j(String expression, List<Profile> profiles, boolean isRegexExpression) {
 		this.grepRequests = new ArrayList<GrepRequest>();
-		this.results = new GrepResultsSet();
+		this.results = new GrepResults();
 		this.expression = expression;
 		this.profiles = ImmutableList.copyOf(profiles);
 		this.options = null;
@@ -109,7 +110,7 @@ public final class Grep4j {
 
 	/**
 	 * 
-	 * This utility method executes the grep command and return the {@link GrepResultsSet}
+	 * This utility method executes the grep command and return the {@link GrepResults}
 	 * containing the result of the grep 
 	 * 
 	 * Example:
@@ -126,13 +127,13 @@ public final class Grep4j {
 	 * @param profiles
 	 * @return GlobalGrepResult
 	 */
-	public static GrepResultsSet grep(String expression, List<Profile> profiles) {
+	public static GrepResults grep(String expression, List<Profile> profiles) {
 		return new Grep4j(expression, profiles, false).execute().andGetResults();
 	}
 
 	/**
 	* 
-	* This utility method executes the grep command and return the {@link GrepResultsSet}
+	* This utility method executes the grep command and return the {@link GrepResults}
 	* containing the result of the grep
 	* 
 	* It also protects the List of profiles and Options wrapping them into an
@@ -186,14 +187,14 @@ public final class Grep4j {
 	* @param option
 	* @return GlobalGrepResult
 	*/
-	public static GrepResultsSet grep(String expression, List<Profile> profiles, Option... options) {
+	public static GrepResults grep(String expression, List<Profile> profiles, Option... options) {
 		return new Grep4j(expression, profiles, Arrays.asList(options), false).execute()
 				.andGetResults();
 	}
 
 	/**
 	 * 
-	 * This utility method executes the grep command and return the {@link GrepResultsSet}
+	 * This utility method executes the grep command and return the {@link GrepResults}
 	 * containing the result of the grep 
 	 * 
 	 * This method supports plain text as well as RegEx. Example : CUSTOMER(.*)UPDATE will
@@ -213,13 +214,13 @@ public final class Grep4j {
 	 * @param profiles
 	 * @return GlobalGrepResult
 	 */
-	public static GrepResultsSet egrep(String expression, List<Profile> profiles) {
+	public static GrepResults egrep(String expression, List<Profile> profiles) {
 		return new Grep4j(expression, profiles, true).execute().andGetResults();
 	}
 
 	/**
 	* 
-	* This utility method executes the grep command and return the {@link GrepResultsSet}
+	* This utility method executes the grep command and return the {@link GrepResults}
 	* containing the result of the grep.
 	* 
 	* This method supports plain text as well as RegEx. Example : CUSTOMER(.*)UPDATE will
@@ -278,13 +279,13 @@ public final class Grep4j {
 	* @param option
 	* @return GlobalGrepResult
 	*/
-	public static GrepResultsSet egrep(String expression, List<Profile> profiles, Option... options) {
+	public static GrepResults egrep(String expression, List<Profile> profiles, Option... options) {
 		return new Grep4j(expression, profiles, Arrays.asList(options), true).execute().andGetResults();
 	}
 
 	/**
 	 * 
-	 * This utility method executes the grep command and return the {@link GrepResultsSet}
+	 * This utility method executes the grep command and return the {@link GrepResults}
 	 * containing the result of the grep 
 	 * 
 	 * Example:
@@ -301,13 +302,13 @@ public final class Grep4j {
 	 * @param profile
 	 * @return GlobalGrepResult
 	 */
-	public static GrepResultsSet grep(String expression, Profile profile) {
+	public static GrepResults grep(String expression, Profile profile) {
 		return new Grep4j(expression, Collections.singletonList(profile), false).execute().andGetResults();
 	}
 
 	/**
 	* 
-	* This utility method executes the grep command and return the {@link GrepResultsSet}
+	* This utility method executes the grep command and return the {@link GrepResults}
 	* containing the result of the grep
 	* 
 	* It also protects the List of profiles and Options wrapping them into an
@@ -363,13 +364,13 @@ public final class Grep4j {
 	* @param options
 	* @return GlobalGrepResult
 	*/
-	public static GrepResultsSet grep(String expression, Profile profile, Option... options) {
+	public static GrepResults grep(String expression, Profile profile, Option... options) {
 		return new Grep4j(expression, Collections.singletonList(profile), Arrays.asList(options), false).execute().andGetResults();
 	}
 
 	/**
 	 * 
-	 * This utility method executes the grep command and return the {@link GrepResultsSet}
+	 * This utility method executes the grep command and return the {@link GrepResults}
 	 * containing the result of the grep 
 	 * 
 	 * This method supports plain text as well as RegEx. Example : CUSTOMER(.*)UPDATE will
@@ -389,13 +390,13 @@ public final class Grep4j {
 	 * @param profile
 	 * @return GlobalGrepResult
 	 */
-	public static GrepResultsSet egrep(String expression, Profile profile) {
+	public static GrepResults egrep(String expression, Profile profile) {
 		return new Grep4j(expression, Collections.singletonList(profile), true).execute().andGetResults();
 	}
 
 	/**
 	* 
-	* This utility method executes the grep command and return the {@link GrepResultsSet}
+	* This utility method executes the grep command and return the {@link GrepResults}
 	* containing the result of the grep.
 	* 
 	* This method supports plain text as well as RegEx. Example : CUSTOMER(.*)UPDATE will
@@ -454,7 +455,7 @@ public final class Grep4j {
 	* @param options
 	* @return GlobalGrepResult
 	*/
-	public static GrepResultsSet egrep(String expression, Profile profile, Option... options) {
+	public static GrepResults egrep(String expression, Profile profile, Option... options) {
 		return new Grep4j(expression, Collections.singletonList(profile), Arrays.asList(options), true).execute().andGetResults();
 	}
 
@@ -483,9 +484,9 @@ public final class Grep4j {
 	}
 
 	/**
-	 * @return a {@link GrepResultsSet}s
+	 * @return a {@link GrepResults}s
 	 */
-	private GrepResultsSet andGetResults() {
+	private GrepResults andGetResults() {
 		return results;
 	}
 
@@ -503,7 +504,7 @@ public final class Grep4j {
 	private void executeCommands() {
 		ExecutorService executorService = null;
 		try {
-			executorService = Executors.newFixedThreadPool(grepRequests.size());
+			executorService = Executors.newFixedThreadPool(maxGrepTaskThreads(grepRequests.size()));
 			Set<Future<List<GrepResult>>> grepTaskFutures = new HashSet<Future<List<GrepResult>>>();
 			for (GrepRequest grepRequest : grepRequests) {
 				grepTaskFutures.add(executorService.submit(new GrepTask(
@@ -514,7 +515,7 @@ public final class Grep4j {
 					results.add(singleGrepResult);
 			}
 		} catch (Exception e) {
-			throw new RuntimeException("Error when executing the commands", e);
+			throw new RuntimeException("Error when executing the GrepTask", e);
 		} finally {
 			if (executorService != null) {
 				executorService.shutdownNow();
