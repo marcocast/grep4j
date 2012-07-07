@@ -2,29 +2,29 @@ package org.grep4j.core.result;
 
 import static org.grep4j.core.fluent.Dictionary.of;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Set;
+import java.util.List;
 
 /**
- * This class contains an HashSet with all the results coming from the grep task
+ * This class contains an ArrayList with all the results coming from the grep task
  * 
  * @author Marco Castigliego
  *
  */
-public class GrepResultsSet implements Collection<GrepResult> {
+public class GrepResults implements Collection<GrepResult> {
 
-	private final Set<GrepResult> grepResults;
+	private final List<GrepResult> grepResults;
 
 	/**
 	 * GlobalGrepResult is a container of different {@link GrepResult}  
 	 * 
 	 * @param the expression used to grep
 	 */
-	public GrepResultsSet() {
-		grepResults = Collections.synchronizedSet(new HashSet<GrepResult>());
+	public GrepResults() {
+		grepResults = Collections.synchronizedList(new ArrayList<GrepResult>());
 	}
 
 	/**
@@ -60,8 +60,8 @@ public class GrepResultsSet implements Collection<GrepResult> {
 	 * @param expression
 	 * @return the lines that match with the passed filter as a regularExpression 
 	 */
-	public GrepResultsSet filterByRE(String expression) {
-		GrepResultsSet grepResultsSet = new GrepResultsSet();
+	public GrepResults filterByRE(String expression) {
+		GrepResults grepResultsSet = new GrepResults();
 
 		for (GrepResult result : grepResults) {
 			GrepResult extractResult = result.filterByRE(expression);
@@ -77,8 +77,8 @@ public class GrepResultsSet implements Collection<GrepResult> {
 	 * @param expression
 	 * @return the lines that match with the passed filter 
 	 */
-	public GrepResultsSet filterBy(String expression) {
-		GrepResultsSet grepResultsSet = new GrepResultsSet();
+	public GrepResults filterBy(String expression) {
+		GrepResults grepResultsSet = new GrepResults();
 
 		for (GrepResult result : grepResults) {
 			GrepResult extractResult = result.filterBy(expression);

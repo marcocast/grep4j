@@ -17,7 +17,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.grep4j.core.model.Profile;
-import org.grep4j.core.result.GrepResultsSet;
+import org.grep4j.core.result.GrepResults;
 import org.testng.annotations.Test;
 
 @Test
@@ -29,17 +29,17 @@ public class WhenGrep4jStartedWithStringToSearchALocalProfile {
 	private final List<Profile> profiles = Arrays.asList(localProfile());
 
 	public void errorStringMustBeFoundOnTheResult() {
-		GrepResultsSet results = grep(STRING_TO_SEARCH, on(profiles));
+		GrepResults results = grep(STRING_TO_SEARCH, on(profiles));
 		assertThat(results, containsExpression("ERROR"));
 	}
 
 	public void only2ErrorStringsMustNotBeFoundOnTheResult() {
-		GrepResultsSet results = grep("ERROR", on(profiles));
+		GrepResults results = grep("ERROR", on(profiles));
 		assertThat(results, doesNotContainExpression("3"));
 	}
 
 	public void gzStringsShouldBeFoundOnTheResult() {
-		GrepResultsSet results = grep("ERROR", on(on(Arrays.asList(localProfileWithWildecard("*")))));
+		GrepResults results = grep("ERROR", on(on(Arrays.asList(localProfileWithWildecard("*")))));
 		assertThat(results, containsExpression("GZ"));
 	}
 
@@ -72,12 +72,12 @@ public class WhenGrep4jStartedWithStringToSearchALocalProfile {
 	}
 
 	public void extraLineAfter() {
-		GrepResultsSet results = grep("ERROR 1", on(profiles), extraLinesAfter(20));
+		GrepResults results = grep("ERROR 1", on(profiles), extraLinesAfter(20));
 		assertThat(results, containsExpression("ERROR 2"));
 	}
 
 	public void extraLineBefore() {
-		GrepResultsSet results = grep("ERROR 2", on(profiles), extraLinesBefore(20));
+		GrepResults results = grep("ERROR 2", on(profiles), extraLinesBefore(20));
 		assertThat(results, containsExpression("ERROR 1"));
 	}
 }

@@ -15,7 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.grep4j.core.model.Profile;
-import org.grep4j.core.result.GrepResultsSet;
+import org.grep4j.core.result.GrepResults;
 import org.testng.annotations.Test;
 
 @Test
@@ -29,12 +29,12 @@ public class WhenGrep4jStartedWithRegExStringToSearchALocalProfile {
 	}
 
 	public void extraLineBefore() {
-		GrepResultsSet results = egrep("ER(.*) 2", on(profiles), extraLinesBefore(20));
+		GrepResults results = egrep("ER(.*) 2", on(profiles), extraLinesBefore(20));
 		assertThat(results, containsExpression("ER(.*) 1"));
 	}
 
 	public void extraLineAfter() {
-		GrepResultsSet results = egrep("ER(.*) 1", on(profiles), extraLinesAfter(20));
+		GrepResults results = egrep("ER(.*) 1", on(profiles), extraLinesAfter(20));
 		assertThat(results, containsExpression("ER(.*) 2"));
 	}
 

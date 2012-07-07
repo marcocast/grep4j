@@ -7,14 +7,17 @@ import static org.grep4j.core.options.Option.countMatches;
 import static org.grep4j.core.options.Option.extraLinesAfter;
 import static org.grep4j.core.options.Option.extraLinesBefore;
 import static org.grep4j.core.options.Option.invertMatch;
+import static org.grep4j.core.options.Option.onlyMatching;
 import static org.grep4j.core.options.Option.withFileName;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 import org.grep4j.core.result.GrepResult;
 import org.grep4j.core.result.GrepResults;
+import org.testng.annotations.Test;
 
-public class WhenGreppingWithOptions {
+@Test(groups="newGrepVersion")
+public class WhenGreppingWithOptionsNewVersion {
 
 	public void linesAfter() {
 		GrepResults results = grep("ERROR 1", on(localProfile()), extraLinesAfter(20));
@@ -33,6 +36,20 @@ public class WhenGreppingWithOptions {
 
 	public void countMatchesOption() {
 		GrepResults results = grep("ERROR 2", on(localProfile()), countMatches());
+		for (GrepResult result : results) {
+			assertThat(result.toString(), is("1\n"));
+		}
+	}
+
+	public void onlyMatchingOption() {
+		GrepResults results = grep("Marco", on(localProfile()), onlyMatching());
+		for (GrepResult result : results) {
+			assertThat(result.toString(), is("Marco\n"));
+		}
+	}
+
+	public void onlyMatchingOptionAndcountMatchesOption() {
+		GrepResults results = grep("Marco", on(localProfile()), onlyMatching(), countMatches());
 		for (GrepResult result : results) {
 			assertThat(result.toString(), is("1\n"));
 		}
