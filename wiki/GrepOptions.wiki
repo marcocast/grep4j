@@ -31,3 +31,35 @@ Here is the list of options available:
 --version, the version of grep 
 
 == Example ==
+
+{{{
+import static org.grep4j.core.Grep4j.grep;
+import static org.grep4j.core.fluent.Dictionary.expression;
+import static org.grep4j.core.fluent.Dictionary.on;
+import static org.grep4j.core.fluent.Dictionary.options;
+import static org.grep4j.core.fluent.Dictionary.option;
+import static org.grep4j.core.fluent.Dictionary.with;
+import static org.grep4j.core.options.Option.ignoreCase;
+import static org.grep4j.core.options.Option.onlyMatching;
+...
+//Single option
+GrepResults results = grep(expression("mArCo"), on(localProfile()),		     
+                          with(option(ignoreCase())));
+
+assertThat(results..totalOccurrences(), is(1));
+
+
+
+//Multiple options
+GrepResults results = grep(expression("mArCo"), on(localProfile()),		     
+                          with(options(
+                                       onlyMatching(),
+                                       countMatches(),
+                                       ignoreCase()
+                           )));
+
+for (GrepResult result : results) {
+	assertThat(result.toString(), is("1\n"));
+}
+
+}}}
