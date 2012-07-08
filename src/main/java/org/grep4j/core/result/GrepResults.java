@@ -1,7 +1,5 @@
 package org.grep4j.core.result;
 
-import static org.grep4j.core.fluent.Dictionary.of;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -39,22 +37,7 @@ public class GrepResults implements Collection<GrepResult> {
 		}
 		return occurrences;
 	}
-
-	/**
-	 * it counts how many times the expressionToSearch pattern is found in all the results
-	 * 
-	 * 
-	 * @param expressionToSearch
-	 * @return total number of time the patter is found in all the GrepResults
-	 */
-	public int totalOccurrences(String expressionToSearch) {
-		int occurrences = 0;
-		for (GrepResult result : grepResults) {
-			occurrences += result.getOccourrences(of(expressionToSearch));
-		}
-		return occurrences;
-	}
-
+	
 	/**
 	 * Loop through all the GrepResults and for each one extracts the lines that match with the passed filter as a regularExpression 
 	 * @param expression

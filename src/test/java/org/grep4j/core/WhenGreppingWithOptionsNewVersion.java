@@ -7,10 +7,7 @@ import static org.grep4j.core.fluent.Dictionary.on;
 import static org.grep4j.core.fluent.Dictionary.options;
 import static org.grep4j.core.fluent.Dictionary.with;
 import static org.grep4j.core.options.Option.countMatches;
-import static org.grep4j.core.options.Option.extraLinesAfter;
-import static org.grep4j.core.options.Option.extraLinesBefore;
 import static org.grep4j.core.options.Option.ignoreCase;
-import static org.grep4j.core.options.Option.invertMatch;
 import static org.grep4j.core.options.Option.onlyMatching;
 import static org.grep4j.core.options.Option.withFileName;
 import static org.hamcrest.CoreMatchers.is;
@@ -23,20 +20,7 @@ import org.testng.annotations.Test;
 @Test(groups="newGrepVersion")
 public class WhenGreppingWithOptionsNewVersion {
 
-	public void linesAfter() {
-		GrepResults results = grep("ERROR 1", on(localProfile()), extraLinesAfter(20));
-		assertThat(results.totalOccurrences("customer Marco(id=12345) has been updated successfully"), is(1));
-	}
-
-	public void linesBefore() {
-		GrepResults results = grep("ERROR 2", on(localProfile()), extraLinesBefore(20));
-		assertThat(results.totalOccurrences("ERROR 1"), is(1));
-	}
-
-	public void invert() {
-		GrepResults results = grep("ERROR 2", on(localProfile()), invertMatch());
-		assertThat(results.totalOccurrences("ERROR 2"), is(0));
-	}
+	
 
 	public void countMatchesOption() {
 		GrepResults results = grep("ERROR 2", on(localProfile()), countMatches());
@@ -62,7 +46,7 @@ public class WhenGreppingWithOptionsNewVersion {
 
 	public void withFileNameOption() {
 		GrepResults results = grep("ERROR 2", on(localProfile()), withFileName());
-		assertThat(results.totalOccurrences("local.txt"), is(1));
+		assertThat(results.filterBy("local.txt").totalOccurrences(), is(1));
 	}
 
 }

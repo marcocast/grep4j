@@ -61,27 +61,6 @@ public class GrepResult {
 	}
 
 	/**
-	 * Given an expression, it counts how many times the pattern is found in the result
-	 * Example: getOccourrences(of(expression));
-	 * 
-	 * @param expression
-	 * @return total number of time the patter is found
-	 */
-	public int getOccourrences(String expressionToSearch) {
-		int occurrences = 0;
-		if (grepRequest.isRegexExpression()) {
-			Pattern pattern = Pattern.compile(expressionToSearch);
-			java.util.regex.Matcher matcher = pattern.matcher(this.getText());
-			while (matcher.find()) {
-				occurrences++;
-			}
-		} else {
-			occurrences = StringUtils.countMatches(this.getText(), expressionToSearch);
-		}
-		return occurrences;
-	}
-
-	/**
 	 * Based on the grep expression, it counts how many times the pattern is found in the result
 	 * 
 	 * @return total number of time the patter is found

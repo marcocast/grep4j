@@ -16,12 +16,11 @@ public class GrepResultTestWithNORegEx {
 	@BeforeTest
 	public void init() {
 		GrepRequest grepRequest = new GrepRequest("customer Marco(id=12345) has been updated successfully", new Profile("profileName", "fileName"));
-		grepResult = new GrepResult(grepRequest, "fileName", "customer Marco(id=12345) has been updated successfully");
+		grepResult = new GrepResult(grepRequest, "fileName", "customer Marco(id=12345) has been updated successfully\n");
 	}
 
 	public void testRegExWithExpression() {
-		assertThat(grepResult.getOccourrences("customer"), is(1));
-		assertThat(grepResult.getOccourrences("Marco"), is(1));
+		assertThat(grepResult.filterBy("Marco").getOccourrences(), is(1));
 	}
 
 	public void testRegEx() {
@@ -37,7 +36,7 @@ public class GrepResultTestWithNORegEx {
 	}
 
 	public void testTextProperties() {
-		assertThat(grepResult.getText(), is("customer Marco(id=12345) has been updated successfully"));
+		assertThat(grepResult.getText(), is("customer Marco(id=12345) has been updated successfully\n"));
 	}
 
 }
