@@ -17,15 +17,10 @@ import org.grep4j.core.task.GrepRequest;
  */
 public class GrepResult {
 
-	// Pattern used to parse lines
-	private static Pattern linePattern = Pattern.compile(".*\r?\n");
-
+	private static final Pattern linePattern = Pattern.compile(".*\r?\n");
 	private final GrepRequest grepRequest;
-
 	private final String fileName;
-
 	private final String text;
-
 	private final String expression;
 
 	public GrepResult(GrepRequest grepRequest, String fileName, String text) {
