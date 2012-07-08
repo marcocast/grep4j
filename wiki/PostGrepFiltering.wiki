@@ -44,7 +44,7 @@ GrepResults results = grep(expression("customer-id"), on(profile)));
 //this will return the total number of updates 
 System.out.println("Total occurrences found : " + results.filterByRE("operation(.*)update").totalOccurrences());
 
-//this will return the total number the number of updates for the customer-id 12345
+//this will return the total number of updates for the customer-id 12345
 System.out.println("Total occurrences found : " + results.filterBy("customer-id:12345").filterByRE("operation(.*)update").totalOccurrences());
 
 //this will return the number of updates between 10am and 11am
