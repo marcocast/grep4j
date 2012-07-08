@@ -1,4 +1,4 @@
-#labels filtering
+#labels filtering,Featured
 = Why filtering a grep result?  =
 
 From Grep4j 1.6.1 you can filter the result/s of your greps.
