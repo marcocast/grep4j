@@ -25,6 +25,12 @@ public class WhenExtractingWithRegEx {
 			assertThat(StringUtils.contains(result.getText(), "customer Marco(id=12345) has been updated successfully"), is(true));
 		}
 	}
+	
+	public void filterAndCounting() {
+		GrepResults results = grep("ERROR 1", on(localProfile()), extraLinesAfter(20));
+		assertThat(results.filterByRE("Marco(.*)has been").filterBy("(id=12345)").totalOccurrences(), is(1));
+		
+	}
 
 	public void aGrepResultsSetWithMultipleFiles() {
 		GrepResults results = grep("er", on(Arrays.asList(localProfileWithWildecard("*"))), extraLinesAfter(20), ignoreCase());

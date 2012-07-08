@@ -68,6 +68,22 @@ public class GrepRequest {
 	public boolean isRegexExpression() {
 		return this.isRegexExpression;
 	}
+	
+	/**
+	 * 
+	 * @return a copy of this GrepRequest with isRegexExpression set to true
+	 */
+	public GrepRequest copyWithRegEx() {
+		return new GrepRequest(this.getExpression(), this.getProfile(),true);
+	}
+	
+	/**
+	 * 
+	 * @return a copy of this GrepRequest with isRegexExpression set to false
+	 */
+	public GrepRequest copyWithNoRegEx() {
+		return new GrepRequest(this.getExpression(), this.getProfile(),false);
+	}
 
 	/**
 	 * @return the pattern / exression to search
