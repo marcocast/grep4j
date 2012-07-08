@@ -34,8 +34,8 @@ import static org.grep4j.core.fluent.Dictionary.on;
 import static org.grep4j.core.fluent.Dictionary.expression;
 ...
 
-//Obtaining all the "operation=update" in the log
-GrepResults results = grep(expression("operation=update"), on(profile)));
+//Obtaining all the sensitive information in the log
+GrepResults results = grep(expression("customer-id"), on(profile)));
 
 //this will return the total number of updates 
 System.out.println("Total occurrences found : " + results.totalOccurrences());
