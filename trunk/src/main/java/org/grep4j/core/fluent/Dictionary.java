@@ -106,5 +106,25 @@ public class Dictionary {
 	public static <T> T returned(T type) {
 		return type;
 	}
+	
+	/**
+	 * Fluent mirror method: use this method to give more readability to the code.
+	 * 
+	 * @param type
+	 * @return type
+	 */
+	public static <T> T withOption(T type) {
+		return type;
+	}
+	
+	/**
+	 * Fluent mirror method: use this method to give more readability to the code.
+	 * 
+	 * @param type
+	 * @return type
+	 */
+	public static <T> T withOptions(T type) {
+		return type;
+	}
 
 }

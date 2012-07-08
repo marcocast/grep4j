@@ -56,7 +56,7 @@ public class GrepResults implements Collection<GrepResult> {
 	}
 
 	/**
-	 * extract the lines that match with the passed filter as a regularExpression 
+	 * Loop through all the GrepResults and for each one extracts the lines that match with the passed filter as a regularExpression 
 	 * @param expression
 	 * @return the lines that match with the passed filter as a regularExpression 
 	 */
@@ -73,7 +73,7 @@ public class GrepResults implements Collection<GrepResult> {
 	}
 
 	/**
-	 * extract the lines that match with the passed filter 
+	 * Loop through all the GrepResults and for each one extracts the lines that match with the passed filter 
 	 * @param expression
 	 * @return the lines that match with the passed filter 
 	 */
