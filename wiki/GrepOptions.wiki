@@ -1,0 +1,18 @@
+= Supported Grep Options =
+
+From Grep4j 1.6.1 you can grep using the most common grep options.
+Here is the list of options available:
+
+  * extraLinesAfter(int number-of-lines)
+  * extraLinesBefore(int number-of-lines)
+  * extraLinesBeforeAndAfter(int number-of-lines)
+  * onlyMatching() 
+  * ignoreCase()
+  * invertMatch()
+  * countMatches()
+  * withFileName()
+  maxMatches
+
+
+
+== Example ==
