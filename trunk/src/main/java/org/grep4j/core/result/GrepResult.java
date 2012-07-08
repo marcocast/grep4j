@@ -122,7 +122,8 @@ public class GrepResult {
 				textResult.append(cs);
 			}
 		}
-		return new GrepResult(expression, grepRequest, fileName, textResult.toString());
+		
+		return new GrepResult(expression, grepRequest.copyWithRegEx(), fileName, textResult.toString());
 	}
 
 	/**
@@ -140,7 +141,7 @@ public class GrepResult {
 			}
 		}
 
-		return new GrepResult(expression, grepRequest, fileName, textResult.toString());
+		return new GrepResult(expression, grepRequest.copyWithNoRegEx(), fileName, textResult.toString());
 	}
 
 	@Override
