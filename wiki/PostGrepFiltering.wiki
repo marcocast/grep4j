@@ -1,14 +1,11 @@
 #labels filtering
-#Filter the result of a grep
-
 = Why filtering a grep result?  =
 
-Add your content here.
+In Grep4j you can filter the result/s of your greps.
+
+This feature can be useful if you want to extract different kind of information from the same grep result/s without paying the cost of another remote connection.
 
 
-= Details =
+== Example one Profile ==
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+Let say you have a log that you want to grep in order to know different information about the same id (a customer id for example).
