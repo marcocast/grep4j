@@ -3,7 +3,13 @@ package org.grep4j.core;
 import static org.grep4j.core.Grep4j.grep;
 import static org.grep4j.core.fixtures.ProfileFixtures.localProfile;
 import static org.grep4j.core.fluent.Dictionary.on;
+import static org.grep4j.core.fluent.Dictionary.and;
+import static org.grep4j.core.fluent.Dictionary.expression;
+import static org.grep4j.core.fluent.Dictionary.option;
+import static org.grep4j.core.fluent.Dictionary.options;
+import static org.grep4j.core.fluent.Dictionary.with;
 import static org.grep4j.core.options.Option.countMatches;
+import static org.grep4j.core.options.Option.ignoreCase;
 import static org.grep4j.core.options.Option.extraLinesAfter;
 import static org.grep4j.core.options.Option.extraLinesBefore;
 import static org.grep4j.core.options.Option.invertMatch;
@@ -49,7 +55,8 @@ public class WhenGreppingWithOptionsNewVersion {
 	}
 
 	public void onlyMatchingOptionAndcountMatchesOption() {
-		GrepResults results = grep("Marco", on(localProfile()), onlyMatching(), countMatches());
+		GrepResults results = grep(expression("marco"), on(localProfile()),
+				with(options(onlyMatching(),countMatches(),ignoreCase())));
 		for (GrepResult result : results) {
 			assertThat(result.toString(), is("1\n"));
 		}

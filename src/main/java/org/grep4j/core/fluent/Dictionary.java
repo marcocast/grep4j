@@ -22,7 +22,7 @@ public class Dictionary {
 	public static <T> T on(T type) {
 		return type;
 	}
-
+		
 	/**
 	 * Fluent mirror method: use this method to give more readability to the code.
 	 * Example:
@@ -106,14 +106,14 @@ public class Dictionary {
 	public static <T> T returned(T type) {
 		return type;
 	}
-	
+		
 	/**
 	 * Fluent mirror method: use this method to give more readability to the code.
 	 * 
 	 * @param type
 	 * @return type
 	 */
-	public static <T> T withOption(T type) {
+	public static <T> T[] options(T... type) {
 		return type;
 	}
 	
@@ -123,7 +123,17 @@ public class Dictionary {
 	 * @param type
 	 * @return type
 	 */
-	public static <T> T withOptions(T type) {
+	public static <T> T option(T type) {
+		return type;
+	}
+	
+	/**
+	 * Fluent mirror method: use this method to give more readability to the code.
+	 * 
+	 * @param type
+	 * @return type
+	 */
+	public static <T> T and(T type) {
 		return type;
 	}
 
