@@ -4,15 +4,30 @@ From Grep4j 1.6.1 you can grep using the most common grep options.
 Here is the list of options available:
 
   * extraLinesAfter(int number-of-lines)
+-A, --after-context=NUM   print NUM lines of trailing context
   * extraLinesBefore(int number-of-lines)
+-B, --before-context=NUM  print NUM lines of leading context
   * extraLinesBeforeAndAfter(int number-of-lines)
+-C, --context=NUM         print NUM lines of output context
   * onlyMatching() 
+-o, --only-matching       show only the part of a line matching PATTERN
   * ignoreCase()
+-i, --ignore-case         ignore case distinctions
   * invertMatch()
+-v, --invert-match        select non-matching lines
   * countMatches()
+-c, --count               print only a count of matching lines per FILE
   * withFileName()
-  maxMatches
-
-
+-H, --with-filename       print the filename for each match
+  * maxMatches(int number-of-matches)
+-m, --max-count=NUM       stop after NUM matches
+  * lineNumber()
+-n, --line-number         print line number with output lines
+  * filesNotMatching()
+-L, --files-without-match  print only names of FILEs containing no match
+  * filesMatching()
+-l, --files-with-matches  print only names of FILEs containing matches
+  * grepVersion()
+--version, the version of grep 
 
 == Example ==
