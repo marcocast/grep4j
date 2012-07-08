@@ -1,8 +1,7 @@
 #labels filtering
-
 = Why filtering a grep result?  =
 
-In Grep4j you can filter the result/s of your greps.
+From Grep4j 1.6.1 you can filter the result/s of your greps.
 
 This feature can be useful if you want to extract different kind of information from the same grep result/s without paying the cost of another remote connection.
 
