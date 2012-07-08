@@ -96,7 +96,7 @@ public class SshCommandExecutor extends CommandExecutor {
 			try {
 				sshClient.disconnect();
 			} catch (IOException e) {
-				System.out.println("ERROR:Unable to disconnect the sshClient");
+				throw new RuntimeException("ERROR:Unable to disconnect the sshClient");
 			}
 		}
 

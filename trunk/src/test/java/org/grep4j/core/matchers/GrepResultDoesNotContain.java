@@ -21,7 +21,7 @@ public class GrepResultDoesNotContain extends TypeSafeMatcher<GrepResults> {
 
 	@Override
 	public boolean matchesSafely(GrepResults results) {
-		return results.totalOccurrences(expression) == 0;
+		return results.filterBy(expression).totalOccurrences() == 0;
 	}
 
 	@Factory

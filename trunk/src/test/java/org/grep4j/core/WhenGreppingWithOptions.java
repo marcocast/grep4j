@@ -13,22 +13,24 @@ import static org.junit.Assert.assertThat;
 
 import org.grep4j.core.result.GrepResult;
 import org.grep4j.core.result.GrepResults;
+import org.testng.annotations.Test;
 
+@Test
 public class WhenGreppingWithOptions {
 
 	public void linesAfter() {
 		GrepResults results = grep("ERROR 1", on(localProfile()), extraLinesAfter(20));
-		assertThat(results.totalOccurrences("customer Marco(id=12345) has been updated successfully"), is(1));
+		assertThat(results.filterBy("customer Marco(id=12345) has been updated successfully").totalOccurrences(), is(1));
 	}
 
 	public void linesBefore() {
 		GrepResults results = grep("ERROR 2", on(localProfile()), extraLinesBefore(20));
-		assertThat(results.totalOccurrences("ERROR 1"), is(1));
+		assertThat(results.filterBy("ERROR 1").totalOccurrences(), is(1));
 	}
 
 	public void invert() {
 		GrepResults results = grep("ERROR 2", on(localProfile()), invertMatch());
-		assertThat(results.totalOccurrences("ERROR 2"), is(0));
+		assertThat(results.filterBy("ERROR 2").totalOccurrences(), is(0));
 	}
 
 	public void countMatchesOption() {
@@ -40,7 +42,7 @@ public class WhenGreppingWithOptions {
 
 	public void withFileNameOption() {
 		GrepResults results = grep("ERROR 2", on(localProfile()), withFileName());
-		assertThat(results.totalOccurrences("local.txt"), is(1));
+		assertThat(results.filterBy("local.txt").totalOccurrences(), is(1));
 	}
 
 }
