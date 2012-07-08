@@ -8,4 +8,19 @@ This feature can be useful if you want to extract different kind of information 
 
 == Example one Profile ==
 
-Let say you have a log that you want to grep in order to know different information about the same id (a customer id for example).
+Let say you have a remote log that you want to grep in order to know how many create operations arrived.
+This log looks like this:
+
+{{{
+...
+2012-05-30 08:48:52 INFO [org.consumer.AnMDB] (main) User Marco customer-id:12345  operation=update received
+2012-05-30 08:48:53 INFO [org.consumer.UserDAO] (main) User Marco customer-id:12345 stored successfully
+...
+2012-05-30 08:49:52 INFO [org.consumer.AnMDB] (main) User Andrea customer-id:12346  operation=update received
+2012-05-30 08:48:53 INFO [org.consumer.UserDAO] (main) User Andrea customer-id:12346 stored successfully
+...
+and so on... thousands of other updates.
+}}}
+
+
+now, with one single grep you can collect 
