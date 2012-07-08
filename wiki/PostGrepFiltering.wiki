@@ -6,21 +6,52 @@ In Grep4j you can filter the result/s of your greps.
 This feature can be useful if you want to extract different kind of information from the same grep result/s without paying the cost of another remote connection.
 
 
-== Example one Profile ==
+== Example ==
 
-Let say you have a remote log that you want to grep in order to know how many create operations arrived.
-This log looks like this:
+Let say you have a remote log that you want to grep in order to know how many updates operations were sent.
+You also want to know how many updates for each customer-id arrived in the server.
+You also want to see for each user, what kind of updates were sent.
+Finally you are also interested in how many updates were sent at 10am.
+The log looks like this:
 
 {{{
 ...
 2012-05-30 08:48:52 INFO [org.consumer.AnMDB] (main) User Marco customer-id:12345  operation=update received
 2012-05-30 08:48:53 INFO [org.consumer.UserDAO] (main) User Marco customer-id:12345 stored successfully
 ...
-2012-05-30 08:49:52 INFO [org.consumer.AnMDB] (main) User Andrea customer-id:12346  operation=update received
-2012-05-30 08:48:53 INFO [org.consumer.UserDAO] (main) User Andrea customer-id:12346 stored successfully
+2012-05-30 10:10:11 INFO [org.consumer.AnMDB] (main) User Andrea customer-id:12346  operation=update received
+2012-05-30 10:10:12 INFO [org.consumer.UserDAO] (main) User Andrea customer-id:12346 stored successfully
 ...
 and so on... thousands of other updates.
 }}}
 
 
-now, with one single grep you can collect 
+now, with one single grep you can collect all the information you need:
+
+{{{
+import static org.grep4j.core.Grep4j.grep;
+import static org.grep4j.core.fluent.Dictionary.on;
+import static org.grep4j.core.fluent.Dictionary.expression;
+...
+
+//Obtaining all the "operation=update" in the log
+GrepResults results = grep(expression("operation=update"), on(profile)));
+
+//this will return the total number of updates 
+System.out.println("Total occurrences found : " + results.totalOccurrences());
+
+//this will return the number of updates for the customer-id 12345
+System.out.println("Total occurrences found : " + results.totalOccurrences("customer-id:12345"));
+
+//this will return the number of updates between 10am and 11am
+System.out.println("Total occurrences found : " + results.totalOccurrences("2012-05-30 10"));
+
+//This will filter the result in order to print only Andrea updates
+for (GrepResult singleResult : results.filterBy("Andrea")) {
+   System.out.println(singleResult.totalOccurrences());        
+   System.out.println(singleResult);    
+}
+
+}}}
+
+You can filter the GrepResults as well as the single GrepResult and you can filter using regular expression using the .filterByRE("regular expression") method.
