@@ -56,7 +56,7 @@ for (GrepResult singleResult : results.filterBy("Andrea")) {
    System.out.println(singleResult);    
 }
 
-//This will filter only the Andrea result in order to print only when we stored successfully
+//This will filter only the Andrea result in order to print only when we stored Andrea changes successfully
 for (GrepResult singleResult : results.filterBy("Andrea").filterBy("stored successfully")) {  
    System.out.println(singleResult.totalOccurrences());        
    System.out.println(singleResult);    
