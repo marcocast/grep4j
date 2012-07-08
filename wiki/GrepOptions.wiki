@@ -1,4 +1,4 @@
-#labels options
+#labels options,Featured
 = Supported Grep Options =
 
 From Grep4j 1.6.1 you can grep using the most common grep options.
