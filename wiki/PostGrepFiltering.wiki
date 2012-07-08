@@ -1,4 +1,6 @@
 #labels filtering
+#Post grep filtering
+
 = Why filtering a grep result?  =
 
 In Grep4j you can filter the result/s of your greps.
