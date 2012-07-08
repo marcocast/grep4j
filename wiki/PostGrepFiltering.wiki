@@ -54,4 +54,4 @@ for (GrepResult singleResult : results.filterBy("Andrea")) {
 
 }}}
 
-You can filter the GrepResults as well as the single GrepResult and you can filter using regular expression using the .filterByRE("regular expression") method.
+You can filter the {{{GrepResults}}} as well as the single {{{GrepResult}}} and you can filter using regular expression using the {{{.filterByRE("regular expression")}}} method.
