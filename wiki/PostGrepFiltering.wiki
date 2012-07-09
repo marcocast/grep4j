@@ -8,13 +8,15 @@ This feature can be useful if you want to extract different kind of information 
 
 == Example ==
 
-Let say you have a remote log that you want to grep, in order to know how many "update operations" were sent to a server.
+Let say you grep a remote log, in order to know:
 
-You also want to know how many updates for each customer-id arrived in the server.
+  # How many "update operations" were sent to a server.
 
-You also want to see for each user, what kind of updates were sent.
+  # How many updates for each customer-id arrived in the server.
 
-Finally you are also interested in how many updates were sent at 10am.
+  # What kind of update for each user.
+
+  # How many updates were sent at 10am.
 
 The log looks like this:
 
