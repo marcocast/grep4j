@@ -8,7 +8,7 @@ This feature can be useful if you want to extract different kind of information 
 
 == Example ==
 
-Let say you grep a remote log, in order to know:
+Let say you have to grep a remote log, in order to know:
 
   # How many "update operations" were sent to a server.
 
