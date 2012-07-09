@@ -19,10 +19,6 @@ public abstract class CommandExecutor {
 		this.serverDetails = serverDetails;
 	}
 
-	public abstract void init();
-
-	public abstract void quit();
-
 	public abstract CommandExecutor execute(ExecutableCommand command);
 
 	/**
@@ -30,11 +26,6 @@ public abstract class CommandExecutor {
 	 */
 	public String andReturnResult() {
 		return result;
-	}
-
-	@Override
-	protected void finalize() throws Throwable {
-		quit();
 	}
 
 }

@@ -56,21 +56,12 @@ public class GrepTask implements Callable<List<GrepResult>> {
 
 	@Override
 	public List<GrepResult> call() {
-		init();
-		try {
-			listMatchingFiles();
-			prepareGrepCommands();
-			executeGrepCommands();
-		} finally {
-			release();
-		}
+		listMatchingFiles();
+		prepareGrepCommands();
+		executeGrepCommands();
 		return results;
 	}
 
-	private void init() {
-		commandExecutor.init();
-	}
-	
 	/*
 	 * In case the file to grep contains a wildcard (EXAMPLE server.log*), we run first an LS command
 	 * to separate each file which will then be treated in a separated Grepresult
@@ -104,7 +95,7 @@ public class GrepTask implements Callable<List<GrepResult>> {
 			executorService = Executors.newFixedThreadPool(maxExecutorTaskThreads(grepList.size()));
 			Set<Future<GrepResult>> commandsExecutorTaskFutures = new HashSet<Future<GrepResult>>();
 			for (AbstractGrepCommand command : grepList) {
-				commandsExecutorTaskFutures.add(executorService.submit(new CommandExecutorTask(commandExecutor,command,grepRequest)));
+				commandsExecutorTaskFutures.add(executorService.submit(new CommandExecutorTask(commandExecutor, command, grepRequest)));
 			}
 			for (Future<GrepResult> future : commandsExecutorTaskFutures) {
 				results.add(future.get());
@@ -116,10 +107,6 @@ public class GrepTask implements Callable<List<GrepResult>> {
 				executorService.shutdownNow();
 			}
 		}
-	}
-
-	private void release() {
-		commandExecutor.quit();
 	}
 
 	private List<String> aListOf(String filenames) {
@@ -137,5 +124,5 @@ public class GrepTask implements Callable<List<GrepResult>> {
 	protected void setCommandExecutor(CommandExecutor commandExecutor) {
 		this.commandExecutor = commandExecutor;
 	}
-	
+
 }
