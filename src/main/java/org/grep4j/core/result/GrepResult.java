@@ -65,7 +65,7 @@ public class GrepResult {
 	 * 
 	 * @return total number of time the patter is found
 	 */
-	public int getOccourrences() {
+	public int totalOccurrences() {
 		int occurrences = 0;
 		if (grepRequest.isRegexExpression()) {
 			Pattern pattern = Pattern.compile(this.expression);

@@ -20,11 +20,11 @@ public class GrepResultTestWithNORegEx {
 	}
 
 	public void testRegExWithExpression() {
-		assertThat(grepResult.filterBy("Marco").getOccourrences(), is(1));
+		assertThat(grepResult.filterBy("Marco").totalOccurrences(), is(1));
 	}
 
 	public void testRegEx() {
-		assertThat(grepResult.getOccourrences(), is(1));
+		assertThat(grepResult.totalOccurrences(), is(1));
 	}
 
 	public void testProfileNameProperties() {
