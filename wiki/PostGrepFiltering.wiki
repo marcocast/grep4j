@@ -52,13 +52,13 @@ System.out.println("Total occurrences found : " + results.filterBy("2012-05-30 1
 
 //This will filter the result in order to print only Andrea updates
 for (GrepResult singleResult : results.filterBy("Andrea")) {
-   System.out.println(singleResult.totalOccurrences());        
+   System.out.println(singleResult.getOccourrences());        
    System.out.println(singleResult);    
 }
 
 //This will filter only the Andrea result in order to print only when we stored Andrea changes successfully
 for (GrepResult singleResult : results.filterBy("Andrea").filterBy("stored successfully")) {  
-   System.out.println(singleResult.totalOccurrences());        
+   System.out.println(singleResult.getOccourrences());        
    System.out.println(singleResult);    
 }
 
