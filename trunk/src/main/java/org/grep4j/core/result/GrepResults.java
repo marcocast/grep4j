@@ -33,7 +33,7 @@ public class GrepResults implements Collection<GrepResult> {
 	public int totalOccurrences() {
 		int occurrences = 0;
 		for (GrepResult result : grepResults) {
-			occurrences += result.getOccourrences();
+			occurrences += result.totalOccurrences();
 		}
 		return occurrences;
 	}
