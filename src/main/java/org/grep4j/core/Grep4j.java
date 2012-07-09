@@ -1,7 +1,5 @@
 package org.grep4j.core;
 
-import static org.grep4j.core.task.ForkController.maxGrepTaskThreads;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -20,6 +18,7 @@ import org.grep4j.core.task.GrepRequest;
 import org.grep4j.core.task.GrepTask;
 
 import com.google.common.collect.ImmutableList;
+
 /**
  * Entry Class for the Grep4j API. Usage example:
  * 
@@ -504,7 +503,7 @@ public final class Grep4j {
 	private void executeCommands() {
 		ExecutorService executorService = null;
 		try {
-			executorService = Executors.newFixedThreadPool(maxGrepTaskThreads(grepRequests.size()));
+			executorService = Executors.newFixedThreadPool(grepRequests.size());
 			Set<Future<List<GrepResult>>> grepTaskFutures = new HashSet<Future<List<GrepResult>>>();
 			for (GrepRequest grepRequest : grepRequests) {
 				grepTaskFutures.add(executorService.submit(new GrepTask(

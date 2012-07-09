@@ -19,20 +19,18 @@ import org.testng.annotations.Test;
 
 @Test
 public class WhenAGrepTaskIsExecuted {
-	
-	
+
 	@Mock
 	private LocalCommandExecutor commandExecutor;
-	
+
 	@BeforeMethod
-	public void initMocks(){
+	public void initMocks() {
 		MockitoAnnotations.initMocks(this);
 	}
-	
-	public void aSimpleGrepResultShouldReturn(){
+
+	public void aSimpleGrepResultShouldReturn() {
 		String expression = "ERROR";
 		GrepTask grepTask = new GrepTask(localGrepERRORrequest(expression));
-		commandExecutor.init();
 		when(commandExecutor.execute(any(LsCommand.class))).thenReturn(commandExecutor);
 		//when(commandExecutor.andReturnResult()).thenReturn(localGrepERRORrequest(expression).getProfile().getFilePath());
 		when(commandExecutor.execute(any(SimpleGrepCommand.class))).thenReturn(commandExecutor);
@@ -43,11 +41,10 @@ public class WhenAGrepTaskIsExecuted {
 		GrepResult result = grepResults.get(0);
 		assertThat(result.getText(), is(expression));
 	}
-	
-	public void aGzGrepResultShouldReturn(){
+
+	public void aGzGrepResultShouldReturn() {
 		String expression = "INFO";
 		GrepTask grepTask = new GrepTask(localGrepERRORrequest(expression));
-		commandExecutor.init();
 		when(commandExecutor.execute(any(LsCommand.class))).thenReturn(commandExecutor);
 		//when(commandExecutor.andReturnResult()).thenReturn(localGzGrepERRORrequest(expression).getProfile().getFilePath());
 		when(commandExecutor.execute(any(SimpleGrepCommand.class))).thenReturn(commandExecutor);

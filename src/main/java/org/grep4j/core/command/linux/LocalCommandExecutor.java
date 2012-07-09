@@ -23,14 +23,6 @@ public class LocalCommandExecutor extends CommandExecutor {
 	}
 
 	@Override
-	public void init() {
-	}
-
-	@Override
-	public void quit() {
-	}
-
-	@Override
 	public CommandExecutor execute(ExecutableCommand command) {
 		try {
 			executeCommand(command);
@@ -49,7 +41,7 @@ public class LocalCommandExecutor extends CommandExecutor {
 			result = IOUtils.readFully((p.getInputStream())).toString();
 		} catch (Exception e) {
 			throw new RuntimeException(e);
-		} 
+		}
 	}
 
 }

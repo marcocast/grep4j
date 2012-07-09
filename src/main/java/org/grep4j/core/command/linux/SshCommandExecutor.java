@@ -18,7 +18,7 @@ import org.grep4j.core.model.ServerDetails;
  * The SshCommandExecutor uses the net.schmizz.sshj library to execute remote commands.
  * 
  * <ol>
- * <li>Connection is established in the init method using credentials in the {@link serverDetails}</li>
+ * <li>Establish a connection using the credential in the {@link serverDetails}</li>
  * <li>Opens a session channel</li>
  * <li>Execute a command on the session</li>
  * <li>Closes the session</li>
@@ -31,8 +31,7 @@ import org.grep4j.core.model.ServerDetails;
  */
 public class SshCommandExecutor extends CommandExecutor {
 
-	private SSHClient sshClient;
-	private Session session = null;
+	//private SSHClient sshClient;
 
 	private SshCommandExecutor(ServerDetails serverDetails) {
 		super(serverDetails);
@@ -40,80 +39,73 @@ public class SshCommandExecutor extends CommandExecutor {
 
 	public static SshCommandExecutor aDefaultSshCommandExecutor(ServerDetails serverDetails) {
 		SshCommandExecutor executor = new SshCommandExecutor(serverDetails);
-		executor.setSshClient(new SSHClient());
 		return executor;
 	}
 
-	public static SshCommandExecutor aCustomSshCommandExecutor(ServerDetails serverDetails, SSHClient sshClient) {
-		SshCommandExecutor executor = new SshCommandExecutor(serverDetails);
-		executor.setSshClient(sshClient);
-		return executor;
-	}
-
-	private void setSshClient(SSHClient sshClient) {
-		this.sshClient = sshClient;
-	}
-
 	@Override
-	public void init() {
-		connect();
+	public CommandExecutor execute(ExecutableCommand command) {
+		SSHClient sshClient = null;
+		try {
+			sshClient = new SSHClient();
+			connect(sshClient);
+			Session session = createAndStartSession(sshClient);
+			executeCommand(session, command);
+			closeSession(session);
+		} catch (Exception e) {
+			throw new RuntimeException(
+					"ERROR: Unrecoverable error when performing remote command "
+							+ e.getMessage(), e);
+		} finally {
+			if (sshClient != null) {
+				disconnect(sshClient);
+			}
+		}
+		return this;
 	}
 
-	@Override
-	public void quit() {
-		disconnect();
-	}
-
-	private void connect() {
+	private void connect(SSHClient sshClient) {
 		try {
 			sshClient.getConnection().setTimeout(60);
 			sshClient.addHostKeyVerifier(new PromiscuousVerifier());
 			sshClient.connect(serverDetails.getHost());
 			sshClient.authPassword(serverDetails.getUser(), serverDetails.getPassword());
 		} catch (IOException e) {
-			quit();
+			disconnect(sshClient);
 			throw new RuntimeException("ERROR:Error trying to connect to ");
 		}
 	}
 
-	@Override
-	public CommandExecutor execute(ExecutableCommand command) {
-		try {
-			startSession();
-			executeCommand(command);
-			closeSession();
-		} catch (Exception e) {
-			throw new RuntimeException(
-					"ERROR: Unrecoverable error when performing remote command "
-							+ e.getMessage(), e);
-		}
-
-		return this;
-	}
-
-	private void disconnect() {
+	private void disconnect(SSHClient sshClient) {
 		if (sshClient.isConnected()) {
 			try {
 				sshClient.disconnect();
 			} catch (IOException e) {
-				throw new RuntimeException("ERROR:Unable to disconnect the sshClient");
+				throw new RuntimeException("ERROR:Unable to disconnect the sshClient", e);
 			}
 		}
 
 	}
 
-	private void closeSession() throws TransportException, ConnectionException {
-		session.close();
+	private void closeSession(Session session) {
+		try {
+			session.close();
+		} catch (IOException e) {
+			throw new RuntimeException("ERROR:Unable to close the ssh session", e);
+		}
 	}
 
-	private void executeCommand(ExecutableCommand command)
+	private void executeCommand(Session session, ExecutableCommand command)
 			throws ConnectionException, TransportException, IOException {
 		Command cmd = session.exec(command.getCommandToExecute());
 		result = IOUtils.readFully(cmd.getInputStream()).toString();
 		cmd.join(5, TimeUnit.SECONDS);
 	}
 
-	private void startSession() throws ConnectionException, TransportException {
-		session = sshClient.startSession();
+	private Session createAndStartSession(SSHClient sshClient) {
+		try {
+			return sshClient.startSession();
+		} catch (IOException e) {
+			throw new RuntimeException("ERROR:Unable to start the ssh session", e);
+		}
 	}
 }
