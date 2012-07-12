@@ -1,0 +1,10 @@
+= Grep Profiles with wildcard =
+
+Usually, you associate one {{{Profile}}} with one specific file, but it's also possible to associate multiple files to the same {{{profile}}} using wildcard in the file path.
+
+= Details =
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
