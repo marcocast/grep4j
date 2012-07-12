@@ -2,9 +2,17 @@
 
 Usually, you associate one {{{Profile}}} with one specific file, but it's also possible to associate multiple files to the same {{{profile}}} using wildcard in the file path.
 
-= Details =
+When grepping on a Profile with a wildcard, Grep4j will run an LS command first. It will then run separate greps and finally return a GrepResult for each file found in the LS.
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+== Example ==
+
+{{{
+//
+Profile remoteProfile= new Profile("alogWithWildcard","/opt/jboss/server/default/log/server.log*");               
+ServerDetails server = new ServerDetails("172.xx.xx.xx");     
+uatFrontEndServer.setUser("user");
+uatFrontEndServer.setPassword("password");
+remoteProfile.setServerDetails(server);
+
+
+}}}
