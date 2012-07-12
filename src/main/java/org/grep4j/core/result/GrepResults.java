@@ -37,7 +37,7 @@ public class GrepResults implements Collection<GrepResult> {
 		}
 		return occurrences;
 	}
-	
+
 	/**
 	 * Loop through all the GrepResults and for each one extracts the lines that match with the passed filter as a regularExpression 
 	 * @param expression
@@ -70,6 +70,14 @@ public class GrepResults implements Collection<GrepResult> {
 			}
 		}
 		return grepResultsSet;
+	}
+
+	/**
+	 * 
+	 * @return the first GrepResult in the GrepResuts list
+	 */
+	public GrepResult getSingleResult() {
+		return grepResults.iterator().next();
 	}
 
 	/**
