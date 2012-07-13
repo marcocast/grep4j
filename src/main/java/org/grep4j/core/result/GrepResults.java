@@ -73,6 +73,7 @@ public class GrepResults implements Collection<GrepResult> {
 	}
 
 	/**
+	 * This return the first GrepResult in the GrepResuts list
 	 * 
 	 * @return the first GrepResult in the GrepResuts list
 	 */
