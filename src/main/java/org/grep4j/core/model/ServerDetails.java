@@ -1,9 +1,14 @@
 package org.grep4j.core.model;
 
+import java.util.List;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
+import org.apache.commons.lang3.StringUtils;
+
+import com.google.common.collect.ImmutableList;
 
 /**
  * Model class containing details of the server where the target file is stored.
@@ -13,10 +18,12 @@ import org.apache.commons.lang.builder.ToStringStyle;
  */
 public class ServerDetails {
 
+	private static final List<String> localhostAliases = ImmutableList.<String> builder().add("localhost", "127.0.0.1").build();
+
 	private final String host;
 	private String user;
 	private String password;
-	
+
 	/**
 	 * The hostname of the server where the target file is stored.
 	 * 
@@ -26,10 +33,10 @@ public class ServerDetails {
 	 * 
 	 * @param host
 	 */
-	public ServerDetails(String host){
+	public ServerDetails(String host) {
 		this.host = host;
 	}
-	
+
 	/**
 	 * Username required to connect to remote machine
 	 * @param user
@@ -37,7 +44,7 @@ public class ServerDetails {
 	public void setUser(String user) {
 		this.user = user;
 	}
-	
+
 	/**
 	 * Password required to connect to remote machine
 	 * @param password
@@ -45,7 +52,7 @@ public class ServerDetails {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
 	/**
 	 * The host of the server where the target file is stored. 
 	 * 
@@ -54,14 +61,14 @@ public class ServerDetails {
 	public String getHost() {
 		return host;
 	}
-	
+
 	/**
 	 * @return the user required to connect to remote machine
 	 */
 	public String getUser() {
 		return user;
 	}
-		
+
 	/**
 	 * 
 	 * @return the password required to connect to remote machine
@@ -70,20 +77,42 @@ public class ServerDetails {
 		return password;
 	}
 
-	@Override
-    public boolean equals(Object obj) {
-        return EqualsBuilder.reflectionEquals(this, obj);
-    }
+	/**
+	 * This method check if this ServerDetails is a "localhost" or "127.0.0.1" otherwise return false
+	 * @return true if localhost
+	 */
+	public boolean isLocalhost() {
+		return localhostAliases.contains(host.toLowerCase());
+	}
+
+	public void validate() {
+		if (StringUtils.isEmpty(host) || StringUtils.isBlank(host)) {
+			throw new IllegalArgumentException("Host is empty or null");
+		}
+		if (!isLocalhost()) {
+			if (StringUtils.isEmpty(user) || StringUtils.isBlank(user)) {
+				throw new IllegalArgumentException("User is empty or null");
+			}
+			if (StringUtils.isEmpty(password) || StringUtils.isBlank(password)) {
+				throw new IllegalArgumentException("Password is empty or null");
+			}
+		}
+	}
 
 	@Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this,
-            ToStringStyle.MULTI_LINE_STYLE);
-    }
+	public boolean equals(Object obj) {
+		return EqualsBuilder.reflectionEquals(this, obj);
+	}
 
 	@Override
-    public int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this);
-    }
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this,
+				ToStringStyle.MULTI_LINE_STYLE);
+	}
+
+	@Override
+	public int hashCode() {
+		return HashCodeBuilder.reflectionHashCode(this);
+	}
 
 }
