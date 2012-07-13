@@ -497,6 +497,10 @@ public final class Grep4j {
 		if (profiles == null || profiles.isEmpty()) {
 			throw new IllegalArgumentException(
 					"No profile to grep was specified");
+		} else {
+			for (Profile profile : profiles) {
+				profile.validate();
+			}
 		}
 	}
 
