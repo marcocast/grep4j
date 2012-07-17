@@ -10,6 +10,8 @@ When grepping on a Profile with a wildcard, Grep4j will run an LS command first.
 {{{
 import static org.grep4j.core.Grep4j.grep;
 import static org.grep4j.core.fluent.Dictionary.on;
+import static org.grep4j.core.fluent.Dictionary.with;
+import static org.grep4j.core.fluent.Dictionary.option;
 import static org.grep4j.core.options.Option.filesMatching;
 
 //creating a profile with wildcard *
@@ -19,7 +21,7 @@ uatFrontEndServer.setUser("user");
 uatFrontEndServer.setPassword("password");
 remoteProfile.setServerDetails(server);
 
-GrepResults results = grep("ERROR", on(remoteProfile),filesMatching());
+GrepResults results = grep("ERROR", on(remoteProfile),with(option(filesMatching())));
 for (GrepResult result : results) {
     System.out.println(result);
 }
