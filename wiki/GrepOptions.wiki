@@ -42,7 +42,7 @@ import static org.grep4j.core.fluent.Dictionary.option;
 import static org.grep4j.core.fluent.Dictionary.with;
 import static org.grep4j.core.options.Option.ignoreCase;
 import static org.grep4j.core.options.Option.onlyMatching;
-import static org.grep4j.core.options.Option.countMatches;
+
 ...
 //Single option
 GrepResults results = grep(expression("mArCo"), on(localProfile()),		     
@@ -56,12 +56,11 @@ assertThat(results.totalOccurrences(), is(1));
 GrepResults results = grep(expression("mArCo"), on(localProfile()),		     
                           with(options(
                                        onlyMatching(),
-                                       countMatches(),
                                        ignoreCase()
                            )));
 
 for (GrepResult result : results) {
-	assertThat(result.toString(), is("1\n"));
+	assertThat(result.toString(), is("Marco"));
 }
 
 }}}
