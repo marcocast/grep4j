@@ -48,7 +48,7 @@ import static org.grep4j.core.options.Option.countMatches;
 GrepResults results = grep(expression("mArCo"), on(localProfile()),		     
                           with(option(ignoreCase())));
 
-assertThat(results..totalOccurrences(), is(1));
+assertThat(results.totalOccurrences(), is(1));
 
 
 
