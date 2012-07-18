@@ -24,7 +24,6 @@ import org.testng.annotations.Test;
 public class WhenGrep4jStartedWithStringToSearchALocalProfile {
 
 	private static final String STRING_TO_SEARCH = "ERROR";
-	private static final String KNOWN_PROFILE = "local";
 
 	private final List<Profile> profiles = Arrays.asList(localProfile());
 
