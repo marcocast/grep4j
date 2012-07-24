@@ -80,6 +80,15 @@ public class GrepResults implements Collection<GrepResult> {
 	public GrepResult getSingleResult() {
 		return grepResults.iterator().next();
 	}
+	
+	@Override
+	public String toString() {		
+		StringBuilder tostringbuilder = new StringBuilder();
+		for (GrepResult result : grepResults) {
+			tostringbuilder.append(result);
+		}
+		return tostringbuilder.toString();
+	}
 
 	/**
 	 * Add a {@link GrepResult} to the Set of results
