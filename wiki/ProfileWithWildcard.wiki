@@ -15,16 +15,16 @@ import static org.grep4j.core.fluent.Dictionary.option;
 import static org.grep4j.core.options.Option.filesMatching;
 
 //creating a profile with wildcard *
-Profile remoteProfile= new Profile("alogWithWildcard","/opt/jboss/server/default/log/server.log*");               
-ServerDetails server = new ServerDetails("172.xx.xx.xx");     
-uatFrontEndServer.setUser("user");
-uatFrontEndServer.setPassword("password");
-remoteProfile.setServerDetails(server);
+Profile remoteProfile = new ProfileBuilder("a log with wildcard")
+		                      .filePath("/opt/log/server.log*")
+		                      .onHost("172.60.60.60")
+		                      .user("user")
+		                      .password("password")
+		                      .build();
 
-GrepResults results = grep("ERROR", on(remoteProfile),with(option(filesMatching())));
-for (GrepResult result : results) {
-    System.out.println(result);
-}
+
+System.out.println(grep("ERROR",on(remoteProfile),with(option(filesMatching()))));
+
 }}}
 
 The output of this will be something like:
