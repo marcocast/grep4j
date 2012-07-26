@@ -54,13 +54,15 @@ assertThat(results.totalOccurrences(), is(1));
 
 //Multiple options
 GrepResults results = grep(expression("mArCo"), on(localProfile()),		     
-                          with(options(
+                          with(
+                               options(
                                        onlyMatching(),
                                        ignoreCase()
-                           )));
+                                       )
+                               )
+                            );
 
-for (GrepResult result : results) {
-	assertThat(result.toString(), is("Marco"));
-}
+assertThat(results.toString(), is("Marco"));
+
 
 }}}
