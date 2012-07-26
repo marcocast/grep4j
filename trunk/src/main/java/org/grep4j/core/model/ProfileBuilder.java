@@ -16,7 +16,7 @@ package org.grep4j.core.model;
  *						.filePath("/opt/log/server.log")
  *						.onHost("172.18.48.22")
  *						.user("marco")
- *						.password("cast")
+ *						.password("xxxx")
  *						.build();
  * </pre>
  * 
