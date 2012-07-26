@@ -1,11 +1,9 @@
 package org.grep4j.core.model;
 
-import org.testng.annotations.Test;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThat;
+
+import org.testng.annotations.Test;
 
 @Test
 public class ProfileValidationTest {
@@ -13,7 +11,6 @@ public class ProfileValidationTest {
 	private static final String name = "profileName";
 	private static final String filePath = "file/path/server.log";
 	private static final String local_host = "localhost";
-	private static final String local_host127 = "127.0.0.1";
 	private static final String remote_host = "host";
 	private static final String user = "user";
 	private static final String password = "password";
