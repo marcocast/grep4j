@@ -1,14 +1,12 @@
 package org.grep4j.core.fixtures;
 
 import static org.grep4j.core.command.OperativeSystemDetector.isWindows;
-import static org.grep4j.core.fixtures.ServerDetailsFixtures.aDummyRemoteServerDetails;
-import static org.grep4j.core.fixtures.ServerDetailsFixtures.aServerDetailsWithUnknownHostname;
-import static org.grep4j.core.fixtures.ServerDetailsFixtures.anotherDummyRemoteServerDetails;
 import static org.grep4j.core.fixtures.ServerDetailsFixtures.localhostServerDetails;
 
 import java.net.URL;
 
 import org.grep4j.core.model.Profile;
+import org.grep4j.core.model.ProfileBuilder;
 
 public class ProfileFixtures {
 
@@ -16,27 +14,39 @@ public class ProfileFixtures {
 	}
 
 	public static Profile aDummyRemoteProfile() {
-		Profile profile = new Profile("dummy remote profiel", "/path/to/file/filename.txt");
-		profile.setServerDetails(aDummyRemoteServerDetails());
-		return profile;
+		return new ProfileBuilder("dummy remote profiel")
+							.filePath("/path/to/file/filename.txt")
+							.onHost("172.60.60.60")
+							.user("user")
+							.password("password")
+							.build();
 	}
 
 	public static Profile aDummyRemoteProfileWithWildcard(String wildcard) {
-		Profile profile = new Profile("dummy remote profiel", "/path/to/file/filename.txt" + wildcard);
-		profile.setServerDetails(aDummyRemoteServerDetails());
-		return profile;
+		return new ProfileBuilder("dummy remote profiel")
+		.filePath("/path/to/file/filename.txt"+ wildcard)
+		.onHost("172.60.60.60")
+		.user("user")
+		.password("password")
+		.build();
 	}
 
 	public static Profile anotherDummyRemoteProfile() {
-		Profile profile = new Profile("dummy remote profiel", "/path/to/file/filename.txt");
-		profile.setServerDetails(anotherDummyRemoteServerDetails());
-		return profile;
+		return new ProfileBuilder("dummy remote profiel")
+		.filePath("/path/to/file/filename.txt")
+		.onHost("172.18.48.20")
+		.user("user")
+		.password("password")
+		.build();
 	}
 
 	public static Profile aRemoteProfileWithUnknownServers() {
-		Profile profile = new Profile("dummy remote profiel", "/path/to/file/filename.txt");
-		profile.setServerDetails(aServerDetailsWithUnknownHostname());
-		return profile;
+		return new ProfileBuilder("dummy remote profiel")
+		.filePath("/path/to/file/filename.txt")
+		.onHost("DontTellMeYouCanResolveThis")
+		.user("user")
+		.password("password")
+		.build();
 	}
 
 	public static Profile localProfile() {
@@ -70,8 +80,9 @@ public class ProfileFixtures {
 		if (isWindows()) {
 			resourcePath = resourcePath.replaceAll(":", "");
 		}
-		Profile profile = new Profile("local", resourcePath);
-		profile.setServerDetails(localhostServerDetails());
-		return profile;
+		return new ProfileBuilder("LOCAL")
+		.filePath(resourcePath)
+		.onLocalhost()
+		.build();
 	}
 }
