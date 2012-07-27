@@ -25,42 +25,40 @@ package org.grep4j.core.model;
  *
  */
 public class ProfileBuilder {
-	
-	private String name;
+
+	private final String name;
 	private String filePath;
 	private String host;
-	private String user;
-	private String password;
+	private Credentials remoteServerDetails;
 
-	
 	/**
 	 * @param name unique identifier for this profile
 	 */
-	public ProfileBuilder(String name){
+	public ProfileBuilder(String name) {
 		this.name = name;
-		
+
 	}
-	
+
 	/**
 	 * 
 	 * @param filePath absolute path of where the file to grep exists. Example: "/opt/jboss/server/log/server.log"
 	 * @return
 	 */
-	public ProfileBuilder filePath( String filePath){
+	public ProfileBuilder filePath(String filePath) {
 		this.filePath = filePath;
 		return this;
 	}
-	
+
 	/**
 	 * The hostname of the server where the target file is stored will be set to "localhost".
 	 * 
 	 * @return
 	 */
-	public ProfileBuilder onLocalhost(){
+	public ProfileBuilder onLocalhost() {
 		this.host = "localhost";
 		return this;
 	}
-	
+
 	/**
 	 * The hostname of the server where the target file is stored.
 	 * 
@@ -70,42 +68,54 @@ public class ProfileBuilder {
 	 * 
 	 * @param host
 	 */
-	public ProfileBuilder onHost(String host){
+	public Credentials onRemoteHost(String host) {
 		this.host = host;
-		return this;
+		this.remoteServerDetails = new Credentials(this);
+		return this.remoteServerDetails;
 	}
-	
-	/**
-	 * Username required to connect to remote machine
-	 * @param user
-	 */
-	public ProfileBuilder user(String user){
-		this.user = user;
-		return this;
-	}	
-	
-	/**
-	 * Password required to connect to remote machine
-	 * @param password
-	 */
-	public ProfileBuilder password(String password){
-		this.password = password;
-		return this;
-	}
-	
+
 	/** 
 	 * @return an instance of Profile.
 	 */
-	public Profile build(){
-		Profile profile = new Profile(name,filePath);  
+	public Profile build() {
+		Profile profile = new Profile(name, filePath);
 		ServerDetails serverDetails = new ServerDetails(host);
-		if(!serverDetails.isLocalhost()){
-			serverDetails.setUser(user);
-	        serverDetails.setPassword(password);
+		if (!serverDetails.isLocalhost()) {
+			serverDetails.setUser(remoteServerDetails.getUser());
+			serverDetails.setPassword(remoteServerDetails.getPassword());
 		}
 		profile.setServerDetails(serverDetails);
 		return profile;
 	}
-	
-}
 
+	public class Credentials {
+
+		private String user;
+		private String password;
+		private final ProfileBuilder profileBuilder;
+
+		Credentials(ProfileBuilder profileBuilder) {
+			this.profileBuilder = profileBuilder;
+		}
+
+		/**
+		 * Username required to connect to remote machine
+		 * Password required to connect to remote machine
+		 * @param user
+		 */
+		public ProfileBuilder credentials(String user, String password) {
+			this.user = user;
+			this.password = password;
+			return this.profileBuilder;
+		}
+
+		protected String getUser() {
+			return user;
+		}
+
+		protected String getPassword() {
+			return password;
+		}
+
+	}
+}

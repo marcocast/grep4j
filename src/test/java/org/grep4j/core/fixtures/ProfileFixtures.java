@@ -15,38 +15,29 @@ public class ProfileFixtures {
 
 	public static Profile aDummyRemoteProfile() {
 		return new ProfileBuilder("dummy remote profiel")
-							.filePath("/path/to/file/filename.txt")
-							.onHost("172.60.60.60")
-							.user("user")
-							.password("password")
-							.build();
+				.filePath("/path/to/file/filename.txt")
+				.onRemoteHost("172.60.60.60").credentials("user", "password").build();
 	}
 
 	public static Profile aDummyRemoteProfileWithWildcard(String wildcard) {
 		return new ProfileBuilder("dummy remote profiel")
-		.filePath("/path/to/file/filename.txt"+ wildcard)
-		.onHost("172.60.60.60")
-		.user("user")
-		.password("password")
-		.build();
+				.filePath("/path/to/file/filename.txt" + wildcard)
+				.onRemoteHost("172.66.66.66").credentials("user", "password")
+				.build();
 	}
 
 	public static Profile anotherDummyRemoteProfile() {
 		return new ProfileBuilder("dummy remote profiel")
-		.filePath("/path/to/file/filename.txt")
-		.onHost("172.18.48.20")
-		.user("user")
-		.password("password")
-		.build();
+				.filePath("/path/to/file/filename.txt")
+				.onRemoteHost("172.60.68.68").credentials("user", "password")
+				.build();
 	}
 
 	public static Profile aRemoteProfileWithUnknownServers() {
 		return new ProfileBuilder("dummy remote profiel")
-		.filePath("/path/to/file/filename.txt")
-		.onHost("DontTellMeYouCanResolveThis")
-		.user("user")
-		.password("password")
-		.build();
+				.filePath("/path/to/file/filename.txt")
+				.onRemoteHost("DontTellMeYouCanResolveThis").credentials("user", "password")
+				.build();
 	}
 
 	public static Profile localProfile() {
@@ -81,8 +72,8 @@ public class ProfileFixtures {
 			resourcePath = resourcePath.replaceAll(":", "");
 		}
 		return new ProfileBuilder("LOCAL")
-		.filePath(resourcePath)
-		.onLocalhost()
-		.build();
+				.filePath(resourcePath)
+				.onLocalhost()
+				.build();
 	}
 }
