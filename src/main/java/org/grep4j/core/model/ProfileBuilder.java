@@ -116,6 +116,7 @@ public class ProfileBuilder {
 		 * Username required to connect to remote machine
 		 * Password required to connect to remote machine
 		 * @param user
+		 * @param password
 		 */
 		public BuildStep credentials(String user, String password) {
 			this.user = user;
