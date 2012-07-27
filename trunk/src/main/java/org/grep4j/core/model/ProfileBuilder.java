@@ -28,22 +28,22 @@ package org.grep4j.core.model;
 public class ProfileBuilder {
 
 	private String name;
-	private FileStep nextStep;
+	private FileStep fileStep;
 	
 	/**
 	 * @param name unique identifier for this profile
 	 */
 	public FileStep name(String name) {
 		this.name = name;
-		this.nextStep = new FileStep(this);
-		return this.nextStep;
+		this.fileStep = new FileStep(this);
+		return this.fileStep;
 	}
 
 	public class FileStep {
 
 		private final ProfileBuilder builder;
 		private String filePath;
-		private ServerStep nextStep;
+		private ServerStep serverStep;
 
 		FileStep(ProfileBuilder builder) {
 			this.builder = builder;
@@ -55,8 +55,8 @@ public class ProfileBuilder {
 		 */
 		public ServerStep filePath(String filePath) {
 			this.filePath = filePath;
-			this.nextStep = new ServerStep(builder);
-			return this.nextStep;
+			this.serverStep = new ServerStep(builder);
+			return this.serverStep;
 		}
 
 	}
@@ -138,11 +138,11 @@ public class ProfileBuilder {
 		 * @return an instance of a Profile.based on the parameters passed
 		 */
 		public Profile build() {
-			Profile profile = new Profile(name, builder.nextStep.filePath);
-			ServerDetails serverDetails = new ServerDetails(builder.nextStep.nextStep.host);
+			Profile profile = new Profile(name, builder.fileStep.filePath);
+			ServerDetails serverDetails = new ServerDetails(builder.fileStep.serverStep.host);
 			if (!serverDetails.isLocalhost()) {
-				serverDetails.setUser(builder.nextStep.nextStep.credentialsStep.user);
-				serverDetails.setPassword(builder.nextStep.nextStep.credentialsStep.password);
+				serverDetails.setUser(builder.fileStep.serverStep.credentialsStep.user);
+				serverDetails.setPassword(builder.fileStep.serverStep.credentialsStep.password);
 			}
 			profile.setServerDetails(serverDetails);
 			return profile;
