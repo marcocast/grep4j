@@ -1,13 +1,11 @@
 package org.grep4j.core.fixtures;
 
 import static org.grep4j.core.command.OperativeSystemDetector.isWindows;
-import static org.grep4j.core.fixtures.ServerDetailsFixtures.localhostServerDetails;
 
 import java.net.URL;
 
 import org.grep4j.core.model.Profile;
 import org.grep4j.core.model.ProfileBuilder;
-import org.grep4j.core.model.ProfileStepBuilder;
 
 public class ProfileFixtures {
 
@@ -15,36 +13,32 @@ public class ProfileFixtures {
 	}
 
 	public static Profile aDummyRemoteProfile() {
-		return new ProfileBuilder("dummy remote profiel")
+		return new ProfileBuilder().name("dummy remote profiel")
 				.filePath("/path/to/file/filename.txt")
-				.onRemoteHost("172.60.60.60").credentials("user", "password").build();
-	}
-
-	public static Profile aDummyRemoteProfile2() {
-		return new ProfileStepBuilder().name("test").filePath("/path/to/file/filename.txt").onRemoteHost("172.60.60.60")
-				.credential("user", "password").build();
+				.onRemotehost("172.60.60.60").credentials("user", "password")
+				.build();
 
 	}
 
 	public static Profile aDummyRemoteProfileWithWildcard(String wildcard) {
-		return new ProfileBuilder("dummy remote profiel")
-				.filePath("/path/to/file/filename.txt" + wildcard)
-				.onRemoteHost("172.66.66.66").credentials("user", "password")
+		return new ProfileBuilder().name("dummy remote profiel")
+				.filePath("/path/to/file/filename.txt")
+				.onRemotehost("172.66.66.66").credentials("user", "password")
 				.build();
 	}
 
 	public static Profile anotherDummyRemoteProfile() {
-		return new ProfileBuilder("dummy remote profiel")
+		return new ProfileBuilder().name("dummy remote profiel")
 				.filePath("/path/to/file/filename.txt")
-				.onRemoteHost("172.60.68.68").credentials("user", "password")
+				.onRemotehost("172.68.68.68").credentials("user", "password")
 				.build();
 	}
 
 	public static Profile aRemoteProfileWithUnknownServers() {
-		return new ProfileBuilder("dummy remote profiel")
+		return new ProfileBuilder().name("dummy remote profiel")
 				.filePath("/path/to/file/filename.txt")
-				.onRemoteHost("DontTellMeYouCanResolveThis").credentials("user", "password")
-				.build();
+				.onRemotehost("DontTellMeYouCanResolveThis")
+				.credentials("user", "password").build();
 	}
 
 	public static Profile localProfile() {
@@ -54,9 +48,7 @@ public class ProfileFixtures {
 		if (isWindows()) {
 			resourcePath = resourcePath.replaceAll(":", "");
 		}
-		Profile profile = new Profile("local", resourcePath);
-		profile.setServerDetails(localhostServerDetails());
-		return profile;
+		return new ProfileBuilder().name("local").filePath(resourcePath).onLocalhost().build();
 	}
 
 	public static Profile localProfileWithWildecard(String wildcard) {
@@ -66,9 +58,7 @@ public class ProfileFixtures {
 		if (isWindows()) {
 			resourcePath = resourcePath.replaceAll(":", "");
 		}
-		Profile profile = new Profile("local", resourcePath + wildcard);
-		profile.setServerDetails(localhostServerDetails());
-		return profile;
+		return new ProfileBuilder().name("local").filePath(resourcePath + wildcard).onLocalhost().build();
 	}
 
 	public static Profile localGzProfile() {
@@ -78,9 +68,6 @@ public class ProfileFixtures {
 		if (isWindows()) {
 			resourcePath = resourcePath.replaceAll(":", "");
 		}
-		return new ProfileBuilder("LOCAL")
-				.filePath(resourcePath)
-				.onLocalhost()
-				.build();
+		return new ProfileBuilder().name("local").filePath(resourcePath).onLocalhost().build();
 	}
 }
