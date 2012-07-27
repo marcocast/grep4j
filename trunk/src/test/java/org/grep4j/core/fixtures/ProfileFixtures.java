@@ -7,6 +7,7 @@ import java.net.URL;
 
 import org.grep4j.core.model.Profile;
 import org.grep4j.core.model.ProfileBuilder;
+import org.grep4j.core.model.ProfileStepBuilder;
 
 public class ProfileFixtures {
 
@@ -17,6 +18,12 @@ public class ProfileFixtures {
 		return new ProfileBuilder("dummy remote profiel")
 				.filePath("/path/to/file/filename.txt")
 				.onRemoteHost("172.60.60.60").credentials("user", "password").build();
+	}
+
+	public static Profile aDummyRemoteProfile2() {
+		return new ProfileStepBuilder().name("test").filePath("/path/to/file/filename.txt").onRemoteHost("172.60.60.60")
+				.credential("user", "password").build();
+
 	}
 
 	public static Profile aDummyRemoteProfileWithWildcard(String wildcard) {
