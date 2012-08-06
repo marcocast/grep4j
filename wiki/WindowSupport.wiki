@@ -1,4 +1,4 @@
-#labels windows
+#labels windows,Featured
 ==Windows support==
 
 At the moment we support Windows to remote Windows operations only through SSH server implementations like:
