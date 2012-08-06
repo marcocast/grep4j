@@ -1,0 +1,13 @@
+#labels windows
+==Windows support==
+
+At the moment we support Windows to remote Windows operations only through SSH server implementations like:
+
+[http://sshwindows.sourceforge.net/ OpenSSH],       
+[http://ist.uwaterloo.ca/~kscully/CygwinSSHD_W2K3.html CygwinSSH], 
+[http://mobassh.mobatek.net/ MobaSSH]. 
+
+`*` 
+Windows to Unix or local Windows operations work just fine if you run the software via the bash console.
+
+see the following [https://www.ibm.com/developerworks/mydeveloperworks/blogs/738b7897-cd38-4f24-9f05-48dd69116837/entry/programmatically_connecting_to_remote_systems2?lang=en IBM post] if you want to dig more into portability issue
