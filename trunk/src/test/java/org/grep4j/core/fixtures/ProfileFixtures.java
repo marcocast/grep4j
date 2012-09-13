@@ -13,7 +13,7 @@ public class ProfileFixtures {
 	}
 
 	public static Profile aDummyRemoteProfile() {
-		return new ProfileBuilder().name("dummy remote profiel")
+		return ProfileBuilder.newBuilder().name("dummy remote profiel")
 				.filePath("/path/to/file/filename.txt")
 				.onRemotehost("172.60.60.60").credentials("user", "password")
 				.build();
@@ -21,21 +21,21 @@ public class ProfileFixtures {
 	}
 
 	public static Profile aDummyRemoteProfileWithWildcard(String wildcard) {
-		return new ProfileBuilder().name("dummy remote profiel")
+		return ProfileBuilder.newBuilder().name("dummy remote profiel")
 				.filePath("/path/to/file/filename.txt")
 				.onRemotehost("172.66.66.66").credentials("user", "password")
 				.build();
 	}
 
 	public static Profile anotherDummyRemoteProfile() {
-		return new ProfileBuilder().name("dummy remote profiel")
+		return ProfileBuilder.newBuilder().name("dummy remote profiel")
 				.filePath("/path/to/file/filename.txt")
 				.onRemotehost("172.68.68.68").credentials("user", "password")
 				.build();
 	}
 
 	public static Profile aRemoteProfileWithUnknownServers() {
-		return new ProfileBuilder().name("dummy remote profiel")
+		return ProfileBuilder.newBuilder().name("dummy remote profiel")
 				.filePath("/path/to/file/filename.txt")
 				.onRemotehost("DontTellMeYouCanResolveThis")
 				.credentials("user", "password").build();
@@ -48,7 +48,7 @@ public class ProfileFixtures {
 		if (isWindows()) {
 			resourcePath = resourcePath.replaceAll(":", "");
 		}
-		return new ProfileBuilder().name("local").filePath(resourcePath).onLocalhost().build();
+		return ProfileBuilder.newBuilder().name("local").filePath(resourcePath).onLocalhost().build();
 	}
 
 	public static Profile localProfileWithWildecard(String wildcard) {
@@ -58,7 +58,7 @@ public class ProfileFixtures {
 		if (isWindows()) {
 			resourcePath = resourcePath.replaceAll(":", "");
 		}
-		return new ProfileBuilder().name("local").filePath(resourcePath + wildcard).onLocalhost().build();
+		return ProfileBuilder.newBuilder().name("local").filePath(resourcePath + wildcard).onLocalhost().build();
 	}
 
 	public static Profile localGzProfile() {
@@ -68,6 +68,6 @@ public class ProfileFixtures {
 		if (isWindows()) {
 			resourcePath = resourcePath.replaceAll(":", "");
 		}
-		return new ProfileBuilder().name("local").filePath(resourcePath).onLocalhost().build();
+		return ProfileBuilder.newBuilder().name("local").filePath(resourcePath).onLocalhost().build();
 	}
 }
