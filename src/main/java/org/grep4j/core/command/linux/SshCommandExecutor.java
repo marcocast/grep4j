@@ -64,7 +64,7 @@ public class SshCommandExecutor extends CommandExecutor {
 			sshClient.authPassword(serverDetails.getUser(), serverDetails.getPassword());
 		} catch (IOException e) {
 			disconnect(sshClient);
-			throw new RuntimeException("ERROR:Error trying to connect to ");
+			throw new RuntimeException("ERROR:Error trying to connect to ", e);
 		}
 	}
 

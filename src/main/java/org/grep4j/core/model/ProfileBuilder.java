@@ -27,63 +27,35 @@ package org.grep4j.core.model;
  */
 public class ProfileBuilder {
 
-	private String name;
-	private FileStep fileStep;
-	
-	/**
-	 * @param name unique identifier for this profile
-	 */
-	public FileStep name(String name) {
-		this.name = name;
-		this.fileStep = new FileStep(this);
-		return this.fileStep;
+	public static NameStep newBuilder() {
+		return new Steps();
 	}
 
-	public class FileStep {
+	private ProfileBuilder() {
+	}
 
-		private final ProfileBuilder builder;
-		private String filePath;
-		private ServerStep serverStep;
+	public static interface NameStep {
+		/**
+		 * @param name unique identifier for this profile
+		 */
+		FileStep name(String name);
+	}
 
-		FileStep(ProfileBuilder builder) {
-			this.builder = builder;
-		}
-		
+	public static interface FileStep {
 		/** 
 		 * @param filePath absolute path of where the file to grep exists. Example: "/opt/jboss/server/log/server.log"
 		 * @return
 		 */
-		public ServerStep filePath(String filePath) {
-			this.filePath = filePath;
-			this.serverStep = new ServerStep(builder);
-			return this.serverStep;
-		}
-
+		ServerStep filePath(String name);
 	}
 
-	public class ServerStep {
-
-		private final ProfileBuilder builder;
-		String host;
-
-		private CredentialsStep credentialsStep;
-		private BuildStep buildStep;
-
-		ServerStep(ProfileBuilder builder) {
-			this.builder = builder;
-		}
-		
+	public static interface ServerStep {
 		/**
 		 * The hostname of the server where the target file is stored will be set to "localhost".
 		 * @return
 		 */
-		public BuildStep onLocalhost() {
-			this.host = "localhost";
-			this.buildStep = new BuildStep(builder);
-			return this.buildStep;
+		public BuildStep onLocalhost();
 
-		}
-		
 		/**
 		 * The hostname of the server where the target file is stored.
 		 * 
@@ -93,60 +65,77 @@ public class ProfileBuilder {
 		 * 
 		 * @param host
 		 */
-		public CredentialsStep onRemotehost(String host) {
-			this.host = host;
-			this.credentialsStep = new CredentialsStep(builder);
-			return this.credentialsStep;
-
-		}
+		public CredentialsStep onRemotehost(String host);
 	}
 
-	public class CredentialsStep {
-
-		private final ProfileBuilder builder;
-		private String user;
-		private String password;
-		private BuildStep buildStep;
-
-		CredentialsStep(ProfileBuilder builder) {
-			this.builder = builder;
-		}
-		
+	public static interface CredentialsStep {
 		/**
 		 * Username required to connect to remote machine
 		 * Password required to connect to remote machine
 		 * @param user
 		 * @param password
 		 */
-		public BuildStep credentials(String user, String password) {
-			this.user = user;
-			this.password = password;
-			this.buildStep = new BuildStep(builder);
-			return this.buildStep;
-		}
-		
+		public BuildStep credentials(String user, String password);
 	}
 
-	public class BuildStep {
-
-		private final ProfileBuilder builder;
-
-		BuildStep(ProfileBuilder builder) {
-			this.builder = builder;
-		}
-		
+	public static interface BuildStep {
 		/** 
 		 * @return an instance of a Profile.based on the parameters passed
 		 */
+		public Profile build();
+	}
+
+	private static class Steps implements NameStep, FileStep, ServerStep, CredentialsStep, BuildStep {
+
+		private String name;
+		private String host;
+		private String user;
+		private String password;
+		private String filePath;
+
+		@Override
+		public FileStep name(String name) {
+			this.name = name;
+			return this;
+		}
+
+		@Override
+		public ServerStep filePath(String filePath) {
+			this.filePath = filePath;
+			return this;
+		}
+
+		@Override
+		public BuildStep onLocalhost() {
+			this.host = "localhost";
+			return this;
+		}
+
+		@Override
+		public CredentialsStep onRemotehost(String host) {
+			this.host = host;
+			return this;
+		}
+
+		@Override
+		public BuildStep credentials(String user, String password) {
+			this.user = user;
+			this.password = password;
+			return this;
+		}
+
+		@Override
 		public Profile build() {
-			Profile profile = new Profile(name, builder.fileStep.filePath);
-			ServerDetails serverDetails = new ServerDetails(builder.fileStep.serverStep.host);
+			Profile profile = new Profile(name, filePath);
+			ServerDetails serverDetails = new ServerDetails(host);
 			if (!serverDetails.isLocalhost()) {
-				serverDetails.setUser(builder.fileStep.serverStep.credentialsStep.user);
-				serverDetails.setPassword(builder.fileStep.serverStep.credentialsStep.password);
+				serverDetails.setUser(user);
+				serverDetails.setPassword(password);
 			}
 			profile.setServerDetails(serverDetails);
 			return profile;
 		}
+
 	}
+
 }
