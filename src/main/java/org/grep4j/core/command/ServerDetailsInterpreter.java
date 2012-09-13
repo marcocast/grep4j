@@ -28,7 +28,7 @@ public class ServerDetailsInterpreter {
 		if (serverDetails.isLocalhost()) {
 			commandExecutor = new LocalCommandExecutor(serverDetails);
 		} else {
-			commandExecutor = SshCommandExecutor.aDefaultSshCommandExecutor(serverDetails);
+			commandExecutor = new SshCommandExecutor(serverDetails);
 		}
 		return commandExecutor;
 	}

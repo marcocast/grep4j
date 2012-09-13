@@ -31,15 +31,8 @@ import org.grep4j.core.model.ServerDetails;
  */
 public class SshCommandExecutor extends CommandExecutor {
 
-	//private SSHClient sshClient;
-
-	private SshCommandExecutor(ServerDetails serverDetails) {
+	public SshCommandExecutor(ServerDetails serverDetails) {
 		super(serverDetails);
-	}
-
-	public static SshCommandExecutor aDefaultSshCommandExecutor(ServerDetails serverDetails) {
-		SshCommandExecutor executor = new SshCommandExecutor(serverDetails);
-		return executor;
 	}
 
 	@Override
