@@ -70,7 +70,9 @@ public class GrepTask implements Callable<List<GrepResult>> {
 		if (grepRequest.getProfile().containsWildcard()) {
 			LsCommand ls = new LsCommand(grepRequest.getProfile());
 			String filenames = commandExecutor.execute(ls).andReturnResult();
-			matchingFiles.addAll(aListOf(filenames));
+			if (!filenames.trim().isEmpty()) {
+				matchingFiles.addAll(aListOf(filenames));
+			}
 		} else {
 			matchingFiles.add(grepRequest.getProfile().getFilePath());
 		}
@@ -90,21 +92,23 @@ public class GrepTask implements Callable<List<GrepResult>> {
 	}
 
 	private void executeGrepCommands() {
-		ExecutorService executorService = null;
-		try {
-			executorService = Executors.newFixedThreadPool(maxExecutorTaskThreads(grepList.size()));
-			Set<Future<GrepResult>> commandsExecutorTaskFutures = new HashSet<Future<GrepResult>>();
-			for (AbstractGrepCommand command : grepList) {
-				commandsExecutorTaskFutures.add(executorService.submit(new CommandExecutorTask(commandExecutor, command, grepRequest)));
-			}
-			for (Future<GrepResult> future : commandsExecutorTaskFutures) {
-				results.add(future.get());
-			}
-		} catch (Exception e) {
-			throw new RuntimeException("Error when executing the CommandExecutorTasks", e);
-		} finally {
-			if (executorService != null) {
-				executorService.shutdownNow();
+		if (!grepList.isEmpty()) {
+			ExecutorService executorService = null;
+			try {
+				executorService = Executors.newFixedThreadPool(maxExecutorTaskThreads(grepList.size()));
+				Set<Future<GrepResult>> commandsExecutorTaskFutures = new HashSet<Future<GrepResult>>();
+				for (AbstractGrepCommand command : grepList) {
+					commandsExecutorTaskFutures.add(executorService.submit(new CommandExecutorTask(commandExecutor, command, grepRequest)));
+				}
+				for (Future<GrepResult> future : commandsExecutorTaskFutures) {
+					results.add(future.get());
+				}
+			} catch (Exception e) {
+				throw new RuntimeException("Error when executing the CommandExecutorTasks", e);
+			} finally {
+				if (executorService != null) {
+					executorService.shutdownNow();
+				}
 			}
 		}
 	}
