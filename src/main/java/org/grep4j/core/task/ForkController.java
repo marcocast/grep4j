@@ -8,7 +8,7 @@ package org.grep4j.core.task;
 public class ForkController {
 
 	private static int MAX_GREPTASK_THREADS = 5;
-	private static int MAX_EXECUTORTASK_THREADS = 5;
+	private static int MAX_EXECUTORTASK_THREADS = 1;
 
 	private ForkController() {
 	}
