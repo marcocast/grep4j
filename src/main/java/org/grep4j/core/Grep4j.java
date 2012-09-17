@@ -12,7 +12,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-import org.grep4j.core.command.linux.SshSessionManager;
 import org.grep4j.core.model.Profile;
 import org.grep4j.core.options.Option;
 import org.grep4j.core.result.GrepResult;
@@ -525,7 +524,6 @@ public final class Grep4j {
 		} finally {
 			if (executorService != null) {
 				executorService.shutdownNow();
-				SshSessionManager.getInstance().shutdownAll();
 			}
 		}
 	}
