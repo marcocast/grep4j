@@ -41,14 +41,15 @@ import static org.grep4j.core.fluent.Dictionary.options;
 import static org.grep4j.core.fluent.Dictionary.option;
 import static org.grep4j.core.fluent.Dictionary.with;
 import static org.grep4j.core.options.Option.ignoreCase;
+import static org.grep4j.core.options.Option.extraLinesAfter;
 import static org.grep4j.core.options.Option.onlyMatching;
 
 ...
 //Single option
 GrepResults results = grep(expression("mArCo"), on(localProfile()),		     
-                          with(option(ignoreCase())));
+                          with(option(extraLinesAfter(20))));
 
-assertThat(results.totalOccurrences(), is(1));
+assertThat(results, is(1));
 
 
 
