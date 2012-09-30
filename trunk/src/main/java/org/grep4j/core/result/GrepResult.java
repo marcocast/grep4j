@@ -21,14 +21,12 @@ public class GrepResult {
 	private final GrepRequest grepRequest;
 	private final String fileName;
 	private final String text;
-	private final String expression;
 
 	public GrepResult(GrepRequest grepRequest, String fileName, String text) {
 		super();
 		this.grepRequest = grepRequest;
 		this.fileName = fileName;
 		this.text = text;
-		this.expression = grepRequest.getExpression();
 	}
 
 	private GrepResult(String expression, GrepRequest grepRequest, String fileName, String text) {
@@ -36,7 +34,6 @@ public class GrepResult {
 		this.grepRequest = grepRequest;
 		this.fileName = fileName;
 		this.text = text;
-		this.expression = expression;
 	}
 
 	/** 
@@ -61,22 +58,17 @@ public class GrepResult {
 	}
 
 	/**
-	 * Based on the grep expression, it counts how many times the pattern is found in the result
+	 * it counts how many lines are in the grep result
 	 * 
-	 * @return total number of time the patter is found
+	 * @return total number of time the new line patter is found
 	 */
-	public int totalOccurrences() {
-		int occurrences = 0;
-		if (grepRequest.isRegexExpression()) {
-			Pattern pattern = Pattern.compile(this.expression);
-			java.util.regex.Matcher matcher = pattern.matcher(this.getText());
-			while (matcher.find()) {
-				occurrences++;
-			}
-		} else {
-			occurrences = StringUtils.countMatches(this.getText(), this.expression);
+	public int totalOccurrences() {	
+		int totalOccurrences = 0;
+		Matcher lm = linePattern.matcher(this.getText()); 
+		while (lm.find()) {
+			totalOccurrences++;
 		}
-		return occurrences;
+		return totalOccurrences;
 	}
 
 	/**
