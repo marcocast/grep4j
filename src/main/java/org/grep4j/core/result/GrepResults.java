@@ -30,12 +30,12 @@ public class GrepResults implements Collection<GrepResult> {
 	 * 
 	 * @return total number of time the patter is found in all the GrepResults
 	 */
-	public int totalOccurrences() {
-		int occurrences = 0;
+	public int totalLines() {
+		int totalLines = 0;
 		for (GrepResult result : grepResults) {
-			occurrences += result.totalOccurrences();
+			totalLines += result.totalLines();
 		}
-		return occurrences;
+		return totalLines;
 	}
 
 	/**

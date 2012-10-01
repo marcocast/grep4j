@@ -62,13 +62,13 @@ public class GrepResult {
 	 * 
 	 * @return total number of time the new line patter is found
 	 */
-	public int totalOccurrences() {	
-		int totalOccurrences = 0;
+	public int totalLines() {	
+		int totalLines = 0;
 		Matcher lm = linePattern.matcher(this.getText()); 
 		while (lm.find()) {
-			totalOccurrences++;
+			totalLines++;
 		}
-		return totalOccurrences;
+		return totalLines;
 	}
 
 	/**
