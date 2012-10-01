@@ -21,11 +21,11 @@ public class GrepResultTestWithRegEx {
 	}
 
 	public void testRegExWithExpression() {
-		assertThat(grepResult.filterByRE("customer(.*)updated").totalOccurrences(), is(1));
+		assertThat(grepResult.filterByRE("customer(.*)updated").totalLines(), is(1));
 	}
 
 	public void testRegEx() {
-		assertThat(grepResult.totalOccurrences(), is(1));
+		assertThat(grepResult.totalLines(), is(1));
 	}
 
 	public void testProfileNameProperties() {

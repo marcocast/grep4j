@@ -24,18 +24,18 @@ public class WhenGrep4jStartedWithRegExStringToSearchALocalProfile {
 	private final List<Profile> profiles = Arrays.asList(localProfile());
 
 	public void customerRegexStringAppears1Time() {
-		assertThat(egrep("customer(.*)updated", on(profiles)).totalOccurrences(), is(1));
-		assertThat(executing(grep("Marco", on(profiles))).totalOccurrences(), is(1));
+		assertThat(egrep("customer(.*)updated", on(profiles)).totalLines(), is(1));
+		assertThat(executing(grep("Marco", on(profiles))).totalLines(), is(1));
 	}
 
 	public void extraLineBefore() {
 		GrepResults results = egrep("er(.*) 2", on(profiles), extraLinesBefore(20),ignoreCase());
-		assertThat(results.filterByRE("ER(.*) 1").totalOccurrences(), is(1));
+		assertThat(results.filterByRE("ER(.*) 1").totalLines(), is(1));
 	}
 
 	public void extraLineAfter() {
 		GrepResults results = egrep("ER(.*) 1", on(profiles), extraLinesAfter(20));
-		assertThat(results.filterByRE("ER(.*) 2").totalOccurrences(), is(1));
+		assertThat(results.filterByRE("ER(.*) 2").totalLines(), is(1));
 	}
 
 }

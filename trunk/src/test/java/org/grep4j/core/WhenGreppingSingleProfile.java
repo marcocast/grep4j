@@ -37,31 +37,31 @@ public class WhenGreppingSingleProfile {
 	}
 
 	public void fineStringAppears3Times() {
-		assertThat(whenCalling(grep("fine", on(localProfile()))).totalOccurrences(), is(5));
+		assertThat(whenCalling(grep("fine", on(localProfile()))).totalLines(), is(5));
 	}
 
 	public void errorStringAppears2Times() {
-		assertThat(executing(grep("ERROR", on(localProfile()))).totalOccurrences(), is(2));
+		assertThat(executing(grep("ERROR", on(localProfile()))).totalLines(), is(2));
 	}
 
 	public void errorStringAppearsAtMost2Times() {
-		assertThat(executing(grep("ERROR", on(localProfile()))).totalOccurrences(), is(2));
+		assertThat(executing(grep("ERROR", on(localProfile()))).totalLines(), is(2));
 	}
 
 	public void errorStringAppearsAtLeast2Times() {
-		assertThat(executing(grep("ERROR", on(localProfile()))).totalOccurrences(), is(2));
+		assertThat(executing(grep("ERROR", on(localProfile()))).totalLines(), is(2));
 	}
 
 	public void error33StringneverAppears() {
-		assertThat(executing(grep("ERROR33", on(localProfile()))).totalOccurrences(), is(0));
+		assertThat(executing(grep("ERROR33", on(localProfile()))).totalLines(), is(0));
 	}
 
 	public void errorMultipleTokenStringStringAppearsOneTime() {
-		assertThat(executing(grep("has been updated", on(localProfile()))).totalOccurrences(), is(1));
+		assertThat(executing(grep("has been updated", on(localProfile()))).totalLines(), is(1));
 	}
 
 	public void errorStringWithRegExCaracthersAppearsOneTime() {
-		assertThat(executing(grep("Marco(id=12345)", on(localProfile()))).totalOccurrences(), is(1));
+		assertThat(executing(grep("Marco(id=12345)", on(localProfile()))).totalLines(), is(1));
 	}
 
 	public void extraLineAfter() {

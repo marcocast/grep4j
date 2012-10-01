@@ -46,7 +46,7 @@ public class WhenGreppingWithOptionsNewVersion {
 
 	public void withFileNameOption() {
 		GrepResults results = grep("ERROR 2", on(localProfile()), withFileName());
-		assertThat(results.filterBy("local.txt").totalOccurrences(), is(1));
+		assertThat(results.filterBy("local.txt").totalLines(), is(1));
 	}
 
 }

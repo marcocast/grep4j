@@ -25,18 +25,18 @@ public class WhenGreppingWithOptions {
 		assertThat(
 				results.filterBy(
 						"customer Marco(id=12345) has been updated successfully")
-						.totalOccurrences(), is(1));
+						.totalLines(), is(1));
 	}
 
 	public void linesBefore() {
 		GrepResults results = grep("ERROR 2", on(localProfile()),
 				extraLinesBefore(20));
-		assertThat(results.filterBy("ERROR 1").totalOccurrences(), is(1));
+		assertThat(results.filterBy("ERROR 1").totalLines(), is(1));
 	}
 
 	public void invert() {
 		GrepResults results = grep("ERROR 2", on(localProfile()), invertMatch());
-		assertThat(results.filterBy("ERROR 2").totalOccurrences(), is(0));
+		assertThat(results.filterBy("ERROR 2").totalLines(), is(0));
 	}
 
 	public void countMatchesOption() {
@@ -50,7 +50,7 @@ public class WhenGreppingWithOptions {
 	public void withFileNameOption() {
 		GrepResults results = grep("ERROR 2", on(localProfile()),
 				withFileName());
-		assertThat(results.filterBy("local.txt").totalOccurrences(), is(1));
+		assertThat(results.filterBy("local.txt").totalLines(), is(1));
 	}
 
 	public void withIgnoreCase() {
@@ -58,14 +58,6 @@ public class WhenGreppingWithOptions {
 				countMatches());
 
 		assertThat(results.toString(), is("1\n"));
-	}
-
-	public void tryss() {
-		GrepResults results = grep("ERRor 2", on(localProfile()), ignoreCase(),
-				invertMatch());
-
-		assertThat(results.totalOccurrences(), is(7));
-
 	}
 
 }

@@ -50,6 +50,16 @@ public class ProfileFixtures {
 		}
 		return ProfileBuilder.newBuilder().name("local").filePath(resourcePath).onLocalhost().build();
 	}
+	
+	public static Profile pizzaProfile() {
+		String fileName = "pizza.txt";
+		URL url = ProfileFixtures.class.getClassLoader().getResource(fileName);
+		String resourcePath = url.getPath();
+		if (isWindows()) {
+			resourcePath = resourcePath.replaceAll(":", "");
+		}
+		return ProfileBuilder.newBuilder().name("local").filePath(resourcePath).onLocalhost().build();
+	}
 
 	public static Profile localProfileWithWildecard(String wildcard) {
 		String fileName = "local.txt";

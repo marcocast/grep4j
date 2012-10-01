@@ -28,7 +28,7 @@ public class WhenExtractingWithRegEx {
 	
 	public void filterAndCounting() {
 		GrepResults results = grep("ERROR 1", on(localProfile()), extraLinesAfter(20));
-		assertThat(results.filterByRE("Marco(.*)has been").filterBy("(id=12345)").totalOccurrences(), is(1));
+		assertThat(results.filterByRE("Marco(.*)has been").filterBy("(id=12345)").totalLines(), is(1));
 		
 	}
 
