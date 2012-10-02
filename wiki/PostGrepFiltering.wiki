@@ -44,23 +44,23 @@ import static org.grep4j.core.fluent.Dictionary.expression;
 GrepResults results = grep(expression("customer-id"), on(profile)));
 
 //this will return the total number of updates 
-System.out.println("Total occurrences found : " + results.filterByRE("operation(.*)update").totalOccurrences());
+System.out.println("Total occurrences found : " + results.filterByRE("operation(.*)update").totalLines());
 
 //this will return the total number of updates for the customer-id 12345
-System.out.println("Total occurrences found : " + results.filterBy("customer-id:12345").filterByRE("operation(.*)update").totalOccurrences());
+System.out.println("Total occurrences found : " + results.filterBy("customer-id:12345").filterByRE("operation(.*)update").totalLines());
 
 //this will return the number of updates between 10am and 11am
-System.out.println("Total occurrences found : " + results.filterBy("2012-05-30 10").totalOccurrences());
+System.out.println("Total occurrences found : " + results.filterBy("2012-05-30 10").totalLines());
 
 //This will filter the result in order to print only Andrea updates
 for (GrepResult singleResult : results.filterBy("Andrea")) {
-   System.out.println(singleResult.getOccourrences());        
+   System.out.println(singleResult.totalLines());        
    System.out.println(singleResult);    
 }
 
 //This will filter only the Andrea result in order to print only when we stored Andrea changes successfully
 for (GrepResult singleResult : results.filterBy("Andrea").filterBy("stored successfully")) {  
-   System.out.println(singleResult.getOccourrences());        
+   System.out.println(singleResult.totalLines());        
    System.out.println(singleResult);    
 }
 
