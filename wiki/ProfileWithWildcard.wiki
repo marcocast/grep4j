@@ -15,12 +15,12 @@ import static org.grep4j.core.fluent.Dictionary.option;
 import static org.grep4j.core.options.Option.filesMatching;
 
 //creating a profile with wildcard *
-Profile remoteProfile = new ProfileBuilder("a log with wildcard")
-		                      .filePath("/opt/log/server.log*")
-		                      .onHost("172.60.60.60")
-		                      .user("user")
-		                      .password("password")
-		                      .build();
+Profile remoteProfile = ProfileBuilder.newBuilder()
+            .name("Remote server log")
+            .filePath("/opt/log/server.log*")
+            .onRemotehost("172.xx.xx.xx")
+            .credentials("user", "password")
+            .build();
 
 
 System.out.println(grep("ERROR",on(remoteProfile),with(option(filesMatching()))));
