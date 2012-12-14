@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * This class contains an ArrayList with all the results coming from the grep task
@@ -22,7 +23,7 @@ public class GrepResults implements Collection<GrepResult> {
 	 * @param the expression used to grep
 	 */
 	public GrepResults() {
-		grepResults = Collections.synchronizedList(new ArrayList<GrepResult>());
+		grepResults = new CopyOnWriteArrayList<GrepResult>();
 	}
 
 	/**
@@ -80,9 +81,9 @@ public class GrepResults implements Collection<GrepResult> {
 	public GrepResult getSingleResult() {
 		return grepResults.iterator().next();
 	}
-	
+
 	@Override
-	public String toString() {		
+	public String toString() {
 		StringBuilder tostringbuilder = new StringBuilder();
 		for (GrepResult result : grepResults) {
 			tostringbuilder.append(result);
