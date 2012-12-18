@@ -5,13 +5,12 @@ import static org.grep4j.core.task.ForkController.maxExecutorTaskThreads;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.Callable;
+import java.util.concurrent.CompletionService;
+import java.util.concurrent.ExecutorCompletionService;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 import org.grep4j.core.command.linux.CommandExecutor;
 import org.grep4j.core.command.linux.grep.AbstractGrepCommand;
@@ -94,14 +93,17 @@ public class GrepTask implements Callable<List<GrepResult>> {
 	private void executeGrepCommands() {
 		if (!grepList.isEmpty()) {
 			ExecutorService executorService = null;
+			CompletionService<GrepResult> completionService = null;
 			try {
 				executorService = Executors.newFixedThreadPool(maxExecutorTaskThreads(grepList.size()));
-				Set<Future<GrepResult>> commandsExecutorTaskFutures = new HashSet<Future<GrepResult>>();
+				completionService = new ExecutorCompletionService<GrepResult>(executorService);
 				for (AbstractGrepCommand command : grepList) {
-					commandsExecutorTaskFutures.add(executorService.submit(new CommandExecutorTask(commandExecutor, command, grepRequest)));
+					completionService.submit(new CommandExecutorTask(commandExecutor, command, grepRequest));
 				}
-				for (Future<GrepResult> future : commandsExecutorTaskFutures) {
-					results.add(future.get());
+
+				for (@SuppressWarnings("unused")
+				AbstractGrepCommand command : grepList) {
+					results.add(completionService.take().get());
 				}
 			} catch (Exception e) {
 				throw new RuntimeException("Error when executing the CommandExecutorTasks", e);
@@ -111,6 +113,7 @@ public class GrepTask implements Callable<List<GrepResult>> {
 				}
 			}
 		}
+
 	}
 
 	private List<String> aListOf(String filenames) {

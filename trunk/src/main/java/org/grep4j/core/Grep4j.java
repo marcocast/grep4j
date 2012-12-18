@@ -5,12 +5,11 @@ import static org.grep4j.core.task.ForkController.maxGrepTaskThreads;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+import java.util.concurrent.CompletionService;
+import java.util.concurrent.ExecutorCompletionService;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 import org.grep4j.core.model.Profile;
 import org.grep4j.core.options.Option;
@@ -508,16 +507,19 @@ public final class Grep4j {
 
 	private void executeCommands() {
 		ExecutorService executorService = null;
+		CompletionService<List<GrepResult>> completionService = null;
 		try {
 			executorService = Executors.newFixedThreadPool(maxGrepTaskThreads(grepRequests.size()));
-			Set<Future<List<GrepResult>>> grepTaskFutures = new HashSet<Future<List<GrepResult>>>();
+			completionService = new ExecutorCompletionService<List<GrepResult>>(executorService);
 			for (GrepRequest grepRequest : grepRequests) {
-				grepTaskFutures.add(executorService.submit(new GrepTask(
-						grepRequest)));
+				completionService.submit(new GrepTask(grepRequest));
 			}
-			for (Future<List<GrepResult>> future : grepTaskFutures) {
-				for (GrepResult singleGrepResult : future.get())
+
+			for (@SuppressWarnings("unused")
+			GrepRequest grepRequest : grepRequests) {
+				for (GrepResult singleGrepResult : completionService.take().get()) {
 					results.add(singleGrepResult);
+				}
 			}
 		} catch (Exception e) {
 			throw new RuntimeException("Error when executing the GrepTask", e);
