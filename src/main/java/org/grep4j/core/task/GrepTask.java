@@ -1,13 +1,12 @@
 package org.grep4j.core.task;
 
 import static org.grep4j.core.command.ServerDetailsInterpreter.getCommandExecutor;
-import static org.grep4j.core.task.ForkController.maxExecutorTaskThreads;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CompletionService;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorCompletionService;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -48,9 +47,9 @@ public class GrepTask implements Callable<List<GrepResult>> {
 	public GrepTask(GrepRequest grepRequest) {
 		this.commandExecutor = getCommandExecutor(grepRequest.getServerDetails());
 		this.grepRequest = grepRequest;
-		this.matchingFiles = new ArrayList<String>();
-		this.grepList = new ArrayList<AbstractGrepCommand>();
-		this.results = new ArrayList<GrepResult>();
+		this.matchingFiles = new CopyOnWriteArrayList<String>();
+		this.grepList = new CopyOnWriteArrayList<AbstractGrepCommand>();
+		this.results = new CopyOnWriteArrayList<GrepResult>();
 	}
 
 	@Override
@@ -95,7 +94,7 @@ public class GrepTask implements Callable<List<GrepResult>> {
 			ExecutorService executorService = null;
 			CompletionService<GrepResult> completionService = null;
 			try {
-				executorService = Executors.newFixedThreadPool(maxExecutorTaskThreads(grepList.size()));
+				executorService = Executors.newSingleThreadExecutor();
 				completionService = new ExecutorCompletionService<GrepResult>(executorService);
 				for (AbstractGrepCommand command : grepList) {
 					completionService.submit(new CommandExecutorTask(commandExecutor, command, grepRequest));

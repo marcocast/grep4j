@@ -2,7 +2,7 @@ package org.grep4j.core.command;
 
 import org.grep4j.core.command.linux.CommandExecutor;
 import org.grep4j.core.command.linux.LocalCommandExecutor;
-import org.grep4j.core.command.linux.SshCommandExecutor;
+import org.grep4j.core.command.linux.SshjCommandExecutor;
 import org.grep4j.core.model.ServerDetails;
 
 /**
@@ -18,7 +18,7 @@ public class ServerDetailsInterpreter {
 	/**
 	 * Based on the server details, it returns {@link LocalCommandExecutor} if
 	 * the host is "localhost" or "127.0.0.1" otherwise return
-	 * {@link SshCommandExecutor}
+	 * {@link SshjCommandExecutor}
 	 * 
 	 * @param serverDetails
 	 * @return {@link CommandExecutor}
@@ -28,7 +28,7 @@ public class ServerDetailsInterpreter {
 		if (serverDetails.isLocalhost()) {
 			commandExecutor = new LocalCommandExecutor(serverDetails);
 		} else {
-			commandExecutor = new SshCommandExecutor(serverDetails);
+			commandExecutor = new SshjCommandExecutor(serverDetails);
 		}
 		return commandExecutor;
 	}

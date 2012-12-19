@@ -29,9 +29,9 @@ import org.grep4j.core.model.ServerDetails;
  * @author Giovanni Gargiulo
  *
  */
-public class SshCommandExecutor extends CommandExecutor {
+public class SshjCommandExecutor extends CommandExecutor {
 
-	public SshCommandExecutor(ServerDetails serverDetails) {
+	public SshjCommandExecutor(ServerDetails serverDetails) {
 		super(serverDetails);
 	}
 
