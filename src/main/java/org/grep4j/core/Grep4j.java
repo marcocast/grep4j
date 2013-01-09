@@ -127,8 +127,8 @@ public final class Grep4j {
 	 * @param profiles
 	 * @return GlobalGrepResult
 	 */
-	public static GrepResults grep(String expression, List<Profile> profiles) {
-		return new Grep4j(expression, profiles, false).execute().andGetResults();
+	public static GrepResults grep(GrepExpression grepExpression, List<Profile> profiles) {
+		return new Grep4j(grepExpression.getText(), profiles, grepExpression.isRegularExpression()).execute().andGetResults();
 	}
 
 	/**
@@ -187,100 +187,9 @@ public final class Grep4j {
 	* @param option
 	* @return GlobalGrepResult
 	*/
-	public static GrepResults grep(String expression, List<Profile> profiles, Option... options) {
-		return new Grep4j(expression, profiles, Arrays.asList(options), false).execute()
+	public static GrepResults grep(GrepExpression grepExpression, List<Profile> profiles, Option... options) {
+		return new Grep4j(grepExpression.getText(), profiles, Arrays.asList(options), grepExpression.isRegularExpression()).execute()
 				.andGetResults();
-	}
-
-	/**
-	 * 
-	 * This utility method executes the grep command and return the {@link GrepResults}
-	 * containing the result of the grep 
-	 * 
-	 * This method supports plain text as well as RegEx. Example : CUSTOMER(.*)UPDATE will
-	 * grep for all the customers * updates
-	 * 
-	 * Example:
-	 * <pre>
-	 * import static org.grep4j.core.Grep4j.egrep;
-	 * import static org.grep4j.core.fluent.Dictionary.on;
-	 * ...
-	 * 
-	 * egrep("regular-expression", on(profiles()));
-	 * </pre>
-	 * 
-	 * 
-	 * @param expression
-	 * @param profiles
-	 * @return GlobalGrepResult
-	 */
-	public static GrepResults egrep(String expression, List<Profile> profiles) {
-		return new Grep4j(expression, profiles, true).execute().andGetResults();
-	}
-
-	/**
-	* 
-	* This utility method executes the grep command and return the {@link GrepResults}
-	* containing the result of the grep.
-	* 
-	* This method supports plain text as well as RegEx. Example : CUSTOMER(.*)UPDATE will
-	* grep for all the customers * updates.
-	* 
-	* It also protects the List of profiles and Options wrapping them into an
-	* ImmutableList.
-	* Example of ExtraLines is :
-	* <pre>
-	* import static org.grep4j.core.Grep4j.egrep;
-	* import static org.grep4j.core.Grep4j.extraLinesAfter;
-	* import static org.grep4j.core.fluent.Dictionary.on;
-	* ...
-	* 
-	* GrepResultsSet results = egrep("regular-expression", on(profiles()), extraLinesAfter(100));
-	* System.out.println("Total occurrences found : " + results.totalOccurrences());
-	* System.out.println("Total occurrences found : " + results.totalOccurrences("another expression within 100 lines after"));
-	* 
-	* for (GrepResult singleResult : results) {			
-	* 		System.out.println(singleResult);
-	* } 
-	* </pre>
-	* or
-	* <pre>
-	* import static org.grep4j.core.Grep4j.egrep;
-	* import static org.grep4j.core.Grep4j.extraLinesBefore;
-	* import static org.grep4j.core.fluent.Dictionary.on;
-	* ...
-	* 
-	* GrepResultsSet results = egrep("regular-expression", on(profiles()), extraLinesBefore(100));
-	* System.out.println("Total occurrences found : " + results.totalOccurrences());
-	* System.out.println("Total occurrences found : " + results.totalOccurrences("another expression within 100 lines before"));
-	* 
-	* for (GrepResult singleResult : results) {			
-	* 		System.out.println(singleResult);
-	* } 
-	* </pre>	 
-	* or
-	* <pre>
-	* import static org.grep4j.core.Grep4j.egrep;
-	* import static org.grep4j.core.Grep4j.extraLinesBefore;
-	* import static org.grep4j.core.Grep4j.extraLinesAfter;
-	* import static org.grep4j.core.fluent.Dictionary.on;
-	* ...
-	* 
-	* GrepResultsSet results = egrep("regular-expression", on(profiles()), extraLinesBefore(100), extraLinesAfter(100));
-	* System.out.println("Total occurrences found : " + results.totalOccurrences());
-	* System.out.println("Total occurrences found : " + results.totalOccurrences("another expression within 100 lines before and 100 after"));
-	* 
-	* for (GrepResult singleResult : results) {			
-	* 		System.out.println(singleResult);
-	* } 	* </pre>
-	* 
-	* @param expression
-	* @param profiles
-	* @param option
-	* @return GlobalGrepResult
-	*/
-	public static GrepResults egrep(String expression, List<Profile> profiles, Option... options) {
-		return new Grep4j(expression, profiles, Arrays.asList(options), true).execute().andGetResults();
 	}
 
 	/**
@@ -302,8 +211,9 @@ public final class Grep4j {
 	 * @param profile
 	 * @return GlobalGrepResult
 	 */
-	public static GrepResults grep(String expression, Profile profile) {
-		return new Grep4j(expression, Collections.singletonList(profile), false).execute().andGetResults();
+	public static GrepResults grep(GrepExpression grepExpression, Profile profile) {
+		return new Grep4j(grepExpression.getText(), Collections.singletonList(profile), grepExpression.isRegularExpression()).execute()
+				.andGetResults();
 	}
 
 	/**
@@ -364,99 +274,29 @@ public final class Grep4j {
 	* @param options
 	* @return GlobalGrepResult
 	*/
-	public static GrepResults grep(String expression, Profile profile, Option... options) {
-		return new Grep4j(expression, Collections.singletonList(profile), Arrays.asList(options), false).execute().andGetResults();
+	public static GrepResults grep(GrepExpression grepExpression, Profile profile, Option... options) {
+		return new Grep4j(grepExpression.getText(), Collections.singletonList(profile), Arrays.asList(options), grepExpression.isRegularExpression())
+				.execute().andGetResults();
 	}
 
 	/**
+	 * Regular expression
 	 * 
-	 * This utility method executes the grep command and return the {@link GrepResults}
-	 * containing the result of the grep 
-	 * 
-	 * This method supports plain text as well as RegEx. Example : CUSTOMER(.*)UPDATE will
-	 * grep for all the customers * updates
-	 * 
-	 * Example:
-	 * <pre>
-	 * import static org.grep4j.core.Grep4j.egrep;
-	 * import static org.grep4j.core.fluent.Dictionary.on;
-	 * ...
-	 * 
-	 * egrep("regular-expression", on(profile));
-	 * </pre>
-	 * 
-	 * 
-	 * @param expression
-	 * @param profile
-	 * @return GlobalGrepResult
+	 * @param text
+	 * @return GrepExpression
 	 */
-	public static GrepResults egrep(String expression, Profile profile) {
-		return new Grep4j(expression, Collections.singletonList(profile), true).execute().andGetResults();
+	public static GrepExpression regularExpression(String text) {
+		return new GrepExpression(text, true);
 	}
 
 	/**
-	* 
-	* This utility method executes the grep command and return the {@link GrepResults}
-	* containing the result of the grep.
-	* 
-	* This method supports plain text as well as RegEx. Example : CUSTOMER(.*)UPDATE will
-	* grep for all the customers * updates.
-	* 
-	* It also protects the List of profiles and Options wrapping them into an
-	* ImmutableList.
-	* Example of ExtraLines is :
-	* <pre>
-	* import static org.grep4j.core.Grep4j.egrep;
-	* import static org.grep4j.core.Grep4j.extraLinesAfter;
-	* import static org.grep4j.core.fluent.Dictionary.on;
-	* ...
-	* 
-	* GrepResultsSet results = egrep("regular-expression", on(profile), extraLinesAfter(100));
-	* System.out.println("Total occurrences found : " + results.totalOccurrences());
-	* System.out.println("Total occurrences found : " + results.totalOccurrences("another expression within 100 lines after"));
-	* 
-	* for (GrepResult singleResult : results) {			
-	* 		System.out.println(singleResult);
-	* } 
-	* </pre>
-	* or
-	* <pre>
-	* import static org.grep4j.core.Grep4j.egrep;
-	* import static org.grep4j.core.Grep4j.extraLinesBefore;
-	* import static org.grep4j.core.fluent.Dictionary.on;
-	* ...
-	* 
-	* GrepResultsSet results = egrep("regular-expression", on(profile), extraLinesBefore(100));
-	* System.out.println("Total occurrences found : " + results.totalOccurrences());
-	* System.out.println("Total occurrences found : " + results.totalOccurrences("another expression within 100 lines before"));
-	* 
-	* for (GrepResult singleResult : results) {			
-	* 		System.out.println(singleResult);
-	* } 
-	* </pre>	 
-	* or
-	* <pre>
-	* import static org.grep4j.core.Grep4j.egrep;
-	* import static org.grep4j.core.Grep4j.extraLinesBefore;
-	* import static org.grep4j.core.Grep4j.extraLinesAfter;
-	* import static org.grep4j.core.fluent.Dictionary.on;
-	* ...
-	* 
-	* GrepResultsSet results = egrep("regular-expression", on(profile), extraLinesBefore(100), extraLinesAfter(100));
-	* System.out.println("Total occurrences found : " + results.totalOccurrences());
-	* System.out.println("Total occurrences found : " + results.totalOccurrences("another expression within 100 lines before and 100 after"));
-	* 
-	* for (GrepResult singleResult : results) {			
-	* 		System.out.println(singleResult);
-	* } 	* </pre>
-	* 
-	* @param expression
-	* @param profiles
-	* @param options
-	* @return GlobalGrepResult
-	*/
-	public static GrepResults egrep(String expression, Profile profile, Option... options) {
-		return new Grep4j(expression, Collections.singletonList(profile), Arrays.asList(options), true).execute().andGetResults();
+	 * Regular Language(string)
+	 * 
+	 * @param text
+	 * @return GrepExpression
+	 */
+	public static GrepExpression regularLanguage(String text) {
+		return new GrepExpression(text, false);
 	}
 
 	/**

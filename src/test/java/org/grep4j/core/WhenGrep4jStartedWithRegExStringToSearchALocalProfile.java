@@ -1,7 +1,8 @@
 package org.grep4j.core;
 
-import static org.grep4j.core.Grep4j.egrep;
 import static org.grep4j.core.Grep4j.grep;
+import static org.grep4j.core.Grep4j.regularExpression;
+import static org.grep4j.core.Grep4j.regularLanguage;
 import static org.grep4j.core.fixtures.ProfileFixtures.localProfile;
 import static org.grep4j.core.fluent.Dictionary.executing;
 import static org.grep4j.core.fluent.Dictionary.on;
@@ -24,17 +25,17 @@ public class WhenGrep4jStartedWithRegExStringToSearchALocalProfile {
 	private final List<Profile> profiles = Arrays.asList(localProfile());
 
 	public void customerRegexStringAppears1Time() {
-		assertThat(egrep("customer(.*)updated", on(profiles)).totalLines(), is(1));
-		assertThat(executing(grep("Marco", on(profiles))).totalLines(), is(1));
+		assertThat(grep(regularExpression("customer(.*)updated"), on(profiles)).totalLines(), is(1));
+		assertThat(executing(grep(regularLanguage("Marco"), on(profiles))).totalLines(), is(1));
 	}
 
 	public void extraLineBefore() {
-		GrepResults results = egrep("er(.*) 2", on(profiles), extraLinesBefore(20),ignoreCase());
+		GrepResults results = grep(regularExpression("er(.*) 2"), on(profiles), extraLinesBefore(20), ignoreCase());
 		assertThat(results.filterByRE("ER(.*) 1").totalLines(), is(1));
 	}
 
 	public void extraLineAfter() {
-		GrepResults results = egrep("ER(.*) 1", on(profiles), extraLinesAfter(20));
+		GrepResults results = grep(regularExpression("ER(.*) 1"), on(profiles), extraLinesAfter(20));
 		assertThat(results.filterByRE("ER(.*) 2").totalLines(), is(1));
 	}
 

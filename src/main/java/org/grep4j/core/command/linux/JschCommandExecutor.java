@@ -23,7 +23,6 @@ import com.jcraft.jsch.UserInfo;
  * </ol> 
  * 
  * @author Marco Castigliego
- * @author Giovanni Gargiulo
  *
  */
 public class JschCommandExecutor extends CommandExecutor {
@@ -50,7 +49,6 @@ public class JschCommandExecutor extends CommandExecutor {
 			channel.setXForwarding(true);
 
 			channel.setInputStream(System.in);
-			channel.setInputStream(null);
 
 			InputStream in = channel.getInputStream();
 
