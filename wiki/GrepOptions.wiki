@@ -31,7 +31,7 @@ Here is the list of options available:
   * {{{grepVersion()}}}
 --version, the version of grep 
   * {{{maxSshConnections(int number-of-connections)}}}
-set the maximum ssh connections 
+set maximum ssh connections 
 
 == Example ==
 
