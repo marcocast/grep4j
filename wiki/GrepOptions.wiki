@@ -30,6 +30,8 @@ Here is the list of options available:
 -l, --files-with-matches  print only names of FILEs containing matches
   * {{{grepVersion()}}}
 --version, the version of grep 
+  * {{{maxSshConnections(int number-of-connections)}}}
+set the maximum ssh connections 
 
 == Example ==
 
