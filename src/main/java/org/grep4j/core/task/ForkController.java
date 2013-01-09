@@ -1,5 +1,8 @@
 package org.grep4j.core.task;
 
+import org.grep4j.core.options.Constants;
+import org.grep4j.core.options.Options;
+
 /**
  * This to control the maximum number of threads to be used when forking tasks
  * @author marcocast
@@ -12,7 +15,9 @@ public class ForkController {
 	private ForkController() {
 	}
 
-	public static int maxGrepTaskThreads(int totGrepTasks) {
-		return totGrepTasks > MAX_GREPTASK_THREADS ? MAX_GREPTASK_THREADS : totGrepTasks;
+	public static int maxGrepTaskThreads(Options options, int totGrepTasks) {
+	    int maxGrepThreads = options.getIntegerValue(Constants.SSH_CONNECTION_LIMIT_OPTION, MAX_GREPTASK_THREADS);
+	    
+		return totGrepTasks > maxGrepThreads ? maxGrepThreads : totGrepTasks;
 	}
 }

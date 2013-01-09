@@ -5,17 +5,18 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 
 public class Option {
 
+    private final String optionType;
 	private final String optionCommand;
 	private final String optionValue;
 
-	private Option(String optionCommand, String optionValue) {
+	private Option(String type, String optionCommand, String optionValue) {
+	    this.optionType = type;
 		this.optionCommand = optionCommand;
 		this.optionValue = optionValue;
 	}
 
-	private Option(String optionCommand) {
-		this.optionCommand = optionCommand;
-		this.optionValue = null;
+	private Option(String type, String optionCommand) {
+		this(type, optionCommand, null);
 	}
 
 	/**
@@ -24,7 +25,7 @@ public class Option {
 	 * @return
 	 */
 	public static Option extraLinesAfter(int lines) {
-		return new Option("-A", String.valueOf(lines));
+		return new Option(Constants.GREP_OPTION, "-A", String.valueOf(lines));
 	}
 
 	/**
@@ -33,7 +34,7 @@ public class Option {
 	 * @return
 	 */
 	public static Option extraLinesBefore(int lines) {
-		return new Option("-B", String.valueOf(lines));
+		return new Option(Constants.GREP_OPTION, "-B", String.valueOf(lines));
 	}
 
 	/**
@@ -42,7 +43,7 @@ public class Option {
 	 * @return
 	 */
 	public static Option extraLinesBeforeAndAfter(int lines) {
-		return new Option("-C", String.valueOf(lines));
+		return new Option(Constants.GREP_OPTION, "-C", String.valueOf(lines));
 	}
 
 	/**
@@ -50,7 +51,7 @@ public class Option {
 	 * @return
 	 */
 	public static Option onlyMatching() {
-		return new Option("-o");
+		return new Option(Constants.GREP_OPTION, "-o");
 	}
 
 	/**
@@ -58,7 +59,7 @@ public class Option {
 	 * @return
 	 */
 	public static Option ignoreCase() {
-		return new Option("-i");
+		return new Option(Constants.GREP_OPTION, "-i");
 	}
 
 	/**
@@ -66,7 +67,7 @@ public class Option {
 	 * @return
 	 */
 	public static Option invertMatch() {
-		return new Option("-v");
+		return new Option(Constants.GREP_OPTION, "-v");
 	}
 
 	/**
@@ -74,7 +75,7 @@ public class Option {
 	 * @return
 	 */
 	public static Option countMatches() {
-		return new Option("-c");
+		return new Option(Constants.GREP_OPTION, "-c");
 	}
 
 	/**
@@ -82,7 +83,7 @@ public class Option {
 	 * @return
 	 */
 	public static Option withFileName() {
-		return new Option("-H");
+		return new Option(Constants.GREP_OPTION, "-H");
 	}
 
 	/**
@@ -90,7 +91,7 @@ public class Option {
 	 * @return
 	 */
 	public static Option maxMatches(int maxMatches) {
-		return new Option("-m", String.valueOf(maxMatches));
+		return new Option(Constants.GREP_OPTION, "-m", String.valueOf(maxMatches));
 	}
 
 	/**
@@ -98,7 +99,7 @@ public class Option {
 	 * @return
 	 */
 	public static Option lineNumber() {
-		return new Option("-n");
+		return new Option(Constants.GREP_OPTION, "-n");
 	}
 
 	/**
@@ -106,7 +107,7 @@ public class Option {
 	 * @return
 	 */
 	public static Option filesNotMatching() {
-		return new Option("-L");
+		return new Option(Constants.GREP_OPTION, "-L");
 	}
 
 	/**
@@ -114,16 +115,28 @@ public class Option {
 	 * @return
 	 */
 	public static Option filesMatching() {
-		return new Option("-l");
+		return new Option(Constants.GREP_OPTION, "-l");
 	}
+	
+    /**
+     * maximium number of connections
+     * @return
+     */
+    public static Option maxSshConnections(int numberOfConnections) {
+        return new Option(Constants.SSH_CONNECTION_LIMIT_OPTION, "", String.valueOf(numberOfConnections));
+    }
 	
 	/**
 	 * --version, the version of grep 
 	 * @return
 	 */
 	public static Option grepVersion() {
-		return new Option("--version");
+		return new Option(Constants.GREP_OPTION, "--version");
 	}
+	
+	public String getOptionType() {
+        return this.optionType;
+    }
 
 	public String getOptionCommand() {
 		return optionCommand;

@@ -13,6 +13,7 @@ import java.util.concurrent.Executors;
 
 import org.grep4j.core.model.Profile;
 import org.grep4j.core.options.Option;
+import org.grep4j.core.options.Options;
 import org.grep4j.core.result.GrepResult;
 import org.grep4j.core.result.GrepResults;
 import org.grep4j.core.task.GrepRequest;
@@ -61,7 +62,7 @@ public final class Grep4j {
 
 	private final String expression;
 	private final ImmutableList<Profile> profiles;
-	private final ImmutableList<Option> options;
+	private final Options options;
 	private final GrepResults results;
 	private final List<GrepRequest> grepRequests;
 	private final boolean isRegexExpression;
@@ -82,12 +83,7 @@ public final class Grep4j {
 		this.expression = expression;
 		this.profiles = ImmutableList.copyOf(profiles);
 		this.isRegexExpression = isRegexExpression;
-		if (options != null) {
-			this.options = ImmutableList.copyOf(options);
-		} else {
-			this.options = null;
-		}
-
+		this.options = new Options(options);
 	}
 
 	/**
@@ -104,7 +100,7 @@ public final class Grep4j {
 		this.results = new GrepResults();
 		this.expression = expression;
 		this.profiles = ImmutableList.copyOf(profiles);
-		this.options = null;
+		this.options = new Options();
 		this.isRegexExpression = isRegexExpression;
 	}
 
@@ -348,8 +344,8 @@ public final class Grep4j {
 	private void executeCommands() {
 		ExecutorService executorService = null;
 		CompletionService<List<GrepResult>> completionService = null;
-		try {
-			executorService = Executors.newFixedThreadPool(maxGrepTaskThreads(grepRequests.size()));
+		try {		    
+			executorService = Executors.newFixedThreadPool(maxGrepTaskThreads(this.options, grepRequests.size()));
 			completionService = new ExecutorCompletionService<List<GrepResult>>(executorService);
 			for (GrepRequest grepRequest : grepRequests) {
 				completionService.submit(new GrepTask(grepRequest));
@@ -373,9 +369,8 @@ public final class Grep4j {
 	private void prepareCommandRequests() {
 		for (Profile profile : profiles) {
 			GrepRequest grepRequest = new GrepRequest(expression, profile, isRegexExpression);
-			if (options != null && !options.isEmpty()) {
-				grepRequest.addOptions(options);
-			}
+			grepRequest.addOptions(options);
+			
 			grepRequests.add(grepRequest);
 		}
 	}
