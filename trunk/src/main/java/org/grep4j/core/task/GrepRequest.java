@@ -2,11 +2,10 @@ package org.grep4j.core.task;
 
 import static ch.lambdaj.Lambda.join;
 
-import java.util.List;
-
 import org.grep4j.core.model.Profile;
 import org.grep4j.core.model.ServerDetails;
-import org.grep4j.core.options.Option;
+import org.grep4j.core.options.Constants;
+import org.grep4j.core.options.Options;
 
 /**
  * Class container of the grep request
@@ -50,11 +49,11 @@ public class GrepRequest {
 	 * Add Extra options {@see Option}
 	 * @param options
 	 */
-	public void addOptions(List<Option> options) {
-		this.contextControls = join(options, SPACE);
+	public void addOptions(Options options) {
+		this.contextControls = join(options.findOptionsByType(Constants.GREP_OPTION), SPACE);
 	}
 
-	/**
+    /**
 	 * @return the Context Controls grouped as string
 	 */
 	public String getContextControls() {
@@ -99,5 +98,4 @@ public class GrepRequest {
 	public Profile getProfile() {
 		return profile;
 	}
-
 }
