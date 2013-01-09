@@ -57,20 +57,6 @@ public class Dictionary {
 	 * Fluent mirror method: use this method to give more readability to the code.
 	 * Example:
 	 * <pre>
-	 * int actualOccurrences = totalOccurrences(<b>of</b>(expression), results);
-	 * </pre>
-	 * 
-	 * @param type
-	 * @return type
-	 */
-	public static <T> T expression(T type) {
-		return type;
-	}
-
-	/**
-	 * Fluent mirror method: use this method to give more readability to the code.
-	 * Example:
-	 * <pre>
 	 * assertThat(whenCalling(getCommandExecutor(<b>with</b>(onetwosevenServerDetails()))), is(returned(LocalCommandExecutor.class)));
 	 * </pre>
 	 * 

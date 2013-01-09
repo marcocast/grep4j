@@ -1,8 +1,8 @@
 package org.grep4j.core;
 
 import static org.grep4j.core.Grep4j.grep;
+import static org.grep4j.core.Grep4j.regularLanguage;
 import static org.grep4j.core.fixtures.ProfileFixtures.localProfile;
-import static org.grep4j.core.fluent.Dictionary.expression;
 import static org.grep4j.core.fluent.Dictionary.on;
 import static org.grep4j.core.fluent.Dictionary.options;
 import static org.grep4j.core.fluent.Dictionary.with;
@@ -17,35 +17,33 @@ import org.grep4j.core.result.GrepResult;
 import org.grep4j.core.result.GrepResults;
 import org.testng.annotations.Test;
 
-@Test(groups="newGrepVersion")
+@Test(groups = "newGrepVersion")
 public class WhenGreppingWithOptionsNewVersion {
 
-	
-
 	public void countMatchesOption() {
-		GrepResults results = grep("ERROR 2", on(localProfile()), countMatches());
+		GrepResults results = grep(regularLanguage("ERROR 2"), on(localProfile()), countMatches());
 		for (GrepResult result : results) {
 			assertThat(result.toString(), is("1\n"));
 		}
 	}
 
 	public void onlyMatchingOption() {
-		GrepResults results = grep("Marco", on(localProfile()), onlyMatching());
+		GrepResults results = grep(regularLanguage("Marco"), on(localProfile()), onlyMatching());
 		for (GrepResult result : results) {
 			assertThat(result.toString(), is("Marco\n"));
 		}
 	}
 
 	public void onlyMatchingOptionAndcountMatchesOption() {
-		GrepResults results = grep(expression("marco"), on(localProfile()),
-				with(options(onlyMatching(),countMatches(),ignoreCase())));
+		GrepResults results = grep(regularLanguage("marco"), on(localProfile()),
+				with(options(onlyMatching(), countMatches(), ignoreCase())));
 		for (GrepResult result : results) {
 			assertThat(result.toString(), is("1\n"));
 		}
 	}
 
 	public void withFileNameOption() {
-		GrepResults results = grep("ERROR 2", on(localProfile()), withFileName());
+		GrepResults results = grep(regularLanguage("ERROR 2"), on(localProfile()), withFileName());
 		assertThat(results.filterBy("local.txt").totalLines(), is(1));
 	}
 

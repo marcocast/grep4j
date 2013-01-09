@@ -1,6 +1,7 @@
 package org.grep4j.core;
 
 import static org.grep4j.core.Grep4j.grep;
+import static org.grep4j.core.Grep4j.regularLanguage;
 import static org.grep4j.core.fixtures.ProfileFixtures.localProfile;
 import static org.grep4j.core.fixtures.ProfileFixtures.localProfileWithWildecard;
 import static org.grep4j.core.fluent.Dictionary.on;
@@ -20,20 +21,20 @@ import org.testng.annotations.Test;
 public class WhenExtractingWithRegEx {
 
 	public void aGrepResultsSetWithSingleFile() {
-		GrepResults results = grep("ERROR 1", on(localProfile()), extraLinesAfter(20));
+		GrepResults results = grep(regularLanguage("ERROR 1"), on(localProfile()), extraLinesAfter(20));
 		for (GrepResult result : results.filterByRE("Marco(.*)has been")) {
 			assertThat(StringUtils.contains(result.getText(), "customer Marco(id=12345) has been updated successfully"), is(true));
 		}
 	}
-	
+
 	public void filterAndCounting() {
-		GrepResults results = grep("ERROR 1", on(localProfile()), extraLinesAfter(20));
+		GrepResults results = grep(regularLanguage("ERROR 1"), on(localProfile()), extraLinesAfter(20));
 		assertThat(results.filterByRE("Marco(.*)has been").filterBy("(id=12345)").totalLines(), is(1));
-		
+
 	}
 
 	public void aGrepResultsSetWithMultipleFiles() {
-		GrepResults results = grep("er", on(Arrays.asList(localProfileWithWildecard("*"))), extraLinesAfter(20), ignoreCase());
+		GrepResults results = grep(regularLanguage("er"), on(Arrays.asList(localProfileWithWildecard("*"))), extraLinesAfter(20), ignoreCase());
 		for (GrepResult result : results.filterByRE("ER(.*)OR")) {
 			if (result.getFileName().endsWith("gz")) {
 				assertThat(StringUtils.contains(result.getText(), "GZ ERROR 1"), is(true));
@@ -46,21 +47,21 @@ public class WhenExtractingWithRegEx {
 	}
 
 	public void aGrepResultsWithSingleFile() {
-		GrepResults results = grep("ERROR 1", on(localProfile()), extraLinesAfter(20));
+		GrepResults results = grep(regularLanguage("ERROR 1"), on(localProfile()), extraLinesAfter(20));
 		for (GrepResult result : results) {
 			assertThat(StringUtils.contains(result.getText(), "customer Marco(id=12345) has been updated successfully"), is(true));
 		}
 	}
 
 	public void aGrepResultsWithSingleFileAndOOption() {
-		GrepResults results = grep("error 1", on(localProfile()), ignoreCase());
+		GrepResults results = grep(regularLanguage("error 1"), on(localProfile()), ignoreCase());
 		for (GrepResult result : results) {
 			assertThat(StringUtils.contains(result.getText(), "ERROR 1"), is(true));
 		}
 	}
 
 	public void aGrepResultsWithMultipleFiles() {
-		GrepResults results = grep("ER", on(Arrays.asList(localProfileWithWildecard("*"))), extraLinesAfter(20));
+		GrepResults results = grep(regularLanguage("ER"), on(Arrays.asList(localProfileWithWildecard("*"))), extraLinesAfter(20));
 		for (GrepResult result : results) {
 			if (result.getFileName().endsWith("gz")) {
 				assertThat(StringUtils.contains(result.filterByRE("E(.*)OR").getText(), "GZ ERROR 1"), is(true));
@@ -73,14 +74,14 @@ public class WhenExtractingWithRegEx {
 	}
 
 	public void aGrepResultsSetWithSingleFileMultipleExtracts() {
-		GrepResults results = grep("ERROR 1", on(localProfile()), extraLinesAfter(20));
+		GrepResults results = grep(regularLanguage("ERROR 1"), on(localProfile()), extraLinesAfter(20));
 		for (GrepResult result : results.filterByRE("f(.*)e").filterByRE("ext(.*)ct")) {
 			assertThat(StringUtils.contains(result.getText(), "fine extract"), is(true));
 		}
 	}
 
 	public void aGrepResultsWithMultipleFilesMultipleExtracts() {
-		GrepResults results = grep("ER", on(Arrays.asList(localProfileWithWildecard("*"))), extraLinesAfter(20));
+		GrepResults results = grep(regularLanguage("ER"), on(Arrays.asList(localProfileWithWildecard("*"))), extraLinesAfter(20));
 		for (GrepResult result : results) {
 			if (result.getFileName().endsWith("gz")) {
 				assertThat(StringUtils.contains(result.filterByRE("OR").filterByRE("2").getText(), "GZ ERROR 1"), is(false));
