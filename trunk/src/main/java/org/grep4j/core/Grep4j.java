@@ -345,6 +345,9 @@ public final class Grep4j {
 	private void executeCommands() {
 		ExecutorService executorService = null;
 		CompletionService<List<GrepResult>> completionService = null;
+
+		StackSessionPool.getInstance().startPool();
+
 		try {
 			executorService = Executors.newFixedThreadPool(maxGrepTaskThreads(this.options, grepRequests.size()));
 			completionService = new ExecutorCompletionService<List<GrepResult>>(executorService);
