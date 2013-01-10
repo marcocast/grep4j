@@ -5,8 +5,8 @@ import static org.junit.Assert.assertThat;
 
 import org.grep4j.core.command.ServerDetailsInterpreter;
 import org.grep4j.core.command.linux.CommandExecutor;
+import org.grep4j.core.command.linux.JschCommandExecutor;
 import org.grep4j.core.command.linux.LocalCommandExecutor;
-import org.grep4j.core.command.linux.SshjCommandExecutor;
 import org.grep4j.core.model.ServerDetails;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -50,7 +50,7 @@ public class WhenAServeDetailIsInterpreted {
 	public void andTheHostIsNotLocalASshCommandExecutorShouldBeUsed(String host) {
 		serverDetails = new ServerDetails(host);
 		CommandExecutor commandExecutor = ServerDetailsInterpreter.getCommandExecutor(serverDetails);
-		assertThat(commandExecutor, is(SshjCommandExecutor.class));
+		assertThat(commandExecutor, is(JschCommandExecutor.class));
 	}
 
 }

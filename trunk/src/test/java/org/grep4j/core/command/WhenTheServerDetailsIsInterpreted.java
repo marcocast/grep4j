@@ -10,8 +10,8 @@ import static org.grep4j.core.fluent.Dictionary.with;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
+import org.grep4j.core.command.linux.JschCommandExecutor;
 import org.grep4j.core.command.linux.LocalCommandExecutor;
-import org.grep4j.core.command.linux.SshjCommandExecutor;
 import org.testng.annotations.Test;
 
 @Test
@@ -26,6 +26,6 @@ public class WhenTheServerDetailsIsInterpreted {
 	}
 
 	public void ifTheHostIsnotLocalAnSSHCommandExecutorShouldReturn() {
-		assertThat(whenCalling(getCommandExecutor(with(aDummyRemoteServerDetails()))), is(returned(SshjCommandExecutor.class)));
+		assertThat(whenCalling(getCommandExecutor(with(aDummyRemoteServerDetails()))), is(returned(JschCommandExecutor.class)));
 	}
 }
