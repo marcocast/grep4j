@@ -1,7 +1,7 @@
 package org.grep4j.core;
 
 import static org.grep4j.core.Grep4j.grep;
-import static org.grep4j.core.Grep4j.regularLanguage;
+import static org.grep4j.core.Grep4j.constantExpression;
 import static org.grep4j.core.fixtures.ProfileFixtures.pizzaProfile;
 import static org.grep4j.core.fluent.Dictionary.on;
 import static org.grep4j.core.options.Option.countMatches;
@@ -21,37 +21,37 @@ import org.testng.annotations.Test;
 public class WhenGreppingPizzaFileWithOptions {
 
 	public void ignoreCaseTest() {
-		GrepResults results = grep(regularLanguage("PIZZA"), on(pizzaProfile()), ignoreCase());
+		GrepResults results = grep(constantExpression("PIZZA"), on(pizzaProfile()), ignoreCase());
 		assertThat(results.totalLines(), is(5));
 	}
 
 	public void extraLinesAfterTest() {
-		GrepResults results = grep(regularLanguage("Continuate ad impastare"), on(pizzaProfile()), extraLinesAfter(3));
+		GrepResults results = grep(constantExpression("Continuate ad impastare"), on(pizzaProfile()), extraLinesAfter(3));
 		assertThat(results.totalLines(), is(3));
 	}
 
 	public void extraLinesBeforeAndAfetrTest() {
-		GrepResults results = grep(regularLanguage("Coprite la ciotola"), on(pizzaProfile()), extraLinesBeforeAndAfter(1));
+		GrepResults results = grep(constantExpression("Coprite la ciotola"), on(pizzaProfile()), extraLinesBeforeAndAfter(1));
 		assertThat(results.totalLines(), is(3));
 	}
 
 	public void invertMatchTest() {
-		GrepResults results = grep(regularLanguage("pizza"), on(pizzaProfile()), invertMatch());
+		GrepResults results = grep(constantExpression("pizza"), on(pizzaProfile()), invertMatch());
 		assertThat(results.totalLines(), is(11));
 	}
 
 	public void invertMatchAndWithFileNameTest() {
-		GrepResults results = grep(regularLanguage("PIZZA"), on(pizzaProfile()), ignoreCase(), withFileName());
+		GrepResults results = grep(constantExpression("PIZZA"), on(pizzaProfile()), ignoreCase(), withFileName());
 		assertThat(results.totalLines(), is(5));
 	}
 
 	public void onlyMatchingTest() {
-		GrepResults results = grep(regularLanguage("pizza"), on(pizzaProfile()), onlyMatching());
+		GrepResults results = grep(constantExpression("pizza"), on(pizzaProfile()), onlyMatching());
 		assertThat(results.totalLines(), is(5));
 	}
 
 	public void countMatchesTest() {
-		GrepResults results = grep(regularLanguage("pizza"), on(pizzaProfile()), countMatches());
+		GrepResults results = grep(constantExpression("pizza"), on(pizzaProfile()), countMatches());
 		assertThat(results.totalLines(), is(1));
 		assertThat(results.toString(), is("5\n"));
 	}
