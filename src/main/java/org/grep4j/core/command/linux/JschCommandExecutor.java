@@ -7,9 +7,6 @@ import org.grep4j.core.model.ServerDetails;
 
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelExec;
-import com.jcraft.jsch.JSch;
-import com.jcraft.jsch.Session;
-import com.jcraft.jsch.UserInfo;
 
 /**
  * The SshCommandExecutor uses the net.schmizz.sshj library to execute remote commands.
@@ -35,20 +32,13 @@ public class JschCommandExecutor extends CommandExecutor {
 	public CommandExecutor execute(ExecutableCommand command) {
 		StringBuilder resultBuilder = new StringBuilder();
 		try {
-			JSch jsch = new JSch();
-			Session session = jsch.getSession(serverDetails.getUser(), serverDetails.getHost(), 22);
-			session.setConfig("StrictHostKeyChecking", "no"); // 
-			UserInfo userInfo = new JschUserInfo(serverDetails.getUser(), serverDetails.getPassword());
-			session.setUserInfo(userInfo);
-			session.setTimeout(20000);
-			session.setPassword(serverDetails.getPassword());
-			session.connect();
-			Channel channel = session.openChannel("exec");
+			Channel channel = SshSessionPoolManager.getInstance().getConnectionFromPool(serverDetails).openChannel("exec");
 			((ChannelExec) channel).setCommand(command.getCommandToExecute());
 			// X Forwarding
 			channel.setXForwarding(true);
 
-			channel.setInputStream(System.in);
+			//channel.setInputStream(System.in);
+			channel.setInputStream(null);
 
 			InputStream in = channel.getInputStream();
 
@@ -65,13 +55,9 @@ public class JschCommandExecutor extends CommandExecutor {
 				if (channel.isClosed()) {
 					break;
 				}
-				try {
-					Thread.sleep(1000);
-				} catch (Exception ee) {
-				}
+
 			}
 			channel.disconnect();
-			session.disconnect();
 		} catch (Exception e) {
 			throw new RuntimeException(
 					"ERROR: Unrecoverable error when performing remote command "

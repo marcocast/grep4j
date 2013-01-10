@@ -11,6 +11,7 @@ import java.util.concurrent.ExecutorCompletionService;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import org.grep4j.core.command.linux.SshSessionPoolManager;
 import org.grep4j.core.model.Profile;
 import org.grep4j.core.options.Option;
 import org.grep4j.core.options.Options;
@@ -344,7 +345,7 @@ public final class Grep4j {
 	private void executeCommands() {
 		ExecutorService executorService = null;
 		CompletionService<List<GrepResult>> completionService = null;
-		try {		    
+		try {
 			executorService = Executors.newFixedThreadPool(maxGrepTaskThreads(this.options, grepRequests.size()));
 			completionService = new ExecutorCompletionService<List<GrepResult>>(executorService);
 			for (GrepRequest grepRequest : grepRequests) {
@@ -363,6 +364,7 @@ public final class Grep4j {
 			if (executorService != null) {
 				executorService.shutdownNow();
 			}
+			SshSessionPoolManager.getInstance().closeAllSessions();
 		}
 	}
 
@@ -370,7 +372,7 @@ public final class Grep4j {
 		for (Profile profile : profiles) {
 			GrepRequest grepRequest = new GrepRequest(expression, profile, isRegexExpression);
 			grepRequest.addOptions(options);
-			
+
 			grepRequests.add(grepRequest);
 		}
 	}

@@ -19,7 +19,6 @@ public class GrepRequest {
 	private static final String SPACE = " ";
 
 	protected final Profile profile;
-
 	private final String expression;
 	private final boolean isRegexExpression;
 	private String contextControls;
@@ -67,21 +66,21 @@ public class GrepRequest {
 	public boolean isRegexExpression() {
 		return this.isRegexExpression;
 	}
-	
+
 	/**
 	 * 
 	 * @return a copy of this GrepRequest with isRegexExpression set to true
 	 */
 	public GrepRequest copyWithRegEx() {
-		return new GrepRequest(this.getExpression(), this.getProfile(),true);
+		return new GrepRequest(this.getExpression(), this.getProfile(), true);
 	}
-	
+
 	/**
 	 * 
 	 * @return a copy of this GrepRequest with isRegexExpression set to false
 	 */
 	public GrepRequest copyWithNoRegEx() {
-		return new GrepRequest(this.getExpression(), this.getProfile(),false);
+		return new GrepRequest(this.getExpression(), this.getProfile(), false);
 	}
 
 	/**

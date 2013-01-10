@@ -1,6 +1,7 @@
 package org.grep4j.core.command;
 
 import org.grep4j.core.command.linux.CommandExecutor;
+import org.grep4j.core.command.linux.JschCommandExecutor;
 import org.grep4j.core.command.linux.LocalCommandExecutor;
 import org.grep4j.core.command.linux.SshjCommandExecutor;
 import org.grep4j.core.model.ServerDetails;
@@ -28,7 +29,7 @@ public class ServerDetailsInterpreter {
 		if (serverDetails.isLocalhost()) {
 			commandExecutor = new LocalCommandExecutor(serverDetails);
 		} else {
-			commandExecutor = new SshjCommandExecutor(serverDetails);
+			commandExecutor = new JschCommandExecutor(serverDetails);
 		}
 		return commandExecutor;
 	}
