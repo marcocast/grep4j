@@ -6,6 +6,12 @@ import org.grep4j.core.model.ServerDetails;
 
 import com.jcraft.jsch.Session;
 
+/**
+ * Pool controller. This class is a singleton that expose the org.apache.commons.pool.KeyedObjectPool class.
+ * 
+ * @author Marco Castigliego
+ *
+ */
 public class StackSessionPool {
 
 	private final KeyedObjectPool<ServerDetails, Session> pool;
@@ -23,6 +29,10 @@ public class StackSessionPool {
 		pool = new StackKeyedObjectPool<ServerDetails, Session>(new SessionFactory(), 1);
 	}
 
+	/**
+	 * 
+	 * @return the org.apache.commons.pool.KeyedObjectPool class
+	 */
 	public KeyedObjectPool<ServerDetails, Session> getPool() {
 		return pool;
 	}

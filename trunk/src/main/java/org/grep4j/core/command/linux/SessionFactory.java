@@ -7,8 +7,17 @@ import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
 import com.jcraft.jsch.UserInfo;
 
+/**
+ * This class is used to handle ssh Session inside the pool.
+ * 
+ * @author Marco Castigliego
+ *
+ */
 public class SessionFactory extends BaseKeyedPoolableObjectFactory<ServerDetails, Session> {
 
+	/**
+	 * This creates a Session if not already present in the pool.
+	 */
 	@Override
 	public Session makeObject(ServerDetails serverDetails) throws Exception {
 		Session session = null;
@@ -28,6 +37,9 @@ public class SessionFactory extends BaseKeyedPoolableObjectFactory<ServerDetails
 		return session;
 	}
 
+	/**
+	 * This is called when closing the pool object
+	 */
 	@Override
 	public void destroyObject(ServerDetails serverDetails, Session session) {
 		session.disconnect();
