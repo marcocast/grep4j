@@ -8,6 +8,7 @@ import org.grep4j.core.model.ServerDetails;
 
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelExec;
+import com.jcraft.jsch.Session;
 
 /**
  * The SshCommandExecutor uses the net.schmizz.sshj library to execute remote commands.
@@ -31,8 +32,14 @@ public class JschCommandExecutor extends CommandExecutor {
 
 	@Override
 	public CommandExecutor execute(ExecutableCommand command) {
+		Session session = null;
 		try {
-			Channel channel = SshSessionPoolManager.getInstance().getConnectionFromPool(serverDetails).openChannel("exec");
+			//	Channel channel = SshSessionPoolManager.getInstance().getConnectionFromPool(serverDetails).openChannel("exec");
+
+			session = StackSessionPool.getInstance().getPool().borrowObject(serverDetails);
+
+			Channel channel = session.openChannel("exec");
+
 			((ChannelExec) channel).setCommand(command.getCommandToExecute());
 			// X Forwarding
 			channel.setXForwarding(true);
@@ -51,6 +58,14 @@ public class JschCommandExecutor extends CommandExecutor {
 			throw new RuntimeException(
 					"ERROR: Unrecoverable error when performing remote command "
 							+ e.getMessage(), e);
+		} finally {
+			if (null != session) {
+				try {
+					StackSessionPool.getInstance().getPool().returnObject(serverDetails, session);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 
 		return this;
