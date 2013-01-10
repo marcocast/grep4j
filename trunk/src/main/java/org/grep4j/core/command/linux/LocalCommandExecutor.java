@@ -2,10 +2,7 @@ package org.grep4j.core.command.linux;
 
 import java.io.IOException;
 
-import net.schmizz.sshj.common.IOUtils;
-import net.schmizz.sshj.connection.ConnectionException;
-import net.schmizz.sshj.transport.TransportException;
-
+import org.apache.commons.io.IOUtils;
 import org.grep4j.core.command.ExecutableCommand;
 import org.grep4j.core.model.ServerDetails;
 
@@ -33,12 +30,12 @@ public class LocalCommandExecutor extends CommandExecutor {
 	}
 
 	private void executeCommand(ExecutableCommand command)
-			throws ConnectionException, TransportException, IOException {
+			throws IOException {
 		String[] commands = { "bash", "-c", command.getCommandToExecute() };
 		try {
 			Process p = Runtime.getRuntime().exec(commands);
 			p.waitFor();
-			result = IOUtils.readFully((p.getInputStream())).toString();
+			result = IOUtils.toString(p.getInputStream());
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}

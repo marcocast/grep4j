@@ -2,6 +2,7 @@ package org.grep4j.core.command.linux;
 
 import java.io.InputStream;
 
+import org.apache.commons.io.IOUtils;
 import org.grep4j.core.command.ExecutableCommand;
 import org.grep4j.core.model.ServerDetails;
 
@@ -30,7 +31,6 @@ public class JschCommandExecutor extends CommandExecutor {
 
 	@Override
 	public CommandExecutor execute(ExecutableCommand command) {
-		StringBuilder resultBuilder = new StringBuilder();
 		try {
 			Channel channel = SshSessionPoolManager.getInstance().getConnectionFromPool(serverDetails).openChannel("exec");
 			((ChannelExec) channel).setCommand(command.getCommandToExecute());
@@ -44,26 +44,13 @@ public class JschCommandExecutor extends CommandExecutor {
 
 			channel.connect();
 
-			byte[] tmp = new byte[1024];
-			while (true) {
-				while (in.available() > 0) {
-					int i = in.read(tmp, 0, 1024);
-					if (i < 0)
-						break;
-					resultBuilder.append(new String(tmp, 0, i));
-				}
-				if (channel.isClosed()) {
-					break;
-				}
+			result = IOUtils.toString(in);
 
-			}
 			channel.disconnect();
 		} catch (Exception e) {
 			throw new RuntimeException(
 					"ERROR: Unrecoverable error when performing remote command "
 							+ e.getMessage(), e);
-		} finally {
-			result = resultBuilder.toString();
 		}
 
 		return this;
