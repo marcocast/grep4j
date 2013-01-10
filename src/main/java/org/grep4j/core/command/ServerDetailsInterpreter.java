@@ -3,7 +3,6 @@ package org.grep4j.core.command;
 import org.grep4j.core.command.linux.CommandExecutor;
 import org.grep4j.core.command.linux.JschCommandExecutor;
 import org.grep4j.core.command.linux.LocalCommandExecutor;
-import org.grep4j.core.command.linux.SshjCommandExecutor;
 import org.grep4j.core.model.ServerDetails;
 
 /**
