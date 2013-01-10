@@ -11,7 +11,7 @@ import java.util.concurrent.ExecutorCompletionService;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import org.grep4j.core.command.linux.SshSessionPoolManager;
+import org.grep4j.core.command.linux.StackSessionPool;
 import org.grep4j.core.model.Profile;
 import org.grep4j.core.options.Option;
 import org.grep4j.core.options.Options;
@@ -364,7 +364,13 @@ public final class Grep4j {
 			if (executorService != null) {
 				executorService.shutdownNow();
 			}
-			SshSessionPoolManager.getInstance().closeAllSessions();
+			try {
+				StackSessionPool.getInstance().getPool().close();
+			} catch (UnsupportedOperationException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
