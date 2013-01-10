@@ -292,7 +292,7 @@ public final class Grep4j {
 	 * @param text
 	 * @return GrepExpression
 	 */
-	public static GrepExpression regularLanguage(String text) {
+	public static GrepExpression constantExpression(String text) {
 		return new GrepExpression(text, false);
 	}
 
