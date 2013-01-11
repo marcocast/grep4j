@@ -2,6 +2,7 @@ package org.grep4j.core.task;
 
 import static org.grep4j.core.command.ServerDetailsInterpreter.getCommandExecutor;
 import static org.grep4j.core.task.ForkController.maxCommandExecutorTaskThreads;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Callable;

@@ -5,8 +5,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import org.apache.commons.lang3.time.StopWatch;
+
 /**
- * This class contains an ArrayList with all the results coming from the grep task
+ * This class contains an List with all the results coming from the grep task
  * 
  * @author Marco Castigliego
  *
@@ -15,13 +17,16 @@ public class GrepResults implements Collection<GrepResult> {
 
 	private final List<GrepResult> grepResults;
 
+	private final StopWatch clock;
+
 	/**
 	 * GlobalGrepResult is a container of different {@link GrepResult}  
 	 * 
 	 * @param the expression used to grep
 	 */
-	public GrepResults() {
+	public GrepResults(StopWatch clock) {
 		grepResults = new CopyOnWriteArrayList<GrepResult>();
+		this.clock = clock;
 	}
 
 	/**
@@ -50,12 +55,28 @@ public class GrepResults implements Collection<GrepResult> {
 	}
 
 	/**
+	 * 
+	 * @return the total time spent for all the grep tasks in milliseconds
+	 */
+	public long getTotalExecutionTime() {
+		return clock.getTime();
+	}
+
+	/**
+	 * 
+	 * @return the total time spent for all the grep tasks in nanoseconds
+	 */
+	public long getTotalExecutionNanoTime() {
+		return clock.getNanoTime();
+	}
+
+	/**
 	 * Loop through all the GrepResults and for each one extracts the lines that match with the passed filter as a regularExpression 
 	 * @param expression
 	 * @return the lines that match with the passed filter as a regularExpression 
 	 */
 	public GrepResults filterByRE(String expression) {
-		GrepResults grepResultsSet = new GrepResults();
+		GrepResults grepResultsSet = new GrepResults(clock);
 
 		for (GrepResult result : grepResults) {
 			GrepResult extractResult = result.filterByRE(expression);
@@ -72,7 +93,7 @@ public class GrepResults implements Collection<GrepResult> {
 	 * @return the lines that match with the passed filter 
 	 */
 	public GrepResults filterBy(String expression) {
-		GrepResults grepResultsSet = new GrepResults();
+		GrepResults grepResultsSet = new GrepResults(clock);
 
 		for (GrepResult result : grepResults) {
 			GrepResult extractResult = result.filterBy(expression);
