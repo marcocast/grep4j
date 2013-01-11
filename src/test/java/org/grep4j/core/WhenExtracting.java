@@ -77,7 +77,8 @@ public class WhenExtracting {
 	}
 
 	public void aGrepResultsWithMultipleFilesMultipleExtracts() {
-		GrepResults results = grep(constantExpression("ER"), on(Arrays.asList(localProfileWithWildecard("*"))), extraLinesAfter(20));
+		GrepResults results = grep(constantExpression("ER"),
+				on(Arrays.asList(localProfileWithWildecard("*"))), extraLinesAfter(20));
 		for (GrepResult result : results) {
 			if (result.getFileName().endsWith("gz")) {
 				assertThat(StringUtils.contains(result.filterBy("OR").filterBy("2").getText(), "GZ ERROR 1"), is(false));
