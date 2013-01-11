@@ -1,7 +1,7 @@
 package org.grep4j.core.task;
 
 import static org.grep4j.core.command.ServerDetailsInterpreter.getCommandExecutor;
-
+import static org.grep4j.core.task.ForkController.maxCommandExecutorTaskThreads;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -90,7 +90,7 @@ public class GrepTask implements Callable<List<GrepResult>> {
 			ExecutorService executorService = null;
 			CompletionService<GrepResult> completionService = null;
 			try {
-				executorService = Executors.newSingleThreadExecutor();
+				executorService = Executors.newFixedThreadPool(maxCommandExecutorTaskThreads(grepList.size()));
 				completionService = new ExecutorCompletionService<GrepResult>(executorService);
 				for (AbstractGrepCommand command : grepList) {
 					completionService.submit(new CommandExecutorTask(getCommandExecutor(grepRequest.getServerDetails()), command, grepRequest));
