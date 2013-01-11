@@ -36,7 +36,7 @@ public abstract class AbstractGrepCommand implements ExecutableCommand {
 	}
 
 	/**
-	 * {@see ContextControl} 
+	 *  
 	 * @param contextControls
 	 */
 	public void setContextControls(String contextControls) {
