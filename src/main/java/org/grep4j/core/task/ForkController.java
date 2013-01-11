@@ -11,13 +11,18 @@ import org.grep4j.core.options.Options;
 public class ForkController {
 
 	private static int MAX_GREPTASK_THREADS = 10;
+	private static int MAX_COMMANDEXECUTORTASK_THREADS = 5;
 
 	private ForkController() {
 	}
 
 	public static int maxGrepTaskThreads(Options options, int totGrepTasks) {
-	    int maxGrepThreads = options.getIntegerValue(Constants.SSH_CONNECTION_LIMIT_OPTION, MAX_GREPTASK_THREADS);
-	    
+		int maxGrepThreads = options.getIntegerValue(Constants.SSH_CONNECTION_LIMIT_OPTION, MAX_GREPTASK_THREADS);
+
 		return totGrepTasks > maxGrepThreads ? maxGrepThreads : totGrepTasks;
+	}
+
+	public static int maxCommandExecutorTaskThreads(int totGrepTasks) {
+		return totGrepTasks > MAX_COMMANDEXECUTORTASK_THREADS ? MAX_COMMANDEXECUTORTASK_THREADS : totGrepTasks;
 	}
 }
