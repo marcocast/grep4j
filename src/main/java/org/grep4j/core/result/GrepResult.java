@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.StopWatch;
 import org.grep4j.core.task.GrepRequest;
 
 /**
@@ -21,22 +22,22 @@ public class GrepResult {
 	private final GrepRequest grepRequest;
 	private final String fileName;
 	private final String text;
-	private final long executionTime;
+	private final StopWatch clock;
 
-	public GrepResult(GrepRequest grepRequest, String fileName, String text, long executionTime) {
+	public GrepResult(GrepRequest grepRequest, String fileName, String text, StopWatch clock) {
 		super();
 		this.grepRequest = grepRequest;
 		this.fileName = fileName;
 		this.text = text;
-		this.executionTime = executionTime;
+		this.clock = clock;
 	}
 
-	private GrepResult(String expression, GrepRequest grepRequest, String fileName, String text, long executionTime) {
+	private GrepResult(String expression, GrepRequest grepRequest, String fileName, String text, StopWatch clock) {
 		super();
 		this.grepRequest = grepRequest;
 		this.fileName = fileName;
 		this.text = text;
-		this.executionTime = executionTime;
+		this.clock = clock;
 	}
 
 	/** 
@@ -65,7 +66,15 @@ public class GrepResult {
 	 * @return the total time spent for the grep task in milliseconds
 	 */
 	public long getExecutionTime() {
-		return executionTime;
+		return clock.getTime();
+	}
+
+	/**
+	 * 
+	 * @return the total time spent for the grep task in nanoseconds
+	 */
+	public long getExecutionNanoTime() {
+		return clock.getNanoTime();
 	}
 
 	/**
@@ -105,7 +114,7 @@ public class GrepResult {
 			}
 		}
 
-		return new GrepResult(expression, grepRequest.copyWithRegEx(), fileName, textResult.toString(), executionTime);
+		return new GrepResult(expression, grepRequest.copyWithRegEx(), fileName, textResult.toString(), clock);
 	}
 
 	/**
@@ -123,7 +132,7 @@ public class GrepResult {
 			}
 		}
 
-		return new GrepResult(expression, grepRequest.copyWithNoRegEx(), fileName, textResult.toString(), executionTime);
+		return new GrepResult(expression, grepRequest.copyWithNoRegEx(), fileName, textResult.toString(), clock);
 	}
 
 	@Override

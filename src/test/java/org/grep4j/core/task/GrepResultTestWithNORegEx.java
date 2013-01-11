@@ -16,7 +16,7 @@ public class GrepResultTestWithNORegEx {
 	@BeforeTest
 	public void init() {
 		GrepRequest grepRequest = new GrepRequest("customer Marco(id=12345) has been updated successfully", new Profile("profileName", "fileName"));
-		grepResult = new GrepResult(grepRequest, "fileName", "customer Marco(id=12345) has been updated successfully\n", 1111);
+		grepResult = new GrepResult(grepRequest, "fileName", "customer Marco(id=12345) has been updated successfully\n", null);
 	}
 
 	public void testRegExWithExpression() {

@@ -2,6 +2,7 @@ package org.grep4j.core.task;
 
 import java.util.concurrent.Callable;
 
+import org.apache.commons.lang3.time.StopWatch;
 import org.grep4j.core.command.linux.CommandExecutor;
 import org.grep4j.core.command.linux.grep.AbstractGrepCommand;
 import org.grep4j.core.result.GrepResult;
@@ -27,10 +28,11 @@ public class CommandExecutorTask implements Callable<GrepResult> {
 
 	@Override
 	public GrepResult call() throws Exception {
-		long start = System.currentTimeMillis();
+		StopWatch clock = new StopWatch();
+		clock.start();
 		String result = this.executorTask.execute(this.commandTask).andReturnResult();
-		GrepResult taskResult = new GrepResult(requestTask, this.commandTask.getFile(), result, (System.currentTimeMillis() - start));
+		clock.stop();
+		GrepResult taskResult = new GrepResult(requestTask, this.commandTask.getFile(), result, clock);
 		return taskResult;
 	}
-
 }

@@ -12,6 +12,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+import org.apache.commons.lang3.time.StopWatch;
 import org.grep4j.core.command.linux.StackSessionPool;
 import org.grep4j.core.model.Profile;
 import org.grep4j.core.options.Option;
@@ -68,6 +69,7 @@ public final class Grep4j {
 	private final GrepResults results;
 	private final List<GrepRequest> grepRequests;
 	private final boolean isRegexExpression;
+	private final StopWatch clock;
 
 	/**
 	 * Creates an instance of Grep4j that accepts also extra lines options.
@@ -81,7 +83,8 @@ public final class Grep4j {
 	 */
 	private Grep4j(String expression, List<Profile> profiles, List<Option> options, boolean isRegexExpression) {
 		this.grepRequests = new ArrayList<GrepRequest>();
-		this.results = new GrepResults();
+		this.clock = new StopWatch();
+		this.results = new GrepResults(clock);
 		this.expression = expression;
 		this.profiles = ImmutableList.copyOf(profiles);
 		this.isRegexExpression = isRegexExpression;
@@ -99,7 +102,8 @@ public final class Grep4j {
 	 */
 	private Grep4j(String expression, List<Profile> profiles, boolean isRegexExpression) {
 		this.grepRequests = new ArrayList<GrepRequest>();
-		this.results = new GrepResults();
+		this.clock = new StopWatch();
+		this.results = new GrepResults(clock);
 		this.expression = expression;
 		this.profiles = ImmutableList.copyOf(profiles);
 		this.options = new Options();
@@ -347,6 +351,7 @@ public final class Grep4j {
 		ExecutorService executorService = null;
 		StackSessionPool.getInstance().startPool();
 		try {
+			clock.start();
 			executorService = Executors.newFixedThreadPool(maxGrepTaskThreads(this.options, grepRequests.size()));
 			Set<Future<List<GrepResult>>> grepTaskFutures = new HashSet<Future<List<GrepResult>>>();
 			for (GrepRequest grepRequest : grepRequests) {
@@ -361,6 +366,7 @@ public final class Grep4j {
 		} catch (Exception e) {
 			throw new RuntimeException("Error when executing the GrepTask", e);
 		} finally {
+			clock.stop();
 			if (executorService != null) {
 				executorService.shutdownNow();
 			}

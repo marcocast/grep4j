@@ -1,10 +1,12 @@
 package org.grep4j.core.result;
 
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.number.OrderingComparisons.greaterThanOrEqualTo;
 import static org.junit.Assert.assertThat;
+
+import org.apache.commons.lang3.time.StopWatch;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
 
 public class GrepResultTest {
 
@@ -22,13 +24,15 @@ public class GrepResultTest {
 
 	@Test(dataProvider = "sleepTime")
 	public void testExecutionTime(int sleepTime) {
-		long start = System.currentTimeMillis();
+		StopWatch clock = new StopWatch();
+		clock.start();
 		try {
 			Thread.sleep(sleepTime);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		GrepResult taskResult = new GrepResult(null, "", "", (System.currentTimeMillis() - start));
+		clock.stop();
+		GrepResult taskResult = new GrepResult(null, "", "", clock);
 		assertThat(new Long(taskResult.getExecutionTime()).intValue(), is(greaterThanOrEqualTo(sleepTime)));
 	}
 
