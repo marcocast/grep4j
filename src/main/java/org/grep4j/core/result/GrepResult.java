@@ -21,19 +21,22 @@ public class GrepResult {
 	private final GrepRequest grepRequest;
 	private final String fileName;
 	private final String text;
+	private final long executionTime;
 
-	public GrepResult(GrepRequest grepRequest, String fileName, String text) {
+	public GrepResult(GrepRequest grepRequest, String fileName, String text, long executionTime) {
 		super();
 		this.grepRequest = grepRequest;
 		this.fileName = fileName;
 		this.text = text;
+		this.executionTime = executionTime;
 	}
 
-	private GrepResult(String expression, GrepRequest grepRequest, String fileName, String text) {
+	private GrepResult(String expression, GrepRequest grepRequest, String fileName, String text, long executionTime) {
 		super();
 		this.grepRequest = grepRequest;
 		this.fileName = fileName;
 		this.text = text;
+		this.executionTime = executionTime;
 	}
 
 	/** 
@@ -58,13 +61,21 @@ public class GrepResult {
 	}
 
 	/**
+	 * 
+	 * @return the total time spent for the grep task in milliseconds
+	 */
+	public long getExecutionTime() {
+		return executionTime;
+	}
+
+	/**
 	 * it counts how many lines are in the grep result
 	 * 
 	 * @return total number of time the new line patter is found
 	 */
-	public int totalLines() {	
+	public int totalLines() {
 		int totalLines = 0;
-		Matcher lm = linePattern.matcher(this.getText()); 
+		Matcher lm = linePattern.matcher(this.getText());
 		while (lm.find()) {
 			totalLines++;
 		}
@@ -80,21 +91,21 @@ public class GrepResult {
 		StringBuilder textResult = new StringBuilder();
 
 		Pattern pattern = Pattern.compile(expression);
-		Matcher lm = linePattern.matcher(this.getText()); 
-		Matcher pm = null; 
+		Matcher lm = linePattern.matcher(this.getText());
+		Matcher pm = null;
 		while (lm.find()) {
-			CharSequence cs = lm.group(); 
-			if (pm == null){
+			CharSequence cs = lm.group();
+			if (pm == null) {
 				pm = pattern.matcher(cs);
-			}else{
+			} else {
 				pm.reset(cs);
 			}
-			if (pm.find()){
+			if (pm.find()) {
 				textResult.append(cs);
 			}
 		}
-		
-		return new GrepResult(expression, grepRequest.copyWithRegEx(), fileName, textResult.toString());
+
+		return new GrepResult(expression, grepRequest.copyWithRegEx(), fileName, textResult.toString(), executionTime);
 	}
 
 	/**
@@ -106,13 +117,13 @@ public class GrepResult {
 		StringBuilder textResult = new StringBuilder();
 		Matcher lm = linePattern.matcher(this.getText());
 		while (lm.find()) {
-			CharSequence cs = lm.group(); 
+			CharSequence cs = lm.group();
 			if (StringUtils.contains(cs, expression)) {
 				textResult.append(cs);
 			}
 		}
 
-		return new GrepResult(expression, grepRequest.copyWithNoRegEx(), fileName, textResult.toString());
+		return new GrepResult(expression, grepRequest.copyWithNoRegEx(), fileName, textResult.toString(), executionTime);
 	}
 
 	@Override

@@ -38,6 +38,18 @@ public class GrepResults implements Collection<GrepResult> {
 	}
 
 	/**
+	 * 
+	 * @return the average time spent for all the grep tasks in milliseconds
+	 */
+	public long getAverageExecutionTime() {
+		long totalExecutionTime = 0;
+		for (GrepResult result : grepResults) {
+			totalExecutionTime += result.getExecutionTime();
+		}
+		return totalExecutionTime / grepResults.size();
+	}
+
+	/**
 	 * Loop through all the GrepResults and for each one extracts the lines that match with the passed filter as a regularExpression 
 	 * @param expression
 	 * @return the lines that match with the passed filter as a regularExpression 

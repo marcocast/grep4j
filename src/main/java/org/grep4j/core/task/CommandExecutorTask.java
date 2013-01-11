@@ -13,23 +13,24 @@ import org.grep4j.core.result.GrepResult;
  * @author marcocast
  *
  */
-public class CommandExecutorTask implements Callable<GrepResult>{
-	
-	private CommandExecutor executorTask;
-	private AbstractGrepCommand commandTask;
-	private GrepRequest requestTask;
-	
-	public CommandExecutorTask(CommandExecutor executorTask, AbstractGrepCommand commandTask,GrepRequest requestTask){
-		this.executorTask = executorTask; 
+public class CommandExecutorTask implements Callable<GrepResult> {
+
+	private final CommandExecutor executorTask;
+	private final AbstractGrepCommand commandTask;
+	private final GrepRequest requestTask;
+
+	public CommandExecutorTask(CommandExecutor executorTask, AbstractGrepCommand commandTask, GrepRequest requestTask) {
+		this.executorTask = executorTask;
 		this.commandTask = commandTask;
 		this.requestTask = requestTask;
 	}
-	
+
 	@Override
 	public GrepResult call() throws Exception {
+		long start = System.currentTimeMillis();
 		String result = this.executorTask.execute(this.commandTask).andReturnResult();
-		GrepResult taskResult = new GrepResult(requestTask, this.commandTask.getFile(), result);
+		GrepResult taskResult = new GrepResult(requestTask, this.commandTask.getFile(), result, (System.currentTimeMillis() - start));
 		return taskResult;
 	}
-	
+
 }
