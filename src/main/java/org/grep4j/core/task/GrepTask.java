@@ -37,15 +37,11 @@ import org.grep4j.core.result.GrepResult;
 public class GrepTask implements Callable<List<GrepResult>> {
 
 	private final GrepRequest grepRequest;
-
-	private CommandExecutor commandExecutor;
-
 	private final List<String> matchingFiles;
 	private final List<AbstractGrepCommand> grepList;
 	private final List<GrepResult> results;
 
 	public GrepTask(GrepRequest grepRequest) {
-		this.commandExecutor = getCommandExecutor(grepRequest.getServerDetails());
 		this.grepRequest = grepRequest;
 		this.matchingFiles = new CopyOnWriteArrayList<String>();
 		this.grepList = new CopyOnWriteArrayList<AbstractGrepCommand>();
@@ -67,7 +63,7 @@ public class GrepTask implements Callable<List<GrepResult>> {
 	private void listMatchingFiles() {
 		if (grepRequest.getProfile().containsWildcard()) {
 			LsCommand ls = new LsCommand(grepRequest.getProfile());
-			String filenames = commandExecutor.execute(ls).andReturnResult();
+			String filenames = getCommandExecutor(grepRequest.getServerDetails()).execute(ls).andReturnResult();
 			if (!filenames.trim().isEmpty()) {
 				matchingFiles.addAll(aListOf(filenames));
 			}
@@ -97,7 +93,7 @@ public class GrepTask implements Callable<List<GrepResult>> {
 				executorService = Executors.newSingleThreadExecutor();
 				completionService = new ExecutorCompletionService<GrepResult>(executorService);
 				for (AbstractGrepCommand command : grepList) {
-					completionService.submit(new CommandExecutorTask(commandExecutor, command, grepRequest));
+					completionService.submit(new CommandExecutorTask(getCommandExecutor(grepRequest.getServerDetails()), command, grepRequest));
 				}
 
 				for (@SuppressWarnings("unused")
@@ -121,14 +117,6 @@ public class GrepTask implements Callable<List<GrepResult>> {
 
 	private boolean isGz(String matchingFile) {
 		return matchingFile.endsWith(".gz");
-	}
-
-	/**
-	 * Only to be used for test purposes like injecting a mock CommandExecutor object 
-	 * @param commandExecutor
-	 */
-	protected void setCommandExecutor(CommandExecutor commandExecutor) {
-		this.commandExecutor = commandExecutor;
 	}
 
 }

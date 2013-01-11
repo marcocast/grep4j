@@ -18,7 +18,7 @@ public class ServerDetailsInterpreter {
 	/**
 	 * Based on the server details, it returns {@link LocalCommandExecutor} if
 	 * the host is "localhost" or "127.0.0.1" otherwise return
-	 * {@link SshjCommandExecutor}
+	 * {@link JschCommandExecutor}
 	 * 
 	 * @param serverDetails
 	 * @return {@link CommandExecutor}
