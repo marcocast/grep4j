@@ -36,12 +36,12 @@ now, with one single grep you can collect all the information you need:
 
 {{{
 import static org.grep4j.core.Grep4j.grep;
+import static org.grep4j.core.Grep4j.constantExpression;
 import static org.grep4j.core.fluent.Dictionary.on;
-import static org.grep4j.core.fluent.Dictionary.expression;
 ...
 
 //Obtaining all the sensitive information in the log
-GrepResults results = grep(expression("customer-id"), on(profile)));
+GrepResults results = grep(constantExpression("customer-id"), on(profile)));
 
 //this will return the total number of updates 
 System.out.println("Total occurrences found : " + results.filterByRE("operation(.*)update").totalLines());
