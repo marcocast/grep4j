@@ -23,7 +23,7 @@ public class SessionFactory extends BaseKeyedPoolableObjectFactory<ServerDetails
 		Session session = null;
 		try {
 			JSch jsch = new JSch();
-			session = jsch.getSession(serverDetails.getUser(), serverDetails.getHost(), 22);
+			session = jsch.getSession(serverDetails.getUser(), serverDetails.getHost(), serverDetails.getPort());
 			session.setConfig("StrictHostKeyChecking", "no"); // 
 			UserInfo userInfo = new JschUserInfo(serverDetails.getUser(), serverDetails.getPassword());
 			session.setUserInfo(userInfo);

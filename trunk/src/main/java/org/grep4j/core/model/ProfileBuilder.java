@@ -75,7 +75,22 @@ public class ProfileBuilder {
 		 * @param user
 		 * @param password
 		 */
-		public BuildStep credentials(String user, String password);
+		public PortStep credentials(String user, String password);
+	}
+	
+	public static interface PortStep {
+		/** 
+		 * @return an instance of a Profile.based on the parameters passed
+		 */
+		public Profile build();
+		
+		/**
+		 * 
+		 * @param options port number ( -p option) 
+		 * @return
+		 */
+		public BuildStep sshPort(int port);
+		
 	}
 
 	public static interface BuildStep {
@@ -85,13 +100,14 @@ public class ProfileBuilder {
 		public Profile build();
 	}
 
-	private static class Steps implements NameStep, FileStep, ServerStep, CredentialsStep, BuildStep {
+	private static class Steps implements NameStep, FileStep, ServerStep, CredentialsStep, PortStep, BuildStep {
 
 		private String name;
 		private String host;
 		private String user;
 		private String password;
 		private String filePath;
+		private Integer port;
 
 		@Override
 		public FileStep name(String name) {
@@ -118,23 +134,47 @@ public class ProfileBuilder {
 		}
 
 		@Override
-		public BuildStep credentials(String user, String password) {
+		public PortStep credentials(String user, String password) {
 			this.user = user;
 			this.password = password;
+			return this;
+		}
+		
+		@Override
+		public BuildStep sshPort(int port) {
+			this.port = port;
 			return this;
 		}
 
 		@Override
 		public Profile build() {
+			if(name == null){
+				throw new IllegalArgumentException("profile name cannot be null");
+			}
+			if(filePath == null){
+				throw new IllegalArgumentException("filePath cannot be null");
+			}
+			if(host == null){
+				throw new IllegalArgumentException("host cannot be null");
+			}
 			Profile profile = new Profile(name, filePath);
 			ServerDetails serverDetails = new ServerDetails(host);
 			if (!serverDetails.isLocalhost()) {
+				if(user == null || password == null){
+					throw new IllegalArgumentException("Credentials are null");
+				}
 				serverDetails.setUser(user);
 				serverDetails.setPassword(password);
+			}
+			if(port != null){
+				serverDetails.setPort(port);
 			}
 			profile.setServerDetails(serverDetails);
 			return profile;
 		}
+
+
+		
 
 	}
 
