@@ -13,32 +13,37 @@ import com.google.common.collect.ImmutableList;
 /**
  * Model class containing details of the server where the target file is stored.
  * 
- * @author Giovanni Gargiulo 
+ * @author Giovanni Gargiulo
  * @author Marco Castigliego
  */
 public class ServerDetails {
 
-	private static final List<String> localhostAliases = ImmutableList.<String> builder().add("localhost", "127.0.0.1").build();
+	private static final List<String> localhostAliases = ImmutableList
+			.<String> builder().add("localhost", "127.0.0.1").build();
 
 	private final String host;
 	private String user;
 	private String password;
+	private Integer port;
 
 	/**
 	 * The hostname of the server where the target file is stored.
 	 * 
 	 * This can be either an IP or proper hostname.
 	 * 
-	 * In case of a local server, the hostname has to be either "localhost" or "127.0.0.1"
+	 * In case of a local server, the hostname has to be either "localhost" or
+	 * "127.0.0.1"
 	 * 
 	 * @param host
 	 */
 	public ServerDetails(String host) {
 		this.host = host;
+		this.port = 22;
 	}
 
 	/**
 	 * Username required to connect to remote machine
+	 * 
 	 * @param user
 	 */
 	public void setUser(String user) {
@@ -47,6 +52,7 @@ public class ServerDetails {
 
 	/**
 	 * Password required to connect to remote machine
+	 * 
 	 * @param password
 	 */
 	public void setPassword(String password) {
@@ -54,7 +60,16 @@ public class ServerDetails {
 	}
 
 	/**
-	 * The host of the server where the target file is stored. 
+	 * 
+	 * @param ssh
+	 *            port
+	 */
+	public void setPort(Integer port) {
+		this.port = port;
+	}
+
+	/**
+	 * The host of the server where the target file is stored.
 	 * 
 	 * @return host
 	 */
@@ -76,9 +91,19 @@ public class ServerDetails {
 	public String getPassword() {
 		return password;
 	}
+	
+	/**
+	 * 
+	 * @return the ssh port specified, default is 22
+	 */
+	public Integer getPort() {
+		return port;
+	}
 
 	/**
-	 * This method check if this ServerDetails is a "localhost" or "127.0.0.1" otherwise return false
+	 * This method check if this ServerDetails is a "localhost" or "127.0.0.1"
+	 * otherwise return false
+	 * 
 	 * @return true if localhost
 	 */
 	public boolean isLocalhost() {
