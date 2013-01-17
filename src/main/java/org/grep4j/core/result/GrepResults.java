@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.apache.commons.lang3.time.StopWatch;
+import org.grep4j.core.model.Profile;
 
 /**
  * This class contains an List with all the results coming from the grep task
@@ -40,6 +41,23 @@ public class GrepResults implements Collection<GrepResult> {
 			totalLines += result.totalLines();
 		}
 		return totalLines;
+	}
+
+	/**
+	 * It filters the grepResults object based on the Profile name passed.   
+	 * 
+	 * @param profile
+	 * @return GrepResults for the passed Profile
+	 */
+	public GrepResults filterOnProfile(Profile profile) {
+		GrepResults filteredGrepResults = new GrepResults(clock);
+		for (GrepResult result : grepResults) {
+			if (profile.getName().equals(result.getProfileName())) {
+				filteredGrepResults.add(result);
+			}
+
+		}
+		return filteredGrepResults;
 	}
 
 	/**
