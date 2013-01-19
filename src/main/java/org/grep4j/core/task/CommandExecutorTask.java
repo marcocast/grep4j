@@ -29,10 +29,12 @@ public class CommandExecutorTask implements Callable<GrepResult> {
 	@Override
 	public GrepResult call() throws Exception {
 		StopWatch clock = new StopWatch();
+		System.out.println("started " +  this.commandTask.getFile());
 		clock.start();
 		String result = this.executorTask.execute(this.commandTask).andReturnResult();
 		clock.stop();
 		GrepResult taskResult = new GrepResult(requestTask, this.commandTask.getFile(), result, clock);
+		System.out.println("ended " +  this.commandTask.getFile());
 		return taskResult;
 	}
 }
