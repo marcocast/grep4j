@@ -44,15 +44,7 @@ public class WhenGreppingSingleProfile {
 	public void errorStringAppears2Times() {
 		assertThat(executing(grep(constantExpression("ERROR"), on(localProfile()))).totalLines(), is(2));
 	}
-
-	public void errorStringAppearsAtMost2Times() {
-		assertThat(executing(grep(constantExpression("ERROR"), on(localProfile()))).totalLines(), is(2));
-	}
-
-	public void errorStringAppearsAtLeast2Times() {
-		assertThat(executing(grep(constantExpression("ERROR"), on(localProfile()))).totalLines(), is(2));
-	}
-
+	
 	public void error33StringneverAppears() {
 		assertThat(executing(grep(constantExpression("ERROR33"), on(localProfile()))).totalLines(), is(0));
 	}
