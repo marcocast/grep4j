@@ -149,7 +149,6 @@
 					<includes>
 						<include>**/*.java</include>
 					</includes>
-					<forkMode>always</forkMode>
 					<excludedGroups>none</excludedGroups>
 				</configuration>
 			</plugin>
