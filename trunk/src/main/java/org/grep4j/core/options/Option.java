@@ -5,12 +5,12 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 
 public class Option {
 
-    private final String optionType;
+	private final String optionType;
 	private final String optionCommand;
 	private final String optionValue;
 
 	private Option(String type, String optionCommand, String optionValue) {
-	    this.optionType = type;
+		this.optionType = type;
 		this.optionCommand = optionCommand;
 		this.optionValue = optionValue;
 	}
@@ -117,15 +117,47 @@ public class Option {
 	public static Option filesMatching() {
 		return new Option(Constants.GREP_OPTION, "-l");
 	}
-	
-    /**
-     * maximium number of connections
-     * @return
-     */
-    public static Option maxSshConnections(int numberOfConnections) {
-        return new Option(Constants.SSH_CONNECTION_LIMIT_OPTION, "", String.valueOf(numberOfConnections));
-    }
-	
+
+	/**
+	 * maximium number of connections
+	 * @return
+	 */
+	public static Option maxSshConnections(int numberOfConnections) {
+		return new Option(Constants.SSH_CONNECTION_LIMIT_OPTION, "", String.valueOf(numberOfConnections));
+	}
+
+	/**
+	 * -n, --lines=N   		   output the last N lines
+	 * @return
+	 */
+	public static Option onlyLastLines(int numberOfLines) {
+		return new Option(Constants.TAIL_OPTION, " | tail -n", String.valueOf(numberOfLines));
+	}
+
+	/**
+	 * -c, --bytes=N            output the last N bytes
+	 * @return
+	 */
+	public static Option onlyLastBytes(int numberOfBytes) {
+		return new Option(Constants.TAIL_OPTION, " | tail -c", String.valueOf(numberOfBytes));
+	}
+
+	/**
+	 * -n, --lines=N   		   output the first N lines
+	 * @return
+	 */
+	public static Option onlyFirstLines(int numberOfLines) {
+		return new Option(Constants.TAIL_OPTION, " | head -n", String.valueOf(numberOfLines));
+	}
+
+	/**
+	 * -c, --bytes=N            output the first N bytes
+	 * @return
+	 */
+	public static Option onlyFirstBytes(int numberOfBytes) {
+		return new Option(Constants.TAIL_OPTION, " | head -c", String.valueOf(numberOfBytes));
+	}
+
 	/**
 	 * --version, the version of grep 
 	 * @return
@@ -133,10 +165,10 @@ public class Option {
 	public static Option grepVersion() {
 		return new Option(Constants.GREP_OPTION, "--version");
 	}
-	
+
 	public String getOptionType() {
-        return this.optionType;
-    }
+		return this.optionType;
+	}
 
 	public String getOptionCommand() {
 		return optionCommand;

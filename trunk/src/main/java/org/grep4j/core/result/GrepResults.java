@@ -44,7 +44,8 @@ public class GrepResults implements Collection<GrepResult> {
 	}
 
 	/**
-	 * It filters the grepResults object based on the Profile name passed.   
+	 * It filters the grepResults object based on the Profile name passed 
+	 * and return All the GrepResult for only the particular Profile passed.  
 	 * 
 	 * @param profile
 	 * @return GrepResults for the passed Profile

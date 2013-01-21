@@ -13,8 +13,8 @@ public abstract class AbstractGrepCommand implements ExecutableCommand {
 	protected final boolean regexExpression;
 	protected final String expression;
 	protected String contextControls;
-
-	protected StringBuilder command;
+	protected String tailContextControls;
+	protected final StringBuilder command;
 
 	/**
 	 * @param expression to search
@@ -43,10 +43,22 @@ public abstract class AbstractGrepCommand implements ExecutableCommand {
 		this.contextControls = contextControls;
 	}
 
+	/**
+	 *  
+	 * @param tailContextControls
+	 */
+	public void setTailContextControls(String tailContextControls) {
+		this.tailContextControls = tailContextControls;
+	}
+
 	protected void appendContextControl() {
 		if (contextControls != null) {
 			command.append(SPACE);
 			command.append(contextControls);
+		}
+		if (tailContextControls != null) {
+			command.append(SPACE);
+			command.append(tailContextControls);
 		}
 	}
 
