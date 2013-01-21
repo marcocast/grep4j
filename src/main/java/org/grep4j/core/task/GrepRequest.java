@@ -22,6 +22,7 @@ public class GrepRequest {
 	private final String expression;
 	private final boolean isRegexExpression;
 	private String contextControls;
+	private String tailContextControls;
 
 	/**
 	 * @param pattern search 
@@ -50,13 +51,21 @@ public class GrepRequest {
 	 */
 	public void addOptions(Options options) {
 		this.contextControls = join(options.findOptionsByType(Constants.GREP_OPTION), SPACE);
+		this.tailContextControls = join(options.findOptionsByType(Constants.TAIL_OPTION), SPACE);
 	}
 
-    /**
+	/**
 	 * @return the Context Controls grouped as string
 	 */
 	public String getContextControls() {
 		return contextControls;
+	}
+
+	/**
+	 * @return the Tail Context Controls grouped as string
+	 */
+	public String getTailContextControls() {
+		return tailContextControls;
 	}
 
 	/**

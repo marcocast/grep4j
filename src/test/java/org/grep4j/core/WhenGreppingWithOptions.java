@@ -10,7 +10,12 @@ import static org.grep4j.core.options.Option.extraLinesBefore;
 import static org.grep4j.core.options.Option.ignoreCase;
 import static org.grep4j.core.options.Option.invertMatch;
 import static org.grep4j.core.options.Option.withFileName;
+import static org.grep4j.core.options.Option.onlyFirstLines;
 import static org.hamcrest.CoreMatchers.is;
+import static org.grep4j.core.options.Option.onlyFirstBytes;
+import static org.grep4j.core.options.Option.onlyLastBytes;
+import static org.grep4j.core.options.Option.onlyLastLines;
+
 import static org.junit.Assert.assertThat;
 
 import org.grep4j.core.result.GrepResult;
@@ -59,6 +64,30 @@ public class WhenGreppingWithOptions {
 				countMatches());
 
 		assertThat(results.toString(), is("1\n"));
+	}
+
+	public void withFirstLines() {
+		GrepResults results = grep(constantExpression("ERRor"), on(localProfile()), ignoreCase(), onlyFirstLines(1));
+
+		assertThat(results.toString(), is("ERROR 1\r\n"));
+	}
+
+	public void withFirstBytes() {
+		GrepResults results = grep(constantExpression("ERRor"), on(localProfile()), ignoreCase(), onlyFirstBytes(1));
+
+		assertThat(results.toString(), is("E"));
+	}
+
+	public void withLastLines() {
+		GrepResults results = grep(constantExpression("ERRor"), on(localProfile()), ignoreCase(), onlyLastLines(1));
+
+		assertThat(results.toString(), is("ERROR 2\r\n"));
+	}
+
+	public void withLastBytes() {
+		GrepResults results = grep(constantExpression("ERRor"), on(localProfile()), ignoreCase(), onlyLastBytes(1));
+
+		assertThat(results.toString(), is("\n"));
 	}
 
 }
