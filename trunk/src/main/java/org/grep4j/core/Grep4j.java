@@ -353,11 +353,12 @@ public final class Grep4j {
 		try {
 			clock.start();
 			executorService = Executors.newFixedThreadPool(maxGrepTaskThreads(this.options, grepRequests.size()));
-			Set<Future<List<GrepResult>>> grepTaskFutures = new HashSet<Future<List<GrepResult>>>();
+			List<GrepTask> grepTasks = new ArrayList<GrepTask>();
 			for (GrepRequest grepRequest : grepRequests) {
-				grepTaskFutures.add(executorService.submit(new GrepTask(
-						grepRequest)));
+				grepTasks.add(new GrepTask(grepRequest));
 			}
+
+			List<Future<List<GrepResult>>> grepTaskFutures = executorService.invokeAll(grepTasks);
 			for (Future<List<GrepResult>> future : grepTaskFutures) {
 				for (GrepResult singleGrepResult : future.get())
 					results.add(singleGrepResult);
