@@ -34,11 +34,12 @@ public class JschCommandExecutor extends CommandExecutor {
 	@Override
 	public CommandExecutor execute(ExecutableCommand command) {
 		Session session = null;
+		Channel channel = null;
 		try {
 
 			session = StackSessionPool.getInstance().getPool()
 					.borrowObject(serverDetails);
-			Channel channel = session.openChannel("exec");
+			channel = session.openChannel("exec");
 			((ChannelExec) channel).setCommand(command.getCommandToExecute());
 			// X Forwarding
 			channel.setXForwarding(true);
@@ -46,13 +47,15 @@ public class JschCommandExecutor extends CommandExecutor {
 			channel.setInputStream(null);
 			InputStream in = channel.getInputStream();
 			channel.connect();
-			result = IOUtils.toString(in);
-			channel.disconnect();
+			result.append(IOUtils.toString(in));
 		} catch (Exception e) {
 			throw new RuntimeException(
 					"ERROR: Unrecoverable error when performing remote command "
 							+ e.getMessage(), e);
 		} finally {
+			if (null != channel && channel.isConnected()) {
+				channel.disconnect();
+			}
 			if (null != session) {
 				try {
 					StackSessionPool.getInstance().getPool()
