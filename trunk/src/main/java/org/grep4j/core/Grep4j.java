@@ -5,9 +5,7 @@ import static org.grep4j.core.task.ForkController.maxGrepTaskThreads;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -29,13 +27,14 @@ import com.google.common.collect.ImmutableList;
  * 
  * <pre>
  * import static org.grep4j.core.Grep4j.grep;
+ * import static org.grep4j.core.Grep4j.constantExpression;
  * import static org.grep4j.core.fluent.Dictionary.on;
  * ...
  * 
  * List<Profile> profiles = Arrays.asList(aProfile,moreProfiles);
  * 
  * 
- * GrepResultsSet results = grep("USER(12435)", on(profiles)));
+ * GrepResultsSet results = grep(constantExpression("Expression_to_grep")", on(profiles)));
  * System.out.println("Total occurrences found : " + results.totalOccurrences());
  * 
  * for (GrepResult singleResult : results) {			
@@ -46,12 +45,13 @@ import com.google.common.collect.ImmutableList;
  * Grep4j used for test:
  * <pre>
  * import static org.grep4j.core.Grep4j.grep;
+ * import static org.grep4j.core.Grep4j.constantExpression;
  * import static org.grep4j.core.fluent.Dictionary.on;
  * import static org.grep4j.core.fluent.Dictionary.executing;
  * ...
  * 
  * List<Profile> profiles = Arrays.asList(aProfile,moreProfiles);
- * assertThat(executing(grep("USER(12435)", on(profiles))).totalOccurrences(), is(1));
+ * assertThat(executing(grep(constantExpression("Expression_to_grep"), on(profiles))).totalOccurrences(), is(1));
  * </pre>
  * 
  * <p>
@@ -118,10 +118,11 @@ public final class Grep4j {
 	 * Example:
 	 * <pre>
 	 * import static org.grep4j.core.Grep4j.grep;
+	 * import static org.grep4j.core.Grep4j.constantExpression;
 	 * import static org.grep4j.core.fluent.Dictionary.on;
 	 * ...
 	 * 
-	 * grep("expression", on(profiles()));
+	 * grep(constantExpression("expression"), on(profiles()));
 	 * </pre>
 	 * 
 	 * 
@@ -143,11 +144,12 @@ public final class Grep4j {
 	* Example of ExtraLines is :
 	* <pre>
 	* import static org.grep4j.core.Grep4j.grep;
+	* import static org.grep4j.core.Grep4j.constantExpression;
 	* import static org.grep4j.core.Grep4j.extraLinesAfter;
 	* import static org.grep4j.core.fluent.Dictionary.on;
 	* ...
 	* 
-	* GrepResultsSet results = grep("expression", on(profiles()), extraLinesAfter(100));
+	* GrepResultsSet results = grep(constantExpression("expression"), on(profiles()), extraLinesAfter(100));
 	* System.out.println("Total occurrences found : " + results.totalOccurrences());
 	* System.out.println("Total occurrences found : " + results.totalOccurrences("another expression within 100 lines after"));
 	* 
@@ -158,11 +160,13 @@ public final class Grep4j {
 	* or
 	* <pre>
 	* import static org.grep4j.core.Grep4j.grep;
+	* import static org.grep4j.core.Grep4j.constantExpression;
 	* import static org.grep4j.core.Grep4j.extraLinesBefore;
 	* import static org.grep4j.core.fluent.Dictionary.on;
+	* import static org.grep4j.core.options.Option.ignoreCase;
 	* ...
 	* 
-	* GrepResultsSet results = grep("eXpReSsIoN", on(profiles()), withOption("-i"));
+	* GrepResultsSet results = grep(constantExpression("eXpReSsIoN"), on(profiles()), ignoreCase());
 	* System.out.println("Total occurrences found : " + results.totalOccurrences());
 	* 
 	* for (GrepResult singleResult : results) {			
@@ -172,12 +176,14 @@ public final class Grep4j {
 	* or
 	* <pre>
 	* import static org.grep4j.core.Grep4j.grep;
+	* import static org.grep4j.core.Grep4j.constantExpression;
 	* import static org.grep4j.core.Grep4j.extraLinesBefore;
 	* import static org.grep4j.core.Grep4j.extraLinesAfter;
 	* import static org.grep4j.core.fluent.Dictionary.on;
+	* import static org.grep4j.core.options.Option.onlyMatching;
 	* ...
 	* 
-	* GrepResultsSet results = grep("expression", on(profiles()), extraLinesBefore(100), extraLinesAfter(100), withOption("-o"));
+	* GrepResultsSet results = grep(constantExpression("expression"), on(profiles()), extraLinesBefore(100), extraLinesAfter(100), onlyMatching());
 	* System.out.println("Total occurrences found : " + results.totalOccurrences());
 	* 
 	* for (GrepResult singleResult : results) {			
@@ -202,10 +208,11 @@ public final class Grep4j {
 	 * Example:
 	 * <pre>
 	 * import static org.grep4j.core.Grep4j.grep;
+	 * import static org.grep4j.core.Grep4j.constantExpression;
 	 * import static org.grep4j.core.fluent.Dictionary.on;
 	 * ...
 	 * 
-	 * grep("expression", on(profile));
+	 * grep(constantExpression("expression"), on(profile));
 	 * </pre>
 	 * 
 	 * 
@@ -228,11 +235,12 @@ public final class Grep4j {
 	* Example of ExtraLines is :
 	* <pre>
 	* import static org.grep4j.core.Grep4j.grep;
+	* import static org.grep4j.core.Grep4j.constantExpression;
 	* import static org.grep4j.core.Grep4j.extraLinesAfter;
 	* import static org.grep4j.core.fluent.Dictionary.on;
 	* ...
 	* 
-	* GrepResultsSet results = grep("expression", on(profiles()), extraLinesAfter(100));
+	* GrepResultsSet results = grep(constantExpression("expression"), on(profiles()), extraLinesAfter(100));
 	* System.out.println("Total occurrences found : " + results.totalOccurrences());
 	* System.out.println("Total occurrences found : " + results.totalOccurrences("another expression within 100 lines after"));
 	* 
@@ -243,11 +251,12 @@ public final class Grep4j {
 	* or
 	* <pre>
 	* import static org.grep4j.core.Grep4j.grep;
+	* import static org.grep4j.core.Grep4j.constantExpression;
 	* import static org.grep4j.core.Grep4j.extraLinesBefore;
 	* import static org.grep4j.core.fluent.Dictionary.on;
 	* ...
 	* 
-	* GrepResultsSet results = grep("expression", on(profiles()), extraLinesBefore(100));
+	* GrepResultsSet results = grep(constantExpression("expression"), on(profiles()), extraLinesBefore(100));
 	* System.out.println("Total occurrences found : " + results.totalOccurrences());
 	* System.out.println("Total occurrences found : " + results.totalOccurrences("another expression within 100 lines before"));
 	* 
@@ -258,12 +267,13 @@ public final class Grep4j {
 	* or
 	* <pre>
 	* import static org.grep4j.core.Grep4j.grep;
+	* import static org.grep4j.core.Grep4j.constantExpression;
 	* import static org.grep4j.core.Grep4j.extraLinesBefore;
 	* import static org.grep4j.core.Grep4j.extraLinesAfter;
 	* import static org.grep4j.core.fluent.Dictionary.on;
 	* ...
 	* 
-	* GrepResultsSet results = grep("expression", on(profile), extraLinesBefore(100), extraLinesAfter(100));
+	* GrepResultsSet results = grep(constantExpression("expression"), on(profile), extraLinesBefore(100), extraLinesAfter(100));
 	* System.out.println("Total occurrences found : " + results.totalOccurrences());
 	* System.out.println("Total occurrences found : " + results.totalOccurrences("another expression within 100 lines before and 100 after"));
 	* 
