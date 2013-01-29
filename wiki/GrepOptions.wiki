@@ -31,7 +31,15 @@ Here is the list of options available:
   * {{{grepVersion()}}}
 --version, the version of grep 
   * {{{maxSshConnections(int number-of-connections)}}}
-set maximum ssh connections 
+set maximum ssh connections
+* {{{onlyLastLines(int number-of-lines)}}}
+-n, --lines=N            output the last N lines
+* {{{onlyLastBytes(int number-of-bytes)}}}
+-c, --bytes=N            output the last N bytes
+* {{{onlyFirstLines(int number-of-lines)}}}
+-n, --lines=N            output the first N lines
+* {{{onlyFirstBytes(int number-of-bytes)}}}
+-c, --bytes=N            output the first N bytes 
 
 == Example ==
 
