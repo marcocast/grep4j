@@ -1,0 +1,8 @@
+ERROR 1
+fine
+fine
+ERROR 2
+fine
+customer Marco(id=12345) has been updated successfully
+fine extract
+fine double extract
