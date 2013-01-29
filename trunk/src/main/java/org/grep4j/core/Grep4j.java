@@ -82,7 +82,7 @@ public final class Grep4j {
 	 * @param isRegexExpression
 	 */
 	private Grep4j(String expression, List<Profile> profiles, List<Option> options, boolean isRegexExpression) {
-		this.grepRequests = new ArrayList<GrepRequest>();
+		this.grepRequests = new ArrayList<GrepRequest>(profiles.size());
 		this.clock = new StopWatch();
 		this.results = new GrepResults(clock);
 		this.expression = expression;
@@ -101,7 +101,7 @@ public final class Grep4j {
 	 * @param isRegexExpression
 	 */
 	private Grep4j(String expression, List<Profile> profiles, boolean isRegexExpression) {
-		this.grepRequests = new ArrayList<GrepRequest>();
+		this.grepRequests = new ArrayList<GrepRequest>(profiles.size());
 		this.clock = new StopWatch();
 		this.results = new GrepResults(clock);
 		this.expression = expression;
