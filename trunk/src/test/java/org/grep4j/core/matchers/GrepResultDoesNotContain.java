@@ -1,6 +1,7 @@
 package org.grep4j.core.matchers;
 
 import org.grep4j.core.result.GrepResults;
+import static org.grep4j.core.Grep4j.constantExpression;
 import org.hamcrest.Description;
 import org.hamcrest.Factory;
 import org.hamcrest.Matcher;
@@ -21,7 +22,7 @@ public class GrepResultDoesNotContain extends TypeSafeMatcher<GrepResults> {
 
 	@Override
 	public boolean matchesSafely(GrepResults results) {
-		return results.filterBy(expression).totalLines() == 0;
+		return results.filterBy(constantExpression(expression)).totalLines() == 0;
 	}
 
 	@Factory
