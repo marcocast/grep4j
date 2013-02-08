@@ -7,6 +7,7 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.StopWatch;
+import org.grep4j.core.GrepExpression;
 import org.grep4j.core.task.GrepRequest;
 
 /**
@@ -90,13 +91,26 @@ public class GrepResult {
 		}
 		return totalLines;
 	}
+	
+	/**
+	 * extract the lines that match with the passed filter as a constant or regular Expression 
+	 * @param expression
+	 * @return the lines that match with the passed filter as a constant or regular Expression 
+	 */
+	public GrepResult filterBy(GrepExpression grepExpression) {
+		if(grepExpression.isRegularExpression()){
+			return filterByRE(grepExpression.getText());
+		}else{
+			return filterBy(grepExpression.getText());
+		}
+	}
 
 	/**
 	 * extract the lines that match with the passed filter as a regularExpression 
 	 * @param expression
 	 * @return the lines that match with the passed filter as a regularExpression 
 	 */
-	public GrepResult filterByRE(String expression) {
+	private GrepResult filterByRE(String expression) {
 		StringBuilder textResult = new StringBuilder();
 
 		Pattern pattern = Pattern.compile(expression);
@@ -122,7 +136,7 @@ public class GrepResult {
 	 * @param expression
 	 * @return the lines that match with the passed filter 
 	 */
-	public GrepResult filterBy(String expression) {
+	private GrepResult filterBy(String expression) {
 		StringBuilder textResult = new StringBuilder();
 		Matcher lm = linePattern.matcher(this.getText());
 		while (lm.find()) {
