@@ -101,14 +101,8 @@ public class GrepResults implements Collection<GrepResult> {
 		}else{
 			return filterBy(grepExpression.getText());
 		}
-	}
+	}	
 	
-	
-	/**
-	 * Loop through all the GrepResults and for each one extracts the lines that match with the passed filter as a regularExpression 
-	 * @param expression
-	 * @return the lines that match with the passed filter as a regularExpression 
-	 */
 	private GrepResults filterByRE(String expression) {
 		GrepResults grepResultsSet = new GrepResults(clock);
 
@@ -121,11 +115,6 @@ public class GrepResults implements Collection<GrepResult> {
 		return grepResultsSet;
 	}
 
-	/**
-	 * Loop through all the GrepResults and for each one extracts the lines that match with the passed filter 
-	 * @param expression
-	 * @return the lines that match with the passed filter 
-	 */
 	private GrepResults filterBy(String expression) {
 		GrepResults grepResultsSet = new GrepResults(clock);
 
