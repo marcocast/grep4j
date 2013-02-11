@@ -5,17 +5,17 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 
 public class Option {
 
-	private final String optionType;
+	private final OptionTypes optionType;
 	private final String optionCommand;
 	private final String optionValue;
 
-	private Option(String type, String optionCommand, String optionValue) {
+	private Option(OptionTypes type, String optionCommand, String optionValue) {
 		this.optionType = type;
 		this.optionCommand = optionCommand;
 		this.optionValue = optionValue;
 	}
 
-	private Option(String type, String optionCommand) {
+	private Option(OptionTypes type, String optionCommand) {
 		this(type, optionCommand, null);
 	}
 
@@ -25,7 +25,7 @@ public class Option {
 	 * @return
 	 */
 	public static Option extraLinesAfter(int lines) {
-		return new Option(Constants.GREP_OPTION, "-A", String.valueOf(lines));
+		return new Option(OptionTypes.GREP_OPTION, "-A", String.valueOf(lines));
 	}
 
 	/**
@@ -34,7 +34,7 @@ public class Option {
 	 * @return
 	 */
 	public static Option extraLinesBefore(int lines) {
-		return new Option(Constants.GREP_OPTION, "-B", String.valueOf(lines));
+		return new Option(OptionTypes.GREP_OPTION, "-B", String.valueOf(lines));
 	}
 
 	/**
@@ -43,7 +43,7 @@ public class Option {
 	 * @return
 	 */
 	public static Option extraLinesBeforeAndAfter(int lines) {
-		return new Option(Constants.GREP_OPTION, "-C", String.valueOf(lines));
+		return new Option(OptionTypes.GREP_OPTION, "-C", String.valueOf(lines));
 	}
 
 	/**
@@ -51,7 +51,7 @@ public class Option {
 	 * @return
 	 */
 	public static Option onlyMatching() {
-		return new Option(Constants.GREP_OPTION, "-o");
+		return new Option(OptionTypes.GREP_OPTION, "-o");
 	}
 
 	/**
@@ -59,7 +59,7 @@ public class Option {
 	 * @return
 	 */
 	public static Option ignoreCase() {
-		return new Option(Constants.GREP_OPTION, "-i");
+		return new Option(OptionTypes.GREP_OPTION, "-i");
 	}
 
 	/**
@@ -67,7 +67,7 @@ public class Option {
 	 * @return
 	 */
 	public static Option invertMatch() {
-		return new Option(Constants.GREP_OPTION, "-v");
+		return new Option(OptionTypes.GREP_OPTION, "-v");
 	}
 
 	/**
@@ -75,7 +75,7 @@ public class Option {
 	 * @return
 	 */
 	public static Option countMatches() {
-		return new Option(Constants.GREP_OPTION, "-c");
+		return new Option(OptionTypes.GREP_OPTION, "-c");
 	}
 
 	/**
@@ -83,7 +83,7 @@ public class Option {
 	 * @return
 	 */
 	public static Option withFileName() {
-		return new Option(Constants.GREP_OPTION, "-H");
+		return new Option(OptionTypes.GREP_OPTION, "-H");
 	}
 
 	/**
@@ -91,7 +91,7 @@ public class Option {
 	 * @return
 	 */
 	public static Option maxMatches(int maxMatches) {
-		return new Option(Constants.GREP_OPTION, "-m", String.valueOf(maxMatches));
+		return new Option(OptionTypes.GREP_OPTION, "-m", String.valueOf(maxMatches));
 	}
 
 	/**
@@ -99,7 +99,7 @@ public class Option {
 	 * @return
 	 */
 	public static Option lineNumber() {
-		return new Option(Constants.GREP_OPTION, "-n");
+		return new Option(OptionTypes.GREP_OPTION, "-n");
 	}
 
 	/**
@@ -107,7 +107,7 @@ public class Option {
 	 * @return
 	 */
 	public static Option filesNotMatching() {
-		return new Option(Constants.GREP_OPTION, "-L");
+		return new Option(OptionTypes.GREP_OPTION, "-L");
 	}
 
 	/**
@@ -115,7 +115,7 @@ public class Option {
 	 * @return
 	 */
 	public static Option filesMatching() {
-		return new Option(Constants.GREP_OPTION, "-l");
+		return new Option(OptionTypes.GREP_OPTION, "-l");
 	}
 
 	/**
@@ -123,7 +123,7 @@ public class Option {
 	 * @return
 	 */
 	public static Option maxSshConnections(int numberOfConnections) {
-		return new Option(Constants.SSH_CONNECTION_LIMIT_OPTION, "", String.valueOf(numberOfConnections));
+		return new Option(OptionTypes.SSH_CONNECTION_LIMIT_OPTION, "", String.valueOf(numberOfConnections));
 	}
 
 	/**
@@ -131,7 +131,7 @@ public class Option {
 	 * @return
 	 */
 	public static Option onlyLastLines(int numberOfLines) {
-		return new Option(Constants.TAIL_OPTION, " | tail -n", String.valueOf(numberOfLines));
+		return new Option(OptionTypes.TAIL_OPTION, " | tail -n", String.valueOf(numberOfLines));
 	}
 
 	/**
@@ -139,7 +139,7 @@ public class Option {
 	 * @return
 	 */
 	public static Option onlyLastBytes(int numberOfBytes) {
-		return new Option(Constants.TAIL_OPTION, " | tail -c", String.valueOf(numberOfBytes));
+		return new Option(OptionTypes.TAIL_OPTION, " | tail -c", String.valueOf(numberOfBytes));
 	}
 
 	/**
@@ -147,7 +147,7 @@ public class Option {
 	 * @return
 	 */
 	public static Option onlyFirstLines(int numberOfLines) {
-		return new Option(Constants.TAIL_OPTION, " | head -n", String.valueOf(numberOfLines));
+		return new Option(OptionTypes.TAIL_OPTION, " | head -n", String.valueOf(numberOfLines));
 	}
 
 	/**
@@ -155,7 +155,7 @@ public class Option {
 	 * @return
 	 */
 	public static Option onlyFirstBytes(int numberOfBytes) {
-		return new Option(Constants.TAIL_OPTION, " | head -c", String.valueOf(numberOfBytes));
+		return new Option(OptionTypes.TAIL_OPTION, " | head -c", String.valueOf(numberOfBytes));
 	}
 
 	/**
@@ -163,10 +163,10 @@ public class Option {
 	 * @return
 	 */
 	public static Option grepVersion() {
-		return new Option(Constants.GREP_OPTION, "--version");
+		return new Option(OptionTypes.GREP_OPTION, "--version");
 	}
 
-	public String getOptionType() {
+	public OptionTypes getOptionType() {
 		return this.optionType;
 	}
 
