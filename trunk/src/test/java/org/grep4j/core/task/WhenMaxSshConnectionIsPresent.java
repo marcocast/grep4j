@@ -6,7 +6,7 @@ import static org.junit.Assert.assertThat;
 
 import java.util.Arrays;
 
-import org.grep4j.core.options.Options;
+import org.grep4j.core.options.OptionDecorator;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -32,7 +32,7 @@ public class WhenMaxSshConnectionIsPresent {
 
     @Test(dataProvider = "maxGrepTaskThreads")
     public void shouldMatchSshConnection(int totTasks, int expectedMaxThreads) {
-        Options options = new Options(
+        OptionDecorator options = new OptionDecorator(
                 Arrays.asList(maxSshConnections(totTasks)));
         assertThat(
                 ForkController.maxGrepTaskThreads(options, Integer.MAX_VALUE),
