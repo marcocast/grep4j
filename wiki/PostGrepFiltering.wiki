@@ -37,6 +37,7 @@ now, with one single grep you can collect all the information you need:
 {{{
 import static org.grep4j.core.Grep4j.grep;
 import static org.grep4j.core.Grep4j.constantExpression;
+import static org.grep4j.core.Grep4j.regularExpression;
 import static org.grep4j.core.fluent.Dictionary.on;
 ...
 
@@ -47,23 +48,23 @@ GrepResults results = grep(constantExpression("customer-id"), on(profile)));
 System.out.println("Total occurrences found : " + results.filterByRE("operation(.*)update").totalLines());
 
 //this will return the total number of updates for the customer-id 12345
-System.out.println("Total occurrences found : " + results.filterBy("customer-id:12345").filterByRE("operation(.*)update").totalLines());
+System.out.println("Total occurrences found : " + results.filterBy("customer-id:12345").filterBy(regularExpression("operation(.*)update")).totalLines());
 
 //this will return the number of updates between 10am and 11am
-System.out.println("Total occurrences found : " + results.filterBy("2012-05-30 10").totalLines());
+System.out.println("Total occurrences found : " + results.filterBy(constantExpression("2012-05-30 10")).totalLines());
 
 //This will filter the result in order to print only Andrea updates
-for (GrepResult singleResult : results.filterBy("Andrea")) {
+for (GrepResult singleResult : results.filterBy(constantExpression("Andrea"))) {
    System.out.println(singleResult.totalLines());        
    System.out.println(singleResult);    
 }
 
 //This will filter only the Andrea result in order to print only when we stored Andrea changes successfully
-for (GrepResult singleResult : results.filterBy("Andrea").filterBy("stored successfully")) {  
+for (GrepResult singleResult : results.filterBy(constantExpression("Andrea")).filterBy(constantExpression("stored successfully"))) {  
    System.out.println(singleResult.totalLines());        
    System.out.println(singleResult);    
 }
 
 }}}
 
-You can filter the {{{GrepResults}}} as well as the single {{{GrepResult}}} and you can filter using regular expression using the {{{.filterByRE("regular expression")}}} method.
+You can filter the {{{GrepResults}}} as well as the single {{{GrepResult}}} and you can filter using regular expression using the {{{.filterBy(regularExpression("regular expression"))}}} method.
