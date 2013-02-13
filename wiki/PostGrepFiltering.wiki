@@ -45,10 +45,10 @@ import static org.grep4j.core.fluent.Dictionary.on;
 GrepResults results = grep(constantExpression("customer-id"), on(profile)));
 
 //this will return the total number of updates 
-System.out.println("Total occurrences found : " + results.filterByRE("operation(.*)update").totalLines());
+System.out.println("Total occurrences found : " + results.filterBy(regularExpression("operation(.*)update")).totalLines());
 
 //this will return the total number of updates for the customer-id 12345
-System.out.println("Total occurrences found : " + results.filterBy("customer-id:12345").filterBy(regularExpression("operation(.*)update")).totalLines());
+System.out.println("Total occurrences found : " + results.filterBy(constantExpression("customer-id:12345")).filterBy(regularExpression("operation(.*)update")).totalLines());
 
 //this will return the number of updates between 10am and 11am
 System.out.println("Total occurrences found : " + results.filterBy(constantExpression("2012-05-30 10")).totalLines());
