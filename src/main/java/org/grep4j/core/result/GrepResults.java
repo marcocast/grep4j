@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.apache.commons.lang3.time.StopWatch;
-import org.grep4j.core.GrepExpression;
 import org.grep4j.core.model.Profile;
 
 /**
@@ -89,25 +88,17 @@ public class GrepResults implements Collection<GrepResult> {
 	public long getTotalExecutionNanoTime() {
 		return clock.getNanoTime();
 	}
-	
+
 	/**
-	 * Loop through all the GrepResults and for each one extracts the lines that match with the passed filter as a constant or regular Expression 
+	 * Loop through all the GrepResults and for each one extracts the lines that match with the passed filter as a regularExpression 
 	 * @param expression
-	 * @return the lines that match with the passed filter as a constant or regular Expression 
+	 * @return the lines that match with the passed filter as a regularExpression 
 	 */
-	public GrepResults filterBy(GrepExpression grepExpression) {
-		if(grepExpression.isRegularExpression()){
-			return filterByRE(grepExpression.getText());
-		}else{
-			return filterBy(grepExpression.getText());
-		}
-	}	
-	
-	private GrepResults filterByRE(String expression) {
+	public GrepResults filterByRE(String expression) {
 		GrepResults grepResultsSet = new GrepResults(clock);
 
 		for (GrepResult result : grepResults) {
-			GrepResult extractResult = result.filterBy(new GrepExpression(expression, true));
+			GrepResult extractResult = result.filterByRE(expression);
 			if (!extractResult.getText().isEmpty()) {
 				grepResultsSet.add(extractResult);
 			}
@@ -115,11 +106,16 @@ public class GrepResults implements Collection<GrepResult> {
 		return grepResultsSet;
 	}
 
-	private GrepResults filterBy(String expression) {
+	/**
+	 * Loop through all the GrepResults and for each one extracts the lines that match with the passed filter 
+	 * @param expression
+	 * @return the lines that match with the passed filter 
+	 */
+	public GrepResults filterBy(String expression) {
 		GrepResults grepResultsSet = new GrepResults(clock);
 
 		for (GrepResult result : grepResults) {
-			GrepResult extractResult = result.filterBy(new GrepExpression(expression, false));
+			GrepResult extractResult = result.filterBy(expression);
 			if (!extractResult.getText().isEmpty()) {
 				grepResultsSet.add(extractResult);
 			}

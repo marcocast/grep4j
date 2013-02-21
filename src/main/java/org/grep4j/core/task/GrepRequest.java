@@ -4,8 +4,8 @@ import static ch.lambdaj.Lambda.join;
 
 import org.grep4j.core.model.Profile;
 import org.grep4j.core.model.ServerDetails;
-import org.grep4j.core.options.OptionTypes;
-import org.grep4j.core.options.OptionDecorator;
+import org.grep4j.core.options.Constants;
+import org.grep4j.core.options.Options;
 
 /**
  * Class container of the grep request
@@ -49,9 +49,9 @@ public class GrepRequest {
 	 * Add Extra options {@see Option}
 	 * @param options
 	 */
-	public void addOptions(OptionDecorator options) {
-		this.contextControls = join(options.findOptionsByType(OptionTypes.GREP_OPTION), SPACE);
-		this.tailContextControls = join(options.findOptionsByType(OptionTypes.TAIL_OPTION), SPACE);
+	public void addOptions(Options options) {
+		this.contextControls = join(options.findOptionsByType(Constants.GREP_OPTION), SPACE);
+		this.tailContextControls = join(options.findOptionsByType(Constants.TAIL_OPTION), SPACE);
 	}
 
 	/**

@@ -1,7 +1,6 @@
 package org.grep4j.core.task;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.grep4j.core.Grep4j.regularExpression;
 import static org.junit.Assert.assertThat;
 
 import org.grep4j.core.model.Profile;
@@ -22,7 +21,7 @@ public class GrepResultTestWithRegEx {
 	}
 
 	public void testRegExWithExpression() {
-		assertThat(grepResult.filterBy(regularExpression("customer(.*)updated")).totalLines(), is(1));
+		assertThat(grepResult.filterByRE("customer(.*)updated").totalLines(), is(1));
 	}
 
 	public void testRegEx() {

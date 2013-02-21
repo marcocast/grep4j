@@ -7,7 +7,6 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.StopWatch;
-import org.grep4j.core.GrepExpression;
 import org.grep4j.core.task.GrepRequest;
 
 /**
@@ -15,7 +14,7 @@ import org.grep4j.core.task.GrepRequest;
  * 
  * @author Marco Castigliego
  * 
- * 
+ *
  */
 public class GrepResult {
 
@@ -25,8 +24,7 @@ public class GrepResult {
 	private final String text;
 	private final StopWatch clock;
 
-	public GrepResult(GrepRequest grepRequest, String fileName, String text,
-			StopWatch clock) {
+	public GrepResult(GrepRequest grepRequest, String fileName, String text, StopWatch clock) {
 		super();
 		this.grepRequest = grepRequest;
 		this.fileName = fileName;
@@ -34,8 +32,7 @@ public class GrepResult {
 		this.clock = clock;
 	}
 
-	private GrepResult(String expression, GrepRequest grepRequest,
-			String fileName, String text, StopWatch clock) {
+	private GrepResult(String expression, GrepRequest grepRequest, String fileName, String text, StopWatch clock) {
 		super();
 		this.grepRequest = grepRequest;
 		this.fileName = fileName;
@@ -43,21 +40,21 @@ public class GrepResult {
 		this.clock = clock;
 	}
 
-	/**
+	/** 
 	 * @return the profile name associated with this grep result
 	 */
 	public String getProfileName() {
 		return grepRequest.getProfile().getName();
 	}
 
-	/**
+	/** 
 	 * @return the file name associated with this grep result
 	 */
 	public String getFileName() {
 		return fileName;
 	}
 
-	/**
+	/** 
 	 * @return the text containing the result of the grep
 	 */
 	public String getText() {
@@ -95,22 +92,11 @@ public class GrepResult {
 	}
 
 	/**
-	 * extract the lines that match with the passed filter as a constant or
-	 * regular Expression
-	 * 
+	 * extract the lines that match with the passed filter as a regularExpression 
 	 * @param expression
-	 * @return the lines that match with the passed filter as a constant or
-	 *         regular Expression
+	 * @return the lines that match with the passed filter as a regularExpression 
 	 */
-	public GrepResult filterBy(GrepExpression grepExpression) {
-		if (grepExpression.isRegularExpression()) {
-			return filterByRE(grepExpression.getText());
-		} else {
-			return filterBy(grepExpression.getText());
-		}
-	}
-
-	private GrepResult filterByRE(String expression) {
+	public GrepResult filterByRE(String expression) {
 		StringBuilder textResult = new StringBuilder();
 
 		Pattern pattern = Pattern.compile(expression);
@@ -128,11 +114,15 @@ public class GrepResult {
 			}
 		}
 
-		return new GrepResult(expression, grepRequest.copyWithRegEx(),
-				fileName, textResult.toString(), clock);
+		return new GrepResult(expression, grepRequest.copyWithRegEx(), fileName, textResult.toString(), clock);
 	}
 
-	private GrepResult filterBy(String expression) {
+	/**
+	 * extract the lines that match with the passed filter
+	 * @param expression
+	 * @return the lines that match with the passed filter 
+	 */
+	public GrepResult filterBy(String expression) {
 		StringBuilder textResult = new StringBuilder();
 		Matcher lm = linePattern.matcher(this.getText());
 		while (lm.find()) {
@@ -142,8 +132,7 @@ public class GrepResult {
 			}
 		}
 
-		return new GrepResult(expression, grepRequest.copyWithNoRegEx(),
-				fileName, textResult.toString(), clock);
+		return new GrepResult(expression, grepRequest.copyWithNoRegEx(), fileName, textResult.toString(), clock);
 	}
 
 	@Override

@@ -31,12 +31,12 @@ public class WhenGrep4jStartedWithRegExStringToSearchALocalProfile {
 
 	public void extraLineBefore() {
 		GrepResults results = grep(regularExpression("er(.*) 2"), on(profiles), extraLinesBefore(20), ignoreCase());
-		assertThat(results.filterBy(regularExpression("ER(.*) 1")).totalLines(), is(1));
+		assertThat(results.filterByRE("ER(.*) 1").totalLines(), is(1));
 	}
 
 	public void extraLineAfter() {
 		GrepResults results = grep(regularExpression("ER(.*) 1"), on(profiles), extraLinesAfter(20));
-		assertThat(results.filterBy(regularExpression("ER(.*) 2")).totalLines(), is(1));
+		assertThat(results.filterByRE("ER(.*) 2").totalLines(), is(1));
 	}
 
 }

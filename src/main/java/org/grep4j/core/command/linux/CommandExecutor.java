@@ -13,11 +13,10 @@ public abstract class CommandExecutor {
 
 	protected final ServerDetails serverDetails;
 
-	protected final StringBuilder result;
+	protected String result;
 
 	public CommandExecutor(ServerDetails serverDetails) {
 		this.serverDetails = serverDetails;
-		this.result = new StringBuilder();
 	}
 
 	public abstract CommandExecutor execute(ExecutableCommand command);
@@ -26,7 +25,7 @@ public abstract class CommandExecutor {
 	 * @return the result of the command in a String format
 	 */
 	public String andReturnResult() {
-		return result.toString();
+		return result;
 	}
 
 }

@@ -3,7 +3,7 @@ package org.grep4j.core.task;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-import org.grep4j.core.options.OptionDecorator;
+import org.grep4j.core.options.Options;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -30,7 +30,7 @@ public class ForkControllerTest {
 
 	@Test(dataProvider = "maxGrepTaskThreads")
 	public void maxGrepTaskThreadsTest(int totTasks, int expectedMaxThreads) {
-		OptionDecorator options = new OptionDecorator();
+		Options options = new Options();
         assertThat(ForkController.maxGrepTaskThreads(options, totTasks), is(expectedMaxThreads));
 	}
 

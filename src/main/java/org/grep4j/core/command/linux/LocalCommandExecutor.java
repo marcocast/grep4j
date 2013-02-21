@@ -35,7 +35,7 @@ public class LocalCommandExecutor extends CommandExecutor {
 		try {
 			Process p = Runtime.getRuntime().exec(commands);
 			p.waitFor();
-			result.append(IOUtils.toString(p.getInputStream()));
+			result = IOUtils.toString(p.getInputStream());
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
