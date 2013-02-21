@@ -18,126 +18,125 @@ import com.google.common.collect.ImmutableList;
  */
 public class ServerDetails {
 
-	private static final List<String> localhostAliases = ImmutableList
-			.<String> builder().add("localhost", "127.0.0.1").build();
+    private static final List<String> localhostAliases = ImmutableList.<String> builder().add("localhost", "127.0.0.1")
+	    .build();
 
-	private final String host;
-	private String user;
-	private String password;
-	private Integer port;
+    private final String host;
+    private String user;
+    private String password;
+    private Integer port;
 
-	/**
-	 * The hostname of the server where the target file is stored.
-	 * 
-	 * This can be either an IP or proper hostname.
-	 * 
-	 * In case of a local server, the hostname has to be either "localhost" or
-	 * "127.0.0.1"
-	 * 
-	 * @param host
-	 */
-	public ServerDetails(String host) {
-		this.host = host;
-		this.port = 22;
-	}
+    /**
+     * The hostname of the server where the target file is stored.
+     * 
+     * This can be either an IP or proper hostname.
+     * 
+     * In case of a local server, the hostname has to be either "localhost" or
+     * "127.0.0.1"
+     * 
+     * @param host
+     */
+    public ServerDetails(String host) {
+	this.host = host;
+	this.port = 22;
+    }
 
-	/**
-	 * Username required to connect to remote machine
-	 * 
-	 * @param user
-	 */
-	public void setUser(String user) {
-		this.user = user;
-	}
+    /**
+     * Username required to connect to remote machine
+     * 
+     * @param user
+     */
+    public void setUser(String user) {
+	this.user = user;
+    }
 
-	/**
-	 * Password required to connect to remote machine
-	 * 
-	 * @param password
-	 */
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    /**
+     * Password required to connect to remote machine
+     * 
+     * @param password
+     */
+    public void setPassword(String password) {
+	this.password = password;
+    }
 
-	/**
-	 * 
-	 * @param ssh
-	 *            port
-	 */
-	public void setPort(Integer port) {
-		this.port = port;
-	}
+    /**
+     * 
+     * @param ssh
+     *            port
+     */
+    public void setPort(Integer port) {
+	this.port = port;
+    }
 
-	/**
-	 * The host of the server where the target file is stored.
-	 * 
-	 * @return host
-	 */
-	public String getHost() {
-		return host;
-	}
+    /**
+     * The host of the server where the target file is stored.
+     * 
+     * @return host
+     */
+    public String getHost() {
+	return host;
+    }
 
-	/**
-	 * @return the user required to connect to remote machine
-	 */
-	public String getUser() {
-		return user;
-	}
+    /**
+     * @return the user required to connect to remote machine
+     */
+    public String getUser() {
+	return user;
+    }
 
-	/**
-	 * 
-	 * @return the password required to connect to remote machine
-	 */
-	public String getPassword() {
-		return password;
-	}
-	
-	/**
-	 * 
-	 * @return the ssh port specified, default is 22
-	 */
-	public Integer getPort() {
-		return port;
-	}
+    /**
+     * 
+     * @return the password required to connect to remote machine
+     */
+    public String getPassword() {
+	return password;
+    }
 
-	/**
-	 * This method check if this ServerDetails is a "localhost" or "127.0.0.1"
-	 * otherwise return false
-	 * 
-	 * @return true if localhost
-	 */
-	public boolean isLocalhost() {
-		return localhostAliases.contains(host.toLowerCase());
-	}
+    /**
+     * 
+     * @return the ssh port specified, default is 22
+     */
+    public Integer getPort() {
+	return port;
+    }
 
-	public void validate() {
-		if (StringUtils.isEmpty(host) || StringUtils.isBlank(host)) {
-			throw new IllegalArgumentException("Host is empty or null");
-		}
-		if (!isLocalhost()) {
-			if (StringUtils.isEmpty(user) || StringUtils.isBlank(user)) {
-				throw new IllegalArgumentException("User is empty or null");
-			}
-			if (StringUtils.isEmpty(password) || StringUtils.isBlank(password)) {
-				throw new IllegalArgumentException("Password is empty or null");
-			}
-		}
-	}
+    /**
+     * This method check if this ServerDetails is a "localhost" or "127.0.0.1"
+     * otherwise return false
+     * 
+     * @return true if localhost
+     */
+    public boolean isLocalhost() {
+	return localhostAliases.contains(host.toLowerCase());
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		return EqualsBuilder.reflectionEquals(this, obj);
+    public void validate() {
+	if (StringUtils.isEmpty(host) || StringUtils.isBlank(host)) {
+	    throw new IllegalArgumentException("Host is empty or null");
 	}
+	if (!isLocalhost()) {
+	    if (StringUtils.isEmpty(user) || StringUtils.isBlank(user)) {
+		throw new IllegalArgumentException("User is empty or null");
+	    }
+	    if (StringUtils.isEmpty(password) || StringUtils.isBlank(password)) {
+		throw new IllegalArgumentException("Password is empty or null");
+	    }
+	}
+    }
 
-	@Override
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this,
-				ToStringStyle.MULTI_LINE_STYLE);
-	}
+    @Override
+    public boolean equals(Object obj) {
+	return EqualsBuilder.reflectionEquals(this, obj);
+    }
 
-	@Override
-	public int hashCode() {
-		return HashCodeBuilder.reflectionHashCode(this);
-	}
+    @Override
+    public String toString() {
+	return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
+    }
+
+    @Override
+    public int hashCode() {
+	return HashCodeBuilder.reflectionHashCode(this);
+    }
 
 }

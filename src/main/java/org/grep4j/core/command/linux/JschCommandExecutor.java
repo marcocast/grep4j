@@ -27,43 +27,39 @@ import com.jcraft.jsch.Session;
  */
 public class JschCommandExecutor extends CommandExecutor {
 
-	public JschCommandExecutor(ServerDetails serverDetails) {
-		super(serverDetails);
-	}
+    public JschCommandExecutor(ServerDetails serverDetails) {
+	super(serverDetails);
+    }
 
-	@Override
-	public CommandExecutor execute(ExecutableCommand command) {
-		Session session = null;
+    @Override
+    public CommandExecutor execute(ExecutableCommand command) {
+	Session session = null;
+	try {
+
+	    session = StackSessionPool.getInstance().getPool().borrowObject(serverDetails);
+	    Channel channel = session.openChannel("exec");
+	    ((ChannelExec) channel).setCommand(command.getCommandToExecute());
+	    // X Forwarding
+	    channel.setXForwarding(true);
+	    // channel.setInputStream(System.in);
+	    channel.setInputStream(null);
+	    InputStream in = channel.getInputStream();
+	    channel.connect();
+	    result = IOUtils.toString(in);
+	    channel.disconnect();
+	} catch (Exception e) {
+	    throw new RuntimeException("ERROR: Unrecoverable error when performing remote command " + e.getMessage(), e);
+	} finally {
+	    if (null != session) {
 		try {
-
-			session = StackSessionPool.getInstance().getPool()
-					.borrowObject(serverDetails);
-			Channel channel = session.openChannel("exec");
-			((ChannelExec) channel).setCommand(command.getCommandToExecute());
-			// X Forwarding
-			channel.setXForwarding(true);
-			// channel.setInputStream(System.in);
-			channel.setInputStream(null);
-			InputStream in = channel.getInputStream();
-			channel.connect();
-			result = IOUtils.toString(in);
-			channel.disconnect();
+		    StackSessionPool.getInstance().getPool().returnObject(serverDetails, session);
 		} catch (Exception e) {
-			throw new RuntimeException(
-					"ERROR: Unrecoverable error when performing remote command "
-							+ e.getMessage(), e);
-		} finally {
-			if (null != session) {
-				try {
-					StackSessionPool.getInstance().getPool()
-							.returnObject(serverDetails, session);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
+		    e.printStackTrace();
 		}
-
-		return this;
+	    }
 	}
+
+	return this;
+    }
 
 }

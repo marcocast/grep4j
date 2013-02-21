@@ -1,28 +1,28 @@
 package org.grep4j.core.task;
 
-import org.grep4j.core.options.Constants;
+import org.grep4j.core.options.Option;
 import org.grep4j.core.options.Options;
 
 /**
  * This to control the maximum number of threads to be used when forking tasks
+ * 
  * @author marcocast
- *
+ * 
  */
 public class ForkController {
 
-	private static int MAX_GREPTASK_THREADS = 10;
-	private static int MAX_COMMANDEXECUTORTASK_THREADS = 5;
+    private static int MAX_GREPTASK_THREADS = 10;
+    private static int MAX_COMMANDEXECUTORTASK_THREADS = 5;
 
-	private ForkController() {
-	}
+    private ForkController() {
+    }
 
-	public static int maxGrepTaskThreads(Options options, int totGrepTasks) {
-		int maxGrepThreads = options.getIntegerValue(Constants.SSH_CONNECTION_LIMIT_OPTION, MAX_GREPTASK_THREADS);
+    public static int maxGrepTaskThreads(Options options, int totGrepTasks) {
+	int maxGrepThreads = options.getIntegerValue(Option.SSH_CONNECTION_LIMIT_OPTION, MAX_GREPTASK_THREADS);
+	return Math.min(totGrepTasks, maxGrepThreads);
+    }
 
-		return totGrepTasks > maxGrepThreads ? maxGrepThreads : totGrepTasks;
-	}
-
-	public static int maxCommandExecutorTaskThreads(int totGrepTasks) {
-		return totGrepTasks > MAX_COMMANDEXECUTORTASK_THREADS ? MAX_COMMANDEXECUTORTASK_THREADS : totGrepTasks;
-	}
+    public static int maxCommandExecutorTaskThreads(int totGrepTasks) {
+	return Math.min(totGrepTasks, MAX_COMMANDEXECUTORTASK_THREADS);
+    }
 }

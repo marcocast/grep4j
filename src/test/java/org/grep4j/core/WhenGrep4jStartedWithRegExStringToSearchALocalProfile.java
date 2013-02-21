@@ -22,21 +22,21 @@ import org.testng.annotations.Test;
 @Test
 public class WhenGrep4jStartedWithRegExStringToSearchALocalProfile {
 
-	private final List<Profile> profiles = Arrays.asList(localProfile());
+    private final List<Profile> profiles = Arrays.asList(localProfile());
 
-	public void customerRegexStringAppears1Time() {
-		assertThat(grep(regularExpression("customer(.*)updated"), on(profiles)).totalLines(), is(1));
-		assertThat(executing(grep(constantExpression("Marco"), on(profiles))).totalLines(), is(1));
-	}
+    public void customerRegexStringAppears1Time() {
+	assertThat(grep(regularExpression("customer(.*)updated"), on(profiles)).totalLines(), is(1));
+	assertThat(executing(grep(constantExpression("Marco"), on(profiles))).totalLines(), is(1));
+    }
 
-	public void extraLineBefore() {
-		GrepResults results = grep(regularExpression("er(.*) 2"), on(profiles), extraLinesBefore(20), ignoreCase());
-		assertThat(results.filterByRE("ER(.*) 1").totalLines(), is(1));
-	}
+    public void extraLineBefore() {
+	GrepResults results = grep(regularExpression("er(.*) 2"), on(profiles), extraLinesBefore(20), ignoreCase());
+	assertThat(results.filterByRegEx("ER(.*) 1").totalLines(), is(1));
+    }
 
-	public void extraLineAfter() {
-		GrepResults results = grep(regularExpression("ER(.*) 1"), on(profiles), extraLinesAfter(20));
-		assertThat(results.filterByRE("ER(.*) 2").totalLines(), is(1));
-	}
+    public void extraLineAfter() {
+	GrepResults results = grep(regularExpression("ER(.*) 1"), on(profiles), extraLinesAfter(20));
+	assertThat(results.filterByRegEx("ER(.*) 2").totalLines(), is(1));
+    }
 
 }

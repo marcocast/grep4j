@@ -20,31 +20,31 @@ import org.testng.annotations.Test;
 @Test(groups = "newGrepVersion")
 public class WhenGreppingWithOptionsNewVersion {
 
-	public void countMatchesOption() {
-		GrepResults results = grep(constantExpression("ERROR 2"), on(localProfile()), countMatches());
-		for (GrepResult result : results) {
-			assertThat(result.toString(), is("1\n"));
-		}
+    public void countMatchesOption() {
+	GrepResults results = grep(constantExpression("ERROR 2"), on(localProfile()), countMatches());
+	for (GrepResult result : results) {
+	    assertThat(result.toString(), is("1\n"));
 	}
+    }
 
-	public void onlyMatchingOption() {
-		GrepResults results = grep(constantExpression("Marco"), on(localProfile()), onlyMatching());
-		for (GrepResult result : results) {
-			assertThat(result.toString(), is("Marco\n"));
-		}
+    public void onlyMatchingOption() {
+	GrepResults results = grep(constantExpression("Marco"), on(localProfile()), onlyMatching());
+	for (GrepResult result : results) {
+	    assertThat(result.toString(), is("Marco\n"));
 	}
+    }
 
-	public void onlyMatchingOptionAndcountMatchesOption() {
-		GrepResults results = grep(constantExpression("marco"), on(localProfile()),
-				with(options(onlyMatching(), countMatches(), ignoreCase())));
-		for (GrepResult result : results) {
-			assertThat(result.toString(), is("1\n"));
-		}
+    public void onlyMatchingOptionAndcountMatchesOption() {
+	GrepResults results = grep(constantExpression("marco"), on(localProfile()),
+		with(options(onlyMatching(), countMatches(), ignoreCase())));
+	for (GrepResult result : results) {
+	    assertThat(result.toString(), is("1\n"));
 	}
+    }
 
-	public void withFileNameOption() {
-		GrepResults results = grep(constantExpression("ERROR 2"), on(localProfile()), withFileName());
-		assertThat(results.filterBy("local.txt").totalLines(), is(1));
-	}
+    public void withFileNameOption() {
+	GrepResults results = grep(constantExpression("ERROR 2"), on(localProfile()), withFileName());
+	assertThat(results.filterBy("local.txt").totalLines(), is(1));
+    }
 
 }

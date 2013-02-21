@@ -4,28 +4,28 @@ import org.grep4j.core.command.ExecutableCommand;
 import org.grep4j.core.model.ServerDetails;
 
 /**
- * Base class for executing commands against a Server 
+ * Base class for executing commands against a Server
  * 
  * @author Marco Castigliego
  * @author Giovanni Gargiulo
  */
 public abstract class CommandExecutor {
 
-	protected final ServerDetails serverDetails;
+    protected final ServerDetails serverDetails;
 
-	protected String result;
+    protected String result;
 
-	public CommandExecutor(ServerDetails serverDetails) {
-		this.serverDetails = serverDetails;
-	}
+    public CommandExecutor(ServerDetails serverDetails) {
+	this.serverDetails = serverDetails;
+    }
 
-	public abstract CommandExecutor execute(ExecutableCommand command);
+    public abstract CommandExecutor execute(ExecutableCommand command);
 
-	/**
-	 * @return the result of the command in a String format
-	 */
-	public String andReturnResult() {
-		return result;
-	}
+    /**
+     * @return the result of the command in a String format
+     */
+    public String andReturnResult() {
+	return result;
+    }
 
 }
