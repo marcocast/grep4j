@@ -17,15 +17,18 @@ import org.testng.annotations.Test;
 @Test
 public class WhenTheServerDetailsIsInterpreted {
 
-	public void ifTheHostIsLocalhostALocalCommandExecutorShouldReturn() {
-		assertThat(whenCalling(getCommandExecutor(with(localhostServerDetails()))), is(returned(LocalCommandExecutor.class)));
-	}
+    public void ifTheHostIsLocalhostALocalCommandExecutorShouldReturn() {
+	assertThat(whenCalling(getCommandExecutor(with(localhostServerDetails()))),
+		is(returned(LocalCommandExecutor.class)));
+    }
 
-	public void ifTheHostIs127001ALocalCommandExecutorShouldReturn() {
-		assertThat(whenCalling(getCommandExecutor(with(onetwosevenServerDetails()))), is(returned(LocalCommandExecutor.class)));
-	}
+    public void ifTheHostIs127001ALocalCommandExecutorShouldReturn() {
+	assertThat(whenCalling(getCommandExecutor(with(onetwosevenServerDetails()))),
+		is(returned(LocalCommandExecutor.class)));
+    }
 
-	public void ifTheHostIsnotLocalAnSSHCommandExecutorShouldReturn() {
-		assertThat(whenCalling(getCommandExecutor(with(aDummyRemoteServerDetails()))), is(returned(JschCommandExecutor.class)));
-	}
+    public void ifTheHostIsnotLocalAnSSHCommandExecutorShouldReturn() {
+	assertThat(whenCalling(getCommandExecutor(with(aDummyRemoteServerDetails()))),
+		is(returned(JschCommandExecutor.class)));
+    }
 }

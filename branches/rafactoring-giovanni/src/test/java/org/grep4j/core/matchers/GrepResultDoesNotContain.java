@@ -8,25 +8,24 @@ import org.hamcrest.TypeSafeMatcher;
 
 public class GrepResultDoesNotContain extends TypeSafeMatcher<GrepResults> {
 
-	private final String expression;
+    private final String expression;
 
-	private GrepResultDoesNotContain(String expression) {
-		this.expression = expression;
-	}
+    private GrepResultDoesNotContain(String expression) {
+	this.expression = expression;
+    }
 
-	@Override
-	public void describeTo(Description description) {
-		description.appendText("contains expression : " + expression);
-	}
+    @Override
+    public void describeTo(Description description) {
+	description.appendText("contains expression : " + expression);
+    }
 
-	@Override
-	public boolean matchesSafely(GrepResults results) {
-		return results.filterBy(expression).totalLines() == 0;
-	}
+    @Override
+    public boolean matchesSafely(GrepResults results) {
+	return results.filterBy(expression).totalLines() == 0;
+    }
 
-	@Factory
-	public static <T> Matcher<GrepResults> doesNotContainExpression(
-			String expression) {
-		return new GrepResultDoesNotContain(expression);
-	}
+    @Factory
+    public static <T> Matcher<GrepResults> doesNotContainExpression(String expression) {
+	return new GrepResultDoesNotContain(expression);
+    }
 }

@@ -7,16 +7,16 @@ import org.grep4j.core.task.GrepRequest;
 
 public class GrepRequestFixtures {
 
-	private GrepRequestFixtures() {
-	}
+    private GrepRequestFixtures() {
+    }
 
-	public static GrepRequest localGrepERRORrequest(String pattern) {
-		GrepRequest grepRequest = new GrepRequest(pattern, localProfile());
-		return grepRequest;
-	}
-	
-	public static GrepRequest localGzGrepERRORrequest(String pattern) {
-		GrepRequest grepRequest = new GrepRequest(pattern, localGzProfile());
-		return grepRequest;
-	}
+    public static GrepRequest simpleLocalGrepRequest(String pattern) {
+	GrepRequest grepRequest = new GrepRequest(pattern, localProfile());
+	return grepRequest;
+    }
+
+    public static GrepRequest gzLocalGrepRequest(String pattern) {
+	GrepRequest grepRequest = new GrepRequest(pattern, localGzProfile());
+	return grepRequest;
+    }
 }

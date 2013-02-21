@@ -14,15 +14,16 @@ import org.testng.annotations.Test;
 @Test
 public class WhenPrintingGrepResults {
 
-	public void aGrepResultsSetWithSingleFile() {
-		assertThat(grep(constantExpression("ERROR 1"), on(localProfile()), extraLinesAfter(20)).filterBy("Marco").toString(),
-				is("customer Marco(id=12345) has been updated successfully\r\n"));
+    public void aGrepResultsSetWithSingleFile() {
+	assertThat(grep(constantExpression("ERROR 1"), on(localProfile()), extraLinesAfter(20)).filterBy("Marco")
+		.toString(), is("customer Marco(id=12345) has been updated successfully\r\n"));
 
-	}
+    }
 
-	public void aGrepResultsSetWithMultipleFiles() {
-		assertThat(grep(constantExpression("ERROR 1"), on(localProfileWithWildecard("*")), extraLinesAfter(20)).filterBy("Marco").toString(),
-				is("customer Marco(id=12345) has been updated successfully\r\n"));
+    public void aGrepResultsSetWithMultipleFiles() {
+	assertThat(grep(constantExpression("ERROR 1"), on(localProfileWithWildecard("*")), extraLinesAfter(20))
+		.filterBy("Marco").toString(), is("customer Marco(id=12345) has been updated successfully\r\n"));
 
-	}
+    }
+    
 }

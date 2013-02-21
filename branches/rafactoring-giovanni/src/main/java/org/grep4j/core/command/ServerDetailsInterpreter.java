@@ -12,24 +12,24 @@ import org.grep4j.core.model.ServerDetails;
  */
 public class ServerDetailsInterpreter {
 
-	private ServerDetailsInterpreter() {
-	}
+    private ServerDetailsInterpreter() {
+    }
 
-	/**
-	 * Based on the server details, it returns {@link LocalCommandExecutor} if
-	 * the host is "localhost" or "127.0.0.1" otherwise return
-	 * {@link JschCommandExecutor}
-	 * 
-	 * @param serverDetails
-	 * @return {@link CommandExecutor}
-	 */
-	public static CommandExecutor getCommandExecutor(ServerDetails serverDetails) {
-		CommandExecutor commandExecutor = null;
-		if (serverDetails.isLocalhost()) {
-			commandExecutor = new LocalCommandExecutor(serverDetails);
-		} else {
-			commandExecutor = new JschCommandExecutor(serverDetails);
-		}
-		return commandExecutor;
+    /**
+     * Based on the server details, it returns {@link LocalCommandExecutor} if
+     * the host is "localhost" or "127.0.0.1" otherwise return
+     * {@link JschCommandExecutor}
+     * 
+     * @param serverDetails
+     * @return {@link CommandExecutor}
+     */
+    public static CommandExecutor getCommandExecutor(ServerDetails serverDetails) {
+	CommandExecutor commandExecutor = null;
+	if (serverDetails.isLocalhost()) {
+	    commandExecutor = new LocalCommandExecutor(serverDetails);
+	} else {
+	    commandExecutor = new JschCommandExecutor(serverDetails);
 	}
+	return commandExecutor;
+    }
 }
