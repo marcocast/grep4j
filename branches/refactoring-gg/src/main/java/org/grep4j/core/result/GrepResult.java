@@ -8,7 +8,6 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.time.StopWatch;
 import org.grep4j.core.GrepExpression;
 import org.grep4j.core.task.GrepRequest;
 
@@ -16,6 +15,7 @@ import org.grep4j.core.task.GrepRequest;
  * This class contains the result of the grep in String format.
  * 
  * @author Marco Castigliego
+ * @author Giovanni Gargiulo
  */
 @RequiredArgsConstructor
 @EqualsAndHashCode
@@ -29,27 +29,13 @@ public class GrepResult {
 	@Getter
 	private final String text;
 	@Getter
-	private final StopWatch clock;
+	private final long executionTime;
 
 	/**
 	 * @return the profile name associated with this grep result
 	 */
 	public String getProfileName() {
 		return grepRequest.getProfile().getName();
-	}
-
-	/**
-	 * @return the total time spent for the grep task in milliseconds
-	 */
-	public long getExecutionTime() {
-		return clock.getTime();
-	}
-
-	/**
-	 * @return the total time spent for the grep task in nanoseconds
-	 */
-	public long getExecutionNanoTime() {
-		return clock.getNanoTime();
 	}
 
 	/**
@@ -98,7 +84,7 @@ public class GrepResult {
 			}
 		}
 
-		return new GrepResult(grepRequest.copyWithRegEx(), fileName, textResult.toString(), clock);
+		return new GrepResult(grepRequest.copyWithRegEx(), fileName, textResult.toString(), executionTime);
 	}
 
 	private GrepResult filterBy(String expression) {
@@ -111,7 +97,7 @@ public class GrepResult {
 			}
 		}
 
-		return new GrepResult(grepRequest.copyWithNoRegEx(), fileName, textResult.toString(), clock);
+		return new GrepResult(grepRequest.copyWithNoRegEx(), fileName, textResult.toString(), executionTime);
 	}
 
 	@Override

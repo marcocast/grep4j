@@ -5,8 +5,6 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThat;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
 import org.grep4j.core.fixtures.ServerDetailsFixtures;
 import org.testng.annotations.Test;
 
@@ -48,11 +46,6 @@ public class ServerDetailsTest {
 		ServerDetails serverDetails = ServerDetailsFixtures.aDummyRemoteServerDetails();
 		ServerDetails serverDetails2 = ServerDetailsFixtures.anotherDummyRemoteServerDetails();
 		assertThat(serverDetails.hashCode(), is(not(equalTo(serverDetails2.hashCode()))));
-	}
-
-	public void testToStrig() {
-		ServerDetails serverDetails = ServerDetailsFixtures.aDummyRemoteServerDetails();
-		assertThat(serverDetails.toString(), is(equalTo(ToStringBuilder.reflectionToString(serverDetails, ToStringStyle.MULTI_LINE_STYLE))));
 	}
 
 }
