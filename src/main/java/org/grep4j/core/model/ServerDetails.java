@@ -2,10 +2,11 @@ package org.grep4j.core.model;
 
 import java.util.List;
 
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import org.apache.commons.lang3.StringUtils;
 
 import com.google.common.collect.ImmutableList;
@@ -16,13 +17,25 @@ import com.google.common.collect.ImmutableList;
  * @author Giovanni Gargiulo
  * @author Marco Castigliego
  */
+@EqualsAndHashCode
+@ToString
 public class ServerDetails {
 
 	private static final List<String> localhostAliases = ImmutableList.<String> builder().add("localhost", "127.0.0.1").build();
 
+	@Getter
 	private final String host;
+
+	@Getter
+	@Setter
 	private String user;
+
+	@Getter
+	@Setter
 	private String password;
+
+	@Getter
+	@Setter
 	private Integer port;
 
 	/**
@@ -34,62 +47,6 @@ public class ServerDetails {
 	public ServerDetails(String host) {
 		this.host = host;
 		this.port = 22;
-	}
-
-	/**
-	 * Username required to connect to remote machine
-	 * 
-	 * @param user
-	 */
-	public void setUser(String user) {
-		this.user = user;
-	}
-
-	/**
-	 * Password required to connect to remote machine
-	 * 
-	 * @param password
-	 */
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	/**
-	 * @param ssh
-	 *            port
-	 */
-	public void setPort(Integer port) {
-		this.port = port;
-	}
-
-	/**
-	 * The host of the server where the target file is stored.
-	 * 
-	 * @return host
-	 */
-	public String getHost() {
-		return host;
-	}
-
-	/**
-	 * @return the user required to connect to remote machine
-	 */
-	public String getUser() {
-		return user;
-	}
-
-	/**
-	 * @return the password required to connect to remote machine
-	 */
-	public String getPassword() {
-		return password;
-	}
-
-	/**
-	 * @return the ssh port specified, default is 22
-	 */
-	public Integer getPort() {
-		return port;
 	}
 
 	/**
@@ -113,21 +70,6 @@ public class ServerDetails {
 				throw new IllegalArgumentException("Password is empty or null");
 			}
 		}
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		return EqualsBuilder.reflectionEquals(this, obj);
-	}
-
-	@Override
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
-	}
-
-	@Override
-	public int hashCode() {
-		return HashCodeBuilder.reflectionHashCode(this);
 	}
 
 }

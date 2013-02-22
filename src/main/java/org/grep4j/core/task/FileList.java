@@ -13,26 +13,26 @@ import org.grep4j.core.command.linux.ls.LsCommand;
 @Data
 public class FileList {
 
-    private final GrepRequest grepRequest;
+	private final GrepRequest grepRequest;
 
-    public List<String> list() {
+	public List<String> list() {
 
-	List<String> matchingFiles = new ArrayList<String>();
+		List<String> matchingFiles = new ArrayList<String>();
 
-	if (grepRequest.getProfile().containsWildcard()) {
-	    LsCommand ls = new LsCommand(grepRequest.getProfile());
-	    String filenames = getCommandExecutor(grepRequest.getServerDetails()).execute(ls).andReturnResult();
-	    if (!filenames.trim().isEmpty()) {
-		matchingFiles.addAll(aListOf(filenames));
-	    }
-	} else {
-	    matchingFiles.add(grepRequest.getProfile().getFilePath());
+		if (grepRequest.getProfile().containsWildcard()) {
+			LsCommand ls = new LsCommand(grepRequest.getProfile());
+			String filenames = getCommandExecutor(grepRequest.getServerDetails()).execute(ls).andReturnResult();
+			if (!filenames.trim().isEmpty()) {
+				matchingFiles.addAll(aListOf(filenames));
+			}
+		} else {
+			matchingFiles.add(grepRequest.getProfile().getFilePath());
+		}
+
+		return matchingFiles;
 	}
 
-	return matchingFiles;
-    }
-
-    private List<String> aListOf(String filenames) {
-	return Arrays.asList(filenames.split("\n"));
-    }
+	private List<String> aListOf(String filenames) {
+		return Arrays.asList(filenames.split("\n"));
+	}
 }
