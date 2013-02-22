@@ -27,7 +27,7 @@ public class GrepResults implements Collection<GrepResult> {
 	 * @param the expression used to grep
 	 */
 	public GrepResults(StopWatch clock) {
-		grepResults = new CopyOnWriteArrayList<GrepResult>();
+grepResults = new CopyOnWriteArrayList<GrepResult>();				
 		this.clock = clock;
 	}
 
