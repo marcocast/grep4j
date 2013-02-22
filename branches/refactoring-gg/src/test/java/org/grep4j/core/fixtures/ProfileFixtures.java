@@ -9,6 +9,9 @@ import org.grep4j.core.model.ProfileBuilder;
 
 public class ProfileFixtures {
 
+	private static final String PLAIN_LOCAL_PROFILE_NAME = "local";
+	private static final String GZ_LOCAL_PROFILE_NAME = "gz_local";
+
 	private ProfileFixtures() {
 	}
 
@@ -40,7 +43,7 @@ public class ProfileFixtures {
 		if (isWindows()) {
 			resourcePath = resourcePath.replaceAll(":", "");
 		}
-		return ProfileBuilder.newBuilder().name("local").filePath(resourcePath).onLocalhost().build();
+		return ProfileBuilder.newBuilder().name(PLAIN_LOCAL_PROFILE_NAME).filePath(resourcePath).onLocalhost().build();
 	}
 
 	public static Profile pizzaProfile() {
@@ -50,7 +53,7 @@ public class ProfileFixtures {
 		if (isWindows()) {
 			resourcePath = resourcePath.replaceAll(":", "");
 		}
-		return ProfileBuilder.newBuilder().name("local").filePath(resourcePath).onLocalhost().build();
+		return ProfileBuilder.newBuilder().name(PLAIN_LOCAL_PROFILE_NAME).filePath(resourcePath).onLocalhost().build();
 	}
 
 	public static Profile localProfileWithWildecard(String wildcard) {
@@ -60,7 +63,7 @@ public class ProfileFixtures {
 		if (isWindows()) {
 			resourcePath = resourcePath.replaceAll(":", "");
 		}
-		return ProfileBuilder.newBuilder().name("local").filePath(resourcePath + wildcard).onLocalhost().build();
+		return ProfileBuilder.newBuilder().name(PLAIN_LOCAL_PROFILE_NAME).filePath(resourcePath + wildcard).onLocalhost().build();
 	}
 
 	public static Profile localGzProfile() {
@@ -70,6 +73,6 @@ public class ProfileFixtures {
 		if (isWindows()) {
 			resourcePath = resourcePath.replaceAll(":", "");
 		}
-		return ProfileBuilder.newBuilder().name("local").filePath(resourcePath).onLocalhost().build();
+		return ProfileBuilder.newBuilder().name(GZ_LOCAL_PROFILE_NAME).filePath(resourcePath).onLocalhost().build();
 	}
 }

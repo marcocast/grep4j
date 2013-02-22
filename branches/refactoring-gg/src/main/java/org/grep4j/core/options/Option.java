@@ -1,19 +1,19 @@
 package org.grep4j.core.options;
 
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
+@EqualsAndHashCode
 public class Option {
 
+	@Getter
 	private final OptionTypes optionType;
+	@Getter
 	private final String optionCommand;
+	@Getter
 	private final String optionValue;
-
-	private Option(OptionTypes type, String optionCommand, String optionValue) {
-		this.optionType = type;
-		this.optionCommand = optionCommand;
-		this.optionValue = optionValue;
-	}
 
 	private Option(OptionTypes type, String optionCommand) {
 		this(type, optionCommand, null);
@@ -182,28 +182,6 @@ public class Option {
 	 */
 	public static Option grepVersion() {
 		return new Option(OptionTypes.GREP_OPTION, "--version");
-	}
-
-	public OptionTypes getOptionType() {
-		return this.optionType;
-	}
-
-	public String getOptionCommand() {
-		return optionCommand;
-	}
-
-	public String getOptionValue() {
-		return optionValue;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		return EqualsBuilder.reflectionEquals(this, obj);
-	}
-
-	@Override
-	public int hashCode() {
-		return HashCodeBuilder.reflectionHashCode(this);
 	}
 
 	@Override
