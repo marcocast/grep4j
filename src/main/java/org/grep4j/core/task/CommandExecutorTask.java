@@ -31,7 +31,7 @@ public class CommandExecutorTask implements Callable<GrepResult> {
 		clock.start();
 		String result = this.executorTask.execute(this.commandTask).andReturnResult();
 		clock.stop();
-		GrepResult taskResult = new GrepResult(requestTask, this.commandTask.getFile(), result, clock);
+		GrepResult taskResult = new GrepResult(requestTask, this.commandTask.getFile(), result, clock.getTime());
 		return taskResult;
 	}
 }

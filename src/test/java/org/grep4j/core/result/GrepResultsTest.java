@@ -13,11 +13,11 @@ public class GrepResultsTest {
 		GrepResult simpleGrepResult = GrepResultsFixture.simpleLocalGrepResultFixture("dummy pattern", "dummy result");
 		GrepResult gzGrepResult = GrepResultsFixture.gzLocalGrepResultFixture("dummy pattern", "dummy result");
 
-		GrepResults grepResults = new GrepResults(null);
+		GrepResults grepResults = new GrepResults();
 		grepResults.add(gzGrepResult);
 		grepResults.add(simpleGrepResult);
 
-		GrepResults expectedGrepResults = new GrepResults(null);
+		GrepResults expectedGrepResults = new GrepResults();
 		expectedGrepResults.add(simpleGrepResult);
 
 		GrepResults filteredResults = grepResults.filterOnProfile(simpleGrepResult.getGrepRequest().getProfile());

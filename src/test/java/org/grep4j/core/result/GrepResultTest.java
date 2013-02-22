@@ -27,7 +27,7 @@ public class GrepResultTest {
 			e.printStackTrace();
 		}
 		clock.stop();
-		GrepResult taskResult = new GrepResult(null, "", "", clock);
+		GrepResult taskResult = new GrepResult(null, "", "", clock.getNanoTime());
 		assertThat(new Long(taskResult.getExecutionTime()).intValue(), is(greaterThanOrEqualTo(sleepTime)));
 	}
 

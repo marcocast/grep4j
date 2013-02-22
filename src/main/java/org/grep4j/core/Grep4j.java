@@ -81,7 +81,7 @@ public final class Grep4j {
 	private Grep4j(GrepExpression expression, List<Profile> profiles, Option... options) {
 		this.grepRequests = new ArrayList<GrepRequest>(profiles.size());
 		this.clock = new StopWatch();
-		this.results = new GrepResults(clock);
+		this.results = new GrepResults();
 		this.expression = expression.getText();
 		this.profiles = ImmutableList.copyOf(profiles);
 		this.isRegexExpression = expression.isRegularExpression();
@@ -268,6 +268,7 @@ public final class Grep4j {
 			throw new RuntimeException("Error when executing the GrepTask", e);
 		} finally {
 			clock.stop();
+			results.setExecutionTime(clock.getTime());
 			if (executorService != null) {
 				executorService.shutdownNow();
 			}
