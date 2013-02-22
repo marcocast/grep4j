@@ -9,14 +9,11 @@ import org.apache.commons.lang.builder.ToStringStyle;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * Model class representing a file that will be the target of the grep command.
- * 
- * The Server Details class attributes will specify how to access the file
- * (either local file or credentials for accessing a remote machine)
+ * Model class representing a file that will be the target of the grep command. The Server Details class attributes will specify how to access the
+ * file (either local file or credentials for accessing a remote machine)
  * 
  * @author Giovanni Gargiulo
  * @author Marco Castigliego
- * 
  */
 @Immutable
 public class Profile {
@@ -26,9 +23,10 @@ public class Profile {
 	private ServerDetails serverDetails;
 
 	/**
-	 * 	
-	 * @param name unique identifier for this profile
-	 * @param filePath absolute path of where the file to grep exists. Example: "/opt/jboss/server/log/server.log"
+	 * @param name
+	 *            unique identifier for this profile
+	 * @param filePath
+	 *            absolute path of where the file to grep exists. Example: "/opt/jboss/server/log/server.log"
 	 */
 	public Profile(String name, String filePath) {
 		this.name = name;
@@ -63,8 +61,7 @@ public class Profile {
 	}
 
 	/**
-	 * @return the {@link ServerDetails} needed to connect to the remote or
-	 *         local server
+	 * @return the {@link ServerDetails} needed to connect to the remote or local server
 	 */
 	public ServerDetails getServerDetails() {
 		return serverDetails;

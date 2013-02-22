@@ -18,8 +18,7 @@ import com.google.common.collect.ImmutableList;
  */
 public class ServerDetails {
 
-	private static final List<String> localhostAliases = ImmutableList
-			.<String> builder().add("localhost", "127.0.0.1").build();
+	private static final List<String> localhostAliases = ImmutableList.<String> builder().add("localhost", "127.0.0.1").build();
 
 	private final String host;
 	private String user;
@@ -27,12 +26,8 @@ public class ServerDetails {
 	private Integer port;
 
 	/**
-	 * The hostname of the server where the target file is stored.
-	 * 
-	 * This can be either an IP or proper hostname.
-	 * 
-	 * In case of a local server, the hostname has to be either "localhost" or
-	 * "127.0.0.1"
+	 * The hostname of the server where the target file is stored. This can be either an IP or proper hostname. In case of a local server, the
+	 * hostname has to be either "localhost" or "127.0.0.1"
 	 * 
 	 * @param host
 	 */
@@ -60,7 +55,6 @@ public class ServerDetails {
 	}
 
 	/**
-	 * 
 	 * @param ssh
 	 *            port
 	 */
@@ -85,15 +79,13 @@ public class ServerDetails {
 	}
 
 	/**
-	 * 
 	 * @return the password required to connect to remote machine
 	 */
 	public String getPassword() {
 		return password;
 	}
-	
+
 	/**
-	 * 
 	 * @return the ssh port specified, default is 22
 	 */
 	public Integer getPort() {
@@ -101,8 +93,7 @@ public class ServerDetails {
 	}
 
 	/**
-	 * This method check if this ServerDetails is a "localhost" or "127.0.0.1"
-	 * otherwise return false
+	 * This method check if this ServerDetails is a "localhost" or "127.0.0.1" otherwise return false
 	 * 
 	 * @return true if localhost
 	 */
@@ -131,8 +122,7 @@ public class ServerDetails {
 
 	@Override
 	public String toString() {
-		return ToStringBuilder.reflectionToString(this,
-				ToStringStyle.MULTI_LINE_STYLE);
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
 	}
 
 	@Override

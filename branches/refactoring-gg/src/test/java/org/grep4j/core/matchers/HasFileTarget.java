@@ -32,8 +32,7 @@ public class HasFileTarget extends TypeSafeMatcher<List<GrepRequest>> {
 	}
 
 	@Factory
-	public static <T> Matcher<List<GrepRequest>> hasFileTarget(
-			String fileTargetName) {
+	public static <T> Matcher<List<GrepRequest>> hasFileTarget(String fileTargetName) {
 		return new HasFileTarget(fileTargetName);
 	}
 }

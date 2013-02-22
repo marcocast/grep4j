@@ -4,14 +4,11 @@ import org.grep4j.core.command.ExecutableCommand;
 import org.grep4j.core.model.Profile;
 
 /**
- * {@link LsCommand} is a {@link ExecutableCommand} object that build the command to list files.
- * It's used in case a wildcard is specified.
- * 
- * Example: "ls /tmp/server.log*"
+ * {@link LsCommand} is a {@link ExecutableCommand} object that build the command to list files. It's used in case a wildcard is specified. Example:
+ * "ls /tmp/server.log*"
  * 
  * @author Marco Castigliego
  * @author Giovanni Gargiulo
- *
  */
 public class LsCommand implements ExecutableCommand {
 

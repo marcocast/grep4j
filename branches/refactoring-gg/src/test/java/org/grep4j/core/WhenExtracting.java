@@ -41,12 +41,14 @@ public class WhenExtracting {
 	}
 
 	public void aGrepResultsSetWithMultipleFilesOnly1Match() {
-		GrepResults results = grep(constantExpression("ER"), on(Arrays.asList(localProfileWithWildecard("*"))), extraLinesAfter(20)).filterBy(constantExpression("GZ"));
+		GrepResults results = grep(constantExpression("ER"), on(Arrays.asList(localProfileWithWildecard("*"))), extraLinesAfter(20)).filterBy(
+				constantExpression("GZ"));
 		assertThat(results.size(), is(1));
 	}
 
 	public void aGrepResultsSetWithMultipleFiles2Matches() {
-		GrepResults results = grep(constantExpression("ER"), on(Arrays.asList(localProfileWithWildecard("*"))), extraLinesAfter(20)).filterBy(constantExpression("OR"));
+		GrepResults results = grep(constantExpression("ER"), on(Arrays.asList(localProfileWithWildecard("*"))), extraLinesAfter(20)).filterBy(
+				constantExpression("OR"));
 		assertThat(results.size(), is(2));
 	}
 
@@ -78,15 +80,18 @@ public class WhenExtracting {
 	}
 
 	public void aGrepResultsWithMultipleFilesMultipleExtracts() {
-		GrepResults results = grep(constantExpression("ER"),
-				on(Arrays.asList(localProfileWithWildecard("*"))), extraLinesAfter(20));
+		GrepResults results = grep(constantExpression("ER"), on(Arrays.asList(localProfileWithWildecard("*"))), extraLinesAfter(20));
 		for (GrepResult result : results) {
 			if (result.getFileName().endsWith("gz")) {
-				assertThat(StringUtils.contains(result.filterBy(constantExpression("OR")).filterBy(constantExpression("2")).getText(), "GZ ERROR 1"), is(false));
-				assertThat(StringUtils.contains(result.filterBy(constantExpression("OR")).filterBy(constantExpression("1")).getText(), "GZ ERROR 2"), is(false));
+				assertThat(StringUtils.contains(result.filterBy(constantExpression("OR")).filterBy(constantExpression("2")).getText(), "GZ ERROR 1"),
+						is(false));
+				assertThat(StringUtils.contains(result.filterBy(constantExpression("OR")).filterBy(constantExpression("1")).getText(), "GZ ERROR 2"),
+						is(false));
 			} else {
-				assertThat(StringUtils.contains(result.filterBy(constantExpression("fine")).filterBy(constantExpression("extract")).filterBy(regularExpression("(.*)ub(.*)")).getText(),
-						"fine double extract"), is(true));
+				assertThat(
+						StringUtils.contains(
+								result.filterBy(constantExpression("fine")).filterBy(constantExpression("extract"))
+										.filterBy(regularExpression("(.*)ub(.*)")).getText(), "fine double extract"), is(true));
 			}
 		}
 	}

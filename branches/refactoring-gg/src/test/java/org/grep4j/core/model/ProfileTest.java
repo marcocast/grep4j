@@ -18,7 +18,7 @@ public class ProfileTest {
 	private final static String name = "name";
 
 	public void testGettersAndSetters() {
-		Profile profile = new Profile(name,filePath);
+		Profile profile = new Profile(name, filePath);
 		profile.setServerDetails(null);
 		assertThat(profile.getFilePath(), is(filePath));
 		assertThat(profile.getName(), is(name));
@@ -51,13 +51,11 @@ public class ProfileTest {
 
 	public void testToStrig() {
 		Profile profile = ProfileFixtures.aDummyRemoteProfile();
-		assertThat(profile.toString(),
-				is(equalTo(ToStringBuilder.reflectionToString(profile,
-						ToStringStyle.MULTI_LINE_STYLE))));
+		assertThat(profile.toString(), is(equalTo(ToStringBuilder.reflectionToString(profile, ToStringStyle.MULTI_LINE_STYLE))));
 	}
 
-//	public void testEquals() {
-//		EqualsVerifier.forClass(Profile.class).suppress(Warning.NONFINAL_FIELDS).verify();
-//	}
+	// public void testEquals() {
+	// EqualsVerifier.forClass(Profile.class).suppress(Warning.NONFINAL_FIELDS).verify();
+	// }
 
 }

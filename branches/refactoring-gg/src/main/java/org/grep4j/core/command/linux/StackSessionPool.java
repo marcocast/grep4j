@@ -10,7 +10,6 @@ import com.jcraft.jsch.Session;
  * Pool controller. This class exposes the org.apache.commons.pool.KeyedObjectPool class.
  * 
  * @author Marco Castigliego
- *
  */
 public class StackSessionPool {
 
@@ -24,13 +23,11 @@ public class StackSessionPool {
 		return SingletonHolder.INSTANCE;
 	}
 
-	private StackSessionPool()
-	{
+	private StackSessionPool() {
 		startPool();
 	}
 
 	/**
-	 * 
 	 * @return the org.apache.commons.pool.KeyedObjectPool class
 	 */
 	public KeyedObjectPool<ServerDetails, Session> getPool() {
@@ -38,7 +35,6 @@ public class StackSessionPool {
 	}
 
 	/**
-	 * 
 	 * @return the org.apache.commons.pool.KeyedObjectPool class
 	 */
 	public void startPool() {

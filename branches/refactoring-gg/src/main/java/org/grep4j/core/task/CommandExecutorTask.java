@@ -8,11 +8,10 @@ import org.grep4j.core.command.linux.grep.AbstractGrepCommand;
 import org.grep4j.core.result.GrepResult;
 
 /**
- * This class run the Executor. Forking the executor is helpful in the case we have 
- * to grep into multiple files (Example when the profile.fileName is .../server.log*)
+ * This class run the Executor. Forking the executor is helpful in the case we have to grep into multiple files (Example when the profile.fileName is
+ * .../server.log*)
  * 
  * @author marcocast
- *
  */
 public class CommandExecutorTask implements Callable<GrepResult> {
 

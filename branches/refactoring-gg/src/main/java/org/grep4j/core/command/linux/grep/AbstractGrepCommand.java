@@ -17,8 +17,10 @@ public abstract class AbstractGrepCommand implements ExecutableCommand {
 	protected final StringBuilder command;
 
 	/**
-	 * @param expression to search
-	 * @param file to grep
+	 * @param expression
+	 *            to search
+	 * @param file
+	 *            to grep
 	 */
 	protected AbstractGrepCommand(String expression, String file, boolean regexExpression) {
 		this.expression = expression;
@@ -36,7 +38,6 @@ public abstract class AbstractGrepCommand implements ExecutableCommand {
 	}
 
 	/**
-	 *  
 	 * @param contextControls
 	 */
 	public void setContextControls(String contextControls) {
@@ -44,7 +45,6 @@ public abstract class AbstractGrepCommand implements ExecutableCommand {
 	}
 
 	/**
-	 *  
 	 * @param tailContextControls
 	 */
 	public void setTailContextControls(String tailContextControls) {

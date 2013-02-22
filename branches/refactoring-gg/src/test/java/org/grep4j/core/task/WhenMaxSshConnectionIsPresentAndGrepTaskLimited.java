@@ -12,24 +12,14 @@ import org.testng.annotations.Test;
 
 public class WhenMaxSshConnectionIsPresentAndGrepTaskLimited {
 
-    @DataProvider(name = "maxGrepTaskThreads")
-    public Object[][] maxGrepTaskThreads() {
-        return new Object[][]
-        {
-        { 1, 1, 1 },
-        { 5, 2, 2 },
-        { 3, 7, 3 },
-        { 3, 11, 3 },
-        { 20, 11, 11 },
-        { 20, 30, 20 },};
-    }
+	@DataProvider(name = "maxGrepTaskThreads")
+	public Object[][] maxGrepTaskThreads() {
+		return new Object[][] { { 1, 1, 1 }, { 5, 2, 2 }, { 3, 7, 3 }, { 3, 11, 3 }, { 20, 11, 11 }, { 20, 30, 20 }, };
+	}
 
-    @Test(dataProvider = "maxGrepTaskThreads")
-    public void shouldMatchSshConnection(int totTasks, int maxGrepTasks,
-        int expectedMaxThreads) {
-        OptionDecorator options = new OptionDecorator(
-                Arrays.asList(maxSshConnections(totTasks)));
-        assertThat(ForkController.maxGrepTaskThreads(options, maxGrepTasks),
-                is(expectedMaxThreads));
-    }
+	@Test(dataProvider = "maxGrepTaskThreads")
+	public void shouldMatchSshConnection(int totTasks, int maxGrepTasks, int expectedMaxThreads) {
+		OptionDecorator options = new OptionDecorator(Arrays.asList(maxSshConnections(totTasks)));
+		assertThat(ForkController.maxGrepTaskThreads(options, maxGrepTasks), is(expectedMaxThreads));
+	}
 }
