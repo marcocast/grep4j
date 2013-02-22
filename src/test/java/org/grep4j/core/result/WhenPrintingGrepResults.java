@@ -1,6 +1,6 @@
 package org.grep4j.core.result;
 
-import static org.grep4j.core.Grep4j.constantExpression;
+import static org.grep4j.core.Grep4j.naturalExpression;
 import static org.grep4j.core.Grep4j.grep;
 import static org.grep4j.core.fixtures.ProfileFixtures.localProfile;
 import static org.grep4j.core.fixtures.ProfileFixtures.localProfileWithWildecard;
@@ -15,13 +15,13 @@ import org.testng.annotations.Test;
 public class WhenPrintingGrepResults {
 
     public void aGrepResultsSetWithSingleFile() {
-	assertThat(grep(constantExpression("ERROR 1"), on(localProfile()), extraLinesAfter(20)).filterBy("Marco")
+	assertThat(grep(naturalExpression("ERROR 1"), on(localProfile()), extraLinesAfter(20)).filterBy("Marco")
 		.toString(), is("customer Marco(id=12345) has been updated successfully\r\n"));
 
     }
 
     public void aGrepResultsSetWithMultipleFiles() {
-	assertThat(grep(constantExpression("ERROR 1"), on(localProfileWithWildecard("*")), extraLinesAfter(20))
+	assertThat(grep(naturalExpression("ERROR 1"), on(localProfileWithWildecard("*")), extraLinesAfter(20))
 		.filterBy("Marco").toString(), is("customer Marco(id=12345) has been updated successfully\r\n"));
 
     }

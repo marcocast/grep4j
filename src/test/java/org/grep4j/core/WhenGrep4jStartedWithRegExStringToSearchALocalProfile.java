@@ -1,6 +1,6 @@
 package org.grep4j.core;
 
-import static org.grep4j.core.Grep4j.constantExpression;
+import static org.grep4j.core.Grep4j.naturalExpression;
 import static org.grep4j.core.Grep4j.grep;
 import static org.grep4j.core.Grep4j.regularExpression;
 import static org.grep4j.core.fixtures.ProfileFixtures.localProfile;
@@ -26,7 +26,7 @@ public class WhenGrep4jStartedWithRegExStringToSearchALocalProfile {
 
     public void customerRegexStringAppears1Time() {
 	assertThat(grep(regularExpression("customer(.*)updated"), on(profiles)).totalLines(), is(1));
-	assertThat(executing(grep(constantExpression("Marco"), on(profiles))).totalLines(), is(1));
+	assertThat(executing(grep(naturalExpression("Marco"), on(profiles))).totalLines(), is(1));
     }
 
     public void extraLineBefore() {

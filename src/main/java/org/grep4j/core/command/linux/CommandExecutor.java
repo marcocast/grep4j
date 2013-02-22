@@ -1,5 +1,7 @@
 package org.grep4j.core.command.linux;
 
+import lombok.RequiredArgsConstructor;
+
 import org.grep4j.core.command.ExecutableCommand;
 import org.grep4j.core.model.ServerDetails;
 
@@ -9,15 +11,12 @@ import org.grep4j.core.model.ServerDetails;
  * @author Marco Castigliego
  * @author Giovanni Gargiulo
  */
+@RequiredArgsConstructor
 public abstract class CommandExecutor {
 
     protected final ServerDetails serverDetails;
 
     protected String result;
-
-    public CommandExecutor(ServerDetails serverDetails) {
-	this.serverDetails = serverDetails;
-    }
 
     public abstract CommandExecutor execute(ExecutableCommand command);
 

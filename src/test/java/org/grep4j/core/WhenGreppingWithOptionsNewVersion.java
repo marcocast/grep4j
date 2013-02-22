@@ -1,6 +1,6 @@
 package org.grep4j.core;
 
-import static org.grep4j.core.Grep4j.constantExpression;
+import static org.grep4j.core.Grep4j.naturalExpression;
 import static org.grep4j.core.Grep4j.grep;
 import static org.grep4j.core.fixtures.ProfileFixtures.localProfile;
 import static org.grep4j.core.fluent.Dictionary.on;
@@ -21,21 +21,21 @@ import org.testng.annotations.Test;
 public class WhenGreppingWithOptionsNewVersion {
 
     public void countMatchesOption() {
-	GrepResults results = grep(constantExpression("ERROR 2"), on(localProfile()), countMatches());
+	GrepResults results = grep(naturalExpression("ERROR 2"), on(localProfile()), countMatches());
 	for (GrepResult result : results) {
 	    assertThat(result.toString(), is("1\n"));
 	}
     }
 
     public void onlyMatchingOption() {
-	GrepResults results = grep(constantExpression("Marco"), on(localProfile()), onlyMatching());
+	GrepResults results = grep(naturalExpression("Marco"), on(localProfile()), onlyMatching());
 	for (GrepResult result : results) {
 	    assertThat(result.toString(), is("Marco\n"));
 	}
     }
 
     public void onlyMatchingOptionAndcountMatchesOption() {
-	GrepResults results = grep(constantExpression("marco"), on(localProfile()),
+	GrepResults results = grep(naturalExpression("marco"), on(localProfile()),
 		with(options(onlyMatching(), countMatches(), ignoreCase())));
 	for (GrepResult result : results) {
 	    assertThat(result.toString(), is("1\n"));
@@ -43,7 +43,7 @@ public class WhenGreppingWithOptionsNewVersion {
     }
 
     public void withFileNameOption() {
-	GrepResults results = grep(constantExpression("ERROR 2"), on(localProfile()), withFileName());
+	GrepResults results = grep(naturalExpression("ERROR 2"), on(localProfile()), withFileName());
 	assertThat(results.filterBy("local.txt").totalLines(), is(1));
     }
 

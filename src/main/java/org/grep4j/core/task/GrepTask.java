@@ -3,7 +3,6 @@ package org.grep4j.core.task;
 import static org.grep4j.core.command.ServerDetailsInterpreter.getCommandExecutor;
 import static org.grep4j.core.task.ForkController.maxCommandExecutorTaskThreads;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CompletionService;
@@ -66,23 +65,15 @@ public class GrepTask implements Callable<List<GrepResult>> {
      * in a separated Grepresult
      */
     private void listMatchingFiles() {
-	if (grepRequest.getProfile().containsWildcard()) {
-	    LsCommand ls = new LsCommand(grepRequest.getProfile());
-	    String filenames = getCommandExecutor(grepRequest.getServerDetails()).execute(ls).andReturnResult();
-	    if (!filenames.trim().isEmpty()) {
-		matchingFiles.addAll(aListOf(filenames));
-	    }
-	} else {
-	    matchingFiles.add(grepRequest.getProfile().getFilePath());
-	}
+	matchingFiles.addAll(new FileList(grepRequest).list());
     }
 
     private void prepareGrepCommands() {
 	for (String filename : matchingFiles) {
-	    AbstractGrepCommand grep;
 	    if (filename.trim().isEmpty()) {
 		continue;
 	    }
+	    AbstractGrepCommand grep;
 	    if (isGz(filename)) {
 		grep = new GzGrepCommand(grepRequest.getExpression(), filename, grepRequest.isRegexExpression());
 	    } else {
@@ -106,10 +97,10 @@ public class GrepTask implements Callable<List<GrepResult>> {
 			    getCommandExecutor(grepRequest.getServerDetails()), command, grepRequest));
 		}
 
-		for (@SuppressWarnings("unused")
-		AbstractGrepCommand command : grepList) {
+		for (int i = 0; i < grepList.size(); i++) {
 		    results.add(completionService.take().get());
 		}
+
 	    } catch (Exception e) {
 		throw new RuntimeException("Error when executing the CommandExecutorTasks", e);
 	    } finally {
@@ -119,10 +110,6 @@ public class GrepTask implements Callable<List<GrepResult>> {
 	    }
 	}
 
-    }
-
-    private List<String> aListOf(String filenames) {
-	return Arrays.asList(filenames.split("\n"));
     }
 
     private boolean isGz(String matchingFile) {
