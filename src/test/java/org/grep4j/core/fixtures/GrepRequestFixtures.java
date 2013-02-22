@@ -10,13 +10,14 @@ public class GrepRequestFixtures {
 	private GrepRequestFixtures() {
 	}
 
-	public static GrepRequest localGrepERRORrequest(String pattern) {
+	public static GrepRequest simpleLocalGrepRequest(String pattern) {
 		GrepRequest grepRequest = new GrepRequest(pattern, localProfile());
 		return grepRequest;
 	}
-	
-	public static GrepRequest localGzGrepERRORrequest(String pattern) {
+
+	public static GrepRequest gzLocalGrepRequest(String pattern) {
 		GrepRequest grepRequest = new GrepRequest(pattern, localGzProfile());
 		return grepRequest;
 	}
+
 }

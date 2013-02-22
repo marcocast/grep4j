@@ -15,26 +15,13 @@ public class WhenAServeDetailIsInterpreted {
 
 	@DataProvider(name = "correctLocalHosts")
 	public Object[][] createCorrectLocalHosts() {
-		return new Object[][] {
-				{ "Localhost" },
-				{ "localhost" },
-				{ "localHost" },
-				{ "LOCALHOST" },
-				{ "127.0.0.1" },
-				{ "localHOST" },
-				{ "LoCaLhoST" },
-		};
+		return new Object[][] { { "Localhost" }, { "localhost" }, { "localHost" }, { "LOCALHOST" }, { "127.0.0.1" }, { "localHOST" },
+				{ "LoCaLhoST" }, };
 	}
 
 	@DataProvider(name = "incorrectLocalHosts")
 	public Object[][] createIncorrectLocalHosts() {
-		return new Object[][] {
-				{ "Localhosst" },
-				{ "localhst" },
-				{ "ocalHost" },
-				{ "172.12.22.22" },
-				{ "127.0.1.1" },
-		};
+		return new Object[][] { { "Localhosst" }, { "localhst" }, { "ocalHost" }, { "172.12.22.22" }, { "127.0.1.1" }, };
 	}
 
 	private ServerDetails serverDetails;

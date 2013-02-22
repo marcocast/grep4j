@@ -3,11 +3,10 @@ package org.grep4j.core.command.linux.grep;
 import org.grep4j.core.command.ExecutableCommand;
 
 /**
- * {@link SimpleGrepCommand} is a {@link ExecutableCommand} object that build the command to grep not compressed files.
- * Example: "grep ERROR /tmp/server.log"   
+ * {@link SimpleGrepCommand} is a {@link ExecutableCommand} object that build the command to grep not compressed files. Example:
+ * "grep ERROR /tmp/server.log"
  * 
  * @author Marco Castigliego
- *
  */
 public class SimpleGrepCommand extends AbstractGrepCommand {
 

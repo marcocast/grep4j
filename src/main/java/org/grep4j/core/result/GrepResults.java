@@ -13,7 +13,6 @@ import org.grep4j.core.model.Profile;
  * This class contains an List with all the results coming from the grep task
  * 
  * @author Marco Castigliego
- *
  */
 public class GrepResults implements Collection<GrepResult> {
 
@@ -22,12 +21,13 @@ public class GrepResults implements Collection<GrepResult> {
 	private final StopWatch clock;
 
 	/**
-	 * GlobalGrepResult is a container of different {@link GrepResult}  
+	 * GlobalGrepResult is a container of different {@link GrepResult}
 	 * 
-	 * @param the expression used to grep
+	 * @param the
+	 *            expression used to grep
 	 */
 	public GrepResults(StopWatch clock) {
-grepResults = new CopyOnWriteArrayList<GrepResult>();				
+		grepResults = new CopyOnWriteArrayList<GrepResult>();
 		this.clock = clock;
 	}
 
@@ -45,8 +45,7 @@ grepResults = new CopyOnWriteArrayList<GrepResult>();
 	}
 
 	/**
-	 * It filters the grepResults object based on the Profile name passed 
-	 * and return All the GrepResult for only the particular Profile passed.  
+	 * It filters the grepResults object based on the Profile name passed and return All the GrepResult for only the particular Profile passed.
 	 * 
 	 * @param profile
 	 * @return GrepResults for the passed Profile
@@ -63,7 +62,6 @@ grepResults = new CopyOnWriteArrayList<GrepResult>();
 	}
 
 	/**
-	 * 
 	 * @return the average time spent for all the grep tasks in milliseconds
 	 */
 	public long getAverageExecutionTime() {
@@ -75,7 +73,6 @@ grepResults = new CopyOnWriteArrayList<GrepResult>();
 	}
 
 	/**
-	 * 
 	 * @return the total time spent for all the grep tasks in milliseconds
 	 */
 	public long getTotalExecutionTime() {
@@ -83,26 +80,26 @@ grepResults = new CopyOnWriteArrayList<GrepResult>();
 	}
 
 	/**
-	 * 
 	 * @return the total time spent for all the grep tasks in nanoseconds
 	 */
 	public long getTotalExecutionNanoTime() {
 		return clock.getNanoTime();
 	}
-	
+
 	/**
-	 * Loop through all the GrepResults and for each one extracts the lines that match with the passed filter as a constant or regular Expression 
+	 * Loop through all the GrepResults and for each one extracts the lines that match with the passed filter as a constant or regular Expression
+	 * 
 	 * @param expression
-	 * @return the lines that match with the passed filter as a constant or regular Expression 
+	 * @return the lines that match with the passed filter as a constant or regular Expression
 	 */
 	public GrepResults filterBy(GrepExpression grepExpression) {
-		if(grepExpression.isRegularExpression()){
+		if (grepExpression.isRegularExpression()) {
 			return filterByRE(grepExpression.getText());
-		}else{
+		} else {
 			return filterBy(grepExpression.getText());
 		}
-	}	
-	
+	}
+
 	private GrepResults filterByRE(String expression) {
 		GrepResults grepResultsSet = new GrepResults(clock);
 

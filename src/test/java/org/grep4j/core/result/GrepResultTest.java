@@ -12,12 +12,7 @@ public class GrepResultTest {
 
 	@DataProvider(name = "sleepTime")
 	public Object[][] sleepTime() {
-		return new Object[][] {
-				{ 10 },
-				{ 0 },
-				{ 100 },
-				{ 202 },
-				{ 11 },
+		return new Object[][] { { 10 }, { 0 }, { 100 }, { 202 }, { 11 },
 
 		};
 	}

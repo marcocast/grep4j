@@ -35,8 +35,7 @@ public class WhenGreppingWithOptionsNewVersion {
 	}
 
 	public void onlyMatchingOptionAndcountMatchesOption() {
-		GrepResults results = grep(constantExpression("marco"), on(localProfile()),
-				with(options(onlyMatching(), countMatches(), ignoreCase())));
+		GrepResults results = grep(constantExpression("marco"), on(localProfile()), with(options(onlyMatching(), countMatches(), ignoreCase())));
 		for (GrepResult result : results) {
 			assertThat(result.toString(), is("1\n"));
 		}

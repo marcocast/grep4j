@@ -13,32 +13,24 @@ public class ProfileFixtures {
 	}
 
 	public static Profile aDummyRemoteProfile() {
-		return ProfileBuilder.newBuilder().name("dummy remote profiel")
-				.filePath("/path/to/file/filename.txt")
-				.onRemotehost("172.60.60.60").credentials("user", "password")
-				.build();
+		return ProfileBuilder.newBuilder().name("dummy remote profiel").filePath("/path/to/file/filename.txt").onRemotehost("172.60.60.60")
+				.credentials("user", "password").build();
 
 	}
 
 	public static Profile aDummyRemoteProfileWithWildcard(String wildcard) {
-		return ProfileBuilder.newBuilder().name("dummy remote profiel")
-				.filePath("/path/to/file/filename.txt")
-				.onRemotehost("172.66.66.66").credentials("user", "password")
-				.build();
+		return ProfileBuilder.newBuilder().name("dummy remote profiel").filePath("/path/to/file/filename.txt").onRemotehost("172.66.66.66")
+				.credentials("user", "password").build();
 	}
 
 	public static Profile anotherDummyRemoteProfile() {
-		return ProfileBuilder.newBuilder().name("dummy remote profiel")
-				.filePath("/path/to/file/filename.txt")
-				.onRemotehost("172.68.68.68").credentials("user", "password")
-				.build();
+		return ProfileBuilder.newBuilder().name("dummy remote profiel").filePath("/path/to/file/filename.txt").onRemotehost("172.68.68.68")
+				.credentials("user", "password").build();
 	}
 
 	public static Profile aRemoteProfileWithUnknownServers() {
-		return ProfileBuilder.newBuilder().name("dummy remote profiel")
-				.filePath("/path/to/file/filename.txt")
-				.onRemotehost("DontTellMeYouCanResolveThis")
-				.credentials("user", "password").build();
+		return ProfileBuilder.newBuilder().name("dummy remote profiel").filePath("/path/to/file/filename.txt")
+				.onRemotehost("DontTellMeYouCanResolveThis").credentials("user", "password").build();
 	}
 
 	public static Profile localProfile() {
@@ -50,7 +42,7 @@ public class ProfileFixtures {
 		}
 		return ProfileBuilder.newBuilder().name("local").filePath(resourcePath).onLocalhost().build();
 	}
-	
+
 	public static Profile pizzaProfile() {
 		String fileName = "pizza.txt";
 		URL url = ProfileFixtures.class.getClassLoader().getResource(fileName);

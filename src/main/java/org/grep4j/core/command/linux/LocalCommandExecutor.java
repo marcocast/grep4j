@@ -7,11 +7,9 @@ import org.grep4j.core.command.ExecutableCommand;
 import org.grep4j.core.model.ServerDetails;
 
 /**
- * The LocalCommandExecutor uses the java.lang.Process to execute the commands.
- * Example of local command: bash -c ls /tmp/*.txt 
+ * The LocalCommandExecutor uses the java.lang.Process to execute the commands. Example of local command: bash -c ls /tmp/*.txt
  * 
  * @author Marco Castigliego
- *
  */
 public class LocalCommandExecutor extends CommandExecutor {
 
@@ -29,8 +27,7 @@ public class LocalCommandExecutor extends CommandExecutor {
 		return this;
 	}
 
-	private void executeCommand(ExecutableCommand command)
-			throws IOException {
+	private void executeCommand(ExecutableCommand command) throws IOException {
 		String[] commands = { "bash", "-c", command.getCommandToExecute() };
 		try {
 			Process p = Runtime.getRuntime().exec(commands);

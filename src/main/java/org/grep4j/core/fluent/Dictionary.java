@@ -7,18 +7,18 @@ import java.util.List;
  * Utility class to group all the fluent mirror methods that help the readability of the code.
  * 
  * @author Marco Castigliego
- *
  */
 public class Dictionary {
 	private Dictionary() {
 	}
 
 	/**
-	 * Fluent mirror method: use this method to give more readability to the code.
-	 * Example:
+	 * Fluent mirror method: use this method to give more readability to the code. Example:
+	 * 
 	 * <pre>
 	 * assertThat("ERROR", appears(atMost(2).times(), <b>on</b>(profiles)));
 	 * </pre>
+	 * 
 	 * @param type
 	 * @return type
 	 */
@@ -27,11 +27,12 @@ public class Dictionary {
 	}
 
 	/**
-	 * Fluent mirror method: use this method to give more readability to the code.
-	 * Example:
+	 * Fluent mirror method: use this method to give more readability to the code. Example:
+	 * 
 	 * <pre>
 	 * assertThat("ERROR", appears(atMost(2).times(), <b>on</b>(profile1, profile2)));
 	 * </pre>
+	 * 
 	 * @param type
 	 * @return type
 	 */
@@ -40,8 +41,8 @@ public class Dictionary {
 	}
 
 	/**
-	 * Fluent mirror method: use this method to give more readability to the code.
-	 * Example:
+	 * Fluent mirror method: use this method to give more readability to the code. Example:
+	 * 
 	 * <pre>
 	 * int actualOccurrences = totalOccurrences(<b>expression</b>("info"), on(results));
 	 * </pre>
@@ -54,8 +55,8 @@ public class Dictionary {
 	}
 
 	/**
-	 * Fluent mirror method: use this method to give more readability to the code.
-	 * Example:
+	 * Fluent mirror method: use this method to give more readability to the code. Example:
+	 * 
 	 * <pre>
 	 * assertThat(whenCalling(getCommandExecutor(<b>with</b>(onetwosevenServerDetails()))), is(returned(LocalCommandExecutor.class)));
 	 * </pre>
@@ -68,8 +69,8 @@ public class Dictionary {
 	}
 
 	/**
-	 * Fluent mirror method: use this method to give more readability to the code.
-	 * Example:
+	 * Fluent mirror method: use this method to give more readability to the code. Example:
+	 * 
 	 * <pre>
 	 * assertThat(<b>whenCalling</b>(getCommandExecutor(with(onetwosevenServerDetails()))), is(returned(LocalCommandExecutor.class)));
 	 * </pre>
@@ -82,8 +83,8 @@ public class Dictionary {
 	}
 
 	/**
-	 * Fluent mirror method: use this method to give more readability to the code.
-	 * Example:
+	 * Fluent mirror method: use this method to give more readability to the code. Example:
+	 * 
 	 * <pre>
 	 * assertThat(<b>executing</b>(getCommandExecutor(with(onetwosevenServerDetails()))), is(returned(LocalCommandExecutor.class)));
 	 * </pre>
@@ -96,8 +97,8 @@ public class Dictionary {
 	}
 
 	/**
-	 * Fluent mirror method: use this method to give more readability to the code.
-	 * Example:
+	 * Fluent mirror method: use this method to give more readability to the code. Example:
+	 * 
 	 * <pre>
 	 * assertThat(whenCalling(getCommandExecutor(with(onetwosevenServerDetails()))), is(<b>returned</b>(LocalCommandExecutor.class)));
 	 * </pre>

@@ -26,17 +26,12 @@ import org.testng.annotations.Test;
 public class WhenGreppingWithOptions {
 
 	public void linesAfter() {
-		GrepResults results = grep(constantExpression("ERROR 1"), on(localProfile()),
-				extraLinesAfter(20));
-		assertThat(
-				results.filterBy(
-						constantExpression("customer Marco(id=12345) has been updated successfully"))
-						.totalLines(), is(1));
+		GrepResults results = grep(constantExpression("ERROR 1"), on(localProfile()), extraLinesAfter(20));
+		assertThat(results.filterBy(constantExpression("customer Marco(id=12345) has been updated successfully")).totalLines(), is(1));
 	}
 
 	public void linesBefore() {
-		GrepResults results = grep(constantExpression("ERROR 2"), on(localProfile()),
-				extraLinesBefore(20));
+		GrepResults results = grep(constantExpression("ERROR 2"), on(localProfile()), extraLinesBefore(20));
 		assertThat(results.filterBy(constantExpression("ERROR 1")).totalLines(), is(1));
 	}
 
@@ -46,22 +41,19 @@ public class WhenGreppingWithOptions {
 	}
 
 	public void countMatchesOption() {
-		GrepResults results = grep(constantExpression("ERROR 2"), on(localProfile()),
-				countMatches());
+		GrepResults results = grep(constantExpression("ERROR 2"), on(localProfile()), countMatches());
 		for (GrepResult result : results) {
 			assertThat(result.toString(), is("1\n"));
 		}
 	}
 
 	public void withFileNameOption() {
-		GrepResults results = grep(constantExpression("ERROR 2"), on(localProfile()),
-				withFileName());
+		GrepResults results = grep(constantExpression("ERROR 2"), on(localProfile()), withFileName());
 		assertThat(results.filterBy(constantExpression("local.txt")).totalLines(), is(1));
 	}
 
 	public void withIgnoreCase() {
-		GrepResults results = grep(constantExpression("ERRor 2"), on(localProfile()), ignoreCase(),
-				countMatches());
+		GrepResults results = grep(constantExpression("ERRor 2"), on(localProfile()), ignoreCase(), countMatches());
 
 		assertThat(results.toString(), is("1\n"));
 	}

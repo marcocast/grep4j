@@ -8,12 +8,7 @@ public abstract class GrepCommandTest {
 
 	@DataProvider(name = "expressionsAndFile")
 	public Object[][] expressionsAndFile() {
-		return new Object[][] {
-				{ "INFO", "/opt/jboss/server/default/log/server.log" },
-				{ "ERROR", "/opt/jboss/server/default/log/server.log" },
-				{ "String to search", "server.log" },
-				{ "//uh//iij", "any.txt" },
-				{ "id:\"23456\"", "/opt/jboss/server/default/log/server.log" },
-		};
+		return new Object[][] { { "INFO", "/opt/jboss/server/default/log/server.log" }, { "ERROR", "/opt/jboss/server/default/log/server.log" },
+				{ "String to search", "server.log" }, { "//uh//iij", "any.txt" }, { "id:\"23456\"", "/opt/jboss/server/default/log/server.log" }, };
 	}
 }
