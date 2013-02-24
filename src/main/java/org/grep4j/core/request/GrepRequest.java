@@ -5,7 +5,7 @@ import static ch.lambdaj.Lambda.join;
 import org.grep4j.core.model.Profile;
 import org.grep4j.core.model.ServerDetails;
 import org.grep4j.core.options.OptionTypes;
-import org.grep4j.core.options.OptionDecorator;
+import org.grep4j.core.options.OptionsDecorator;
 
 /**
  * Class container of the grep request
@@ -49,7 +49,7 @@ public final class GrepRequest {
 	 * Add Extra options {@see Option}
 	 * @param options
 	 */
-	public void addOptions(OptionDecorator options) {
+	public void addOptions(OptionsDecorator options) {
 		this.contextControls = join(options.findOptionsByType(OptionTypes.GREP_OPTION), SPACE);
 		this.tailContextControls = join(options.findOptionsByType(OptionTypes.TAIL_OPTION), SPACE);
 	}

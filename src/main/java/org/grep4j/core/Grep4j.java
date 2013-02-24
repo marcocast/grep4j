@@ -14,7 +14,7 @@ import org.apache.commons.lang3.time.StopWatch;
 import org.grep4j.core.command.linux.StackSessionPool;
 import org.grep4j.core.model.Profile;
 import org.grep4j.core.options.Option;
-import org.grep4j.core.options.OptionDecorator;
+import org.grep4j.core.options.OptionsDecorator;
 import org.grep4j.core.request.GrepExpression;
 import org.grep4j.core.request.GrepRequest;
 import org.grep4j.core.result.GrepResult;
@@ -67,7 +67,7 @@ public final class Grep4j {
 
 	private final String expression;
 	private final ImmutableList<Profile> profiles;
-	private final OptionDecorator options;
+	private final OptionsDecorator options;
 	private final GrepResults results;
 	private final List<GrepRequest> grepRequests;
 	private final boolean isRegexExpression;
@@ -91,7 +91,7 @@ public final class Grep4j {
 		this.expression = expression;
 		this.profiles = ImmutableList.copyOf(profiles);
 		this.isRegexExpression = isRegexExpression;
-		this.options = new OptionDecorator(options);
+		this.options = new OptionsDecorator(options);
 	}
 
 	/**
@@ -110,7 +110,7 @@ public final class Grep4j {
 		this.results = new GrepResults(clock);
 		this.expression = expression;
 		this.profiles = ImmutableList.copyOf(profiles);
-		this.options = new OptionDecorator();
+		this.options = new OptionsDecorator();
 		this.isRegexExpression = isRegexExpression;
 	}
 
