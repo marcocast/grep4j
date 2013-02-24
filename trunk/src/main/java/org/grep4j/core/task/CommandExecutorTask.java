@@ -5,6 +5,7 @@ import java.util.concurrent.Callable;
 import org.apache.commons.lang3.time.StopWatch;
 import org.grep4j.core.command.linux.CommandExecutor;
 import org.grep4j.core.command.linux.grep.AbstractGrepCommand;
+import org.grep4j.core.request.GrepRequest;
 import org.grep4j.core.result.GrepResult;
 
 /**

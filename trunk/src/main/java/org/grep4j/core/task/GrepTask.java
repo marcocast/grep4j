@@ -17,6 +17,7 @@ import org.grep4j.core.command.linux.grep.AbstractGrepCommand;
 import org.grep4j.core.command.linux.grep.GzGrepCommand;
 import org.grep4j.core.command.linux.grep.SimpleGrepCommand;
 import org.grep4j.core.command.linux.ls.LsCommand;
+import org.grep4j.core.request.GrepRequest;
 import org.grep4j.core.result.GrepResult;
 
 /**

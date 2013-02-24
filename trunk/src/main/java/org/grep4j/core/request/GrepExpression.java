@@ -1,4 +1,4 @@
-package org.grep4j.core;
+package org.grep4j.core.request;
 
 public class GrepExpression {
 

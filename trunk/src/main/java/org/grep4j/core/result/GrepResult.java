@@ -7,8 +7,8 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.StopWatch;
-import org.grep4j.core.GrepExpression;
-import org.grep4j.core.task.GrepRequest;
+import org.grep4j.core.request.GrepExpression;
+import org.grep4j.core.request.GrepRequest;
 
 /**
  * This class contains the result of the grep in String format.
@@ -17,7 +17,7 @@ import org.grep4j.core.task.GrepRequest;
  * 
  * 
  */
-public class GrepResult {
+public final class GrepResult {
 
 	private static final Pattern linePattern = Pattern.compile(".*\r?\n");
 	private final GrepRequest grepRequest;
