@@ -12,15 +12,15 @@ import com.google.common.collect.ImmutableList;
  * 
  * @author pjurski
  */
-public final class OptionDecorator {
+public final class OptionsDecorator {
 
 	private final List<Option> options;
 
-	public OptionDecorator() {
+	public OptionsDecorator() {
 		this(null);
 	}
 
-	public OptionDecorator(List<Option> options) {
+	public OptionsDecorator(List<Option> options) {
 		if (options != null) {
 			this.options = ImmutableList.copyOf(options);
 		} else {
