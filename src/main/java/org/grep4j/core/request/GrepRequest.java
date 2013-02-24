@@ -1,4 +1,4 @@
-package org.grep4j.core.task;
+package org.grep4j.core.request;
 
 import static ch.lambdaj.Lambda.join;
 
@@ -14,7 +14,7 @@ import org.grep4j.core.options.OptionDecorator;
  * @author Giovanni Gargiulo
  *
  */
-public class GrepRequest {
+public final class GrepRequest {
 
 	private static final String SPACE = " ";
 
@@ -93,7 +93,7 @@ public class GrepRequest {
 	}
 
 	/**
-	 * @return the pattern / exression to search
+	 * @return the pattern / expression to search
 	 */
 	public String getExpression() {
 		return expression;

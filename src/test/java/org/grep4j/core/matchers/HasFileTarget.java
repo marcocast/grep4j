@@ -2,7 +2,7 @@ package org.grep4j.core.matchers;
 
 import java.util.List;
 
-import org.grep4j.core.task.GrepRequest;
+import org.grep4j.core.request.GrepRequest;
 import org.hamcrest.Description;
 import org.hamcrest.Factory;
 import org.hamcrest.Matcher;

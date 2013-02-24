@@ -5,6 +5,7 @@ import static org.grep4j.core.Grep4j.constantExpression;
 import static org.junit.Assert.assertThat;
 
 import org.grep4j.core.model.Profile;
+import org.grep4j.core.request.GrepRequest;
 import org.grep4j.core.result.GrepResult;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;

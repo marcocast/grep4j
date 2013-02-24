@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.apache.commons.lang3.time.StopWatch;
-import org.grep4j.core.GrepExpression;
 import org.grep4j.core.model.Profile;
+import org.grep4j.core.request.GrepExpression;
 
 /**
  * This class contains an List with all the results coming from the grep task
