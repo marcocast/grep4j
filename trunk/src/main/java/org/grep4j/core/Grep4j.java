@@ -366,7 +366,9 @@ public final class Grep4j {
 		for (Profile profile : profiles) {
 			GrepRequest grepRequest = new GrepRequest(expression, profile,
 					isRegexExpression);
-			grepRequest.addOptions(options);
+			if (options != null && !options.isEmpty()) {
+				grepRequest.addOptions(options);
+			}
 			grepRequests.add(grepRequest);
 		}
 	}
