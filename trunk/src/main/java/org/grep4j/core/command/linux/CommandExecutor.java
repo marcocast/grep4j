@@ -4,7 +4,7 @@ import org.grep4j.core.command.ExecutableCommand;
 import org.grep4j.core.model.ServerDetails;
 
 /**
- * Base class for executing commands against a Server 
+ * Base class for executing commands against a Server
  * 
  * @author Marco Castigliego
  * @author Giovanni Gargiulo

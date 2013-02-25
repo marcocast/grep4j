@@ -6,8 +6,6 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThat;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
 import org.grep4j.core.fixtures.ProfileFixtures;
 import org.testng.annotations.Test;
 
@@ -18,7 +16,7 @@ public class ProfileTest {
 	private final static String name = "name";
 
 	public void testGettersAndSetters() {
-		Profile profile = new Profile(name,filePath);
+		Profile profile = new Profile(name, filePath);
 		profile.setServerDetails(null);
 		assertThat(profile.getFilePath(), is(filePath));
 		assertThat(profile.getName(), is(name));
@@ -48,16 +46,5 @@ public class ProfileTest {
 		Profile profile2 = ProfileFixtures.anotherDummyRemoteProfile();
 		assertThat(profile.hashCode(), is(not(equalTo(profile2.hashCode()))));
 	}
-
-	public void testToStrig() {
-		Profile profile = ProfileFixtures.aDummyRemoteProfile();
-		assertThat(profile.toString(),
-				is(equalTo(ToStringBuilder.reflectionToString(profile,
-						ToStringStyle.MULTI_LINE_STYLE))));
-	}
-
-//	public void testEquals() {
-//		EqualsVerifier.forClass(Profile.class).suppress(Warning.NONFINAL_FIELDS).verify();
-//	}
 
 }

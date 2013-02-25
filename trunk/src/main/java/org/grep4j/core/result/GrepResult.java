@@ -3,10 +3,11 @@ package org.grep4j.core.result;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.time.StopWatch;
 import org.grep4j.core.request.GrepExpression;
 import org.grep4j.core.request.GrepRequest;
 
@@ -14,70 +15,27 @@ import org.grep4j.core.request.GrepRequest;
  * This class contains the result of the grep in String format.
  * 
  * @author Marco Castigliego
- * 
- * 
+ * @author Giovanni Gargiulo
  */
-public final class GrepResult {
+@RequiredArgsConstructor
+@EqualsAndHashCode
+public class GrepResult {
 
 	private static final Pattern linePattern = Pattern.compile(".*\r?\n");
+	@Getter
 	private final GrepRequest grepRequest;
+	@Getter
 	private final String fileName;
+	@Getter
 	private final String text;
-	private final StopWatch clock;
-
-	public GrepResult(GrepRequest grepRequest, String fileName, String text,
-			StopWatch clock) {
-		super();
-		this.grepRequest = grepRequest;
-		this.fileName = fileName;
-		this.text = text;
-		this.clock = clock;
-	}
-
-	private GrepResult(String expression, GrepRequest grepRequest,
-			String fileName, String text, StopWatch clock) {
-		super();
-		this.grepRequest = grepRequest;
-		this.fileName = fileName;
-		this.text = text;
-		this.clock = clock;
-	}
+	@Getter
+	private final long executionTime;
 
 	/**
 	 * @return the profile name associated with this grep result
 	 */
 	public String getProfileName() {
 		return grepRequest.getProfile().getName();
-	}
-
-	/**
-	 * @return the file name associated with this grep result
-	 */
-	public String getFileName() {
-		return fileName;
-	}
-
-	/**
-	 * @return the text containing the result of the grep
-	 */
-	public String getText() {
-		return text;
-	}
-
-	/**
-	 * 
-	 * @return the total time spent for the grep task in milliseconds
-	 */
-	public long getExecutionTime() {
-		return clock.getTime();
-	}
-
-	/**
-	 * 
-	 * @return the total time spent for the grep task in nanoseconds
-	 */
-	public long getExecutionNanoTime() {
-		return clock.getNanoTime();
 	}
 
 	/**
@@ -95,12 +53,10 @@ public final class GrepResult {
 	}
 
 	/**
-	 * extract the lines that match with the passed filter as a constant or
-	 * regular Expression
+	 * extract the lines that match with the passed filter as a constant or regular Expression
 	 * 
 	 * @param expression
-	 * @return the lines that match with the passed filter as a constant or
-	 *         regular Expression
+	 * @return the lines that match with the passed filter as a constant or regular Expression
 	 */
 	public GrepResult filterBy(GrepExpression grepExpression) {
 		if (grepExpression.isRegularExpression()) {
@@ -128,8 +84,7 @@ public final class GrepResult {
 			}
 		}
 
-		return new GrepResult(expression, grepRequest.copyWithRegEx(),
-				fileName, textResult.toString(), clock);
+		return new GrepResult(grepRequest.copyWithRegEx(), fileName, textResult.toString(), executionTime);
 	}
 
 	private GrepResult filterBy(String expression) {
@@ -142,18 +97,7 @@ public final class GrepResult {
 			}
 		}
 
-		return new GrepResult(expression, grepRequest.copyWithNoRegEx(),
-				fileName, textResult.toString(), clock);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		return EqualsBuilder.reflectionEquals(this, obj);
-	}
-
-	@Override
-	public int hashCode() {
-		return HashCodeBuilder.reflectionHashCode(this);
+		return new GrepResult(grepRequest.copyWithNoRegEx(), fileName, textResult.toString(), executionTime);
 	}
 
 	@Override

@@ -85,11 +85,15 @@ public class WhenExtractingWithRegEx {
 		GrepResults results = grep(constantExpression("ER"), on(Arrays.asList(localProfileWithWildecard("*"))), extraLinesAfter(20));
 		for (GrepResult result : results) {
 			if (result.getFileName().endsWith("gz")) {
-				assertThat(StringUtils.contains(result.filterBy(regularExpression("OR")).filterBy(regularExpression("2")).getText(), "GZ ERROR 1"), is(false));
-				assertThat(StringUtils.contains(result.filterBy(regularExpression("OR")).filterBy(regularExpression("1")).getText(), "GZ ERROR 2"), is(false));
+				assertThat(StringUtils.contains(result.filterBy(regularExpression("OR")).filterBy(regularExpression("2")).getText(), "GZ ERROR 1"),
+						is(false));
+				assertThat(StringUtils.contains(result.filterBy(regularExpression("OR")).filterBy(regularExpression("1")).getText(), "GZ ERROR 2"),
+						is(false));
 			} else {
-				assertThat(StringUtils.contains(result.filterBy(regularExpression("fine")).filterBy(regularExpression("extract")).filterBy(regularExpression("(.*)ub(.*)")).getText(),
-						"fine double extract"), is(true));
+				assertThat(
+						StringUtils.contains(
+								result.filterBy(regularExpression("fine")).filterBy(regularExpression("extract"))
+										.filterBy(regularExpression("(.*)ub(.*)")).getText(), "fine double extract"), is(true));
 			}
 		}
 	}

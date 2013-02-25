@@ -1,6 +1,11 @@
 package org.grep4j.core.request;
 
 import static ch.lambdaj.Lambda.join;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import org.grep4j.core.model.Profile;
 import org.grep4j.core.model.ServerDetails;
@@ -12,32 +17,32 @@ import org.grep4j.core.options.OptionsDecorator;
  * 
  * @author Marco Castigliego
  * @author Giovanni Gargiulo
- *
  */
-public final class GrepRequest {
+@RequiredArgsConstructor
+@EqualsAndHashCode
+@ToString
+public class GrepRequest {
 
 	private static final String SPACE = " ";
 
-	protected final Profile profile;
+	@Getter
 	private final String expression;
+	@Getter
+	private final Profile profile;
+	@Getter
 	private final boolean isRegexExpression;
+	@Getter
+	@Setter
 	private String contextControls;
+	@Getter
+	@Setter
 	private String tailContextControls;
 
 	/**
-	 * @param pattern search 
-	 * @param profile to grep
-	 * @param isRegexExpression
-	 */
-	public GrepRequest(String expression, Profile profile, boolean isRegexExpression) {
-		this.profile = profile;
-		this.expression = expression;
-		this.isRegexExpression = isRegexExpression;
-	}
-
-	/**
-	 * @param pattern search 
-	 * @param profile to grep
+	 * @param pattern
+	 *            search
+	 * @param profile
+	 *            to grep
 	 */
 	public GrepRequest(String pattern, Profile profile) {
 		this.profile = profile;
@@ -47,6 +52,7 @@ public final class GrepRequest {
 
 	/**
 	 * Add Extra options {@see Option}
+	 * 
 	 * @param options
 	 */
 	public void addOptions(OptionsDecorator options) {
@@ -55,29 +61,6 @@ public final class GrepRequest {
 	}
 
 	/**
-	 * @return the Context Controls grouped as string
-	 */
-	public String getContextControls() {
-		return contextControls;
-	}
-
-	/**
-	 * @return the Tail Context Controls grouped as string
-	 */
-	public String getTailContextControls() {
-		return tailContextControls;
-	}
-
-	/**
-	 * 
-	 * @return if the expression is a regex expression
-	 */
-	public boolean isRegexExpression() {
-		return this.isRegexExpression;
-	}
-
-	/**
-	 * 
 	 * @return a copy of this GrepRequest with isRegexExpression set to true
 	 */
 	public GrepRequest copyWithRegEx() {
@@ -85,25 +68,14 @@ public final class GrepRequest {
 	}
 
 	/**
-	 * 
 	 * @return a copy of this GrepRequest with isRegexExpression set to false
 	 */
 	public GrepRequest copyWithNoRegEx() {
 		return new GrepRequest(this.getExpression(), this.getProfile(), false);
 	}
 
-	/**
-	 * @return the pattern / expression to search
-	 */
-	public String getExpression() {
-		return expression;
-	}
-
 	public ServerDetails getServerDetails() {
 		return profile.getServerDetails();
 	}
 
-	public Profile getProfile() {
-		return profile;
-	}
 }

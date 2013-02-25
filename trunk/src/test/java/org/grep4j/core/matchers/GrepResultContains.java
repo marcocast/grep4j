@@ -26,8 +26,7 @@ public class GrepResultContains extends TypeSafeMatcher<GrepResults> {
 	}
 
 	@Factory
-	public static <T> Matcher<GrepResults> containsExpression(
-			String expression) {
+	public static <T> Matcher<GrepResults> containsExpression(String expression) {
 		return new GrepResultContains(expression);
 	}
 }

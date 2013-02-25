@@ -1,8 +1,11 @@
 package org.grep4j.core.options;
 
-import java.util.ArrayList;
+import static ch.lambdaj.Lambda.having;
+import static ch.lambdaj.Lambda.on;
+import static ch.lambdaj.Lambda.select;
+import static org.hamcrest.Matchers.equalTo;
+
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 import com.google.common.collect.ImmutableList;
@@ -24,7 +27,7 @@ public final class OptionsDecorator {
 		if (options != null) {
 			this.options = ImmutableList.copyOf(options);
 		} else {
-			this.options = null;
+			this.options = Collections.emptyList();
 		}
 	}
 
@@ -69,17 +72,6 @@ public final class OptionsDecorator {
 	 * @return
 	 */
 	public List<Option> findOptionsByType(OptionTypes type) {
-		if (this.isEmpty()) {
-			return Collections.emptyList();
-		}
-
-		List<Option> grepOptions = new ArrayList<Option>(this.options);
-		for (Iterator<Option> iter = grepOptions.iterator(); iter.hasNext();) {
-			Option option = iter.next();
-			if (type.equals(option.getOptionType()) == false) {
-				iter.remove();
-			}
-		}
-		return grepOptions;
+		return select(this.options, having(on(Option.class).getOptionType(), equalTo(type)));
 	}
 }

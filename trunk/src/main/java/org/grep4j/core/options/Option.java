@@ -1,26 +1,27 @@
 package org.grep4j.core.options;
 
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
+@EqualsAndHashCode
 public class Option {
 
+	@Getter
 	private final OptionTypes optionType;
+	@Getter
 	private final String optionCommand;
+	@Getter
 	private final String optionValue;
-
-	private Option(OptionTypes type, String optionCommand, String optionValue) {
-		this.optionType = type;
-		this.optionCommand = optionCommand;
-		this.optionValue = optionValue;
-	}
 
 	private Option(OptionTypes type, String optionCommand) {
 		this(type, optionCommand, null);
 	}
 
 	/**
-	 * -A, --after-context=NUM   print NUM lines of trailing context
+	 * -A, --after-context=NUM print NUM lines of trailing context
+	 * 
 	 * @param optionComand
 	 * @return
 	 */
@@ -29,7 +30,8 @@ public class Option {
 	}
 
 	/**
-	 * -B, --before-context=NUM  print NUM lines of leading context
+	 * -B, --before-context=NUM print NUM lines of leading context
+	 * 
 	 * @param optionComand
 	 * @return
 	 */
@@ -38,7 +40,8 @@ public class Option {
 	}
 
 	/**
-	 * -C, --context=NUM         print NUM lines of output context
+	 * -C, --context=NUM print NUM lines of output context
+	 * 
 	 * @param optionComand
 	 * @return
 	 */
@@ -47,7 +50,8 @@ public class Option {
 	}
 
 	/**
-	 * -o, --only-matching       show only the part of a line matching PATTERN
+	 * -o, --only-matching show only the part of a line matching PATTERN
+	 * 
 	 * @return
 	 */
 	public static Option onlyMatching() {
@@ -55,7 +59,8 @@ public class Option {
 	}
 
 	/**
-	 * -i, --ignore-case         ignore case distinctions
+	 * -i, --ignore-case ignore case distinctions
+	 * 
 	 * @return
 	 */
 	public static Option ignoreCase() {
@@ -63,7 +68,8 @@ public class Option {
 	}
 
 	/**
-	 * -v, --invert-match        select non-matching lines
+	 * -v, --invert-match select non-matching lines
+	 * 
 	 * @return
 	 */
 	public static Option invertMatch() {
@@ -71,7 +77,8 @@ public class Option {
 	}
 
 	/**
-	 * -c, --count               print only a count of matching lines per FILE
+	 * -c, --count print only a count of matching lines per FILE
+	 * 
 	 * @return
 	 */
 	public static Option countMatches() {
@@ -79,7 +86,8 @@ public class Option {
 	}
 
 	/**
-	 * -H, --with-filename       print the filename for each match
+	 * -H, --with-filename print the filename for each match
+	 * 
 	 * @return
 	 */
 	public static Option withFileName() {
@@ -87,7 +95,8 @@ public class Option {
 	}
 
 	/**
-	 * -m, --max-count=NUM       stop after NUM matches
+	 * -m, --max-count=NUM stop after NUM matches
+	 * 
 	 * @return
 	 */
 	public static Option maxMatches(int maxMatches) {
@@ -95,7 +104,8 @@ public class Option {
 	}
 
 	/**
-	 * -n, --line-number         print line number with output lines
+	 * -n, --line-number print line number with output lines
+	 * 
 	 * @return
 	 */
 	public static Option lineNumber() {
@@ -103,7 +113,8 @@ public class Option {
 	}
 
 	/**
-	 * -L, --files-without-match  print only names of FILEs containing no match
+	 * -L, --files-without-match print only names of FILEs containing no match
+	 * 
 	 * @return
 	 */
 	public static Option filesNotMatching() {
@@ -111,7 +122,8 @@ public class Option {
 	}
 
 	/**
-	 * -l, --files-with-matches  print only names of FILEs containing matches
+	 * -l, --files-with-matches print only names of FILEs containing matches
+	 * 
 	 * @return
 	 */
 	public static Option filesMatching() {
@@ -120,6 +132,7 @@ public class Option {
 
 	/**
 	 * maximium number of connections
+	 * 
 	 * @return
 	 */
 	public static Option maxSshConnections(int numberOfConnections) {
@@ -127,7 +140,8 @@ public class Option {
 	}
 
 	/**
-	 * -n, --lines=N   		   output the last N lines
+	 * -n, --lines=N output the last N lines
+	 * 
 	 * @return
 	 */
 	public static Option onlyLastLines(int numberOfLines) {
@@ -135,7 +149,8 @@ public class Option {
 	}
 
 	/**
-	 * -c, --bytes=N            output the last N bytes
+	 * -c, --bytes=N output the last N bytes
+	 * 
 	 * @return
 	 */
 	public static Option onlyLastBytes(int numberOfBytes) {
@@ -143,7 +158,8 @@ public class Option {
 	}
 
 	/**
-	 * -n, --lines=N   		   output the first N lines
+	 * -n, --lines=N output the first N lines
+	 * 
 	 * @return
 	 */
 	public static Option onlyFirstLines(int numberOfLines) {
@@ -151,7 +167,8 @@ public class Option {
 	}
 
 	/**
-	 * -c, --bytes=N            output the first N bytes
+	 * -c, --bytes=N output the first N bytes
+	 * 
 	 * @return
 	 */
 	public static Option onlyFirstBytes(int numberOfBytes) {
@@ -159,33 +176,12 @@ public class Option {
 	}
 
 	/**
-	 * --version, the version of grep 
+	 * --version, the version of grep
+	 * 
 	 * @return
 	 */
 	public static Option grepVersion() {
 		return new Option(OptionTypes.GREP_OPTION, "--version");
-	}
-
-	public OptionTypes getOptionType() {
-		return this.optionType;
-	}
-
-	public String getOptionCommand() {
-		return optionCommand;
-	}
-
-	public String getOptionValue() {
-		return optionValue;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		return EqualsBuilder.reflectionEquals(this, obj);
-	}
-
-	@Override
-	public int hashCode() {
-		return HashCodeBuilder.reflectionHashCode(this);
 	}
 
 	@Override

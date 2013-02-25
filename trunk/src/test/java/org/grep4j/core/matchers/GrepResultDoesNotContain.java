@@ -26,8 +26,7 @@ public class GrepResultDoesNotContain extends TypeSafeMatcher<GrepResults> {
 	}
 
 	@Factory
-	public static <T> Matcher<GrepResults> doesNotContainExpression(
-			String expression) {
+	public static <T> Matcher<GrepResults> doesNotContainExpression(String expression) {
 		return new GrepResultDoesNotContain(expression);
 	}
 }
