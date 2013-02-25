@@ -11,9 +11,7 @@ import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.Session;
 
 /**
- * The SshCommandExecutor uses the net.schmizz.sshj library to execute remote
- * commands.
- * 
+ * The SshCommandExecutor uses the net.schmizz.sshj library to execute remote commands.
  * <ol>
  * <li>Establish a connection using the credential in the {@link serverDetails}</li>
  * <li>Opens a session channel</li>
@@ -23,7 +21,6 @@ import com.jcraft.jsch.Session;
  * </ol>
  * 
  * @author Marco Castigliego
- * 
  */
 public class JschCommandExecutor extends CommandExecutor {
 
@@ -37,8 +34,7 @@ public class JschCommandExecutor extends CommandExecutor {
 		Channel channel = null;
 		try {
 
-			session = StackSessionPool.getInstance().getPool()
-					.borrowObject(serverDetails);
+			session = StackSessionPool.getInstance().getPool().borrowObject(serverDetails);
 			channel = session.openChannel("exec");
 			((ChannelExec) channel).setCommand(command.getCommandToExecute());
 			// X Forwarding
@@ -49,17 +45,14 @@ public class JschCommandExecutor extends CommandExecutor {
 			channel.connect();
 			result.append(IOUtils.toString(in));
 		} catch (Exception e) {
-			throw new RuntimeException(
-					"ERROR: Unrecoverable error when performing remote command "
-							+ e.getMessage(), e);
+			throw new RuntimeException("ERROR: Unrecoverable error when performing remote command " + e.getMessage(), e);
 		} finally {
 			if (null != channel && channel.isConnected()) {
 				channel.disconnect();
 			}
 			if (null != session) {
 				try {
-					StackSessionPool.getInstance().getPool()
-							.returnObject(serverDetails, session);
+					StackSessionPool.getInstance().getPool().returnObject(serverDetails, session);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

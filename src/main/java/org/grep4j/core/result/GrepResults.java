@@ -1,34 +1,45 @@
 package org.grep4j.core.result;
 
+import static ch.lambdaj.Lambda.having;
+import static ch.lambdaj.Lambda.on;
+import static ch.lambdaj.Lambda.select;
+import static org.hamcrest.Matchers.equalTo;
+
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import org.apache.commons.lang3.time.StopWatch;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+
 import org.grep4j.core.model.Profile;
 import org.grep4j.core.request.GrepExpression;
 
 /**
- * This class contains an List with all the results coming from the grep task
+ * This class contains a List with all the results produced by a grep task
  * 
  * @author Marco Castigliego
- *
+ * @author Giovanni Gargiulo
  */
+@EqualsAndHashCode(exclude = "executionTime")
 public class GrepResults implements Collection<GrepResult> {
 
 	private final List<GrepResult> grepResults;
 
-	private final StopWatch clock;
+	@Getter
+	@Setter
+	private long executionTime;
 
 	/**
-	 * GlobalGrepResult is a container of different {@link GrepResult}  
+	 * GlobalGrepResult is a container of different {@link GrepResult}
 	 * 
-	 * @param the expression used to grep
+	 * @param the
+	 *            expression used to grep
 	 */
-	public GrepResults(StopWatch clock) {
+	public GrepResults() {
 		grepResults = new CopyOnWriteArrayList<GrepResult>();
-		this.clock = clock;
 	}
 
 	/**
@@ -45,25 +56,18 @@ public class GrepResults implements Collection<GrepResult> {
 	}
 
 	/**
-	 * It filters the grepResults object based on the Profile name passed 
-	 * and return All the GrepResult for only the particular Profile passed.  
+	 * It filters the grepResults object based on the Profile name passed and return All the GrepResult for only the particular Profile passed.
 	 * 
 	 * @param profile
 	 * @return GrepResults for the passed Profile
 	 */
 	public GrepResults filterOnProfile(Profile profile) {
-		GrepResults filteredGrepResults = new GrepResults(clock);
-		for (GrepResult result : grepResults) {
-			if (profile.getName().equals(result.getProfileName())) {
-				filteredGrepResults.add(result);
-			}
-
-		}
-		return filteredGrepResults;
+		GrepResults filteredResults = new GrepResults();
+		filteredResults.addAll(select(grepResults, having(on(GrepResult.class).getProfileName(), equalTo(profile.getName()))));
+		return filteredResults;
 	}
 
 	/**
-	 * 
 	 * @return the average time spent for all the grep tasks in milliseconds
 	 */
 	public long getAverageExecutionTime() {
@@ -75,51 +79,15 @@ public class GrepResults implements Collection<GrepResult> {
 	}
 
 	/**
+	 * Loop through all the GrepResults and for each one extracts the lines that match with the passed filter as a constant or regular Expression
 	 * 
-	 * @return the total time spent for all the grep tasks in milliseconds
-	 */
-	public long getTotalExecutionTime() {
-		return clock.getTime();
-	}
-
-	/**
-	 * 
-	 * @return the total time spent for all the grep tasks in nanoseconds
-	 */
-	public long getTotalExecutionNanoTime() {
-		return clock.getNanoTime();
-	}
-	
-	/**
-	 * Loop through all the GrepResults and for each one extracts the lines that match with the passed filter as a constant or regular Expression 
 	 * @param expression
-	 * @return the lines that match with the passed filter as a constant or regular Expression 
+	 * @return the lines that match with the passed filter as a constant or regular Expression
 	 */
 	public GrepResults filterBy(GrepExpression grepExpression) {
-		if(grepExpression.isRegularExpression()){
-			return filterByRE(grepExpression.getText());
-		}else{
-			return filterBy(grepExpression.getText());
-		}
-	}	
-	
-	private GrepResults filterByRE(String expression) {
-		GrepResults grepResultsSet = new GrepResults(clock);
-
+		GrepResults grepResultsSet = new GrepResults();
 		for (GrepResult result : grepResults) {
-			GrepResult extractResult = result.filterBy(new GrepExpression(expression, true));
-			if (!extractResult.getText().isEmpty()) {
-				grepResultsSet.add(extractResult);
-			}
-		}
-		return grepResultsSet;
-	}
-
-	private GrepResults filterBy(String expression) {
-		GrepResults grepResultsSet = new GrepResults(clock);
-
-		for (GrepResult result : grepResults) {
-			GrepResult extractResult = result.filterBy(new GrepExpression(expression, false));
+			GrepResult extractResult = result.filterBy(grepExpression);
 			if (!extractResult.getText().isEmpty()) {
 				grepResultsSet.add(extractResult);
 			}
@@ -152,20 +120,17 @@ public class GrepResults implements Collection<GrepResult> {
 	 */
 	@Override
 	public boolean add(GrepResult e) {
-		grepResults.add(e);
-		return true;
+		return grepResults.add(e);
 	}
 
 	@Override
 	public boolean addAll(Collection<? extends GrepResult> c) {
-		grepResults.addAll(c);
-		return true;
+		return grepResults.addAll(c);
 	}
 
 	@Override
 	public void clear() {
 		grepResults.clear();
-
 	}
 
 	@Override
@@ -190,20 +155,17 @@ public class GrepResults implements Collection<GrepResult> {
 
 	@Override
 	public boolean remove(Object o) {
-		grepResults.remove(o);
-		return true;
+		return grepResults.remove(o);
 	}
 
 	@Override
 	public boolean removeAll(Collection<?> c) {
-		grepResults.removeAll(c);
-		return false;
+		return grepResults.removeAll(c);
 	}
 
 	@Override
 	public boolean retainAll(Collection<?> c) {
-		grepResults.retainAll(c);
-		return false;
+		return grepResults.retainAll(c);
 	}
 
 	@Override

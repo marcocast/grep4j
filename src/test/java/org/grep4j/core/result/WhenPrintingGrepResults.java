@@ -21,8 +21,8 @@ public class WhenPrintingGrepResults {
 	}
 
 	public void aGrepResultsSetWithMultipleFiles() {
-		assertThat(grep(constantExpression("ERROR 1"), on(localProfileWithWildecard("*")), extraLinesAfter(20)).filterBy(constantExpression("Marco")).toString(),
-				is("customer Marco(id=12345) has been updated successfully\r\n"));
+		assertThat(grep(constantExpression("ERROR 1"), on(localProfileWithWildecard("*")), extraLinesAfter(20)).filterBy(constantExpression("Marco"))
+				.toString(), is("customer Marco(id=12345) has been updated successfully\r\n"));
 
 	}
 }

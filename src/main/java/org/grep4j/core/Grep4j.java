@@ -55,9 +55,7 @@ import com.google.common.collect.ImmutableList;
  * List<Profile> profiles = Arrays.asList(aProfile,moreProfiles);
  * assertThat(executing(grep(constantExpression("Expression_to_grep"), on(profiles))).totalOccurrences(), is(1));
  * </pre>
- * 
  * <p>
- * 
  * Reference: http://code.google.com/p/grep4j/
  * 
  * @author Marco Castigliego
@@ -66,7 +64,7 @@ import com.google.common.collect.ImmutableList;
 public final class Grep4j {
 
 	private final String expression;
-	private final ImmutableList<Profile> profiles;
+	private final List<Profile> profiles;
 	private final OptionsDecorator options;
 	private final GrepResults results;
 	private final List<GrepRequest> grepRequests;
@@ -74,53 +72,27 @@ public final class Grep4j {
 	private final StopWatch clock;
 
 	/**
-	 * Creates an instance of Grep4j that accepts also extra lines options.
-	 * 
-	 * It also protects profiles and extra lines options with ImmutableList.
+	 * Creates an instance of Grep4j that accepts also extra lines options. It also protects profiles and extra lines options with ImmutableList.
 	 * 
 	 * @param expression
 	 * @param profiles
 	 * @param options
 	 * @param isRegexExpression
 	 */
-	private Grep4j(String expression, List<Profile> profiles,
-			List<Option> options, boolean isRegexExpression) {
+	private Grep4j(GrepExpression expression, List<Profile> profiles, Option... options) {
 		this.grepRequests = new ArrayList<GrepRequest>(profiles.size());
 		this.clock = new StopWatch();
-		this.results = new GrepResults(clock);
-		this.expression = expression;
+		this.results = new GrepResults();
+		this.expression = expression.getText();
 		this.profiles = ImmutableList.copyOf(profiles);
-		this.isRegexExpression = isRegexExpression;
-		this.options = new OptionsDecorator(options);
+		this.isRegexExpression = expression.isRegularExpression();
+		this.options = new OptionsDecorator(Arrays.asList(options));
 	}
 
 	/**
-	 * Creates an instance of Grep4j
-	 * 
-	 * It also protects profiles with ImmutableList.
-	 * 
-	 * @param expression
-	 * @param profiles
-	 * @param isRegexExpression
-	 */
-	private Grep4j(String expression, List<Profile> profiles,
-			boolean isRegexExpression) {
-		this.grepRequests = new ArrayList<GrepRequest>(profiles.size());
-		this.clock = new StopWatch();
-		this.results = new GrepResults(clock);
-		this.expression = expression;
-		this.profiles = ImmutableList.copyOf(profiles);
-		this.options = new OptionsDecorator();
-		this.isRegexExpression = isRegexExpression;
-	}
-
-	/**
-	 * 
-	 * This utility method executes the grep command and return the
-	 * {@link GrepResults} containing the result of the grep
-	 * 
-	 * It also protects the List of profiles and Options wrapping them into an
-	 * ImmutableList. Example of ExtraLines is :
+	 * This utility method executes the grep command and return the {@link GrepResults} containing the result of the grep Example: This utility method
+	 * executes the grep command and return the {@link GrepResults} containing the result of the grep It also protects the List of profiles and
+	 * Options wrapping them into an ImmutableList. Example of ExtraLines is :
 	 * 
 	 * <pre>
 	 * import static org.grep4j.core.Grep4j.grep;
@@ -169,31 +141,23 @@ public final class Grep4j {
 	 * 
 	 * GrepResultsSet results = grep(constantExpression("expression"), on(profiles()), extraLinesBefore(100), extraLinesAfter(100), onlyMatching());
 	 * System.out.println("Total occurrences found : " + results.totalOccurrences());
-	 * 
 	 * for (GrepResult singleResult : results) {			
 	 * 		System.out.println(singleResult);
 	 * } 	*
 	 * </pre>
 	 * 
 	 * @param expression
-	 * @param profiles
+	 * @param profile
 	 * @param option
 	 * @return GlobalGrepResult
 	 */
-	public static GrepResults grep(GrepExpression grepExpression,
-			List<Profile> profiles, Option... options) {
-		return new Grep4j(grepExpression.getText(), profiles,
-				Arrays.asList(options), grepExpression.isRegularExpression())
-				.execute().andGetResults();
+	public static GrepResults grep(GrepExpression grepExpression, List<Profile> profiles, Option... options) {
+		return new Grep4j(grepExpression, profiles, options).execute().andGetResults();
 	}
 
 	/**
-	 * 
-	 * This utility method executes the grep command and return the
-	 * {@link GrepResults} containing the result of the grep
-	 * 
-	 * It also protects the List of profiles and Options wrapping them into an
-	 * ImmutableList. Example of ExtraLines is :
+	 * This utility method executes the grep command and return the {@link GrepResults} containing the result of the grep It also protects the List of
+	 * profiles and Options wrapping them into an ImmutableList. Example of ExtraLines is :
 	 * 
 	 * <pre>
 	 * import static org.grep4j.core.Grep4j.grep;
@@ -218,6 +182,7 @@ public final class Grep4j {
 	 * import static org.grep4j.core.Grep4j.constantExpression;
 	 * import static org.grep4j.core.Grep4j.extraLinesBefore;
 	 * import static org.grep4j.core.fluent.Dictionary.on;
+	 * import static org.grep4j.core.options.Option.ignoreCase;
 	 * ...
 	 * 
 	 * GrepResultsSet results = grep(constantExpression("expression"), on(profiles()), extraLinesBefore(100));
@@ -249,15 +214,13 @@ public final class Grep4j {
 	 * </pre>
 	 * 
 	 * @param expression
-	 * @param profile
+	 * @param profiles
+	 * @param option
 	 * @param options
 	 * @return GlobalGrepResult
 	 */
-	public static GrepResults grep(GrepExpression grepExpression,
-			Profile profile, Option... options) {
-		return new Grep4j(grepExpression.getText(),
-				Collections.singletonList(profile), Arrays.asList(options),
-				grepExpression.isRegularExpression()).execute().andGetResults();
+	public static GrepResults grep(GrepExpression grepExpression, Profile profile, Option... options) {
+		return grep(grepExpression, Collections.singletonList(profile), options);
 	}
 
 	/**
@@ -271,7 +234,7 @@ public final class Grep4j {
 	}
 
 	/**
-	 * Regular Language(string)
+	 * Natural Language(string)
 	 * 
 	 * @param text
 	 * @return GrepExpression
@@ -280,17 +243,6 @@ public final class Grep4j {
 		return new GrepExpression(text, false);
 	}
 
-	/**
-	 * This method will:
-	 * <ol>
-	 * <li>Clean all result and request lists</li>
-	 * <li>Verify the input checking that mandatory fields have been correctly
-	 * populated</li>
-	 * <li>Prepare {@link GrepRequest}s to be executed, based on the inputs
-	 * passed</li>
-	 * <li>Execute {@link GrepRequest} for each valid {@link Profile}</li>
-	 * </ol>
-	 */
 	private Grep4j execute() {
 		clear();
 		verifyInputs();
@@ -313,12 +265,10 @@ public final class Grep4j {
 
 	private void verifyInputs() {
 		if (expression == null || expression.trim().isEmpty()) {
-			throw new IllegalArgumentException(
-					"No expression to grep was specified");
+			throw new IllegalArgumentException("No expression to grep was specified");
 		}
 		if (profiles == null || profiles.isEmpty()) {
-			throw new IllegalArgumentException(
-					"No profile to grep was specified");
+			throw new IllegalArgumentException("No profile to grep was specified");
 		} else {
 			for (Profile profile : profiles) {
 				profile.validate();
@@ -331,15 +281,13 @@ public final class Grep4j {
 		StackSessionPool.getInstance().startPool();
 		try {
 			clock.start();
-			executorService = Executors.newFixedThreadPool(maxGrepTaskThreads(
-					this.options, grepRequests.size()));
+			executorService = Executors.newFixedThreadPool(maxGrepTaskThreads(this.options, grepRequests.size()));
 			List<GrepTask> grepTasks = new ArrayList<GrepTask>();
 			for (GrepRequest grepRequest : grepRequests) {
 				grepTasks.add(new GrepTask(grepRequest));
 			}
 
-			List<Future<List<GrepResult>>> grepTaskFutures = executorService
-					.invokeAll(grepTasks);
+			List<Future<List<GrepResult>>> grepTaskFutures = executorService.invokeAll(grepTasks);
 			for (Future<List<GrepResult>> future : grepTaskFutures) {
 				for (GrepResult singleGrepResult : future.get())
 					results.add(singleGrepResult);
@@ -349,6 +297,7 @@ public final class Grep4j {
 			throw new RuntimeException("Error when executing the GrepTask", e);
 		} finally {
 			clock.stop();
+			results.setExecutionTime(clock.getTime());
 			if (executorService != null) {
 				executorService.shutdownNow();
 			}
@@ -364,11 +313,9 @@ public final class Grep4j {
 
 	private void prepareCommandRequests() {
 		for (Profile profile : profiles) {
-			GrepRequest grepRequest = new GrepRequest(expression, profile,
-					isRegexExpression);
-			if (options != null && !options.isEmpty()) {
-				grepRequest.addOptions(options);
-			}
+			GrepRequest grepRequest = new GrepRequest(expression, profile, isRegexExpression);
+
+			grepRequest.addOptions(options);
 			grepRequests.add(grepRequest);
 		}
 	}

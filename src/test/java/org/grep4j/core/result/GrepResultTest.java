@@ -12,12 +12,7 @@ public class GrepResultTest {
 
 	@DataProvider(name = "sleepTime")
 	public Object[][] sleepTime() {
-		return new Object[][] {
-				{ 10 },
-				{ 0 },
-				{ 100 },
-				{ 202 },
-				{ 11 },
+		return new Object[][] { { 10 }, { 0 }, { 100 }, { 202 }, { 11 },
 
 		};
 	}
@@ -32,7 +27,7 @@ public class GrepResultTest {
 			e.printStackTrace();
 		}
 		clock.stop();
-		GrepResult taskResult = new GrepResult(null, "", "", clock);
+		GrepResult taskResult = new GrepResult(null, "", "", clock.getNanoTime());
 		assertThat(new Long(taskResult.getExecutionTime()).intValue(), is(greaterThanOrEqualTo(sleepTime)));
 	}
 

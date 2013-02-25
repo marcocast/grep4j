@@ -11,7 +11,6 @@ import com.jcraft.jsch.UserInfo;
  * This class is used to handle ssh Session inside the pool.
  * 
  * @author Marco Castigliego
- *
  */
 public class SessionFactory extends BaseKeyedPoolableObjectFactory<ServerDetails, Session> {
 
@@ -24,15 +23,14 @@ public class SessionFactory extends BaseKeyedPoolableObjectFactory<ServerDetails
 		try {
 			JSch jsch = new JSch();
 			session = jsch.getSession(serverDetails.getUser(), serverDetails.getHost(), serverDetails.getPort());
-			session.setConfig("StrictHostKeyChecking", "no"); // 
+			session.setConfig("StrictHostKeyChecking", "no"); //
 			UserInfo userInfo = new JschUserInfo(serverDetails.getUser(), serverDetails.getPassword());
 			session.setUserInfo(userInfo);
 			session.setTimeout(60000);
 			session.setPassword(serverDetails.getPassword());
 			session.connect();
 		} catch (Exception e) {
-			throw new RuntimeException(
-					"ERROR: Unrecoverable error when trying to connect to serverDetails :  " + serverDetails, e);
+			throw new RuntimeException("ERROR: Unrecoverable error when trying to connect to serverDetails :  " + serverDetails, e);
 		}
 		return session;
 	}

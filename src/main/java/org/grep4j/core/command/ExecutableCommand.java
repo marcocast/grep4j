@@ -1,7 +1,7 @@
 package org.grep4j.core.command;
 
 /**
- * Base interface all the Linux Command have to implement so to be executable. 
+ * Base interface all the Linux Command have to implement so to be executable.
  * 
  * @author Giovanni Gargiulo
  * @author Marco Castigliego
