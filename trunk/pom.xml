@@ -42,18 +42,7 @@
 		</snapshotRepository>
 	</distributionManagement>
 
-	<developers>
-		<developer>
-			<id>marcocast</id>
-			<name>Marco Castigliego</name>
-			<email>marcocast@gmail.com</email>
-		</developer>
-		<developer>
-			<id>nemo83</id>
-			<name>Giovanni Gargiulo</name>
-			<email>gargiulo.gianni@gmail.com</email>
-		</developer>
-	</developers>
+	
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
