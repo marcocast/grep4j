@@ -41,6 +41,14 @@ public class ServerDetails {
 	@Getter
 	@Setter
 	private String privateKeyLocation;
+	
+	@Getter
+	@Setter
+	private String proxyHost;
+	
+	@Getter
+	@Setter
+	private int proxyPort;
 
 	/**
 	 * The hostname of the server where the target file is stored. This can be either an IP or proper hostname. In case of a local server, the
