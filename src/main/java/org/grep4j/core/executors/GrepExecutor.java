@@ -8,6 +8,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+import javax.annotation.concurrent.ThreadSafe;
+
 import org.apache.commons.lang3.time.StopWatch;
 import org.grep4j.core.command.linux.StackSessionPool;
 import org.grep4j.core.options.OptionsDecorator;
@@ -16,7 +18,14 @@ import org.grep4j.core.result.GrepResult;
 import org.grep4j.core.result.GrepResults;
 import org.grep4j.core.task.GrepTask;
 
-public class GrepExecutor {
+/**
+ * This class run one GrepTask Thread for each grepRequest.
+ * 
+ * @author mcastigliego
+ *
+ */
+@ThreadSafe
+public class GrepExecutor implements Executor<GrepResults, List<GrepRequest>>{
 	
 	private final StopWatch clock;
 	private final OptionsDecorator options;
@@ -26,8 +35,9 @@ public class GrepExecutor {
 		this.clock = clock;
 		this.options = options;
 	}
-
-	public GrepResults executeCommands(List<GrepRequest> grepRequests) {
+	
+	@Override
+	public GrepResults execute(List<GrepRequest> grepRequests) {
 		GrepResults results = new GrepResults();
 		ExecutorService executorService = null;
 		StackSessionPool.getInstance().startPool();
@@ -63,5 +73,5 @@ public class GrepExecutor {
 		}
 		return results;
 	}
-	
+
 }
