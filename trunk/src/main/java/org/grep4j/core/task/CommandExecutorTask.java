@@ -1,5 +1,7 @@
 package org.grep4j.core.task;
 
+import static org.grep4j.core.command.ServerDetailsInterpreter.getCommandExecutor;
+
 import java.util.concurrent.Callable;
 
 import org.apache.commons.lang3.time.StopWatch;
@@ -20,8 +22,8 @@ public class CommandExecutorTask implements Callable<GrepResult> {
 	private final AbstractGrepCommand commandTask;
 	private final GrepRequest requestTask;
 
-	public CommandExecutorTask(CommandExecutor executorTask, AbstractGrepCommand commandTask, GrepRequest requestTask) {
-		this.executorTask = executorTask;
+	public CommandExecutorTask(AbstractGrepCommand commandTask, GrepRequest requestTask) {
+		this.executorTask = getCommandExecutor(requestTask.getServerDetails());
 		this.commandTask = commandTask;
 		this.requestTask = requestTask;
 	}
