@@ -1,8 +1,8 @@
 package org.grep4j.core.task;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.grep4j.core.command.linux.CommandExecutor;
 import org.grep4j.core.command.linux.grep.AbstractGrepCommand;
@@ -31,21 +31,21 @@ public class GrepTask implements Callable<List<GrepResult>> {
 
 	private final GrepRequest grepRequest;
 	private final List<String> matchingFiles;
-	private final List<AbstractGrepCommand> grepList;	
+	private final List<AbstractGrepCommand> grepCommandsList;	
 	private final GrepTaskExecutor grepTaskExecutor;
 
 	public GrepTask(GrepRequest grepRequest) {
 		this.grepRequest = grepRequest;
-		this.matchingFiles = new CopyOnWriteArrayList<String>();
-		this.grepList = new CopyOnWriteArrayList<AbstractGrepCommand>();
-		this.grepTaskExecutor = new GrepTaskExecutor(grepList, grepRequest);
+		this.matchingFiles = new ArrayList<String>();
+		this.grepCommandsList = new ArrayList<AbstractGrepCommand>();
+		this.grepTaskExecutor = new GrepTaskExecutor(grepCommandsList);
 	}
 
 	@Override
 	public List<GrepResult> call() {
 		listMatchingFiles();
 		prepareGrepCommands();
-		return grepTaskExecutor.executeGrepCommands();		
+		return grepTaskExecutor.execute(grepRequest);		
 	}
 
 	/*
@@ -69,7 +69,7 @@ public class GrepTask implements Callable<List<GrepResult>> {
 			}
 			grep.setContextControls(grepRequest.getContextControls());
 			grep.setTailContextControls(grepRequest.getTailContextControls());
-			grepList.add(grep);
+			grepCommandsList.add(grep);
 		}
 	}
 

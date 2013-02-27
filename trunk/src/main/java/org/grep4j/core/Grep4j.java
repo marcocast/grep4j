@@ -237,7 +237,7 @@ public final class Grep4j {
 		grepRequests.clear();
 		verifyInputs();
 		prepareCommandRequests();
-		return grepExecutor.executeCommands(grepRequests);
+		return grepExecutor.execute(grepRequests);
 	}
 
 
