@@ -65,7 +65,7 @@ public class ProfileBuilder {
 		 * @param user
 		 * @param password
 		 */
-		public PortStep credentials(String user, String password);
+		public ProxyStep credentials(String user, String password);
 		
 		/**
 		 *  This will connect using the user authentification by public key.
@@ -77,7 +77,32 @@ public class ProfileBuilder {
 		 * @param passphrase
 		 * @return
 		 */
-		public PortStep userAuthPubKeyDetails(String privateKeyLocation, String user, String passphrase);
+		public ProxyStep userAuthPubKeyDetails(String privateKeyLocation, String user, String passphrase);
+	}
+	
+	public static interface ProxyStep {
+		
+		/**
+		 * This will connect to ssh session via HTTP proxy
+		 * 
+		 * @param proxyHost
+		 * @param proxyPort
+		 * @return
+		 */
+		public PortStep withProxy(String proxyHost, int proxyPort );
+		
+		/**
+		 * @param options
+		 *            port number ( -p option)
+		 * @return
+		 */
+		public BuildStep sshPort(int port);
+		
+		/**
+		 * @return an instance of a Profile.based on the parameters passed
+		 */
+		public Profile build();
+
 	}
 
 	public static interface PortStep {
@@ -102,7 +127,7 @@ public class ProfileBuilder {
 		public Profile build();
 	}
 
-	private static class Steps implements NameStep, FileStep, ServerStep, CredentialsStep, PortStep, BuildStep {
+	private static class Steps implements NameStep, FileStep, ServerStep, CredentialsStep, PortStep, BuildStep, ProxyStep {
 
 		private String name;
 		private String host;
@@ -111,6 +136,8 @@ public class ProfileBuilder {
 		private String filePath;
 		private Integer port;
 		private String privateKeyLocation;
+		private String proxyHost;
+		private int proxyPort;
 
 		@Override
 		public FileStep name(String name) {
@@ -137,7 +164,7 @@ public class ProfileBuilder {
 		}
 
 		@Override
-		public PortStep credentials(String user, String password) {
+		public ProxyStep credentials(String user, String password) {
 			this.user = user;
 			this.password = password;
 			return this;
@@ -150,11 +177,18 @@ public class ProfileBuilder {
 		}
 		
 		@Override
-		public PortStep userAuthPubKeyDetails(String privateKeyLocation,
+		public ProxyStep userAuthPubKeyDetails(String privateKeyLocation,
 				String user, String passphrase) {
 			this.privateKeyLocation = privateKeyLocation;
 			this.password = passphrase;
 			this.user = user;
+			return this;
+		}
+		
+		@Override
+		public PortStep withProxy(String proxyHost, int proxyPort) {
+			this.proxyHost = proxyHost;
+			this.proxyPort = proxyPort;
 			return this;
 		}
 
@@ -184,9 +218,13 @@ public class ProfileBuilder {
 			if (privateKeyLocation != null) {
 				serverDetails.setPrivateKeyLocation(privateKeyLocation);
 			}
+			serverDetails.setProxyHost(proxyHost);
+			serverDetails.setProxyPort(proxyPort);
 			profile.setServerDetails(serverDetails);
 			return profile;
 		}
+
+		
 
 		
 

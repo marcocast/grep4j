@@ -4,6 +4,7 @@ import org.apache.commons.pool.BaseKeyedPoolableObjectFactory;
 import org.grep4j.core.model.ServerDetails;
 
 import com.jcraft.jsch.JSch;
+import com.jcraft.jsch.ProxyHTTP;
 import com.jcraft.jsch.Session;
 import com.jcraft.jsch.UserInfo;
 
@@ -31,6 +32,9 @@ public class SessionFactory extends
 			session.setConfig("StrictHostKeyChecking", "no"); //
 			UserInfo userInfo = new JschUserInfo(serverDetails.getUser(),
 					serverDetails.getPassword());
+			if(serverDetails.getProxyHost() != null){
+				session.setProxy(new ProxyHTTP(serverDetails.getProxyHost(), serverDetails.getProxyPort()));
+			}
 			session.setUserInfo(userInfo);
 			session.setTimeout(60000);			
 			session.setPassword(serverDetails.getPassword());			
