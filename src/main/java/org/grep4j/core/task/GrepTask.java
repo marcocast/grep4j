@@ -1,21 +1,15 @@
 package org.grep4j.core.task;
 
-import static org.grep4j.core.command.ServerDetailsInterpreter.getCommandExecutor;
-import static org.grep4j.core.task.ForkController.maxCommandExecutorTaskThreads;
-
 import java.util.List;
 import java.util.concurrent.Callable;
-import java.util.concurrent.CompletionService;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.ExecutorCompletionService;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import org.grep4j.core.command.linux.CommandExecutor;
 import org.grep4j.core.command.linux.grep.AbstractGrepCommand;
 import org.grep4j.core.command.linux.grep.GzGrepCommand;
 import org.grep4j.core.command.linux.grep.SimpleGrepCommand;
 import org.grep4j.core.command.linux.ls.LsCommand;
+import org.grep4j.core.executors.GrepTaskExecutor;
 import org.grep4j.core.request.GrepRequest;
 import org.grep4j.core.result.GrepResult;
 
@@ -37,22 +31,21 @@ public class GrepTask implements Callable<List<GrepResult>> {
 
 	private final GrepRequest grepRequest;
 	private final List<String> matchingFiles;
-	private final List<AbstractGrepCommand> grepList;
-	private final List<GrepResult> results;
+	private final List<AbstractGrepCommand> grepList;	
+	private final GrepTaskExecutor grepTaskExecutor;
 
 	public GrepTask(GrepRequest grepRequest) {
 		this.grepRequest = grepRequest;
 		this.matchingFiles = new CopyOnWriteArrayList<String>();
 		this.grepList = new CopyOnWriteArrayList<AbstractGrepCommand>();
-		this.results = new CopyOnWriteArrayList<GrepResult>();
+		this.grepTaskExecutor = new GrepTaskExecutor(grepList, grepRequest);
 	}
 
 	@Override
 	public List<GrepResult> call() {
 		listMatchingFiles();
 		prepareGrepCommands();
-		executeGrepCommands();
-		return results;
+		return grepTaskExecutor.executeGrepCommands();		
 	}
 
 	/*
@@ -80,29 +73,6 @@ public class GrepTask implements Callable<List<GrepResult>> {
 		}
 	}
 
-	private void executeGrepCommands() {
-		if (!grepList.isEmpty()) {
-			ExecutorService executorService = null;
-			CompletionService<GrepResult> completionService = null;
-			try {
-				executorService = Executors.newFixedThreadPool(maxCommandExecutorTaskThreads(grepList.size()));
-				completionService = new ExecutorCompletionService<GrepResult>(executorService);
-				for (AbstractGrepCommand command : grepList) {
-					completionService.submit(new CommandExecutorTask(getCommandExecutor(grepRequest.getServerDetails()), command, grepRequest));
-				}
-				for (int i = 0; i < grepList.size(); i++) {
-					results.add(completionService.take().get());
-				}
-			} catch (Exception e) {
-				throw new RuntimeException("Error when executing the CommandExecutorTasks", e);
-			} finally {
-				if (executorService != null) {
-					executorService.shutdownNow();
-				}
-			}
-		}
-
-	}
 
 	private boolean isGz(String matchingFile) {
 		return matchingFile.endsWith(".gz");
