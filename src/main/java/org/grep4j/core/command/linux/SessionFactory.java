@@ -12,7 +12,8 @@ import com.jcraft.jsch.UserInfo;
  * 
  * @author Marco Castigliego
  */
-public class SessionFactory extends BaseKeyedPoolableObjectFactory<ServerDetails, Session> {
+public class SessionFactory extends
+		BaseKeyedPoolableObjectFactory<ServerDetails, Session> {
 
 	/**
 	 * This creates a Session if not already present in the pool.
@@ -22,15 +23,22 @@ public class SessionFactory extends BaseKeyedPoolableObjectFactory<ServerDetails
 		Session session = null;
 		try {
 			JSch jsch = new JSch();
-			session = jsch.getSession(serverDetails.getUser(), serverDetails.getHost(), serverDetails.getPort());
+			if(serverDetails.getPrivateKeyLocation() != null){				
+				jsch.addIdentity(serverDetails.getPrivateKeyLocation());				
+			}
+			session = jsch.getSession(serverDetails.getUser(),
+					serverDetails.getHost(), serverDetails.getPort());
 			session.setConfig("StrictHostKeyChecking", "no"); //
-			UserInfo userInfo = new JschUserInfo(serverDetails.getUser(), serverDetails.getPassword());
+			UserInfo userInfo = new JschUserInfo(serverDetails.getUser(),
+					serverDetails.getPassword());
 			session.setUserInfo(userInfo);
-			session.setTimeout(60000);
-			session.setPassword(serverDetails.getPassword());
+			session.setTimeout(60000);			
+			session.setPassword(serverDetails.getPassword());			
 			session.connect();
 		} catch (Exception e) {
-			throw new RuntimeException("ERROR: Unrecoverable error when trying to connect to serverDetails :  " + serverDetails, e);
+			throw new RuntimeException(
+					"ERROR: Unrecoverable error when trying to connect to serverDetails :  "
+							+ serverDetails, e);
 		}
 		return session;
 	}
