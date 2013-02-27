@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.lang3.time.StopWatch;
+import org.grep4j.core.executors.Executor;
 import org.grep4j.core.executors.GrepExecutor;
 import org.grep4j.core.model.Profile;
 import org.grep4j.core.options.Option;
@@ -59,7 +60,7 @@ public final class Grep4j {
 	private final List<GrepRequest> grepRequests;
 	private final boolean isRegexExpression;
 	private final StopWatch clock;
-	private final GrepExecutor grepExecutor; 
+	private final Executor<GrepResults, List<GrepRequest>> grepExecutor; 
 
 	/**
 	 * Creates an instance of Grep4j that accepts also extra lines options. It also protects profiles and extra lines options with ImmutableList.

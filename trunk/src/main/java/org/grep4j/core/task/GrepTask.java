@@ -9,9 +9,11 @@ import org.grep4j.core.command.linux.grep.AbstractGrepCommand;
 import org.grep4j.core.command.linux.grep.GzGrepCommand;
 import org.grep4j.core.command.linux.grep.SimpleGrepCommand;
 import org.grep4j.core.command.linux.ls.LsCommand;
+import org.grep4j.core.executors.Executor;
 import org.grep4j.core.executors.GrepTaskExecutor;
 import org.grep4j.core.request.GrepRequest;
 import org.grep4j.core.result.GrepResult;
+import org.grep4j.core.result.GrepResults;
 
 /**
  * Callable class used to run {@link CommandExecutor}s. When called:
@@ -32,7 +34,8 @@ public class GrepTask implements Callable<List<GrepResult>> {
 	private final GrepRequest grepRequest;
 	private final List<String> matchingFiles;
 	private final List<AbstractGrepCommand> grepCommandsList;	
-	private final GrepTaskExecutor grepTaskExecutor;
+	private final Executor<List<GrepResult>, GrepRequest> grepTaskExecutor; 
+	
 
 	public GrepTask(GrepRequest grepRequest) {
 		this.grepRequest = grepRequest;
