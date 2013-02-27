@@ -66,6 +66,18 @@ public class ProfileBuilder {
 		 * @param password
 		 */
 		public PortStep credentials(String user, String password);
+		
+		/**
+		 *  This will connect using the user authentification by public key.
+		 *  It requires privatekey(id_dsa) ex. ~/.ssh/id_dsa, user and passphrase
+		 *  
+		 * 
+		 * @param privateKeyLocation
+		 * @param user
+		 * @param passphrase
+		 * @return
+		 */
+		public PortStep userAuthPubKeyDetails(String privateKeyLocation, String user, String passphrase);
 	}
 
 	public static interface PortStep {
@@ -98,6 +110,7 @@ public class ProfileBuilder {
 		private String password;
 		private String filePath;
 		private Integer port;
+		private String privateKeyLocation;
 
 		@Override
 		public FileStep name(String name) {
@@ -135,6 +148,15 @@ public class ProfileBuilder {
 			this.port = port;
 			return this;
 		}
+		
+		@Override
+		public PortStep userAuthPubKeyDetails(String privateKeyLocation,
+				String user, String passphrase) {
+			this.privateKeyLocation = privateKeyLocation;
+			this.password = passphrase;
+			this.user = user;
+			return this;
+		}
 
 		@Override
 		public Profile build() {
@@ -159,9 +181,14 @@ public class ProfileBuilder {
 			if (port != null) {
 				serverDetails.setPort(port);
 			}
+			if (privateKeyLocation != null) {
+				serverDetails.setPrivateKeyLocation(privateKeyLocation);
+			}
 			profile.setServerDetails(serverDetails);
 			return profile;
 		}
+
+		
 
 	}
 

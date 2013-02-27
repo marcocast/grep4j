@@ -37,6 +37,10 @@ public class ServerDetails {
 	@Getter
 	@Setter
 	private Integer port;
+	
+	@Getter
+	@Setter
+	private String privateKeyLocation;
 
 	/**
 	 * The hostname of the server where the target file is stored. This can be either an IP or proper hostname. In case of a local server, the

@@ -13,7 +13,6 @@ import org.grep4j.core.executors.Executor;
 import org.grep4j.core.executors.GrepTaskExecutor;
 import org.grep4j.core.request.GrepRequest;
 import org.grep4j.core.result.GrepResult;
-import org.grep4j.core.result.GrepResults;
 
 /**
  * Callable class used to run {@link CommandExecutor}s. When called:
