@@ -1,7 +1,7 @@
 package org.grep4j.core.task;
 
-import org.grep4j.core.options.OptionsDecorator;
 import org.grep4j.core.options.OptionTypes;
+import org.grep4j.core.options.OptionsDecorator;
 
 /**
  * This to control the maximum number of threads to be used when forking tasks

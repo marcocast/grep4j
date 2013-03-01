@@ -28,12 +28,12 @@ import org.grep4j.core.task.GrepTask;
 public class GrepExecutor implements Executor<GrepResults, List<GrepRequest>>{
 	
 	private final StopWatch clock;
-	private final OptionsDecorator options;
+	private final OptionsDecorator optionsDecorator;
 	
-	public GrepExecutor(StopWatch clock, OptionsDecorator options) {
+	public GrepExecutor(StopWatch clock, OptionsDecorator optionsDecorator) {
 		super();
 		this.clock = clock;
-		this.options = options;
+		this.optionsDecorator = optionsDecorator;
 	}
 	
 	@Override
@@ -43,7 +43,7 @@ public class GrepExecutor implements Executor<GrepResults, List<GrepRequest>>{
 		StackSessionPool.getInstance().startPool();
 		try {
 			clock.start();
-			executorService = Executors.newFixedThreadPool(maxGrepTaskThreads(this.options, grepRequests.size()));
+			executorService = Executors.newFixedThreadPool(maxGrepTaskThreads(this.optionsDecorator, grepRequests.size()));
 			List<GrepTask> grepTasks = new ArrayList<GrepTask>();
 			for (GrepRequest grepRequest : grepRequests) {
 				grepTasks.add(new GrepTask(grepRequest));

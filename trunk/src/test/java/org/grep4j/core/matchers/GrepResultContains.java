@@ -1,7 +1,8 @@
 package org.grep4j.core.matchers;
 
-import org.grep4j.core.result.GrepResults;
 import static org.grep4j.core.Grep4j.constantExpression;
+
+import org.grep4j.core.result.GrepResults;
 import org.hamcrest.Description;
 import org.hamcrest.Factory;
 import org.hamcrest.Matcher;

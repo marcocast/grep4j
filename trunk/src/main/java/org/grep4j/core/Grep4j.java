@@ -60,7 +60,7 @@ public final class Grep4j {
 	private final List<GrepRequest> grepRequests;
 	private final boolean isRegexExpression;
 	private final StopWatch clock;
-	private final Executor<GrepResults, List<GrepRequest>> grepExecutor; 
+	private final Executor<GrepResults, List<GrepRequest>> grepExecutor;
 
 	/**
 	 * Creates an instance of Grep4j that accepts also extra lines options. It also protects profiles and extra lines options with ImmutableList.
@@ -241,20 +241,14 @@ public final class Grep4j {
 		return grepExecutor.execute(grepRequests);
 	}
 
-
 	private void verifyInputs() {
 		if (expression == null || expression.trim().isEmpty()) {
 			throw new IllegalArgumentException("No expression to grep was specified");
 		}
 		if (profiles == null || profiles.isEmpty()) {
 			throw new IllegalArgumentException("No profile to grep was specified");
-		} else {
-			for (Profile profile : profiles) {
-				profile.validate();
-			}
 		}
 	}
-	
 
 	private void prepareCommandRequests() {
 		for (Profile profile : profiles) {

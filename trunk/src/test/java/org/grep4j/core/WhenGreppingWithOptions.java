@@ -9,13 +9,12 @@ import static org.grep4j.core.options.Option.extraLinesAfter;
 import static org.grep4j.core.options.Option.extraLinesBefore;
 import static org.grep4j.core.options.Option.ignoreCase;
 import static org.grep4j.core.options.Option.invertMatch;
-import static org.grep4j.core.options.Option.withFileName;
-import static org.grep4j.core.options.Option.onlyFirstLines;
-import static org.hamcrest.CoreMatchers.is;
 import static org.grep4j.core.options.Option.onlyFirstBytes;
+import static org.grep4j.core.options.Option.onlyFirstLines;
 import static org.grep4j.core.options.Option.onlyLastBytes;
 import static org.grep4j.core.options.Option.onlyLastLines;
-
+import static org.grep4j.core.options.Option.withFileName;
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 import org.grep4j.core.result.GrepResult;
