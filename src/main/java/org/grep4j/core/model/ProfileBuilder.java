@@ -85,7 +85,7 @@ public class ProfileBuilder {
 		 * @param privateKeyLocation
 		 * @return
 		 */
-		public UserAuthPubKeyCredential userAuthPubKeyDetails(String privateKeyLocation);
+		public UserAuthPubKeyCredential userAuthPrivateKeyLocation(String privateKeyLocation);
 
 		/**
 		 *  This will connect using the user authentication by public key.
@@ -97,7 +97,7 @@ public class ProfileBuilder {
 		 * @param passphrase
 		 * @return
 		 */
-		public UserAuthPubKeyCredential userAuthPubKeyDetails(String privateKeyLocation, String passphrase);
+		public UserAuthPubKeyCredential userAuthPrivateKeyLocationAndPassphrase(String privateKeyLocation, String passphrase);
 
 	}
 
@@ -171,13 +171,13 @@ public class ProfileBuilder {
 		}
 
 		@Override
-		public UserAuthPubKeyCredential userAuthPubKeyDetails(String privateKeyLocation) {
+		public UserAuthPubKeyCredential userAuthPrivateKeyLocation(String privateKeyLocation) {
 			this.privateKeyLocation = privateKeyLocation;
 			return this;
 		}
 
 		@Override
-		public UserAuthPubKeyCredential userAuthPubKeyDetails(String privateKeyLocation, String passphrase) {
+		public UserAuthPubKeyCredential userAuthPrivateKeyLocationAndPassphrase(String privateKeyLocation, String passphrase) {
 			this.privateKeyLocation = privateKeyLocation;
 			this.password = passphrase;
 			return this;
