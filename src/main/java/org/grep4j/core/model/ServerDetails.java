@@ -37,18 +37,14 @@ public class ServerDetails {
 	@Getter
 	@Setter
 	private Integer port;
-	
+
 	@Getter
 	@Setter
 	private String privateKeyLocation;
-	
+
 	@Getter
 	@Setter
-	private String proxyHost;
-	
-	@Getter
-	@Setter
-	private int proxyPort;
+	private boolean isPasswordRequired;
 
 	/**
 	 * The hostname of the server where the target file is stored. This can be either an IP or proper hostname. In case of a local server, the
@@ -78,8 +74,17 @@ public class ServerDetails {
 			if (StringUtils.isEmpty(user) || StringUtils.isBlank(user)) {
 				throw new IllegalArgumentException("User is empty or null");
 			}
-			if (StringUtils.isEmpty(password) || StringUtils.isBlank(password)) {
-				throw new IllegalArgumentException("Password is empty or null");
+			if (isPasswordRequired()) {
+				String errorComponent = "Password";
+				if (!StringUtils.isEmpty(privateKeyLocation) && !StringUtils.isBlank(privateKeyLocation)) {
+					errorComponent = "Passphrase";
+				}
+				if (StringUtils.isEmpty(password) || StringUtils.isBlank(password)) {
+					throw new IllegalArgumentException(errorComponent + " is empty or null");
+				}
+			}
+			if (port < 1 || port > 65535) {
+				throw new IllegalArgumentException("Port out of possible ranges (1 to 65535)");
 			}
 		}
 	}

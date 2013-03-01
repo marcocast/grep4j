@@ -1,7 +1,7 @@
 package org.grep4j.core.task;
 
-import static org.hamcrest.CoreMatchers.is;
 import static org.grep4j.core.Grep4j.constantExpression;
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 import org.grep4j.core.model.Profile;

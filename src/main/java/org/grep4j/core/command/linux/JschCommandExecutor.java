@@ -37,9 +37,7 @@ public class JschCommandExecutor extends CommandExecutor {
 			session = StackSessionPool.getInstance().getPool().borrowObject(serverDetails);
 			channel = session.openChannel("exec");
 			((ChannelExec) channel).setCommand(command.getCommandToExecute());
-			// X Forwarding
 			channel.setXForwarding(true);
-			// channel.setInputStream(System.in);
 			channel.setInputStream(null);
 			InputStream in = channel.getInputStream();
 			channel.connect();

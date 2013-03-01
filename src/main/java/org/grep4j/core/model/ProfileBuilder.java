@@ -56,6 +56,16 @@ public class ProfileBuilder {
 		 * @param host
 		 */
 		public CredentialsStep onRemotehost(String host);
+
+		/**
+		 * The hostname of the server where the target file is stored. This can be either an IP or proper hostname. In case of a local server, the
+		 * hostname has to be either "localhost" or "127.0.0.1"
+		 * SSH Port number in case is not the default 22 ( -p option)
+		 * 
+		 * @param host
+		 * @param port number ( -p option)
+		 */
+		public CredentialsStep onRemotehostAndPort(String host, int port);
 	}
 
 	public static interface CredentialsStep {
@@ -65,11 +75,21 @@ public class ProfileBuilder {
 		 * @param user
 		 * @param password
 		 */
-		public ProxyStep credentials(String user, String password);
-		
+		public BuildStep credentials(String user, String password);
+
 		/**
-		 *  This will connect using the user authentification by public key.
-		 *  It requires privatekey(id_dsa) ex. ~/.ssh/id_dsa, user and passphrase
+		 *  This will connect using the user authentication by public key.
+		 *  It requires privatekey(id_dsa) ex. ~/.ssh/id_dsa
+		 *  
+		 * 
+		 * @param privateKeyLocation
+		 * @return
+		 */
+		public UserAuthPubKeyCredential userAuthPubKeyDetails(String privateKeyLocation);
+
+		/**
+		 *  This will connect using the user authentication by public key.
+		 *  It requires privatekey(id_dsa) ex. ~/.ssh/id_dsa and Passphrase required to read privatekey(id_dsa)
 		 *  
 		 * 
 		 * @param privateKeyLocation
@@ -77,46 +97,19 @@ public class ProfileBuilder {
 		 * @param passphrase
 		 * @return
 		 */
-		public ProxyStep userAuthPubKeyDetails(String privateKeyLocation, String user, String passphrase);
+		public UserAuthPubKeyCredential userAuthPubKeyDetails(String privateKeyLocation, String passphrase);
+
 	}
-	
-	public static interface ProxyStep {
-		
+
+	public static interface UserAuthPubKeyCredential {
+
 		/**
-		 * This will connect to ssh session via HTTP proxy
+		 * Username required to connect to remote machine
 		 * 
-		 * @param proxyHost
-		 * @param proxyPort
+		 * @param user
 		 * @return
 		 */
-		public PortStep withProxy(String proxyHost, int proxyPort );
-		
-		/**
-		 * @param options
-		 *            port number ( -p option)
-		 * @return
-		 */
-		public BuildStep sshPort(int port);
-		
-		/**
-		 * @return an instance of a Profile.based on the parameters passed
-		 */
-		public Profile build();
-
-	}
-
-	public static interface PortStep {
-		/**
-		 * @return an instance of a Profile.based on the parameters passed
-		 */
-		public Profile build();
-
-		/**
-		 * @param options
-		 *            port number ( -p option)
-		 * @return
-		 */
-		public BuildStep sshPort(int port);
+		public BuildStep withUser(String user);
 
 	}
 
@@ -127,7 +120,7 @@ public class ProfileBuilder {
 		public Profile build();
 	}
 
-	private static class Steps implements NameStep, FileStep, ServerStep, CredentialsStep, PortStep, BuildStep, ProxyStep {
+	private static class Steps implements NameStep, FileStep, ServerStep, CredentialsStep, UserAuthPubKeyCredential, BuildStep {
 
 		private String name;
 		private String host;
@@ -136,8 +129,7 @@ public class ProfileBuilder {
 		private String filePath;
 		private Integer port;
 		private String privateKeyLocation;
-		private String proxyHost;
-		private int proxyPort;
+		private boolean isPasswordRequired;
 
 		@Override
 		public FileStep name(String name) {
@@ -164,31 +156,36 @@ public class ProfileBuilder {
 		}
 
 		@Override
-		public ProxyStep credentials(String user, String password) {
-			this.user = user;
-			this.password = password;
+		public CredentialsStep onRemotehostAndPort(String host, int port) {
+			this.host = host;
+			this.port = port;
 			return this;
 		}
 
 		@Override
-		public BuildStep sshPort(int port) {
-			this.port = port;
+		public BuildStep credentials(String user, String password) {
+			this.user = user;
+			this.password = password;
+			this.isPasswordRequired = true;
 			return this;
 		}
-		
+
 		@Override
-		public ProxyStep userAuthPubKeyDetails(String privateKeyLocation,
-				String user, String passphrase) {
+		public UserAuthPubKeyCredential userAuthPubKeyDetails(String privateKeyLocation) {
+			this.privateKeyLocation = privateKeyLocation;
+			return this;
+		}
+
+		@Override
+		public UserAuthPubKeyCredential userAuthPubKeyDetails(String privateKeyLocation, String passphrase) {
 			this.privateKeyLocation = privateKeyLocation;
 			this.password = passphrase;
-			this.user = user;
 			return this;
 		}
-		
+
 		@Override
-		public PortStep withProxy(String proxyHost, int proxyPort) {
-			this.proxyHost = proxyHost;
-			this.proxyPort = proxyPort;
+		public BuildStep withUser(String user) {
+			this.user = user;
 			return this;
 		}
 
@@ -206,27 +203,20 @@ public class ProfileBuilder {
 			Profile profile = new Profile(name, filePath);
 			ServerDetails serverDetails = new ServerDetails(host);
 			if (!serverDetails.isLocalhost()) {
-				if (user == null || password == null) {
-					throw new IllegalArgumentException("Credentials are null");
-				}
 				serverDetails.setUser(user);
 				serverDetails.setPassword(password);
 			}
+			serverDetails.setPasswordRequired(isPasswordRequired);
 			if (port != null) {
 				serverDetails.setPort(port);
 			}
 			if (privateKeyLocation != null) {
 				serverDetails.setPrivateKeyLocation(privateKeyLocation);
 			}
-			serverDetails.setProxyHost(proxyHost);
-			serverDetails.setProxyPort(proxyPort);
 			profile.setServerDetails(serverDetails);
+			profile.validate();
 			return profile;
 		}
-
-		
-
-		
 
 	}
 

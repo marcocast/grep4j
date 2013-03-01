@@ -1,11 +1,7 @@
 package org.grep4j.core.model;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-
 import org.testng.annotations.Test;
 
-@Test
 public class ProfileValidationTest {
 
 	private static final String name = "profileName";
@@ -14,126 +10,100 @@ public class ProfileValidationTest {
 	private static final String remote_host = "host";
 	private static final String user = "user";
 	private static final String password = "password";
-	private static final String prefix = "Validation error for Profile [" + name + "]:";
+	private static final String prefix = "Validation error for Profile \\[" + name + "\\]:";
 
+	@Test(expectedExceptions = IllegalArgumentException.class, expectedExceptionsMessageRegExp = "Profile name is empty or null")
 	public void testEmptyProfileName() {
-		String errorMessage = "Profile name is empty or null";
-		try {
-			new Profile("", filePath).validate();
-		} catch (IllegalArgumentException e) {
-			assertThat(e.getMessage(), is(errorMessage));
-		}
+		new Profile("", filePath).validate();
 	}
 
+	@Test(expectedExceptions = IllegalArgumentException.class, expectedExceptionsMessageRegExp = "Profile name is empty or null")
 	public void testNullProfileName() {
-		String errorMessage = "Profile name is empty or null";
-		try {
-			new Profile(null, filePath).validate();
-		} catch (IllegalArgumentException e) {
-			assertThat(e.getMessage(), is(errorMessage));
-		}
+		new Profile(null, filePath).validate();
 	}
 
+	@Test(expectedExceptions = IllegalArgumentException.class, expectedExceptionsMessageRegExp = prefix + "FilePath is empty or null")
 	public void testEmptyFilePath() {
-		String errorMessage = prefix + "FilePath is empty or null";
-		try {
-			new Profile(name, "").validate();
-		} catch (IllegalArgumentException e) {
-			assertThat(e.getMessage(), is(errorMessage));
-		}
+		new Profile(name, "").validate();
 	}
 
+	@Test(expectedExceptions = IllegalArgumentException.class, expectedExceptionsMessageRegExp = prefix + "FilePath is empty or null")
 	public void testNullFilePath() {
-		String errorMessage = prefix + "FilePath is empty or null";
-		try {
-			new Profile(name, null).validate();
-		} catch (IllegalArgumentException e) {
-			assertThat(e.getMessage(), is(errorMessage));
-		}
+		new Profile(name, null).validate();
 	}
 
+	@Test(expectedExceptions = IllegalArgumentException.class, expectedExceptionsMessageRegExp = prefix + "Host is empty or null")
 	public void testEmptyHost() {
-		String errorMessage = prefix + "Host is empty or null";
-		try {
-			Profile profile = new Profile(name, filePath);
-			profile.setServerDetails(new ServerDetails(""));
-			profile.validate();
-		} catch (IllegalArgumentException e) {
-			assertThat(e.getMessage(), is(errorMessage));
-		}
+		Profile profile = new Profile(name, filePath);
+		profile.setServerDetails(new ServerDetails(""));
+		profile.validate();
 	}
 
+	@Test(expectedExceptions = IllegalArgumentException.class, expectedExceptionsMessageRegExp = prefix + "Host is empty or null")
 	public void testNullHost() {
-		String errorMessage = prefix + "Host is empty or null";
-		try {
-			Profile profile = new Profile(name, filePath);
-			profile.setServerDetails(new ServerDetails(null));
-			profile.validate();
-		} catch (IllegalArgumentException e) {
-			assertThat(e.getMessage(), is(errorMessage));
-		}
+		Profile profile = new Profile(name, filePath);
+		profile.setServerDetails(new ServerDetails(null));
+		profile.validate();
 	}
 
+	@Test(expectedExceptions = IllegalArgumentException.class, expectedExceptionsMessageRegExp = prefix + "User is empty or null")
 	public void testEmptyRemoteHostUser() {
-		String errorMessage = prefix + "User is empty or null";
-		try {
-			Profile profile = new Profile(name, filePath);
-			ServerDetails serverDetails = new ServerDetails(remote_host);
-			serverDetails.setUser("");
-			serverDetails.setPassword(password);
-			profile.setServerDetails(serverDetails);
-			profile.validate();
-		} catch (IllegalArgumentException e) {
-			assertThat(e.getMessage(), is(errorMessage));
-		}
+		Profile profile = new Profile(name, filePath);
+		ServerDetails serverDetails = new ServerDetails(remote_host);
+		serverDetails.setUser("");
+		serverDetails.setPassword(password);
+		profile.setServerDetails(serverDetails);
+		profile.validate();
 	}
 
+	@Test(expectedExceptions = IllegalArgumentException.class, expectedExceptionsMessageRegExp = prefix + "User is empty or null")
 	public void testNullRemoteHostUser() {
-		String errorMessage = prefix + "User is empty or null";
-		try {
-			Profile profile = new Profile(name, filePath);
-			ServerDetails serverDetails = new ServerDetails(remote_host);
-			serverDetails.setUser(null);
-			serverDetails.setPassword(password);
-			profile.setServerDetails(serverDetails);
-			profile.validate();
-		} catch (IllegalArgumentException e) {
-			assertThat(e.getMessage(), is(errorMessage));
-		}
+		Profile profile = new Profile(name, filePath);
+		ServerDetails serverDetails = new ServerDetails(remote_host);
+		serverDetails.setUser(null);
+		serverDetails.setPassword(password);
+		profile.setServerDetails(serverDetails);
+		profile.validate();
 	}
 
+	@Test(expectedExceptions = IllegalArgumentException.class, expectedExceptionsMessageRegExp = prefix + "Password is empty or null")
 	public void testEmptyRemoteHostPassword() {
-		String errorMessage = prefix + "Password is empty or null";
-		try {
-			Profile profile = new Profile(name, filePath);
-			ServerDetails serverDetails = new ServerDetails(remote_host);
-			serverDetails.setUser(user);
-			serverDetails.setPassword("");
-			profile.setServerDetails(serverDetails);
-			profile.validate();
-		} catch (IllegalArgumentException e) {
-			assertThat(e.getMessage(), is(errorMessage));
-		}
+		Profile profile = new Profile(name, filePath);
+		ServerDetails serverDetails = new ServerDetails(remote_host);
+		serverDetails.setUser(user);
+		serverDetails.setPasswordRequired(true);
+		serverDetails.setPassword("");
+		profile.setServerDetails(serverDetails);
+		profile.validate();
 	}
 
+	@Test(expectedExceptions = IllegalArgumentException.class, expectedExceptionsMessageRegExp = prefix + "Password is empty or null")
 	public void testNullRemoteHostPassword() {
-		String errorMessage = prefix + "Password is empty or null";
-		try {
-			Profile profile = new Profile(name, filePath);
-			ServerDetails serverDetails = new ServerDetails(remote_host);
-			serverDetails.setUser(user);
-			serverDetails.setPassword(null);
-			profile.setServerDetails(serverDetails);
-			profile.validate();
-		} catch (IllegalArgumentException e) {
-			assertThat(e.getMessage(), is(errorMessage));
-		}
+		Profile profile = new Profile(name, filePath);
+		ServerDetails serverDetails = new ServerDetails(remote_host);
+		serverDetails.setUser(user);
+		serverDetails.setPasswordRequired(true);
+		serverDetails.setPassword(null);
+		profile.setServerDetails(serverDetails);
+		profile.validate();
 	}
 
+	@Test
 	public void testNullLocalHostPassword() {
 		Profile profile = new Profile(name, filePath);
 		ServerDetails serverDetails = new ServerDetails(local_host);
 		serverDetails.setUser(user);
+		serverDetails.setPassword(null);
+		profile.setServerDetails(serverDetails);
+		profile.validate();
+	}
+
+	@Test
+	public void testNoPasswordWhenNotRequired() {
+		Profile profile = new Profile(name, filePath);
+		ServerDetails serverDetails = new ServerDetails(remote_host);
+		serverDetails.setUser(user);
+		serverDetails.setPasswordRequired(false);
 		serverDetails.setPassword(null);
 		profile.setServerDetails(serverDetails);
 		profile.validate();

@@ -29,9 +29,15 @@ public class ProfileTest {
 		assertThat(profile, is(equalTo(profile2)));
 	}
 
-	public void testNegativeEquals() {
-		Profile profile = ProfileFixtures.aDummyRemoteProfile();
-		Profile profile2 = ProfileFixtures.anotherDummyRemoteProfile();
+	public void testPositivePublicKeyEquals() {
+		Profile profile = ProfileFixtures.aDummyRemoteProfileWithPublicKeyWithNoPassword();
+		Profile profile2 = ProfileFixtures.aDummyRemoteProfileWithPublicKeyWithNoPassword();
+		assertThat(profile, is(equalTo(profile2)));
+	}
+
+	public void testNegativePublicKeyEquals() {
+		Profile profile = ProfileFixtures.aDummyRemoteProfileWithPublicKeyWithNoPasswordDifferentPort();
+		Profile profile2 = ProfileFixtures.aDummyRemoteProfileWithPublicKeyWithNoPasswordDifferentPort();
 		assertThat(profile, is(not(equalTo(profile2))));
 	}
 

@@ -18,7 +18,12 @@ public class ProfileFixtures {
 	public static Profile aDummyRemoteProfile() {
 		return ProfileBuilder.newBuilder().name("dummy remote profiel").filePath("/path/to/file/filename.txt").onRemotehost("172.60.60.60")
 				.credentials("user", "password").build();
+	}
 
+	public static Profile aDummyRemoteProfileOnDifferentPort() {
+		return ProfileBuilder.newBuilder().name("dummy remote profiel").filePath("/path/to/file/filename.txt")
+				.onRemotehostAndPort("172.60.60.60", 8081)
+				.credentials("user", "password").build();
 	}
 
 	public static Profile aDummyRemoteProfileWithWildcard(String wildcard) {
@@ -34,6 +39,30 @@ public class ProfileFixtures {
 	public static Profile aRemoteProfileWithUnknownServers() {
 		return ProfileBuilder.newBuilder().name("dummy remote profiel").filePath("/path/to/file/filename.txt")
 				.onRemotehost("DontTellMeYouCanResolveThis").credentials("user", "password").build();
+	}
+
+	public static Profile aDummyRemoteProfileWithPublicKeyWithNoPassword() {
+		return ProfileBuilder.newBuilder().name("aDummyRemoteProfileWithPublicKeyWithPassword").filePath("/path/to/file/filename.txt")
+				.onRemotehost("172.60.60.60")
+				.userAuthPubKeyDetails("~/.ssh/id_rsa").withUser("user").build();
+	}
+
+	public static Profile aDummyRemoteProfileWithPublicKeyWithPassword() {
+		return ProfileBuilder.newBuilder().name("aDummyRemoteProfileWithPublicKeyWithPassword").filePath("/path/to/file/filename.txt")
+				.onRemotehost("172.60.60.60")
+				.userAuthPubKeyDetails("~/.ssh/id_rsa", "password").withUser("user").build();
+	}
+
+	public static Profile aDummyRemoteProfileWithPublicKeyWithNoPasswordDifferentPort() {
+		return ProfileBuilder.newBuilder().name("aDummyRemoteProfileWithPublicKeyWithPassword").filePath("/path/to/file/filename.txt")
+				.onRemotehostAndPort("172.60.60.60", 8081)
+				.userAuthPubKeyDetails("~/.ssh/id_rsa").withUser("user").build();
+	}
+
+	public static Profile aDummyRemoteProfileWithPublicKeyWithPasswordDifferentPort() {
+		return ProfileBuilder.newBuilder().name("aDummyRemoteProfileWithPublicKeyWithPassword").filePath("/path/to/file/filename.txt")
+				.onRemotehostAndPort("172.60.60.60", 8081)
+				.userAuthPubKeyDetails("~/.ssh/id_rsa", "password").withUser("user").build();
 	}
 
 	public static Profile localProfile() {
