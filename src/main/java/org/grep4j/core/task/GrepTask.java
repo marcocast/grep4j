@@ -32,22 +32,23 @@ public class GrepTask implements Callable<List<GrepResult>> {
 
 	private final GrepRequest grepRequest;
 	private final List<String> matchingFiles;
-	private final List<AbstractGrepCommand> grepCommandsList;	
-	private final Executor<List<GrepResult>, GrepRequest> grepTaskExecutor; 
-	
+	private final List<AbstractGrepCommand> grepCommandsList;
+	private final Executor<List<GrepResult>, GrepRequest> grepTaskExecutor;
+	private final FileList fileList;
 
 	public GrepTask(GrepRequest grepRequest) {
 		this.grepRequest = grepRequest;
 		this.matchingFiles = new ArrayList<String>();
 		this.grepCommandsList = new ArrayList<AbstractGrepCommand>();
 		this.grepTaskExecutor = new GrepTaskExecutor(grepCommandsList);
+		this.fileList = new FileList();
 	}
 
 	@Override
 	public List<GrepResult> call() {
 		listMatchingFiles();
 		prepareGrepCommands();
-		return grepTaskExecutor.execute(grepRequest);		
+		return grepTaskExecutor.execute(grepRequest);
 	}
 
 	/*
@@ -55,7 +56,7 @@ public class GrepTask implements Callable<List<GrepResult>> {
 	 * in a separated Grepresult
 	 */
 	private void listMatchingFiles() {
-		matchingFiles.addAll(new FileList(grepRequest).list());
+		matchingFiles.addAll(fileList.list(grepRequest));
 	}
 
 	private void prepareGrepCommands() {
@@ -63,18 +64,17 @@ public class GrepTask implements Callable<List<GrepResult>> {
 			if (filename.trim().isEmpty()) {
 				continue;
 			}
-			AbstractGrepCommand grep;
+			AbstractGrepCommand grepCommand;
 			if (isGz(filename)) {
-				grep = new GzGrepCommand(grepRequest.getExpression(), filename, grepRequest.isRegexExpression());
+				grepCommand = new GzGrepCommand(grepRequest, filename);
 			} else {
-				grep = new SimpleGrepCommand(grepRequest.getExpression(), filename, grepRequest.isRegexExpression());
+				grepCommand = new SimpleGrepCommand(grepRequest, filename);
 			}
-			grep.setContextControls(grepRequest.getContextControls());
-			grep.setTailContextControls(grepRequest.getTailContextControls());
-			grepCommandsList.add(grep);
+			grepCommand.setContextControls(grepRequest.getContextControls());
+			grepCommand.setTailContextControls(grepRequest.getTailContextControls());
+			grepCommandsList.add(grepCommand);
 		}
 	}
-
 
 	private boolean isGz(String matchingFile) {
 		return matchingFile.endsWith(".gz");

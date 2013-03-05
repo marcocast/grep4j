@@ -1,6 +1,7 @@
 package org.grep4j.core.command.linux.grep;
 
 import org.grep4j.core.command.ExecutableCommand;
+import org.grep4j.core.request.GrepRequest;
 
 public abstract class AbstractGrepCommand implements ExecutableCommand {
 
@@ -22,11 +23,11 @@ public abstract class AbstractGrepCommand implements ExecutableCommand {
 	 * @param file
 	 *            to grep
 	 */
-	protected AbstractGrepCommand(String expression, String file, boolean regexExpression) {
-		this.expression = expression;
+	protected AbstractGrepCommand(GrepRequest grepRequest, String file) {
+		this.expression = grepRequest.getExpression();
 		this.file = file;
 		this.command = new StringBuilder();
-		this.regexExpression = regexExpression;
+		this.regexExpression = grepRequest.isRegexExpression();
 	}
 
 	protected String getGrepCommand() {

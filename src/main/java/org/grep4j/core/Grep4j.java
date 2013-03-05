@@ -235,7 +235,6 @@ public final class Grep4j {
 	}
 
 	private GrepResults execute() {
-		grepRequests.clear();
 		verifyInputs();
 		prepareCommandRequests();
 		return grepExecutor.execute(grepRequests);
@@ -251,6 +250,7 @@ public final class Grep4j {
 	}
 
 	private void prepareCommandRequests() {
+		grepRequests.clear();
 		for (Profile profile : profiles) {
 			GrepRequest grepRequest = new GrepRequest(expression, profile, isRegexExpression);
 			grepRequest.addOptions(optionsDecorator);
