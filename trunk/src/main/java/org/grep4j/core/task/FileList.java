@@ -6,17 +6,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import lombok.Data;
+import javax.annotation.concurrent.ThreadSafe;
 
 import org.grep4j.core.command.linux.ls.LsCommand;
 import org.grep4j.core.request.GrepRequest;
 
-@Data
+@ThreadSafe
 public class FileList {
 
-	private final GrepRequest grepRequest;
-
-	public List<String> list() {
+	public List<String> list(GrepRequest grepRequest) {
 
 		List<String> matchingFiles = new ArrayList<String>();
 

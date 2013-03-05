@@ -20,6 +20,11 @@ public class ProfileFixtures {
 				.credentials("user", "password").build();
 	}
 
+	public static Profile aDummyRemoteProfileWithFile(String file) {
+		return ProfileBuilder.newBuilder().name("dummy remote profiel").filePath(file).onRemotehost("172.60.60.60")
+				.credentials("user", "password").build();
+	}
+
 	public static Profile aDummyRemoteProfileOnDifferentPort() {
 		return ProfileBuilder.newBuilder().name("dummy remote profiel").filePath("/path/to/file/filename.txt")
 				.onRemotehostAndPort("172.60.60.60", 8081)

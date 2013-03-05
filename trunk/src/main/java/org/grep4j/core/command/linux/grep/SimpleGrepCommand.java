@@ -1,6 +1,7 @@
 package org.grep4j.core.command.linux.grep;
 
 import org.grep4j.core.command.ExecutableCommand;
+import org.grep4j.core.request.GrepRequest;
 
 /**
  * {@link SimpleGrepCommand} is a {@link ExecutableCommand} object that build the command to grep not compressed files. Example:
@@ -10,8 +11,8 @@ import org.grep4j.core.command.ExecutableCommand;
  */
 public class SimpleGrepCommand extends AbstractGrepCommand {
 
-	public SimpleGrepCommand(String expression, String file, boolean regexExpression) {
-		super(expression, file, regexExpression);
+	public SimpleGrepCommand(GrepRequest grepRequest, String file) {
+		super(grepRequest, file);
 	}
 
 	@Override
