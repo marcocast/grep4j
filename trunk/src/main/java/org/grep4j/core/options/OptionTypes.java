@@ -7,7 +7,7 @@ package org.grep4j.core.options;
  */
 public enum OptionTypes {
 
-	GREP_OPTION,
+	STANDARD_GREP_OPTION,
 	SSH_CONNECTION_LIMIT_OPTION,
 	TAIL_OPTION;
 

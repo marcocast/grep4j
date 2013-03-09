@@ -17,13 +17,13 @@ import com.google.common.collect.ImmutableList;
  */
 public final class OptionsDecorator {
 
-	private final List<Options> options;
+	private final List<Option> options;
 
 	public OptionsDecorator() {
 		this(null);
 	}
 
-	public OptionsDecorator(List<Options> options) {
+	public OptionsDecorator(List<Option> options) {
 		if (options != null) {
 			this.options = ImmutableList.copyOf(options);
 		} else {
@@ -43,7 +43,7 @@ public final class OptionsDecorator {
 	 * @return
 	 */
 	public String getStringValue(OptionTypes name, String defaultValue) {
-		List<Options> options = this.findOptionsByType(name);
+		List<Option> options = this.findOptionsByType(name);
 		if (options.isEmpty()) {
 			return defaultValue;
 		}
@@ -58,7 +58,7 @@ public final class OptionsDecorator {
 	 * @return
 	 */
 	public Integer getIntegerValue(OptionTypes type, Integer defaultValue) {
-		List<Options> options = this.findOptionsByType(type);
+		List<Option> options = this.findOptionsByType(type);
 		if (options.isEmpty()) {
 			return defaultValue;
 		}
@@ -71,7 +71,7 @@ public final class OptionsDecorator {
 	 * @param type
 	 * @return
 	 */
-	public List<Options> findOptionsByType(OptionTypes type) {
-		return select(this.options, having(on(Options.class).getOptionType(), equalTo(type)));
+	public List<Option> findOptionsByType(OptionTypes type) {
+		return select(this.options, having(on(Option.class).getOptionType(), equalTo(type)));
 	}
 }

@@ -6,10 +6,10 @@ import static org.grep4j.core.fixtures.ProfileFixtures.localProfile;
 import static org.grep4j.core.fluent.Dictionary.on;
 import static org.grep4j.core.fluent.Dictionary.options;
 import static org.grep4j.core.fluent.Dictionary.with;
-import static org.grep4j.core.options.Options.countMatches;
-import static org.grep4j.core.options.Options.ignoreCase;
-import static org.grep4j.core.options.Options.onlyMatching;
-import static org.grep4j.core.options.Options.withFileName;
+import static org.grep4j.core.options.Option.countMatches;
+import static org.grep4j.core.options.Option.ignoreCase;
+import static org.grep4j.core.options.Option.onlyMatching;
+import static org.grep4j.core.options.Option.withFileName;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
