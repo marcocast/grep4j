@@ -1,16 +1,39 @@
 package org.grep4j.core.model;
 
 /**
- * Builder class for {@link Profile} and {@link ServerDetails} Remote Profile Example:
+ * Builder class for {@link Profile} and {@link ServerDetails} 
+ * 
+ * Remote Profile Example:
  * 
  * <pre>
- * new ProfileBuilder().name(&quot;Remote file&quot;).filePath(&quot;/path/to/file/filename.txt&quot;).onRemotehost(&quot;172.xx.xx.xx&quot;).credentials(&quot;user&quot;, &quot;password&quot;).build();
+ * ProfileBuilder.newBuilder()
+		.name("Remote profile")
+		.filePath("/path/to/file/filename.txt")
+		.onRemotehost("172.68.68.68")
+		.credentials("user", "password")
+		.build();
+ * </pre>
+ * 
+ * Remote Profile with public key connectionExample:
+ * 
+ * <pre>
+ * ProfileBuilder.newBuilder()
+		.name("Remote profile with user Auth Private/Public Key")
+		.filePath("/path/to/file/filename.txt")
+		.onRemotehost("172.68.68.68")
+		.userAuthPrivateKeyLocation("~/.ssh/id_dsa")
+		.withUser("user")
+		.build();
  * </pre>
  * 
  * local Profile Example:
  * 
  * <pre>
- * new ProfileBuilder().name(&quot;Local file&quot;).filePath(&quot;/path/to/file/filename.txt&quot;).onLocalhost().build();
+ * ProfileBuilder.newBuilder()
+		.name("Local profile")
+		.filePath("/path/to/file/filename.txt")
+		.onLocalhost()
+		.build();
  * </pre>
  * 
  * @author marcocast
