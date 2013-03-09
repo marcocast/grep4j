@@ -9,7 +9,7 @@ import org.apache.commons.lang3.time.StopWatch;
 import org.grep4j.core.executors.Executor;
 import org.grep4j.core.executors.GrepExecutor;
 import org.grep4j.core.model.Profile;
-import org.grep4j.core.options.Options;
+import org.grep4j.core.options.Option;
 import org.grep4j.core.options.OptionsDecorator;
 import org.grep4j.core.request.GrepExpression;
 import org.grep4j.core.request.GrepRequest;
@@ -62,7 +62,7 @@ public final class Grep4j {
 	private final StopWatch clock;
 	private final Executor<GrepResults, List<GrepRequest>> grepExecutor;
 
-	/**
+	/*
 	 * Creates an instance of Grep4j that accepts also extra lines options. It also protects profiles and extra lines options with ImmutableList.
 	 * 
 	 * @param expression
@@ -70,7 +70,7 @@ public final class Grep4j {
 	 * @param options
 	 * @param isRegexExpression
 	 */
-	private Grep4j(GrepExpression expression, List<Profile> profiles, Options... options) {
+	private Grep4j(GrepExpression expression, List<Profile> profiles, Option... options) {
 		this.grepRequests = new ArrayList<GrepRequest>(profiles.size());
 		this.clock = new StopWatch();
 		this.expression = expression.getText();
@@ -142,7 +142,7 @@ public final class Grep4j {
 	 * @param option
 	 * @return GlobalGrepResult
 	 */
-	public static GrepResults grep(GrepExpression grepExpression, List<Profile> profiles, Options... options) {
+	public static GrepResults grep(GrepExpression grepExpression, List<Profile> profiles, Option... options) {
 		return new Grep4j(grepExpression, profiles, options).execute();
 	}
 
@@ -210,7 +210,7 @@ public final class Grep4j {
 	 * @param options
 	 * @return GlobalGrepResult
 	 */
-	public static GrepResults grep(GrepExpression grepExpression, Profile profile, Options... options) {
+	public static GrepResults grep(GrepExpression grepExpression, Profile profile, Option... options) {
 		return grep(grepExpression, Collections.singletonList(profile), options);
 	}
 

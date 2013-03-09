@@ -6,8 +6,8 @@ import static org.grep4j.core.Grep4j.regularExpression;
 import static org.grep4j.core.fixtures.ProfileFixtures.localProfile;
 import static org.grep4j.core.fixtures.ProfileFixtures.localProfileWithWildecard;
 import static org.grep4j.core.fluent.Dictionary.on;
-import static org.grep4j.core.options.Options.extraLinesAfter;
-import static org.grep4j.core.options.Options.ignoreCase;
+import static org.grep4j.core.options.Option.extraLinesAfter;
+import static org.grep4j.core.options.Option.ignoreCase;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 

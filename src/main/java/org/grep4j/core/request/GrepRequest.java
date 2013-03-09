@@ -56,7 +56,7 @@ public class GrepRequest {
 	 * @param options
 	 */
 	public void addOptions(OptionsDecorator options) {
-		this.contextControls = join(options.findOptionsByType(OptionTypes.GREP_OPTION), SPACE);
+		this.contextControls = join(options.findOptionsByType(OptionTypes.STANDARD_GREP_OPTION), SPACE);
 		this.tailContextControls = join(options.findOptionsByType(OptionTypes.TAIL_OPTION), SPACE);
 	}
 

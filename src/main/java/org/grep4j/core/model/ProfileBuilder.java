@@ -52,6 +52,7 @@ public class ProfileBuilder {
 		/**
 		 * The hostname of the server where the target file is stored. This can be either an IP or proper hostname. In case of a local server, the
 		 * hostname has to be either "localhost" or "127.0.0.1".
+		 * The default ssh port 22 will be used ( -p option).
 		 * 
 		 * @param host
 		 */
@@ -60,7 +61,7 @@ public class ProfileBuilder {
 		/**
 		 * The hostname of the server where the target file is stored. This can be either an IP or proper hostname. In case of a local server, the
 		 * hostname has to be either "localhost" or "127.0.0.1".
-		 * SSH Port number in case is not the default 22 ( -p option).
+		 * SSH Port number. In case it is not set, the default ssh port 22 will be used ( -p option).
 		 * 
 		 * @param host
 		 * @param port number ( -p option)
