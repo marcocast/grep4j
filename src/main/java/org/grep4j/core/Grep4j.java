@@ -88,7 +88,7 @@ public final class Grep4j {
 	 * <pre>
 	 * import static org.grep4j.core.Grep4j.grep;
 	 * import static org.grep4j.core.Grep4j.constantExpression;
-	 * import static org.grep4j.core.Grep4j.extraLinesAfter;
+	 * import static org.grep4j.core.options.Option.extraLinesAfter;
 	 * import static org.grep4j.core.fluent.Dictionary.on;
 	 * ...
 	 * 
@@ -106,7 +106,6 @@ public final class Grep4j {
 	 * <pre>
 	 * import static org.grep4j.core.Grep4j.grep;
 	 * import static org.grep4j.core.Grep4j.constantExpression;
-	 * import static org.grep4j.core.Grep4j.extraLinesBefore;
 	 * import static org.grep4j.core.fluent.Dictionary.on;
 	 * import static org.grep4j.core.options.Option.ignoreCase;
 	 * ...
@@ -124,8 +123,8 @@ public final class Grep4j {
 	 * <pre>
 	 * import static org.grep4j.core.Grep4j.grep;
 	 * import static org.grep4j.core.Grep4j.constantExpression;
-	 * import static org.grep4j.core.Grep4j.extraLinesBefore;
-	 * import static org.grep4j.core.Grep4j.extraLinesAfter;
+	 * import static org.grep4j.core.options.Option.extraLinesBefore;
+	 * import static org.grep4j.core.options.Option.extraLinesAfter;
 	 * import static org.grep4j.core.fluent.Dictionary.on;
 	 * import static org.grep4j.core.options.Option.onlyMatching;
 	 * ...
@@ -153,7 +152,7 @@ public final class Grep4j {
 	 * <pre>
 	 * import static org.grep4j.core.Grep4j.grep;
 	 * import static org.grep4j.core.Grep4j.constantExpression;
-	 * import static org.grep4j.core.Grep4j.extraLinesAfter;
+	 * import static org.grep4j.core.options.Option.extraLinesAfter;
 	 * import static org.grep4j.core.fluent.Dictionary.on;
 	 * ...
 	 * 
