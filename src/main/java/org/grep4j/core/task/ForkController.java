@@ -11,7 +11,7 @@ import org.grep4j.core.options.OptionsDecorator;
 public class ForkController {
 
 	private static int MAX_GREPTASK_THREADS = 10;
-	private static int MAX_COMMANDEXECUTORTASK_THREADS = 5;
+	private static int MAX_COMMANDEXECUTORTASK_THREADS = 1;
 
 	private ForkController() {
 	}
