@@ -3,6 +3,7 @@ package org.grep4j.core;
 import static org.grep4j.core.Grep4j.constantExpression;
 import static org.grep4j.core.Grep4j.grep;
 import static org.grep4j.core.fixtures.ProfileFixtures.pizzaProfile;
+import static org.grep4j.core.fixtures.ProfileFixtures.pizzaWithSpaceProfile;
 import static org.grep4j.core.fluent.Dictionary.on;
 import static org.grep4j.core.options.Option.countMatches;
 import static org.grep4j.core.options.Option.extraLinesAfter;
@@ -52,6 +53,12 @@ public class WhenGreppingPizzaFileWithOptions {
 
 	public void countMatchesTest() {
 		GrepResults results = grep(constantExpression("pizza"), on(pizzaProfile()), countMatches());
+		assertThat(results.totalLines(), is(1));
+		assertThat(results.toString(), is("5\n"));
+	}
+
+	public void countMatchesWithspaceTest() {
+		GrepResults results = grep(constantExpression("pizza"), on(pizzaWithSpaceProfile()), countMatches());
 		assertThat(results.totalLines(), is(1));
 		assertThat(results.toString(), is("5\n"));
 	}

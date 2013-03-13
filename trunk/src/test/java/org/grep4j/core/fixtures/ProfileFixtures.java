@@ -91,6 +91,17 @@ public class ProfileFixtures {
 		return ProfileBuilder.newBuilder().name(PLAIN_LOCAL_PROFILE_NAME).filePath(resourcePath).onLocalhost().build();
 	}
 
+	public static Profile pizzaWithSpaceProfile() {
+		String fileName = "pizza.txt";
+		URL url = ProfileFixtures.class.getClassLoader().getResource(fileName);
+		String resourcePath = url.getPath();
+		if (isWindows()) {
+			resourcePath = resourcePath.replaceAll(":", "");
+		}
+		return ProfileBuilder.newBuilder().name(PLAIN_LOCAL_PROFILE_NAME).filePath(resourcePath.replaceAll(".txt", " with space.txt")).onLocalhost()
+				.build();
+	}
+
 	public static Profile localProfileWithWildecard(String wildcard) {
 		String fileName = "local.txt";
 		URL url = ProfileFixtures.class.getClassLoader().getResource(fileName);

@@ -25,7 +25,7 @@ public class FileList {
 				matchingFiles.addAll(aListOf(filenames));
 			}
 		} else {
-			matchingFiles.add(grepRequest.getProfile().getFilePath());
+			matchingFiles.add(grepRequest.getProfile().getFilePath().replaceAll(" ", "\\\\ "));
 		}
 
 		return matchingFiles;
