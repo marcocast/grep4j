@@ -15,10 +15,6 @@ public class GzGrepCommand extends AbstractGrepCommand {
 
 	public GzGrepCommand(GrepRequest grepRequest, String file) {
 		super(grepRequest, file);
-	}
-
-	@Override
-	public String getCommandToExecute() {
 		command.append(GUNZIP);
 		command.append(SPACE);
 		command.append(GUNZIP_CONSOLE_OPTION);
@@ -32,6 +28,10 @@ public class GzGrepCommand extends AbstractGrepCommand {
 		command.append(QUOTE);
 		command.append(expression);
 		command.append(QUOTE);
+	}
+
+	@Override
+	public String getCommandToExecute() {
 		appendContextControl();
 		return command.toString();
 	}

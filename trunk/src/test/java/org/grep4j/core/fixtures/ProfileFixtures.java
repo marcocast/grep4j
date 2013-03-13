@@ -10,6 +10,7 @@ import org.grep4j.core.model.ProfileBuilder;
 public class ProfileFixtures {
 
 	private static final String PLAIN_LOCAL_PROFILE_NAME = "local";
+	private static final String ALL_LOCAL_PROFILE_NAME = "all locals";
 	private static final String GZ_LOCAL_PROFILE_NAME = "gz_local";
 
 	private ProfileFixtures() {
@@ -108,5 +109,15 @@ public class ProfileFixtures {
 			resourcePath = resourcePath.replaceAll(":", "");
 		}
 		return ProfileBuilder.newBuilder().name(GZ_LOCAL_PROFILE_NAME).filePath(resourcePath).onLocalhost().build();
+	}
+
+	public static Profile localAllProfiles() {
+		String fileName = "local.txt";
+		URL url = ProfileFixtures.class.getClassLoader().getResource(fileName);
+		String resourcePath = url.getPath();
+		if (isWindows()) {
+			resourcePath = resourcePath.replaceAll(":", "");
+		}
+		return ProfileBuilder.newBuilder().name(ALL_LOCAL_PROFILE_NAME).filePath(resourcePath.replaceAll(".txt", "*")).onLocalhost().build();
 	}
 }

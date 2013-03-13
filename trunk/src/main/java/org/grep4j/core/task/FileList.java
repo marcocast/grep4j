@@ -32,6 +32,7 @@ public class FileList {
 	}
 
 	private List<String> aListOf(String filenames) {
-		return Arrays.asList(filenames.split("\n"));
+		return Arrays.asList(filenames.replaceAll(" ", "\\\\ ").split("\n"));
 	}
+
 }

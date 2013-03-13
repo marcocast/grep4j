@@ -13,10 +13,6 @@ public class SimpleGrepCommand extends AbstractGrepCommand {
 
 	public SimpleGrepCommand(GrepRequest grepRequest, String file) {
 		super(grepRequest, file);
-	}
-
-	@Override
-	public String getCommandToExecute() {
 		command.append(getGrepCommand());
 		command.append(SPACE);
 		command.append(QUOTE);
@@ -24,6 +20,11 @@ public class SimpleGrepCommand extends AbstractGrepCommand {
 		command.append(QUOTE);
 		command.append(SPACE);
 		command.append(file);
+
+	}
+
+	@Override
+	public String getCommandToExecute() {
 		appendContextControl();
 		return command.toString();
 	}
