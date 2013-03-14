@@ -40,7 +40,7 @@ public class LocalCommandExecutor extends CommandExecutor {
 			ReaderThread brError = new ReaderThread(p.getErrorStream());
 			brError.start();
 			p.waitFor();
-			while (!brInput.isFinished() && !brError.isFinished()) {
+			while (!brInput.isFinished()) {
 			}
 			result.append(brInput.getResults());
 		} catch (Exception e) {
