@@ -98,7 +98,8 @@ public class ProfileFixtures {
 		if (isWindows()) {
 			resourcePath = resourcePath.replaceAll(":", "");
 		}
-		return ProfileBuilder.newBuilder().name(PLAIN_LOCAL_PROFILE_NAME).filePath(resourcePath.replaceAll(".txt", " with space.txt")).onLocalhost()
+		return ProfileBuilder.newBuilder().name(PLAIN_LOCAL_PROFILE_NAME).filePath("\"" + resourcePath.replaceAll(".txt", " with space.txt") + "\"")
+				.onLocalhost()
 				.build();
 	}
 
