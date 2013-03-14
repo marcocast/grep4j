@@ -1,10 +1,10 @@
 package org.grep4j.core.task;
 
+import static ch.lambdaj.Lambda.convert;
 import static org.grep4j.core.command.ServerDetailsInterpreter.getCommandExecutor;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.concurrent.ThreadSafe;
@@ -13,7 +13,6 @@ import org.grep4j.core.command.linux.ls.LsCommand;
 import org.grep4j.core.request.GrepRequest;
 
 import ch.lambdaj.function.convert.PropertyExtractor;
-import static ch.lambdaj.Lambda.*;
 
 @ThreadSafe
 public class FileList {
