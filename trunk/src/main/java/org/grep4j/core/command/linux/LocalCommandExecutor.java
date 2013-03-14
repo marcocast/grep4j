@@ -40,7 +40,7 @@ public class LocalCommandExecutor extends CommandExecutor {
 			ReaderThread brError = new ReaderThread(p.getErrorStream());
 			brError.start();
 			p.waitFor();
-			while (!brInput.isFinished()) {
+			while (!brInput.isFinished() && !brError.isFinished()) {
 			}
 			result.append(brInput.getResults());
 		} catch (Exception e) {
@@ -49,6 +49,7 @@ public class LocalCommandExecutor extends CommandExecutor {
 	}
 
 	private static class ReaderThread extends Thread {
+		private static final String LINE_SEPARATOR = System.getProperty("line.separator");
 		private final InputStream stream;
 		private final AtomicBoolean isFinished = new AtomicBoolean();
 		private final StringBuilder results = new StringBuilder();
@@ -66,7 +67,7 @@ public class LocalCommandExecutor extends CommandExecutor {
 				String line;
 				while ((line = input.readLine()) != null) {
 					results.append(line);
-					results.append(System.getProperty("line.separator"));
+					results.append(LINE_SEPARATOR);
 
 				}
 			} catch (IOException e) {
