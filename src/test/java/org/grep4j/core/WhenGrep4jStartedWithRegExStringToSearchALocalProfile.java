@@ -25,6 +25,7 @@ public class WhenGrep4jStartedWithRegExStringToSearchALocalProfile {
 	private final List<Profile> profiles = Arrays.asList(localProfile());
 
 	public void customerRegexStringAppears1Time() {
+
 		assertThat(grep(regularExpression("customer(.*)updated"), on(profiles)).totalLines(), is(1));
 		assertThat(executing(grep(constantExpression("Marco"), on(profiles))).totalLines(), is(1));
 	}

@@ -60,19 +60,19 @@ public class WhenGreppingWithOptions {
 	public void withFirstLines() {
 		GrepResults results = grep(constantExpression("ERRor"), on(localProfile()), ignoreCase(), onlyFirstLines(1));
 
-		assertThat(results.toString(), is("ERROR 1\r\n"));
+		assertThat(results.toString(), is("ERROR 1\n"));
 	}
 
 	public void withFirstBytes() {
 		GrepResults results = grep(constantExpression("ERRor"), on(localProfile()), ignoreCase(), onlyFirstBytes(1));
 
-		assertThat(results.toString(), is("E"));
+		assertThat(results.toString(), is("E\n"));
 	}
 
 	public void withLastLines() {
 		GrepResults results = grep(constantExpression("ERRor"), on(localProfile()), ignoreCase(), onlyLastLines(1));
 
-		assertThat(results.toString(), is("ERROR 2\r\n"));
+		assertThat(results.toString(), is("ERROR 2\n"));
 	}
 
 	public void withLastBytes() {
