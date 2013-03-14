@@ -17,20 +17,20 @@ public class WhenPrintingGrepResults {
 
 	public void aGrepResultsSetWithSingleFile() {
 		assertThat(grep(constantExpression("ERROR 1"), on(localProfile()), extraLinesAfter(20)).filterBy(constantExpression("Marco")).toString(),
-				is("customer Marco(id=12345) has been updated successfully\r\n"));
+				is("customer Marco(id=12345) has been updated successfully\n"));
 
 	}
 
 	public void aGrepResultsSetWithMultipleFiles() {
 		assertThat(grep(constantExpression("ERROR 1"), on(localProfileWithWildecard("*")), extraLinesAfter(20)).filterBy(constantExpression("Marco"))
-				.toString(), is("customer Marco(id=12345) has been updated successfully\r\n"));
+				.toString(), is("customer Marco(id=12345) has been updated successfully\n"));
 
 	}
 
 	public void aGrepResultsSetWithAllFiles() {
 		assertThat(grep(constantExpression("ERROR 1"), on(localAllProfiles()), extraLinesAfter(20)).filterBy(constantExpression("Marco"))
 				.toString(),
-				is("customer Marco(id=12345) has been updated successfully\r\ncustomer Marco(id=12345) has been updated successfully\r\n"));
+				is("customer Marco(id=12345) has been updated successfully\ncustomer Marco(id=12345) has been updated successfully\n"));
 
 	}
 

@@ -21,7 +21,7 @@ import org.grep4j.core.request.GrepRequest;
 @EqualsAndHashCode
 public class GrepResult {
 
-	private static final Pattern linePattern = Pattern.compile(".*\r?\n");
+	private static final Pattern linePattern = Pattern.compile(".*\r?" + System.getProperty("line.separator"));
 	@Getter
 	private final GrepRequest grepRequest;
 	@Getter
