@@ -26,6 +26,7 @@ import org.grep4j.core.request.GrepExpression;
 @EqualsAndHashCode(exclude = "executionTime")
 public class GrepResults implements Collection<GrepResult> {
 
+	private final String LINE_SEPARATOR = System.getProperty("line.separator");
 	private final List<GrepResult> grepResults;
 
 	@Getter
@@ -111,6 +112,18 @@ public class GrepResults implements Collection<GrepResult> {
 			tostringbuilder.append(result);
 		}
 		return tostringbuilder.toString();
+	}
+
+	public String getHeaderInformation() {
+		StringBuilder sb = new StringBuilder();
+		for (GrepResult result : grepResults) {
+			sb.append(String.format("Profile name >>>%s<<< [ File Name:%s; Total lines found:%s; Total execution time:%s; Expression:%s ]",
+					result.getGrepRequest().getProfile().getName(), result.getFileName(), result.totalLines(), result.getExecutionTime(), result
+							.getGrepRequest()
+							.getExpression()));
+			sb.append(LINE_SEPARATOR);
+		}
+		return sb.toString();
 	}
 
 	/**
