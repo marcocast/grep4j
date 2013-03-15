@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.grep4j.core.command.ExecutableCommand;
 import org.grep4j.core.model.ServerDetails;
@@ -32,36 +31,47 @@ public class LocalCommandExecutor extends CommandExecutor {
 
 	private void executeCommand(ExecutableCommand command) throws IOException {
 		String[] commands = { "bash", "-c", command.getCommandToExecute() };
+		ReaderThread brInput = null;
+		ReaderThread brError = null;
+		Process p = null;
 		try {
-			Process p = Runtime.getRuntime().exec(commands);
-			p.getInputStream();
-			ReaderThread brInput = new ReaderThread(p.getInputStream());
+			p = Runtime.getRuntime().exec(commands);
+			//It needs to continually read from the processes input and error streams to ensure that it doesn't block
+			brInput = new ReaderThread(p.getInputStream());
+			brError = new ReaderThread(p.getErrorStream());
 			brInput.start();
-			ReaderThread brError = new ReaderThread(p.getErrorStream());
 			brError.start();
+			//This waits until the bash process is finished
 			p.waitFor();
-			while (!brInput.isFinished()) {
-			}
+			//This waits until the thread reading the input stream is finished (no need to wait for the Thread reading the error stream)
+			brInput.join();
 			result.append(brInput.getResults());
 		} catch (Exception e) {
 			throw new RuntimeException(e);
+		} finally {
+			p.destroy();
+			if (brInput.isAlive() && !brInput.isInterrupted()) {
+				brInput.interrupt();
+			}
+			if (brError.isAlive() && !brError.isInterrupted()) {
+				brError.interrupt();
+			}
 		}
 	}
 
-	private static class ReaderThread extends Thread {
-		private static final String LINE_SEPARATOR = System.getProperty("line.separator");
+	private class ReaderThread extends Thread {
+		private final String LINE_SEPARATOR = System.getProperty("line.separator");
 		private final InputStream stream;
-		private final AtomicBoolean isFinished = new AtomicBoolean();
 		private final StringBuilder results = new StringBuilder();
 
 		public ReaderThread(InputStream stream) {
 			this.stream = stream;
-			isFinished.set(false);
 		}
 
 		@Override
-		public void run() {
+		public void start() {
 			try {
+				results.setLength(0);
 				BufferedReader input = new BufferedReader
 						(new InputStreamReader(stream));
 				String line;
@@ -71,18 +81,12 @@ public class LocalCommandExecutor extends CommandExecutor {
 
 				}
 			} catch (IOException e) {
-				e.printStackTrace();
-			} finally {
-				isFinished.set(true);
+				throw new RuntimeException(e);
 			}
 		}
 
 		public String getResults() {
 			return this.results.toString();
-		}
-
-		public boolean isFinished() {
-			return this.isFinished.get();
 		}
 
 	}
