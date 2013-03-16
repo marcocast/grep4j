@@ -9,7 +9,8 @@ import org.grep4j.core.command.ExecutableCommand;
 import org.grep4j.core.model.ServerDetails;
 
 /**
- * The LocalCommandExecutor uses the java.lang.Process to execute the commands. Example of local command: bash -c ls /tmp/*.txt
+ * The LocalCommandExecutor uses the java.lang.Process to execute the commands.
+ * Example of local command: bash -c ls /tmp/*.txt
  * 
  * @author Marco Castigliego
  */
@@ -24,7 +25,9 @@ public class LocalCommandExecutor extends CommandExecutor {
 		try {
 			executeCommand(command);
 		} catch (Exception e) {
-			throw new RuntimeException("ERROR: Unrecoverable error when performing local command " + e.getMessage(), e);
+			throw new RuntimeException(
+					"ERROR: Unrecoverable error when performing local command "
+							+ e.getMessage(), e);
 		}
 		return this;
 	}
@@ -36,27 +39,37 @@ public class LocalCommandExecutor extends CommandExecutor {
 		Process p = null;
 		try {
 			p = Runtime.getRuntime().exec(commands);
-			//It needs to continually read from the processes input and error streams to ensure that it doesn't block
+			// It needs to continually read from the processes input and error
+			// streams to ensure that it doesn't block
 			brInput = new ReaderThread(p.getInputStream());
 			brError = new ReaderThread(p.getErrorStream());
 			brInput.start();
 			brError.start();
-			//This waits until the bash process is finished
+			// This waits until the bash process is finished
 			p.waitFor();
-			//This waits until the thread reading the input stream is finished (no need to wait for the Thread reading the error stream)
+			// This waits until the thread reading the input stream is finished
+			// (no need to wait for the Thread reading the error stream)
 			brInput.join();
 			result.append(brInput.getResults());
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		} finally {
-			p.destroy();
-			brInput.interrupt();
-			brError.interrupt();			
+			if (p != null) {
+				p.destroy();
+			}
+			if (brInput != null) {
+				brInput.interrupt();
+			}
+			if (brError != null) {
+				brError.interrupt();
+			}
 		}
+
 	}
 
 	private class ReaderThread extends Thread {
-		private final String LINE_SEPARATOR = System.getProperty("line.separator");
+		private final String LINE_SEPARATOR = System
+				.getProperty("line.separator");
 		private final InputStream stream;
 		private final StringBuilder results = new StringBuilder();
 
@@ -68,8 +81,8 @@ public class LocalCommandExecutor extends CommandExecutor {
 		public void start() {
 			try {
 				results.setLength(0);
-				BufferedReader input = new BufferedReader
-						(new InputStreamReader(stream));
+				BufferedReader input = new BufferedReader(
+						new InputStreamReader(stream));
 				String line;
 				while ((line = input.readLine()) != null) {
 					results.append(line);
