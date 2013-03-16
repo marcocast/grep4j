@@ -50,12 +50,8 @@ public class LocalCommandExecutor extends CommandExecutor {
 			throw new RuntimeException(e);
 		} finally {
 			p.destroy();
-			if (brInput.isAlive() && !brInput.isInterrupted()) {
-				brInput.interrupt();
-			}
-			if (brError.isAlive() && !brError.isInterrupted()) {
-				brError.interrupt();
-			}
+			brInput.interrupt();
+			brError.interrupt();			
 		}
 	}
 
