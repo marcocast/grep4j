@@ -114,6 +114,10 @@ public class GrepResults implements Collection<GrepResult> {
 		return tostringbuilder.toString();
 	}
 
+	/**
+	 * 
+	 * @return all the header information for each single @GrepResult in this format : Profile name >>>%s<<< [ File Name:%s; Total lines found:%s; Total execution time:%s; Expression:%s ]
+	 */
 	public String getHeaderInformation() {
 		StringBuilder sb = new StringBuilder();
 		for (GrepResult result : grepResults) {
