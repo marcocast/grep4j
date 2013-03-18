@@ -25,7 +25,6 @@ public class SimpleGrepCommand extends AbstractGrepCommand {
 
 	@Override
 	public String getCommandToExecute() {
-		appendContextControl();
 		return command.toString();
 	}
 

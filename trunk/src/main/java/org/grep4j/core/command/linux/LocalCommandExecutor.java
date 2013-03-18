@@ -32,7 +32,7 @@ public class LocalCommandExecutor extends CommandExecutor {
 		return this;
 	}
 
-	private void executeCommand(ExecutableCommand command) throws IOException {
+	private void executeCommand(ExecutableCommand command) throws IOException {		
 		String[] commands = { "bash", "-c", command.getCommandToExecute() };
 		ReaderThread brInput = null;
 		ReaderThread brError = null;
@@ -64,7 +64,6 @@ public class LocalCommandExecutor extends CommandExecutor {
 				brError.interrupt();
 			}
 		}
-
 	}
 
 	private class ReaderThread extends Thread {
