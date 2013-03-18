@@ -13,8 +13,6 @@ public abstract class AbstractGrepCommand implements ExecutableCommand {
 	protected final String file;
 	protected final boolean regexExpression;
 	protected final String expression;
-	protected String contextControls;
-	protected String tailContextControls;
 	protected final StringBuilder command;
 
 	/**
@@ -42,26 +40,23 @@ public abstract class AbstractGrepCommand implements ExecutableCommand {
 	 * @param contextControls
 	 */
 	public void setContextControls(String contextControls) {
-		this.contextControls = contextControls;
+		if (contextControls != null) {
+			command.append(SPACE);
+			command.append(contextControls);
+		}
 	}
 
 	/**
 	 * @param tailContextControls
 	 */
 	public void setTailContextControls(String tailContextControls) {
-		this.tailContextControls = tailContextControls;
-	}
-
-	protected void appendContextControl() {
-		if (contextControls != null) {
-			command.append(SPACE);
-			command.append(contextControls);
-		}
 		if (tailContextControls != null) {
 			command.append(SPACE);
 			command.append(tailContextControls);
 		}
 	}
+
+
 
 	/**
 	 * @return the file to grep
