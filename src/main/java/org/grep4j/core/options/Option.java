@@ -184,6 +184,48 @@ public class Option {
 		return new Option(OptionTypes.STANDARD_GREP_OPTION, "--version");
 	}
 
+	/**
+	 * -R, -r, --recursive       equivalent to --directories=recurse
+	 * 
+	 * @return
+	 */
+	public static Option recursive() {
+		return new Option(OptionTypes.STANDARD_GREP_OPTION, "-r");
+	}
+
+	/**
+	 * Recursive option only working with -r
+	 * 
+	 * --include=FILE_PATTERN  search only files that match FILE_PATTERN
+	 * 
+	 * @return
+	 */
+	public static Option onlyFileWhenRecursing(String filePattern) {
+		return new Option(OptionTypes.STANDARD_GREP_OPTION, "--include='" + filePattern + "'");
+	}
+
+	/**
+	 * Recursive option only working with -r
+	 * 
+	 * --exclude=FILE_PATTERN  skip files and directories matching FILE_PATTERN
+	 * 
+	 * @return
+	 */
+	public static Option excludeFileWhenRecursing(String filePattern) {
+		return new Option(OptionTypes.STANDARD_GREP_OPTION, "--exclude='" + filePattern + "'");
+	}
+
+	/**
+	 * Recursive option only working with -r
+	 * 
+	 * --exclude-dir=PATTERN  directories that match PATTERN will be skipped.
+	 * 
+	 * @return
+	 */
+	public static Option excludeDirectoryWhenRecursing(String directoryPattern) {
+		return new Option(OptionTypes.STANDARD_GREP_OPTION, "--exclude-dir='" + directoryPattern + "'");
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder stringBuilder = new StringBuilder();

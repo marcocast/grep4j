@@ -21,7 +21,7 @@ package org.grep4j.core.model;
 		.name("Remote profile with user Auth Private/Public Key")
 		.filePath("/path/to/file/filename.txt")
 		.onRemotehost("172.68.68.68")
-		.userAuthPrivateKeyLocation("~/.ssh/id_dsa")
+		.userAuthPrivateKeyLocation("/home/user/.ssh/id_dsa")
 		.withUser("user")
 		.build();
  * </pre>
@@ -103,7 +103,7 @@ public class ProfileBuilder {
 
 		/**
 		 *  This will connect using the user authentication by public key.
-		 *  It requires privatekey(id_dsa) ex. ~/.ssh/id_dsa
+		 *  It requires privatekey(id_dsa) ex. /home/user/.ssh/id_dsa
 		 *  
 		 * 
 		 * @param privateKeyLocation
@@ -113,7 +113,7 @@ public class ProfileBuilder {
 
 		/**
 		 *  This will connect using the user authentication by public key.
-		 *  It requires privatekey(id_dsa) ex. ~/.ssh/id_dsa and Passphrase required to read privatekey(id_dsa)
+		 *  It requires privatekey(id_dsa) ex. /home/user/.ssh/id_dsa and Passphrase required to read privatekey(id_dsa)
 		 *  
 		 * 
 		 * @param privateKeyLocation
