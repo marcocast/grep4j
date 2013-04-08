@@ -14,9 +14,9 @@ import static org.grep4j.core.options.Option.invertMatch;
 import static org.grep4j.core.options.Option.onlyMatching;
 import static org.grep4j.core.options.Option.withFileName;
 import static org.grep4j.core.options.Option.recursive;
-import static org.grep4j.core.options.Option.onlyFileWhenRecursing;
-import static org.grep4j.core.options.Option.excludeFileWhenRecursing;
-import static org.grep4j.core.options.Option.excludeDirectoryWhenRecursing;
+import static org.grep4j.core.options.Option.onlyFilesWhenRecursing;
+import static org.grep4j.core.options.Option.excludeFilesWhenRecursing;
+import static org.grep4j.core.options.Option.excludeDirectoriesWhenRecursing;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -74,32 +74,32 @@ public class WhenGreppingPizzaFileWithOptions {
 	}
 
 	public void recursiveonlyFileTest() {
-		GrepResults results = grep(constantExpression("fine"), on(pizzaFolderProfile()), recursive(), onlyFileWhenRecursing("local.txt"));
+		GrepResults results = grep(constantExpression("fine"), on(pizzaFolderProfile()), recursive(), onlyFilesWhenRecursing("local.txt"));
 		assertThat(results.totalLines(), is(5));
 	}
 
 	public void recursiveonlyFileWildcardTest() {
-		GrepResults results = grep(constantExpression("pizza"), on(pizzaFolderProfile()), recursive(), onlyFileWhenRecursing("p*.txt"));
+		GrepResults results = grep(constantExpression("pizza"), on(pizzaFolderProfile()), recursive(), onlyFilesWhenRecursing("p*.txt"));
 		assertThat(results.totalLines(), is(10));
 	}
 
 	public void recursiveExcludeFileTest() {
-		GrepResults results = grep(constantExpression("a"), on(pizzaFolderProfile()), recursive(), excludeFileWhenRecursing("pizza.txt"));
+		GrepResults results = grep(constantExpression("a"), on(pizzaFolderProfile()), recursive(), excludeFilesWhenRecursing("pizza.txt"));
 		assertThat(results.totalLines(), is(55));
 	}
 
 	public void recursiveExcludeWithWildCardFileTest() {
-		GrepResults results = grep(constantExpression("a"), on(pizzaFolderProfile()), recursive(), excludeFileWhenRecursing("p*.txt"));
+		GrepResults results = grep(constantExpression("a"), on(pizzaFolderProfile()), recursive(), excludeFilesWhenRecursing("p*.txt"));
 		assertThat(results.totalLines(), is(43));
 	}
 
 	public void recursiveExcludeDirectoryTest() {
-		GrepResults results = grep(constantExpression("a"), on(pizzaFolderProfile()), recursive(), excludeDirectoryWhenRecursing("pippo"));
+		GrepResults results = grep(constantExpression("a"), on(pizzaFolderProfile()), recursive(), excludeDirectoriesWhenRecursing("pippo"));
 		assertThat(results.totalLines(), is(67));
 	}
 
 	public void recursiveExcludeDirectoryWithWildCardFileTest() {
-		GrepResults results = grep(constantExpression("a"), on(pizzaFolderProfile()), recursive(), excludeDirectoryWhenRecursing("*"));
+		GrepResults results = grep(constantExpression("a"), on(pizzaFolderProfile()), recursive(), excludeDirectoriesWhenRecursing("*"));
 		assertThat(results.totalLines(), is(0));
 	}
 }
