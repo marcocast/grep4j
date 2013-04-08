@@ -194,7 +194,7 @@ public class Option {
 	}
 
 	/**
-	 * Recursive option only working with -r
+	 * Recursive option only working with Option.recursive()
 	 * 
 	 * --include=FILE_PATTERN  search only files that match FILE_PATTERN
 	 * 
@@ -205,7 +205,7 @@ public class Option {
 	}
 
 	/**
-	 * Recursive option only working with -r
+	 * Recursive option only working with Option.recursive()
 	 * 
 	 * --exclude=FILE_PATTERN  skip files and directories matching FILE_PATTERN
 	 * 
@@ -216,7 +216,7 @@ public class Option {
 	}
 
 	/**
-	 * Recursive option only working with -r
+	 * Recursive option only working with Option.recursive()
 	 * 
 	 * --exclude-dir=PATTERN  directories that match PATTERN will be skipped.
 	 * 
