@@ -200,7 +200,7 @@ public class Option {
 	 * 
 	 * @return
 	 */
-	public static Option onlyFileWhenRecursing(String filePattern) {
+	public static Option onlyFilesWhenRecursing(String filePattern) {
 		return new Option(OptionTypes.STANDARD_GREP_OPTION, "--include='" + filePattern + "'");
 	}
 
@@ -211,7 +211,7 @@ public class Option {
 	 * 
 	 * @return
 	 */
-	public static Option excludeFileWhenRecursing(String filePattern) {
+	public static Option excludeFilesWhenRecursing(String filePattern) {
 		return new Option(OptionTypes.STANDARD_GREP_OPTION, "--exclude='" + filePattern + "'");
 	}
 
@@ -222,7 +222,7 @@ public class Option {
 	 * 
 	 * @return
 	 */
-	public static Option excludeDirectoryWhenRecursing(String directoryPattern) {
+	public static Option excludeDirectoriesWhenRecursing(String directoryPattern) {
 		return new Option(OptionTypes.STANDARD_GREP_OPTION, "--exclude-dir='" + directoryPattern + "'");
 	}
 
