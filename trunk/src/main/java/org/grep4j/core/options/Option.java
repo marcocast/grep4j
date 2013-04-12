@@ -200,8 +200,8 @@ public class Option {
 	 * 
 	 * @return
 	 */
-	public static Option onlyFilesWhenRecursing(String filePattern) {
-		return new Option(OptionTypes.STANDARD_GREP_OPTION, "--include='" + filePattern + "'");
+	public static Option onlyFilesWhenRecursing(String pattern) {
+		return new Option(OptionTypes.STANDARD_GREP_OPTION, "--include='" + pattern + "'");
 	}
 
 	/**
@@ -211,8 +211,8 @@ public class Option {
 	 * 
 	 * @return
 	 */
-	public static Option excludeFilesWhenRecursing(String filePattern) {
-		return new Option(OptionTypes.STANDARD_GREP_OPTION, "--exclude='" + filePattern + "'");
+	public static Option excludeFilesWhenRecursing(String pattern) {
+		return new Option(OptionTypes.STANDARD_GREP_OPTION, "--exclude='" + pattern + "'");
 	}
 
 	/**
@@ -222,8 +222,8 @@ public class Option {
 	 * 
 	 * @return
 	 */
-	public static Option excludeDirectoriesWhenRecursing(String directoryPattern) {
-		return new Option(OptionTypes.STANDARD_GREP_OPTION, "--exclude-dir='" + directoryPattern + "'");
+	public static Option excludeDirectoriesWhenRecursing(String pattern) {
+		return new Option(OptionTypes.STANDARD_GREP_OPTION, "--exclude-dir='" + pattern + "'");
 	}
 
 	@Override
