@@ -3,6 +3,8 @@ package org.grep4j.core.fluent;
 import java.util.Arrays;
 import java.util.List;
 
+import org.grep4j.core.options.Option;
+
 /**
  * Utility class to group all the fluent mirror methods that help the readability of the code.
  * 
@@ -116,8 +118,18 @@ public class Dictionary {
 	 * @param type
 	 * @return type
 	 */
-	public static <T> T[] options(T... type) {
+	public static Option[] options(Option... type) {
 		return type;
+	}
+	
+	/**
+	 * Fluent mirror method: use this method to give more readability to the code.
+	 * 
+	 * @param type
+	 * @return type
+	 */
+	public static <T> Option[] options(List<Option> types) {
+		return types.toArray(new Option[types.size()]);
 	}
 
 	/**
@@ -126,7 +138,7 @@ public class Dictionary {
 	 * @param type
 	 * @return type
 	 */
-	public static <T> T option(T type) {
+	public static Option option(Option type) {
 		return type;
 	}
 

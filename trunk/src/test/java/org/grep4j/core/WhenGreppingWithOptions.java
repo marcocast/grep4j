@@ -4,6 +4,7 @@ import static org.grep4j.core.Grep4j.constantExpression;
 import static org.grep4j.core.Grep4j.grep;
 import static org.grep4j.core.fixtures.ProfileFixtures.localProfile;
 import static org.grep4j.core.fluent.Dictionary.on;
+import static org.grep4j.core.fluent.Dictionary.options;
 import static org.grep4j.core.options.Option.countMatches;
 import static org.grep4j.core.options.Option.extraLinesAfter;
 import static org.grep4j.core.options.Option.extraLinesBefore;
@@ -15,8 +16,12 @@ import static org.grep4j.core.options.Option.onlyLastBytes;
 import static org.grep4j.core.options.Option.onlyLastLines;
 import static org.grep4j.core.options.Option.withFileName;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
+import java.util.Arrays;
+import java.util.List;
+
+import org.grep4j.core.options.Option;
 import org.grep4j.core.result.GrepResult;
 import org.grep4j.core.result.GrepResults;
 import org.testng.annotations.Test;
@@ -77,6 +82,14 @@ public class WhenGreppingWithOptions {
 
 	public void withLastBytes() {
 		GrepResults results = grep(constantExpression("ERRor"), on(localProfile()), ignoreCase(), onlyLastBytes(1));
+
+		assertThat(results.toString(), is("\n"));
+	}
+	
+	public void testOptionsPassedAsList() {
+		List<Option> optionsList = Arrays.asList(ignoreCase(), onlyLastBytes(1));
+		
+		GrepResults results = grep(constantExpression("ERRor"), on(localProfile()), options(optionsList));
 
 		assertThat(results.toString(), is("\n"));
 	}

@@ -39,4 +39,5 @@ public class OptionsTest {
 		assertThat(options.findOptionsByType(OptionTypes.TAIL_OPTION).size(), is(2));
 	}
 
+
 }
