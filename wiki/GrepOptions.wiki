@@ -40,6 +40,14 @@ set maximum ssh connections
 -n, --lines=N            output the first N lines
   * {{{onlyFirstBytes(int number-of-bytes)}}}
 -c, --bytes=N            output the first N bytes 
+  * {{{recursive()}}}
+-R, -r, --recursive   equivalent to --directories=recurse
+  * {{{onlyFilesWhenRecursing(String pattern)}}}
+-include=FILE_PATTERN  search only files that match FILE_PATTERN
+  * {{{excludeFilesWhenRecursing(String pattern)}}}
+--exclude=FILE_PATTERN  skip files and directories matching FILE_PATTERN
+  * {{{excludeDirectoriesWhenRecursing(String pattern)}}}
+--exclude-dir=PATTERN  directories that match PATTERN will be skipped.
 
 == Example ==
 
