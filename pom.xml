@@ -9,7 +9,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.googlecode.grep4j</groupId>
 	<artifactId>grep4j</artifactId>
-	<version>1.8.5-SNAPSHOT</version>
+	<version>1.8.5</version>
 	<description>Grep4j is a simple api made to centralise and so facilitate the greps along all the configured files remote or local</description>
 	<packaging>jar</packaging>
 
@@ -24,9 +24,9 @@
 	</licenses>
 
 	<scm>
-		<connection>scm:svn:http://grep4j.googlecode.com/svn/trunk</connection>
-		<developerConnection>scm:svn:https://grep4j.googlecode.com/svn/trunk</developerConnection>
-		<url>http://grep4j.googlecode.com/svn/trunk/</url>
+		<connection>scm:svn:http://grep4j.googlecode.com/svn/tags/grep4j-1.8.5</connection>
+		<developerConnection>scm:svn:https://grep4j.googlecode.com/svn/tags/grep4j-1.8.5</developerConnection>
+		<url>http://grep4j.googlecode.com/svn/tags/grep4j-1.8.5</url>
 	</scm>
 
 	<distributionManagement>
