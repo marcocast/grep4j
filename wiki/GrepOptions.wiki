@@ -83,5 +83,25 @@ GrepResults results = grep(constantExpression("mArCo"),        on(localProfile()
 
 assertThat(results.toString(), is("Marco"));
 
+//Recursive options
+Profile remoteJBossFolder = ProfileBuilder.newBuilder()
+				.name("a remote folder")
+				.filePath("/opt/ops/logs/jboss")
+				.onRemotehost("172.xx.xx.xx")
+				.credentials("user", "password")
+				.build();
+
+GrepResults results = grep(regularExpression(PATTERN), on(remoteJBossFolder),
+				with(
+					options(
+						recursive(),
+						onlyFilesWhenRecursing("server.log*"),
+						excludeDirectoriesWhenRecursing("*-gui"),
+						excludeFilesWhenRecursing("*.2013-03-0*")
+						)
+					)
+				);
+
+assertThat(results.totalLines(), is(10));
 
 }}}
