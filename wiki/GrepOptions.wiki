@@ -61,6 +61,10 @@ import static org.grep4j.core.fluent.Dictionary.with;
 import static org.grep4j.core.options.Option.ignoreCase;
 import static org.grep4j.core.options.Option.extraLinesAfter;
 import static org.grep4j.core.options.Option.onlyMatching;
+import static org.grep4j.core.options.Option.excludeDirectoriesWhenRecursing;
+import static org.grep4j.core.options.Option.excludeFilesWhenRecursing;
+import static org.grep4j.core.options.Option.onlyFilesWhenRecursing;
+import static org.grep4j.core.options.Option.recursive;
 
 ...
 //Single option
