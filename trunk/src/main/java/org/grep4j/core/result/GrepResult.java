@@ -21,7 +21,7 @@ import org.grep4j.core.request.GrepRequest;
 @EqualsAndHashCode
 public class GrepResult {
 
-	private static final Pattern linePattern = Pattern.compile(".*\r?" + System.getProperty("line.separator"));
+	private static final Pattern linePattern = Pattern.compile(".*\\r?\\n");
 	@Getter
 	private final GrepRequest grepRequest;
 	@Getter
@@ -99,14 +99,14 @@ public class GrepResult {
 
 		return new GrepResult(grepRequest.copyWithNoRegEx(), fileName, textResult.toString(), executionTime);
 	}
-	
+
 	/**
-	 * 
-	 * @return all the header information in this format : Profile name >>>%s<<< [ File Name:%s; Total lines found:%s; Total execution time:%s; Expression:%s ]
+	 * @return all the header information in this format : Profile name >>>%s<<< [ File Name:%s; Total lines found:%s; Total execution time:%s;
+	 *         Expression:%s ]
 	 */
 	public String getHeaderInformation() {
-		return String.format("Profile name >>>%s<<< [ File Name:%s; Total lines found:%s; Total execution time:%s; Expression:%s ]",
-				grepRequest.getProfile().getName(), getFileName(), totalLines(), getExecutionTime(), grepRequest.getExpression());
+		return String.format("Profile name >>>%s<<< [ File Name:%s; Total lines found:%s; Total execution time:%s; Expression:%s ]", grepRequest
+				.getProfile().getName(), getFileName(), totalLines(), getExecutionTime(), grepRequest.getExpression());
 	}
 
 	@Override
