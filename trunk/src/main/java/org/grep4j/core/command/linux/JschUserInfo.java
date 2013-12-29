@@ -4,31 +4,31 @@ import com.jcraft.jsch.UserInfo;
 
 public class JschUserInfo implements UserInfo {
 
-	private final String user_;
-	private final String password_;
+	private final String user;
+	private final String password;
 
 	public JschUserInfo(String user, String password) {
-		user_ = user;
-		password_ = password;
+		this.user = user;
+		this.password = password;
 	}
 
 	public String getUser() {
-		return user_;
+		return user;
 	}
 
 	@Override
 	public String getPassphrase() {
-		return null;
+		return password;
 	}
 
 	@Override
 	public String getPassword() {
-		return password_;
+		return password;
 	}
 
 	@Override
 	public boolean promptPassphrase(String arg0) {
-		return false;
+		return true;
 	}
 
 	@Override
