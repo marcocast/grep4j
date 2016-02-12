@@ -22,13 +22,17 @@ In grep4j a profile is the grep target context. The profile contains information
 ####Using Grep4j to grep local or remote files
 
 You can use Grep4j to obtain grep information across multiple local/remote files in an easy and fluent way: 
+    
     import static org.grep4j.core.Grep4j.grep; 
     import static org.grep4j.core.Grep4j.constantExpression; 
     import static org.grep4j.core.fluent.Dictionary.on; 
     ...
 
     //Obtaining the global result 
-    GrepResults results = grep(constantExpression("Expression_to_grep"), on(remoteProfile,localProfile));     System.out.println("Grep results : " + results); System.out.println("Total lines found : " + results.totalLines());    System.out.println("Total Execution Time : " + results.getExecutionTime());
+    GrepResults results = grep(constantExpression("Expression_to_grep"), on(remoteProfile,localProfile));     
+    System.out.println("Grep results : " + results); 
+    System.out.println("Total lines found : " + results.totalLines());      
+    System.out.println("Total Execution Time : " + results.getExecutionTime());
 
     //processing the single grep result for each profile for 
     (GrepResult singleResult : results) { 
@@ -49,7 +53,8 @@ Let's say you need to test that after starting your network of servers, no error
     import static org.grep4j.core.fluent.Dictionary.executing; 
     ...
 
-    assertThat(executing(grep(constantExpression("ERROR"), on(profile1,profile2))).totalLines(), is(0));      assertThat(executing(grep(constantExpression("Exception"), on(profile1,profile2))).totalLines(), is(0));
+    assertThat(executing(grep(constantExpression("ERROR"), on(profile1,profile2))).totalLines(), is(0));    
+    assertThat(executing(grep(constantExpression("Exception"), on(profile1,profile2))).totalLines(), is(0));
 
 
 Here you want to check that a particular init method was triggered:
@@ -70,7 +75,7 @@ Or you want to check that the flow of data is passing correctly through a group 
     import static org.grep4j.core.fluent.Dictionary.executing; 
     ...
 
-    assertThat(executing(grep(constantExpression("Message 1234 received"), on(profiles))).totalLines(), is(1)); ```
+    assertThat(executing(grep(constantExpression("Message 1234 received"), on(profiles))).totalLines(), is(1)); 
 
 ####Testing distributed applications
 
@@ -78,15 +83,15 @@ It's often the case that an application is distributed across different remote m
 
 #####Context
 
-The GUI runs in the guiServer(172.1.1.1);
+The GUI runs in the guiServer (172.1.1.1);
 
-The distribution system runs on distributionServer(172.1.1.2);
+The distribution system runs on distributionServer (172.1.1.2);
 
-Consumer 1 runs on consumer1Server(172.1.1.3)
+Consumer 1 runs on consumer1Server (172.1.1.3)
 
-Consumer 2 runs on consumer2Server(172.1.1.4)
+Consumer 2 runs on consumer2Server (172.1.1.4)
 
-Consumer 3 runs on consumer3Server(172.1.1.5)
+Consumer 3 runs on consumer3Server (172.1.1.5)
 
 #####Logs
 
@@ -109,7 +114,7 @@ When each consumer receives the message:
 Problem
 You want to test that the creation of the User with id 12345 goes correctly through all the steps in the system reaching all the consumers.
 
-Solution with Grep4j
+#####Solution with Grep4j
 
     import static org.grep4j.core.Grep4j.grep; 
     import static org.grep4j.core.Grep4j.constantExpression; 
@@ -117,17 +122,24 @@ Solution with Grep4j
     import static org.grep4j.core.fluent.Dictionary.executing; 
     ...
 
-    Profile guiProfile = create the Profile for your guiServer Profile distributionProfile = create the Profile for your  distributionServer List consumersProfiles = create the Profiles for your 3 consumers
+    Profile guiProfile = create the Profile for your guiServer 
+    Profile distributionProfile = create the Profile for your distributionServer 
+    List consumersProfiles = create the Profiles for your 3 consumers
 
-    //Assert that the GUI has sent the create message to the distribution server:     assertThat(executing(grep(constantExpression("12345 sent to distribution server"), on(guiProfile))).totalLines(), is(1));
+    //Assert that the GUI has sent the create message to the distribution server: 
+    assertThat(executing(grep(constantExpression("12345 sent to distribution server"), on(guiProfile))).totalLines(), is(1));
 
-    //Assert that the distribution application received the message: assertThat(executing(grep(constantExpression("User Marco id:12345 received"), on(distributionProfile))).totalLines(), is(1));
+    //Assert that the distribution application received the message: 
+    assertThat(executing(grep(constantExpression("User Marco id:12345 received"), on(distributionProfile))).totalLines(), is(1));
 
-    //Assert that the distribution application distributed the message to all the 3 consumers:   assertThat(executing(grep(constantExpression("User Marco id:12345 sent to Consumer"), on(distributionProfile))).totalLines(), is(3));
+    //Assert that the distribution application distributed the message to all the 3 consumers:   
+    assertThat(executing(grep(constantExpression("User Marco id:12345 sent to Consumer"), on(distributionProfile))).totalLines(), is(3));
 
-    //Assert that all the 3 consumers received the message: assertThat(executing(grep(constantExpression("User Marco id:12345 received"), on(consumersProfiles))).totalLines(), is(3));
+    //Assert that all the 3 consumers received the message: 
+    assertThat(executing(grep(constantExpression("User Marco id:12345 received"), on(consumersProfiles))).totalLines(), is(3));
 
-    //Assert that all the 3 consumers save the user correctly: assertThat(executing(grep(constantExpression("User Marco id:12345 stored sucessfully"), on(consumersProfiles))).totalLines(), is(3));
+    //Assert that all the 3 consumers save the user correctly: 
+    assertThat(executing(grep(constantExpression("User Marco id:12345 stored sucessfully"),  on(consumersProfiles))).totalLines(), is(3));
 
 
 ####Regex support
@@ -136,7 +148,9 @@ In the case you need a more dynamic way to search in a file, Grep4j supports reg
 
     import static org.grep4j.core.Grep4j.grep; 
     import static org.grep4j.core.Grep4j.regularExpression; 
-    import static org.grep4j.core.fluent.Dictionary.on; import static org.grep4j.core.fluent.Dictionary.executing; ...
+    import static org.grep4j.core.fluent.Dictionary.on; 
+    import static org.grep4j.core.fluent.Dictionary.executing; 
+    ...
 
     assertThat(executing(grep(regularExpression("Marco(.*)stored"), on(profile))).totalLines(), is(1)); ```
 
@@ -154,11 +168,17 @@ If you need to include more lines in your grep result:
     import static org.grep4j.core.fluent.Dictionary.options; 
     ...
 
-    GrepResults results = grep(constantExpression("string-to-search"), on(profile), with(option(extraLinesAfter(100))));   System.out.println("Total lines found : " + results.totalLines()); System.out.println("Total lines found : " +   results.filterBy("another expression within 100 lines after").totalLines());
+    GrepResults results = grep(constantExpression("string-to-search"), on(profile), with(option(extraLinesAfter(100)))); 
+    System.out.println("Total lines found : " + results.totalLines()); 
+    System.out.println("Total lines found : " +   results.filterBy("another expression within 100 lines after").totalLines());
 
-    GrepResults results = grep(constantExpression("string-to-search"), on(profile), with(option(extraLinesBefore(100)))); System.out.println("Total lines found : " + results.totalLines()); System.out.println("Total lines found : " + results.filterBy("another expression within 100 lines before").totalLines());
+    GrepResults results = grep(constantExpression("string-to-search"), on(profile), with(option(extraLinesBefore(100))));
+    System.out.println("Total lines found : " + results.totalLines()); 
+    System.out.println("Total lines found : " + results.filterBy("another expression within 100 lines before").totalLines());
 
-    GrepResults results = grep(constantExpression("string-to-search"), on(profile), with(options(extraLinesBefore(100), extraLinesAfter(100)))); System.out.println("Total lines found : " + results.totalLines()); System.out.println("Total lines found : " + results.filterBy("another expression within 100 lines before and 100 after").totalLines()); ```
+    GrepResults results = grep(constantExpression("string-to-search"), on(profile), with(options(extraLinesBefore(100), extraLinesAfter(100)))); 
+    System.out.println("Total lines found : " + results.totalLines()); 
+    System.out.println("Total lines found : " + results.filterBy("another expression within 100 lines before and 100 after").totalLines()); ```
 
 See all the Grep options available in the [Grep4j Options page](https://github.com/marcocast/grep4j/wiki/Grep-Options)
 
