@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Grep4j by marcocast</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Grep4j</h1>
+      <h2 class="project-tagline">Java grep made easy</h2>
+      <a href="https://github.com/marcocast/grep4j" class="btn">View on GitHub</a>
+      <a href="https://github.com/marcocast/grep4j/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/marcocast/grep4j/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h3>
+<a id="what-is-grep4j" class="anchor" href="#what-is-grep4j" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>What is Grep4j?</h3>
+
+<p>Grep4j is a simple API made to centralise and facilitate the search of expressions within remote or local files, in Unix environments. For Windows support click here</p>
+
+<h3>
+<a id="maven" class="anchor" href="#maven" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Maven</h3>
+
+<pre><code>&lt;dependency&gt; &lt;groupId&gt;com.googlecode.grep4j&lt;/groupId&gt; &lt;artifactId&gt;grep4j&lt;/artifactId&gt; &lt;version&gt;1.8.7&lt;/version&gt;   &lt;/dependency&gt;
+</code></pre>
+
+<h3>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage</h3>
+
+<h4>
+<a id="profile" class="anchor" href="#profile" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Profile</h4>
+
+<p>In grep4j a profile is the grep target context. The profile contains information such as the name of the file, the path of the file to grep and the host and the credentials to connect to either local or remote machine. ```</p>
+
+<pre><code>Profile remoteProfile = ProfileBuilder.newBuilder().name("Remote server log").filePath("/opt/log/server.log").onRemotehost("172.xx.xx.xx").credentials("user", "password").build();
+
+Profile localProfile = ProfileBuilder.newBuilder().name("Local server log").filePath("/opt/log/server.log").onLocalhost().build();
+
+Profile remoteProfileWithPublicKey = ProfileBuilder.newBuilder().name("Another remote server log").filePath("/path/to/file/filename.txt").onRemotehost("172.x.x.x").userAuthPrivateKeyLocation("/home/user/.ssh/id_dsa").withUser("user").build();
+</code></pre>
+
+<h4>
+<a id="using-grep4j-to-grep-local-or-remote-files" class="anchor" href="#using-grep4j-to-grep-local-or-remote-files" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Using Grep4j to grep local or remote files</h4>
+
+<p>You can use Grep4j to obtain grep information across multiple local/remote files in an easy and fluent way: 
+    import static org.grep4j.core.Grep4j.grep; 
+    import static org.grep4j.core.Grep4j.constantExpression; 
+    import static org.grep4j.core.fluent.Dictionary.on; 
+    ...</p>
+
+<pre><code>//Obtaining the global result 
+GrepResults results = grep(constantExpression("Expression_to_grep"), on(remoteProfile,localProfile));     System.out.println("Grep results : " + results); System.out.println("Total lines found : " + results.totalLines());    System.out.println("Total Execution Time : " + results.getExecutionTime());
+
+//processing the single grep result for each profile for 
+(GrepResult singleResult : results) { 
+    System.out.println(singleResult.getProfileName()); 
+    System.out.println(singleResult.getFileName()); 
+    System.out.println(singleResult.getExecutionTime()); System.out.println(singleResult); 
+}
+</code></pre>
+
+<h4>
+<a id="using-grep4j-in-your-tests" class="anchor" href="#using-grep4j-in-your-tests" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Using Grep4j in your tests</h4>
+
+<p>You can use Grep4j to make your acceptance/integration tests more fluent and easy.</p>
+
+<p>Let's say you need to test that after starting your network of servers, no errors or exceptions will be found in the log:</p>
+
+<pre><code>import static org.grep4j.core.Grep4j.grep; 
+import static org.grep4j.core.Grep4j.constantExpression; 
+import static org.grep4j.core.fluent.Dictionary.on; 
+import static org.grep4j.core.fluent.Dictionary.executing; 
+...
+
+assertThat(executing(grep(constantExpression("ERROR"), on(profile1,profile2))).totalLines(), is(0));      assertThat(executing(grep(constantExpression("Exception"), on(profile1,profile2))).totalLines(), is(0));
+</code></pre>
+
+<p>Here you want to check that a particular init method was triggered:</p>
+
+<pre><code>import static org.grep4j.core.Grep4j.grep; 
+import static org.grep4j.core.Grep4j.constantExpression; 
+import static org.grep4j.core.fluent.Dictionary.on; 
+import static org.grep4j.core.fluent.Dictionary.executing; 
+...
+
+assertThat(executing(grep(constantExpression("Init resources ended succesfully"), on(aProfile))).totalLines(), is(1)); 
+</code></pre>
+
+<p>Or you want to check that the flow of data is passing correctly through a group of specified servers:</p>
+
+<pre><code>import static org.grep4j.core.Grep4j.grep; 
+import static org.grep4j.core.Grep4j.constantExpression;  
+import static org.grep4j.core.fluent.Dictionary.on; 
+import static org.grep4j.core.fluent.Dictionary.executing; 
+...
+
+assertThat(executing(grep(constantExpression("Message 1234 received"), on(profiles))).totalLines(), is(1)); ```
+</code></pre>
+
+<h4>
+<a id="testing-distributed-applications" class="anchor" href="#testing-distributed-applications" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Testing distributed applications</h4>
+
+<p>It's often the case that an application is distributed across different remote machines. This to promote scalability, performance, etc. The problem with distributed technology is that it's hard to cover the application with end to end acceptance and integration tests. Example:</p>
+
+<h5>
+<a id="context" class="anchor" href="#context" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Context</h5>
+
+<p>The GUI runs in the guiServer(172.1.1.1);
+The distribution system runs on distributionServer(172.1.1.2);
+Consumer 1 runs on consumer1Server(172.1.1.3)
+Consumer 2 runs on consumer2Server(172.1.1.4)
+Consumer 3 runs on consumer3Server(172.1.1.5)</p>
+
+<h5>
+<a id="logs" class="anchor" href="#logs" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Logs</h5>
+
+<p>When a User is created in the GUI:
+    2012-05-30 08:48:49,885 INFO <a href="main">org.app.Sender</a> User Marco id:12345 sent to distribution server</p>
+
+<p>When the distributionServer receives the message:
+    2012-05-30 08:48:50 INFO <a href="main">org.dist.AnMDB</a> User Marco id:12345 received
+    2012-05-30 08:48:51 INFO <a href="main">org.dist.Distributor</a> User Marco id:12345 sent to Consumer one
+    2012-05-30 08:48:51 INFO <a href="main">org.dist.Distributor</a> User Marco id:12345 sent to Consumer two
+    2012-05-30 08:48:51 INFO <a href="main">org.dist.Distributor</a> User Marco id:12345 sent to Consumer three</p>
+
+<p>When each consumer receives the message:
+    2012-05-30 08:48:52 INFO <a href="main">org.consumer.AnMDB</a> User Marco id:12345 received
+    2012-05-30 08:48:53 INFO <a href="main">org.consumer.UserDAO</a> User Marco id:12345 stored successfully</p>
+
+<p>Problem
+You want to test that the creation of the User with id 12345 goes correctly through all the steps in the system reaching all the consumers.</p>
+
+<p>Solution with Grep4j</p>
+
+<pre><code>import static org.grep4j.core.Grep4j.grep; 
+import static org.grep4j.core.Grep4j.constantExpression; 
+import static org.grep4j.core.fluent.Dictionary.on; 
+import static org.grep4j.core.fluent.Dictionary.executing; 
+...
+
+Profile guiProfile = create the Profile for your guiServer Profile distributionProfile = create the Profile for your  distributionServer List consumersProfiles = create the Profiles for your 3 consumers
+
+//Assert that the GUI has sent the create message to the distribution server:     assertThat(executing(grep(constantExpression("12345 sent to distribution server"), on(guiProfile))).totalLines(), is(1));
+
+//Assert that the distribution application received the message: assertThat(executing(grep(constantExpression("User Marco id:12345 received"), on(distributionProfile))).totalLines(), is(1));
+
+//Assert that the distribution application distributed the message to all the 3 consumers:   assertThat(executing(grep(constantExpression("User Marco id:12345 sent to Consumer"), on(distributionProfile))).totalLines(), is(3));
+
+//Assert that all the 3 consumers received the message: assertThat(executing(grep(constantExpression("User Marco id:12345 received"), on(consumersProfiles))).totalLines(), is(3));
+
+//Assert that all the 3 consumers save the user correctly: assertThat(executing(grep(constantExpression("User Marco id:12345 stored sucessfully"), on(consumersProfiles))).totalLines(), is(3));
+</code></pre>
+
+<h4>
+<a id="regex-support" class="anchor" href="#regex-support" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Regex support</h4>
+
+<p>In the case you need a more dynamic way to search in a file, Grep4j supports regex: </p>
+
+<pre><code>import static org.grep4j.core.Grep4j.grep; 
+import static org.grep4j.core.Grep4j.regularExpression; 
+import static org.grep4j.core.fluent.Dictionary.on; import static org.grep4j.core.fluent.Dictionary.executing; ...
+
+assertThat(executing(grep(regularExpression("Marco(.*)stored"), on(profile))).totalLines(), is(1)); ```
+</code></pre>
+
+<h4>
+<a id="grep-with-lines-after-before-or-both" class="anchor" href="#grep-with-lines-after-before-or-both" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Grep with lines after, before or both</h4>
+
+<p>If you need to include more lines in your grep result:
+    import static org.grep4j.core.Grep4j.grep; 
+    import static org.grep4j.core.Grep4j.constantExpression; 
+    import static org.grep4j.core.options.Option.extraLinesAfter; 
+    import static org.grep4j.core.options.Option.extraLinesBefore; 
+    import static org.grep4j.core.fluent.Dictionary.on; 
+    import static org.grep4j.core.fluent.Dictionary.with; 
+    import static org.grep4j.core.fluent.Dictionary.option; 
+    import static org.grep4j.core.fluent.Dictionary.options; 
+    ...</p>
+
+<pre><code>GrepResults results = grep(constantExpression("string-to-search"), on(profile), with(option(extraLinesAfter(100))));   System.out.println("Total lines found : " + results.totalLines()); System.out.println("Total lines found : " +   results.filterBy("another expression within 100 lines after").totalLines());
+
+GrepResults results = grep(constantExpression("string-to-search"), on(profile), with(option(extraLinesBefore(100)))); System.out.println("Total lines found : " + results.totalLines()); System.out.println("Total lines found : " + results.filterBy("another expression within 100 lines before").totalLines());
+
+GrepResults results = grep(constantExpression("string-to-search"), on(profile), with(options(extraLinesBefore(100), extraLinesAfter(100)))); System.out.println("Total lines found : " + results.totalLines()); System.out.println("Total lines found : " + results.filterBy("another expression within 100 lines before and 100 after").totalLines()); ```
+</code></pre>
+
+<p>See all the Grep options available in the <a href="https://github.com/marcocast/grep4j/wiki/Grep-Options">Grep4j Options page</a></p>
+
+<h4>
+<a id="fluent-mirror-methods" class="anchor" href="#fluent-mirror-methods" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Fluent mirror methods</h4>
+
+<p>In Grep4j we are focused on the readability of the code. 
+Because of this we introduced a fluent Dictionary   class(org.grep4j.core.fluent.Dictionary) which contains only fluent mirror methods to be used in order to improve the readability of your code. 
+A fluent mirror method is a simple static method returning the same object passed. 
+For example: public static  T executing(T type) { return type; } and you can use this method as follows: </p>
+
+<pre><code>import static org.grep4j.core.Grep4j.grep; 
+import static org.grep4j.core.Grep4j.constantExpression; 
+import static org.grep4j.core.fluent.Dictionary.on; 
+import static org.grep4j.core.fluent.Dictionary.executing; 
+import static org.grep4j.core.fluent.Dictionary.with; 
+...
+
+assertThat(executing(grep(with(constantExpression("Marco")), on(profile))).totalLines(), is(1));
+</code></pre>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/marcocast/grep4j">Grep4j</a> is maintained by <a href="https://github.com/marcocast">marcocast</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
