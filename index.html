@@ -120,18 +120,24 @@ Consumer 3 runs on consumer3Server(172.1.1.5)</p>
 <h5>
 <a id="logs" class="anchor" href="#logs" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Logs</h5>
 
-<p>When a User is created in the GUI:
-    2012-05-30 08:48:49,885 INFO <a href="main">org.app.Sender</a> User Marco id:12345 sent to distribution server</p>
+<p>When a User is created in the GUI:</p>
 
-<p>When the distributionServer receives the message:
-    2012-05-30 08:48:50 INFO <a href="main">org.dist.AnMDB</a> User Marco id:12345 received
-    2012-05-30 08:48:51 INFO <a href="main">org.dist.Distributor</a> User Marco id:12345 sent to Consumer one
-    2012-05-30 08:48:51 INFO <a href="main">org.dist.Distributor</a> User Marco id:12345 sent to Consumer two
-    2012-05-30 08:48:51 INFO <a href="main">org.dist.Distributor</a> User Marco id:12345 sent to Consumer three</p>
+<pre><code>2012-05-30 08:48:49,885 INFO [org.app.Sender] (main) User Marco id:12345 sent to distribution server
+</code></pre>
 
-<p>When each consumer receives the message:
-    2012-05-30 08:48:52 INFO <a href="main">org.consumer.AnMDB</a> User Marco id:12345 received
-    2012-05-30 08:48:53 INFO <a href="main">org.consumer.UserDAO</a> User Marco id:12345 stored successfully</p>
+<p>When the distributionServer receives the message:</p>
+
+<pre><code>2012-05-30 08:48:50 INFO [org.dist.AnMDB] (main) User Marco id:12345 received
+2012-05-30 08:48:51 INFO [org.dist.Distributor] (main) User Marco id:12345 sent to Consumer one
+2012-05-30 08:48:51 INFO [org.dist.Distributor] (main) User Marco id:12345 sent to Consumer two
+2012-05-30 08:48:51 INFO [org.dist.Distributor] (main) User Marco id:12345 sent to Consumer three
+</code></pre>
+
+<p>When each consumer receives the message:</p>
+
+<pre><code>2012-05-30 08:48:52 INFO [org.consumer.AnMDB] (main) User Marco id:12345 received
+2012-05-30 08:48:53 INFO [org.consumer.UserDAO] (main) User Marco id:12345 stored successfully
+</code></pre>
 
 <p>Problem
 You want to test that the creation of the User with id 12345 goes correctly through all the steps in the system reaching all the consumers.</p>
