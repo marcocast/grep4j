@@ -225,6 +225,16 @@ public class Option {
 	public static Option excludeDirectoriesWhenRecursing(String pattern) {
 		return new Option(OptionTypes.STANDARD_GREP_OPTION, "--exclude-dir='" + pattern + "'");
 	}
+	
+	/**
+	 * Added by Roman Jovner
+	 * -a, Process a binary file as if it were text; this is equivalent  to the --binary-files=text option.
+	 * 
+	 * @return
+	 */
+	public static Option binaryAsText() {
+		return new Option(OptionTypes.STANDARD_GREP_OPTION, "-a");
+	}
 
 	@Override
 	public String toString() {
