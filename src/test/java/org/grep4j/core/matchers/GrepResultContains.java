@@ -4,7 +4,6 @@ import static org.grep4j.core.Grep4j.constantExpression;
 
 import org.grep4j.core.result.GrepResults;
 import org.hamcrest.Description;
-import org.hamcrest.Factory;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 
@@ -26,7 +25,6 @@ public class GrepResultContains extends TypeSafeMatcher<GrepResults> {
 		return results.filterBy(constantExpression(expression)).totalLines() > 0;
 	}
 
-	@Factory
 	public static <T> Matcher<GrepResults> containsExpression(String expression) {
 		return new GrepResultContains(expression);
 	}

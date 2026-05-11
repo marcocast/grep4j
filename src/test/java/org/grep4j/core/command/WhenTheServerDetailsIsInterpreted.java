@@ -4,28 +4,27 @@ import static org.grep4j.core.command.ServerDetailsInterpreter.getCommandExecuto
 import static org.grep4j.core.fixtures.ServerDetailsFixtures.aDummyRemoteServerDetails;
 import static org.grep4j.core.fixtures.ServerDetailsFixtures.localhostServerDetails;
 import static org.grep4j.core.fixtures.ServerDetailsFixtures.onetwosevenServerDetails;
-import static org.grep4j.core.fluent.Dictionary.returned;
-import static org.grep4j.core.fluent.Dictionary.whenCalling;
-import static org.grep4j.core.fluent.Dictionary.with;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.CoreMatchers.instanceOf;
 
 import org.grep4j.core.command.linux.JschCommandExecutor;
 import org.grep4j.core.command.linux.LocalCommandExecutor;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
-@Test
-public class WhenTheServerDetailsIsInterpreted {
+class WhenTheServerDetailsIsInterpreted {
 
-	public void ifTheHostIsLocalhostALocalCommandExecutorShouldReturn() {
-		assertThat(whenCalling(getCommandExecutor(with(localhostServerDetails()))), is(returned(LocalCommandExecutor.class)));
-	}
+    @Test
+    void ifTheHostIsLocalhostALocalCommandExecutorShouldReturn() {
+        assertThat(getCommandExecutor(localhostServerDetails()), instanceOf(LocalCommandExecutor.class));
+    }
 
-	public void ifTheHostIs127001ALocalCommandExecutorShouldReturn() {
-		assertThat(whenCalling(getCommandExecutor(with(onetwosevenServerDetails()))), is(returned(LocalCommandExecutor.class)));
-	}
+    @Test
+    void ifTheHostIs127001ALocalCommandExecutorShouldReturn() {
+        assertThat(getCommandExecutor(onetwosevenServerDetails()), instanceOf(LocalCommandExecutor.class));
+    }
 
-	public void ifTheHostIsnotLocalAnSSHCommandExecutorShouldReturn() {
-		assertThat(whenCalling(getCommandExecutor(with(aDummyRemoteServerDetails()))), is(returned(JschCommandExecutor.class)));
-	}
+    @Test
+    void ifTheHostIsNotLocalAnSSHCommandExecutorShouldReturn() {
+        assertThat(getCommandExecutor(aDummyRemoteServerDetails()), instanceOf(JschCommandExecutor.class));
+    }
 }

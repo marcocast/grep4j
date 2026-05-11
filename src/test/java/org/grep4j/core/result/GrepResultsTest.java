@@ -1,27 +1,26 @@
 package org.grep4j.core.result;
 
-import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.CoreMatchers.is;
 
 import org.grep4j.core.fixtures.GrepResultsFixture;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
-@Test
-public class GrepResultsTest {
+class GrepResultsTest {
 
-	public void testSomething() {
-		GrepResult simpleGrepResult = GrepResultsFixture.simpleLocalGrepResultFixture("dummy pattern", "dummy result");
-		GrepResult gzGrepResult = GrepResultsFixture.gzLocalGrepResultFixture("dummy pattern", "dummy result");
+    @Test
+    void filterOnProfileReturnsSingleProfileResults() {
+        GrepResult simpleGrepResult = GrepResultsFixture.simpleLocalGrepResultFixture("dummy pattern", "dummy result");
+        GrepResult gzGrepResult = GrepResultsFixture.gzLocalGrepResultFixture("dummy pattern", "dummy result");
 
-		GrepResults grepResults = new GrepResults();
-		grepResults.add(gzGrepResult);
-		grepResults.add(simpleGrepResult);
+        GrepResults grepResults = new GrepResults();
+        grepResults.add(gzGrepResult);
+        grepResults.add(simpleGrepResult);
 
-		GrepResults expectedGrepResults = new GrepResults();
-		expectedGrepResults.add(simpleGrepResult);
+        GrepResults expected = new GrepResults();
+        expected.add(simpleGrepResult);
 
-		GrepResults filteredResults = grepResults.filterOnProfile(simpleGrepResult.getGrepRequest().getProfile());
-		assertThat(expectedGrepResults, is(filteredResults));
-	}
-
+        GrepResults filtered = grepResults.filterOnProfile(simpleGrepResult.getGrepRequest().getProfile());
+        assertThat(filtered, is(expected));
+    }
 }

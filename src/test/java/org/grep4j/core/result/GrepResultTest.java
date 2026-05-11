@@ -1,34 +1,21 @@
 package org.grep4j.core.result;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.number.OrderingComparisons.greaterThanOrEqualTo;
-import static org.junit.Assert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.apache.commons.lang3.time.StopWatch;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
-public class GrepResultTest {
+class GrepResultTest {
 
-	@DataProvider(name = "sleepTime")
-	public Object[][] sleepTime() {
-		return new Object[][] { { 10 }, { 0 }, { 100 }, { 202 }, { 11 },
+    @ParameterizedTest
+    @ValueSource(ints = {10, 0, 100, 202, 11})
+    void testExecutionTime(int sleepMillis) throws InterruptedException {
+        long before = System.nanoTime();
+        Thread.sleep(sleepMillis);
+        long elapsedNanos = System.nanoTime() - before;
 
-		};
-	}
-
-	@Test(dataProvider = "sleepTime")
-	public void testExecutionTime(int sleepTime) {
-		StopWatch clock = new StopWatch();
-		clock.start();
-		try {
-			Thread.sleep(sleepTime);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		clock.stop();
-		GrepResult taskResult = new GrepResult(null, "", "", clock.getNanoTime());
-		assertThat(new Long(taskResult.getExecutionTime()).intValue(), is(greaterThanOrEqualTo(sleepTime)));
-	}
-
+        GrepResult taskResult = new GrepResult(null, "", "", elapsedNanos);
+        long elapsedMillis = taskResult.getExecutionTime() / 1_000_000;
+        assertTrue(elapsedMillis >= sleepMillis);
+    }
 }

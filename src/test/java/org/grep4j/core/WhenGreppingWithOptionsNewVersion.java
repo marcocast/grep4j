@@ -10,40 +10,42 @@ import static org.grep4j.core.options.Option.countMatches;
 import static org.grep4j.core.options.Option.ignoreCase;
 import static org.grep4j.core.options.Option.onlyMatching;
 import static org.grep4j.core.options.Option.withFileName;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
 
 import org.grep4j.core.result.GrepResult;
 import org.grep4j.core.result.GrepResults;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
-@Test(groups = "newGrepVersion")
-public class WhenGreppingWithOptionsNewVersion {
+class WhenGreppingWithOptionsNewVersion {
 
-	public void countMatchesOption() {
-		GrepResults results = grep(constantExpression("ERROR 2"), on(localProfile()), countMatches());
-		for (GrepResult result : results) {
-			assertThat(result.toString(), is("1\n"));
-		}
-	}
+    @Test
+    void countMatchesOption() {
+        GrepResults results = grep(constantExpression("ERROR 2"), on(localProfile()), countMatches());
+        for (GrepResult result : results) {
+            assertThat(result.toString(), is("1\n"));
+        }
+    }
 
-	public void onlyMatchingOption() {
-		GrepResults results = grep(constantExpression("Marco"), on(localProfile()), onlyMatching());
-		for (GrepResult result : results) {
-			assertThat(result.toString(), is("Marco\n"));
-		}
-	}
+    @Test
+    void onlyMatchingOption() {
+        GrepResults results = grep(constantExpression("Marco"), on(localProfile()), onlyMatching());
+        for (GrepResult result : results) {
+            assertThat(result.toString(), is("Marco\n"));
+        }
+    }
 
-	public void onlyMatchingOptionAndcountMatchesOption() {
-		GrepResults results = grep(constantExpression("marco"), on(localProfile()), with(options(onlyMatching(), countMatches(), ignoreCase())));
-		for (GrepResult result : results) {
-			assertThat(result.toString(), is("1\n"));
-		}
-	}
+    @Test
+    void onlyMatchingAndCountMatchesOption() {
+        GrepResults results = grep(constantExpression("marco"), on(localProfile()), with(options(onlyMatching(), countMatches(), ignoreCase())));
+        for (GrepResult result : results) {
+            assertThat(result.toString(), is("1\n"));
+        }
+    }
 
-	public void withFileNameOption() {
-		GrepResults results = grep(constantExpression("ERROR 2"), on(localProfile()), withFileName());
-		assertThat(results.filterBy(constantExpression("local.txt")).totalLines(), is(1));
-	}
-
+    @Test
+    void withFileNameOption() {
+        GrepResults results = grep(constantExpression("ERROR 2"), on(localProfile()), withFileName());
+        assertThat(results.filterBy(constantExpression("local.txt")).totalLines(), is(1));
+    }
 }

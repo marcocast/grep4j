@@ -1,51 +1,50 @@
 package org.grep4j.core.model;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.not;
-import static org.junit.Assert.assertThat;
 
 import org.grep4j.core.fixtures.ServerDetailsFixtures;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
-@Test
-public class ServerDetailsTest {
+class ServerDetailsTest {
 
-	private final static String host = "host";
-	private final static String user = "user";
-	private final static String password = "password";
+    private static final String HOST = "host";
+    private static final String USER = "user";
+    private static final String PASSWORD = "password";
 
-	public void testGettersAndSetters() {
-		ServerDetails serverDetails = new ServerDetails(host);
-		serverDetails.setUser(user);
-		serverDetails.setPassword(password);
-		assertThat(serverDetails.getHost(), is(host));
-		assertThat(serverDetails.getUser(), is(user));
-		assertThat(serverDetails.getPassword(), is(password));
-	}
+    @Test
+    void testGettersAndSetters() {
+        ServerDetails sd = new ServerDetails(HOST);
+        sd.setUser(USER);
+        sd.setPassword(PASSWORD);
+        assertThat(sd.getHost(), is(HOST));
+        assertThat(sd.getUser(), is(USER));
+        assertThat(sd.getPassword(), is(PASSWORD));
+    }
 
-	public void testPositiveEquals() {
-		ServerDetails serverDetails = ServerDetailsFixtures.aDummyRemoteServerDetails();
-		ServerDetails serverDetails2 = ServerDetailsFixtures.aDummyRemoteServerDetails();
-		assertThat(serverDetails, is(equalTo(serverDetails2)));
-	}
+    @Test
+    void testPositiveEquals() {
+        assertThat(ServerDetailsFixtures.aDummyRemoteServerDetails(),
+                is(equalTo(ServerDetailsFixtures.aDummyRemoteServerDetails())));
+    }
 
-	public void testNegativeEquals() {
-		ServerDetails serverDetails = ServerDetailsFixtures.aDummyRemoteServerDetails();
-		ServerDetails serverDetails2 = ServerDetailsFixtures.anotherDummyRemoteServerDetails();
-		assertThat(serverDetails, is(not(equalTo(serverDetails2))));
-	}
+    @Test
+    void testNegativeEquals() {
+        assertThat(ServerDetailsFixtures.aDummyRemoteServerDetails(),
+                is(not(equalTo(ServerDetailsFixtures.anotherDummyRemoteServerDetails()))));
+    }
 
-	public void testPositiveHashCode() {
-		ServerDetails serverDetails = ServerDetailsFixtures.aDummyRemoteServerDetails();
-		ServerDetails serverDetails2 = ServerDetailsFixtures.aDummyRemoteServerDetails();
-		assertThat(serverDetails.hashCode(), is(equalTo(serverDetails2.hashCode())));
-	}
+    @Test
+    void testPositiveHashCode() {
+        assertThat(ServerDetailsFixtures.aDummyRemoteServerDetails().hashCode(),
+                is(equalTo(ServerDetailsFixtures.aDummyRemoteServerDetails().hashCode())));
+    }
 
-	public void testNegativeHashCode() {
-		ServerDetails serverDetails = ServerDetailsFixtures.aDummyRemoteServerDetails();
-		ServerDetails serverDetails2 = ServerDetailsFixtures.anotherDummyRemoteServerDetails();
-		assertThat(serverDetails.hashCode(), is(not(equalTo(serverDetails2.hashCode()))));
-	}
-
+    @Test
+    void testNegativeHashCode() {
+        assertThat(ServerDetailsFixtures.aDummyRemoteServerDetails().hashCode(),
+                is(not(equalTo(ServerDetailsFixtures.anotherDummyRemoteServerDetails().hashCode()))));
+    }
 }
