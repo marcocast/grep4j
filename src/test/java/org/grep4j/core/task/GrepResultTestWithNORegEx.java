@@ -1,44 +1,50 @@
 package org.grep4j.core.task;
 
 import static org.grep4j.core.Grep4j.constantExpression;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
 
 import org.grep4j.core.model.Profile;
 import org.grep4j.core.request.GrepRequest;
 import org.grep4j.core.result.GrepResult;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-@Test
-public class GrepResultTestWithNORegEx {
+class GrepResultTestWithNORegEx {
 
-	GrepResult grepResult;
+    GrepResult grepResult;
 
-	@BeforeTest
-	public void init() {
-		GrepRequest grepRequest = new GrepRequest("customer Marco(id=12345) has been updated successfully", new Profile("profileName", "fileName"));
-		grepResult = new GrepResult(grepRequest, "fileName", "customer Marco(id=12345) has been updated successfully\n", 0l);
-	}
+    @BeforeEach
+    void init() {
+        GrepRequest grepRequest = new GrepRequest(
+                "customer Marco(id=12345) has been updated successfully",
+                new Profile("profileName", "fileName"));
+        grepResult = new GrepResult(grepRequest, "fileName",
+                "customer Marco(id=12345) has been updated successfully\n", 0L);
+    }
 
-	public void testRegExWithExpression() {
-		assertThat(grepResult.filterBy(constantExpression("Marco")).totalLines(), is(1));
-	}
+    @Test
+    void testFilterByConstantExpression() {
+        assertThat(grepResult.filterBy(constantExpression("Marco")).totalLines(), is(1));
+    }
 
-	public void testRegEx() {
-		assertThat(grepResult.totalLines(), is(1));
-	}
+    @Test
+    void testTotalLines() {
+        assertThat(grepResult.totalLines(), is(1));
+    }
 
-	public void testProfileNameProperties() {
-		assertThat(grepResult.getProfileName(), is("profileName"));
-	}
+    @Test
+    void testProfileNameProperty() {
+        assertThat(grepResult.getProfileName(), is("profileName"));
+    }
 
-	public void testFileNameProperties() {
-		assertThat(grepResult.getFileName(), is("fileName"));
-	}
+    @Test
+    void testFileNameProperty() {
+        assertThat(grepResult.getFileName(), is("fileName"));
+    }
 
-	public void testTextProperties() {
-		assertThat(grepResult.getText(), is("customer Marco(id=12345) has been updated successfully\n"));
-	}
-
+    @Test
+    void testTextProperty() {
+        assertThat(grepResult.getText(), is("customer Marco(id=12345) has been updated successfully\n"));
+    }
 }

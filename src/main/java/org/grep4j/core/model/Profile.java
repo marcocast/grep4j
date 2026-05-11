@@ -1,6 +1,5 @@
 package org.grep4j.core.model;
 
-import javax.annotation.concurrent.Immutable;
 
 import lombok.Data;
 
@@ -13,7 +12,6 @@ import org.apache.commons.lang3.StringUtils;
  * @author Giovanni Gargiulo
  * @author Marco Castigliego
  */
-@Immutable
 @Data
 public class Profile {
 

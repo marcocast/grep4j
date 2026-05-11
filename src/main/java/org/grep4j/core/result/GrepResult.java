@@ -18,7 +18,7 @@ import org.grep4j.core.request.GrepRequest;
  * @author Giovanni Gargiulo
  */
 @RequiredArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(exclude = "cachedTotalLines")
 public class GrepResult {
 
 	private static final Pattern linePattern = Pattern.compile(".*\\r?\\n");
@@ -30,6 +30,8 @@ public class GrepResult {
 	private final String text;
 	@Getter
 	private final long executionTime;
+
+	private volatile int cachedTotalLines = -1;
 
 	/**
 	 * @return the profile name associated with this grep result
@@ -44,12 +46,13 @@ public class GrepResult {
 	 * @return total number of time the new line patter is found
 	 */
 	public int totalLines() {
-		int totalLines = 0;
-		Matcher lm = linePattern.matcher(this.getText());
-		while (lm.find()) {
-			totalLines++;
+		if (cachedTotalLines == -1) {
+			int count = 0;
+			Matcher lm = linePattern.matcher(this.getText());
+			while (lm.find()) count++;
+			cachedTotalLines = count;
 		}
-		return totalLines;
+		return cachedTotalLines;
 	}
 
 	/**
@@ -60,9 +63,9 @@ public class GrepResult {
 	 */
 	public GrepResult filterBy(GrepExpression grepExpression) {
 		if (grepExpression.isRegularExpression()) {
-			return filterByRE(grepExpression.getText());
+			return filterByRE(grepExpression.text());
 		} else {
-			return filterBy(grepExpression.getText());
+			return filterBy(grepExpression.text());
 		}
 	}
 

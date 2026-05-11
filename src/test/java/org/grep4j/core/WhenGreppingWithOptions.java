@@ -15,8 +15,8 @@ import static org.grep4j.core.options.Option.onlyFirstLines;
 import static org.grep4j.core.options.Option.onlyLastBytes;
 import static org.grep4j.core.options.Option.onlyLastLines;
 import static org.grep4j.core.options.Option.withFileName;
-import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.CoreMatchers.is;
 
 import java.util.Arrays;
 import java.util.List;
@@ -24,74 +24,76 @@ import java.util.List;
 import org.grep4j.core.options.Option;
 import org.grep4j.core.result.GrepResult;
 import org.grep4j.core.result.GrepResults;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
-@Test
-public class WhenGreppingWithOptions {
+class WhenGreppingWithOptions {
 
-	public void linesAfter() {
-		GrepResults results = grep(constantExpression("ERROR 1"), on(localProfile()), extraLinesAfter(20));
-		assertThat(results.filterBy(constantExpression("customer Marco(id=12345) has been updated successfully")).totalLines(), is(1));
-	}
+    @Test
+    void linesAfter() {
+        GrepResults results = grep(constantExpression("ERROR 1"), on(localProfile()), extraLinesAfter(20));
+        assertThat(results.filterBy(constantExpression("customer Marco(id=12345) has been updated successfully")).totalLines(), is(1));
+    }
 
-	public void linesBefore() {
-		GrepResults results = grep(constantExpression("ERROR 2"), on(localProfile()), extraLinesBefore(20));
-		assertThat(results.filterBy(constantExpression("ERROR 1")).totalLines(), is(1));
-	}
+    @Test
+    void linesBefore() {
+        GrepResults results = grep(constantExpression("ERROR 2"), on(localProfile()), extraLinesBefore(20));
+        assertThat(results.filterBy(constantExpression("ERROR 1")).totalLines(), is(1));
+    }
 
-	public void invert() {
-		GrepResults results = grep(constantExpression("ERROR 2"), on(localProfile()), invertMatch());
-		assertThat(results.filterBy(constantExpression("ERROR 2")).totalLines(), is(0));
-	}
+    @Test
+    void invert() {
+        GrepResults results = grep(constantExpression("ERROR 2"), on(localProfile()), invertMatch());
+        assertThat(results.filterBy(constantExpression("ERROR 2")).totalLines(), is(0));
+    }
 
-	public void countMatchesOption() {
-		GrepResults results = grep(constantExpression("ERROR 2"), on(localProfile()), countMatches());
-		for (GrepResult result : results) {
-			assertThat(result.toString(), is("1\n"));
-		}
-	}
+    @Test
+    void countMatchesOption() {
+        GrepResults results = grep(constantExpression("ERROR 2"), on(localProfile()), countMatches());
+        for (GrepResult result : results) {
+            assertThat(result.toString(), is("1\n"));
+        }
+    }
 
-	public void withFileNameOption() {
-		GrepResults results = grep(constantExpression("ERROR 2"), on(localProfile()), withFileName());
-		assertThat(results.filterBy(constantExpression("local.txt")).totalLines(), is(1));
-	}
+    @Test
+    void withFileNameOption() {
+        GrepResults results = grep(constantExpression("ERROR 2"), on(localProfile()), withFileName());
+        assertThat(results.filterBy(constantExpression("local.txt")).totalLines(), is(1));
+    }
 
-	public void withIgnoreCase() {
-		GrepResults results = grep(constantExpression("ERRor 2"), on(localProfile()), ignoreCase(), countMatches());
+    @Test
+    void withIgnoreCase() {
+        GrepResults results = grep(constantExpression("ERRor 2"), on(localProfile()), ignoreCase(), countMatches());
+        assertThat(results.toString(), is("1\n"));
+    }
 
-		assertThat(results.toString(), is("1\n"));
-	}
+    @Test
+    void withFirstLines() {
+        GrepResults results = grep(constantExpression("ERRor"), on(localProfile()), ignoreCase(), onlyFirstLines(1));
+        assertThat(results.toString(), is("ERROR 1\n"));
+    }
 
-	public void withFirstLines() {
-		GrepResults results = grep(constantExpression("ERRor"), on(localProfile()), ignoreCase(), onlyFirstLines(1));
+    @Test
+    void withFirstBytes() {
+        GrepResults results = grep(constantExpression("ERRor"), on(localProfile()), ignoreCase(), onlyFirstBytes(1));
+        assertThat(results.toString(), is("E"));
+    }
 
-		assertThat(results.toString(), is("ERROR 1\n"));
-	}
+    @Test
+    void withLastLines() {
+        GrepResults results = grep(constantExpression("ERRor"), on(localProfile()), ignoreCase(), onlyLastLines(1));
+        assertThat(results.toString(), is("ERROR 2\n"));
+    }
 
-	public void withFirstBytes() {
-		GrepResults results = grep(constantExpression("ERRor"), on(localProfile()), ignoreCase(), onlyFirstBytes(1));
+    @Test
+    void withLastBytes() {
+        GrepResults results = grep(constantExpression("ERRor"), on(localProfile()), ignoreCase(), onlyLastBytes(1));
+        assertThat(results.toString(), is("\n"));
+    }
 
-		assertThat(results.toString(), is("E\n"));
-	}
-
-	public void withLastLines() {
-		GrepResults results = grep(constantExpression("ERRor"), on(localProfile()), ignoreCase(), onlyLastLines(1));
-
-		assertThat(results.toString(), is("ERROR 2\n"));
-	}
-
-	public void withLastBytes() {
-		GrepResults results = grep(constantExpression("ERRor"), on(localProfile()), ignoreCase(), onlyLastBytes(1));
-
-		assertThat(results.toString(), is("\n"));
-	}
-	
-	public void testOptionsPassedAsList() {
-		List<Option> optionsList = Arrays.asList(ignoreCase(), onlyLastBytes(1));
-		
-		GrepResults results = grep(constantExpression("ERRor"), on(localProfile()), options(optionsList));
-
-		assertThat(results.toString(), is("\n"));
-	}
-
+    @Test
+    void testOptionsPassedAsList() {
+        List<Option> optionsList = Arrays.asList(ignoreCase(), onlyLastBytes(1));
+        GrepResults results = grep(constantExpression("ERRor"), on(localProfile()), options(optionsList));
+        assertThat(results.toString(), is("\n"));
+    }
 }

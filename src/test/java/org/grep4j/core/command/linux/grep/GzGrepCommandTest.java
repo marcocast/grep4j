@@ -1,35 +1,42 @@
 package org.grep4j.core.command.linux.grep;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
 
 import org.grep4j.core.fixtures.ProfileFixtures;
 import org.grep4j.core.request.GrepRequest;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 public class GzGrepCommandTest extends GrepCommandTest {
 
-	@Test
-	public void testGetFile() {
-		String expression = "expression";
+    @Test
+    void testGetFile() {
+        String expression = "expression";
+        GzGrepCommand gzGrepCommand = new GzGrepCommand(
+                new GrepRequest(expression, ProfileFixtures.aDummyRemoteProfile()),
+                ProfileFixtures.aDummyRemoteProfile().getFilePath());
+        assertThat(gzGrepCommand.getFile(), is(ProfileFixtures.aDummyRemoteProfile().getFilePath()));
+    }
 
-		GzGrepCommand GzGrepCommand = new GzGrepCommand(new GrepRequest(expression, ProfileFixtures.aDummyRemoteProfile()), ProfileFixtures
-				.aDummyRemoteProfile().getFilePath());
-		assertThat(GzGrepCommand.getFile(), is(ProfileFixtures.aDummyRemoteProfile().getFilePath()));
-	}
+    @ParameterizedTest
+    @MethodSource("expressionsAndFile")
+    void testGetCommandToExecute(String expression, String file) {
+        GzGrepCommand gzGrepCommand = new GzGrepCommand(
+                new GrepRequest(expression, ProfileFixtures.aDummyRemoteProfile()), file);
+        assertThat(gzGrepCommand.getCommandToExecute(),
+                is("gunzip -c " + file + " | grep " + SINGLE_QUOTE + expression + SINGLE_QUOTE));
+    }
 
-	@Test(dataProvider = "expressionsAndFile")
-	public void testGetCommandToExecute(String expression, String file) {
-		GzGrepCommand GzGrepCommand = new GzGrepCommand(new GrepRequest(expression, ProfileFixtures.aDummyRemoteProfile()), file);
-		assertThat(GzGrepCommand.getCommandToExecute(), is("gunzip -c " + file + " | grep " + SINGLE_QUOTE + expression + SINGLE_QUOTE));
-	}
-
-	@Test(dataProvider = "expressionsAndFile")
-	public void testGetCommandToExecuteWithContextControll(String expression, String file) {
-		GzGrepCommand GzGrepCommand = new GzGrepCommand(new GrepRequest(expression, ProfileFixtures.aDummyRemoteProfile()), file);
-		String contextControl = "-A";
-		GzGrepCommand.setContextControls(contextControl);
-		assertThat(GzGrepCommand.getCommandToExecute(), is("gunzip -c " + file + " | grep " + SINGLE_QUOTE + expression + SINGLE_QUOTE + " "
-				+ contextControl));
-	}
+    @ParameterizedTest
+    @MethodSource("expressionsAndFile")
+    void testGetCommandToExecuteWithContextControl(String expression, String file) {
+        GzGrepCommand gzGrepCommand = new GzGrepCommand(
+                new GrepRequest(expression, ProfileFixtures.aDummyRemoteProfile()), file);
+        String contextControl = "-A";
+        gzGrepCommand.setContextControls(contextControl);
+        assertThat(gzGrepCommand.getCommandToExecute(),
+                is("gunzip -c " + file + " | grep " + SINGLE_QUOTE + expression + SINGLE_QUOTE + " " + contextControl));
+    }
 }

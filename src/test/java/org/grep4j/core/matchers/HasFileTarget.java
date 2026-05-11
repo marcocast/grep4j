@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.grep4j.core.request.GrepRequest;
 import org.hamcrest.Description;
-import org.hamcrest.Factory;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 
@@ -31,7 +30,6 @@ public class HasFileTarget extends TypeSafeMatcher<List<GrepRequest>> {
 		return false;
 	}
 
-	@Factory
 	public static <T> Matcher<List<GrepRequest>> hasFileTarget(String fileTargetName) {
 		return new HasFileTarget(fileTargetName);
 	}

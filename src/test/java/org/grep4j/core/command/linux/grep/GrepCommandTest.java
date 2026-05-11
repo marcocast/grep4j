@@ -1,14 +1,20 @@
 package org.grep4j.core.command.linux.grep;
 
-import org.testng.annotations.DataProvider;
+import java.util.stream.Stream;
+
+import org.junit.jupiter.params.provider.Arguments;
 
 public abstract class GrepCommandTest {
 
-	public final static String SINGLE_QUOTE = "\'";
+    public static final String SINGLE_QUOTE = "'";
 
-	@DataProvider(name = "expressionsAndFile")
-	public Object[][] expressionsAndFile() {
-		return new Object[][] { { "INFO", "/opt/jboss/server/default/log/server.log" }, { "ERROR", "/opt/jboss/server/default/log/server.log" },
-				{ "String to search", "server.log" }, { "//uh//iij", "any.txt" }, { "id:\"23456\"", "/opt/jboss/server/default/log/server.log" }, };
-	}
+    static Stream<Arguments> expressionsAndFile() {
+        return Stream.of(
+                Arguments.of("INFO", "/opt/jboss/server/default/log/server.log"),
+                Arguments.of("ERROR", "/opt/jboss/server/default/log/server.log"),
+                Arguments.of("String to search", "server.log"),
+                Arguments.of("//uh//iij", "any.txt"),
+                Arguments.of("id:\"23456\"", "/opt/jboss/server/default/log/server.log")
+        );
+    }
 }

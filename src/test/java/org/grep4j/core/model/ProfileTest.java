@@ -1,50 +1,48 @@
 package org.grep4j.core.model;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.not;
-import static org.junit.Assert.assertThat;
 
 import org.grep4j.core.fixtures.ProfileFixtures;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
-@Test
-public class ProfileTest {
+class ProfileTest {
 
-	private final static String filePath = "filePathTest";
-	private final static String name = "name";
+    private static final String FILE_PATH = "filePathTest";
+    private static final String NAME = "name";
 
-	public void testGettersAndSetters() {
-		Profile profile = new Profile(name, filePath);
-		profile.setServerDetails(null);
-		assertThat(profile.getFilePath(), is(filePath));
-		assertThat(profile.getName(), is(name));
-		assertThat(profile.getServerDetails(), nullValue());
-	}
+    @Test
+    void testGettersAndSetters() {
+        Profile profile = new Profile(NAME, FILE_PATH);
+        profile.setServerDetails(null);
+        assertThat(profile.getFilePath(), is(FILE_PATH));
+        assertThat(profile.getName(), is(NAME));
+        assertThat(profile.getServerDetails(), nullValue());
+    }
 
-	public void testPositiveEquals() {
-		Profile profile = ProfileFixtures.aDummyRemoteProfile();
-		Profile profile2 = ProfileFixtures.aDummyRemoteProfile();
-		assertThat(profile, is(equalTo(profile2)));
-	}
+    @Test
+    void testPositiveEquals() {
+        assertThat(ProfileFixtures.aDummyRemoteProfile(), is(equalTo(ProfileFixtures.aDummyRemoteProfile())));
+    }
 
-	public void testPositivePublicKeyEquals() {
-		Profile profile = ProfileFixtures.aDummyRemoteProfileWithPublicKeyWithNoPassword();
-		Profile profile2 = ProfileFixtures.aDummyRemoteProfileWithPublicKeyWithNoPassword();
-		assertThat(profile, is(equalTo(profile2)));
-	}
+    @Test
+    void testPositivePublicKeyEquals() {
+        assertThat(ProfileFixtures.aDummyRemoteProfileWithPublicKeyWithNoPassword(),
+                is(equalTo(ProfileFixtures.aDummyRemoteProfileWithPublicKeyWithNoPassword())));
+    }
 
-	public void testPositiveHashCode() {
-		Profile profile = ProfileFixtures.aDummyRemoteProfile();
-		Profile profile2 = ProfileFixtures.aDummyRemoteProfile();
-		assertThat(profile.hashCode(), is(equalTo(profile2.hashCode())));
-	}
+    @Test
+    void testPositiveHashCode() {
+        assertThat(ProfileFixtures.aDummyRemoteProfile().hashCode(),
+                is(equalTo(ProfileFixtures.aDummyRemoteProfile().hashCode())));
+    }
 
-	public void testNegativeHashCode() {
-		Profile profile = ProfileFixtures.aDummyRemoteProfile();
-		Profile profile2 = ProfileFixtures.anotherDummyRemoteProfile();
-		assertThat(profile.hashCode(), is(not(equalTo(profile2.hashCode()))));
-	}
-
+    @Test
+    void testNegativeHashCode() {
+        assertThat(ProfileFixtures.aDummyRemoteProfile().hashCode(),
+                is(not(equalTo(ProfileFixtures.anotherDummyRemoteProfile().hashCode()))));
+    }
 }

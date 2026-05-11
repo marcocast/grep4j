@@ -1,44 +1,40 @@
 package org.grep4j.core.command.linux;
 
-import org.apache.commons.pool.KeyedObjectPool;
-import org.apache.commons.pool.impl.StackKeyedObjectPool;
+import org.apache.commons.pool2.KeyedObjectPool;
+import org.apache.commons.pool2.impl.GenericKeyedObjectPool;
+import org.apache.commons.pool2.impl.GenericKeyedObjectPoolConfig;
 import org.grep4j.core.model.ServerDetails;
 
 import com.jcraft.jsch.Session;
 
 /**
- * Pool controller. This class exposes the org.apache.commons.pool.KeyedObjectPool class.
- * 
- * @author Marco Castigliego
+ * Singleton SSH session pool backed by commons-pool2 {@link GenericKeyedObjectPool}.
+ * The pool lives for the lifetime of the JVM and is closed via a shutdown hook.
  */
 public class StackSessionPool {
 
-	private KeyedObjectPool<ServerDetails, Session> pool;
+    private final KeyedObjectPool<ServerDetails, Session> pool;
 
-	private static class SingletonHolder {
-		public static final StackSessionPool INSTANCE = new StackSessionPool();
-	}
+    private static class SingletonHolder {
+        static final StackSessionPool INSTANCE = new StackSessionPool();
+    }
 
-	public static StackSessionPool getInstance() {
-		return SingletonHolder.INSTANCE;
-	}
+    public static StackSessionPool getInstance() {
+        return SingletonHolder.INSTANCE;
+    }
 
-	private StackSessionPool() {
-		startPool();
-	}
+    private StackSessionPool() {
+        GenericKeyedObjectPoolConfig<Session> config = new GenericKeyedObjectPoolConfig<>();
+        config.setMaxTotalPerKey(1);
+        config.setTestOnBorrow(true);
+        pool = new GenericKeyedObjectPool<>(new SessionFactory(), config);
+        Runtime.getRuntime().addShutdownHook(Thread.ofVirtual().unstarted(() -> {
+            try { pool.close(); } catch (Exception ignored) {}
+        }));
+    }
 
-	/**
-	 * @return the org.apache.commons.pool.KeyedObjectPool class
-	 */
-	public KeyedObjectPool<ServerDetails, Session> getPool() {
-		return pool;
-	}
-
-	/**
-	 * @return the org.apache.commons.pool.KeyedObjectPool class
-	 */
-	public void startPool() {
-		pool = new StackKeyedObjectPool<ServerDetails, Session>(new SessionFactory(), 1);
-	}
-
+    /** @return the underlying keyed object pool */
+    public KeyedObjectPool<ServerDetails, Session> getPool() {
+        return pool;
+    }
 }

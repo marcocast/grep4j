@@ -11,73 +11,73 @@ import static org.grep4j.core.matchers.GrepResultMatchers.containsExpression;
 import static org.grep4j.core.matchers.GrepResultMatchers.doesNotContainExpression;
 import static org.grep4j.core.options.Option.extraLinesAfter;
 import static org.grep4j.core.options.Option.extraLinesBefore;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
 
 import java.util.Arrays;
 import java.util.List;
 
 import org.grep4j.core.model.Profile;
 import org.grep4j.core.result.GrepResults;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
-@Test
-public class WhenGrep4jStartedWithStringToSearchALocalProfile {
+class WhenGrep4jStartedWithStringToSearchALocalProfile {
 
-	private static final String STRING_TO_SEARCH = "ERROR";
+    private static final String STRING_TO_SEARCH = "ERROR";
+    private final List<Profile> profiles = Arrays.asList(localProfile());
 
-	private final List<Profile> profiles = Arrays.asList(localProfile());
+    @Test
+    void errorStringMustBeFoundOnTheResult() {
+        GrepResults results = grep(constantExpression(STRING_TO_SEARCH), on(profiles));
+        assertThat(results, containsExpression("ERROR"));
+    }
 
-	public void errorStringMustBeFoundOnTheResult() {
-		GrepResults results = grep(constantExpression(STRING_TO_SEARCH), on(profiles));
-		assertThat(results, containsExpression("ERROR"));
-	}
+    @Test
+    void only2ErrorStringsMustNotBeFoundOnTheResult() {
+        GrepResults results = grep(constantExpression("ERROR"), on(profiles));
+        assertThat(results, doesNotContainExpression("3"));
+    }
 
-	public void only2ErrorStringsMustNotBeFoundOnTheResult() {
-		GrepResults results = grep(constantExpression("ERROR"), on(profiles));
-		assertThat(results, doesNotContainExpression("3"));
-	}
+    @Test
+    void gzStringsShouldBeFoundOnTheResult() {
+        GrepResults results = grep(constantExpression("ERROR"), on(on(Arrays.asList(localProfileWithWildecard("*")))));
+        assertThat(results, containsExpression("GZ"));
+    }
 
-	public void gzStringsShouldBeFoundOnTheResult() {
-		GrepResults results = grep(constantExpression("ERROR"), on(on(Arrays.asList(localProfileWithWildecard("*")))));
-		assertThat(results, containsExpression("GZ"));
-	}
+    @Test
+    void fineStringAppears5Times() {
+        assertThat(whenCalling(grep(constantExpression("fine"), on(profiles))).totalLines(), is(5));
+    }
 
-	public void fineStringAppears3Times() {
-		assertThat(whenCalling(grep(constantExpression("fine"), on(profiles))).totalLines(), is(5));
-	}
+    @Test
+    void errorStringAppears2Times() {
+        assertThat(executing(grep(constantExpression("ERROR"), on(profiles))).totalLines(), is(2));
+    }
 
-	public void errorStringAppears2Times() {
-		assertThat(executing(grep(constantExpression("ERROR"), on(profiles))).totalLines(), is(2));
-	}
+    @Test
+    void error33StringNeverAppears() {
+        assertThat(executing(grep(constantExpression("ERROR33"), on(profiles))).totalLines(), is(0));
+    }
 
-	public void errorStringAppearsAtMost2Times() {
-		assertThat(executing(grep(constantExpression("ERROR"), on(profiles))).totalLines(), is(2));
-	}
+    @Test
+    void errorMultipleTokenStringAppearsOneTime() {
+        assertThat(executing(grep(constantExpression("has been updated"), on(profiles))).totalLines(), is(1));
+    }
 
-	public void errorStringAppearsAtLeast2Times() {
-		assertThat(executing(grep(constantExpression("ERROR"), on(profiles))).totalLines(), is(2));
-	}
+    @Test
+    void errorStringWithRegExCharactersAppearsOneTime() {
+        assertThat(executing(grep(constantExpression("Marco(id=12345)"), on(profiles))).totalLines(), is(1));
+    }
 
-	public void error33StringneverAppears() {
-		assertThat(executing(grep(constantExpression("ERROR33"), on(profiles))).totalLines(), is(0));
-	}
+    @Test
+    void extraLineAfter() {
+        GrepResults results = grep(constantExpression("ERROR 1"), on(profiles), extraLinesAfter(20));
+        assertThat(results, containsExpression("ERROR 2"));
+    }
 
-	public void errorMultipleTokenStringStringAppearsOneTime() {
-		assertThat(executing(grep(constantExpression("has been updated"), on(profiles))).totalLines(), is(1));
-	}
-
-	public void errorStringWithRegExCaracthersAppearsOneTime() {
-		assertThat(executing(grep(constantExpression("Marco(id=12345)"), on(profiles))).totalLines(), is(1));
-	}
-
-	public void extraLineAfter() {
-		GrepResults results = grep(constantExpression("ERROR 1"), on(profiles), extraLinesAfter(20));
-		assertThat(results, containsExpression("ERROR 2"));
-	}
-
-	public void extraLineBefore() {
-		GrepResults results = grep(constantExpression("ERROR 2"), on(profiles), extraLinesBefore(20));
-		assertThat(results, containsExpression("ERROR 1"));
-	}
+    @Test
+    void extraLineBefore() {
+        GrepResults results = grep(constantExpression("ERROR 2"), on(profiles), extraLinesBefore(20));
+        assertThat(results, containsExpression("ERROR 1"));
+    }
 }
